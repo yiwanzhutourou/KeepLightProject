@@ -1,0 +1,13 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/homepage/homepage",
+    "pages/book/addBook"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "留灯计划",
+    "navigationBarTextStyle":"black"
+  }
+}

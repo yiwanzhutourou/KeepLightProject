@@ -1,0 +1,9 @@
+/* pages/book/addBook.wxss */
+
+.scanButton {
+    margin: 20rpx;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}

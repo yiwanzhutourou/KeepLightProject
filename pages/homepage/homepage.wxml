@@ -1,0 +1,12 @@
+<!--pages/homepage/homepage.wxml-->
+<view class="container">
+    <view class="userinfo">
+        <image class="userinfo-avatar"
+               src="{{userInfo.avatarUrl}}"
+               background-size="cover"></image>
+        <text class="userinfo-nickname">{{userShufangName}}</text>
+    </view>
+    <button class="button" bindtap="addBook">添加图书</button>
+    <button class="button" bindtap="chooseLocation">添加地址</button>
+    <text class="text">地址：{{addressName}}</text>
+</view>

@@ -1,0 +1,7 @@
+<!--index.wxml-->
+<map id="homeMap"
+    longitude="{{longitude}}"
+    latitude="{{latitude}}"
+    controls="{{controls}}"
+    bindcontroltap="controltap"
+    show-location />

@@ -1,0 +1,9 @@
+/**index.wxss**/
+
+/*
+  主页map式样
+*/
+#homeMap {
+  width: 100%;
+  height: 100vh;
+}
