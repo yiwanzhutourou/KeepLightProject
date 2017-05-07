@@ -1,6 +1,11 @@
 <!--pages/book/addBook.wxml-->
 <view class="container">
     <button class="scanButton" bindtap="scanISBN">扫描图书ISBN</button>
-    <text class="text">ISBN: {{code}}</text>
-    <text class="text">type: {{codeType}}</text>
+    <image
+        class="image"
+        mode="center"
+        src="{{imageSrc}}" />
+    <text class="text">书名: {{title}}</text>
+    <text class="text">作者: {{author}}</text>
+    <text class="text">链接: {{url}}</text>
 </view>

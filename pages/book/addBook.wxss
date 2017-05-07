@@ -7,3 +7,9 @@
 .userinfo-nickname {
   color: #aaa;
 }
+
+.imgae {
+  width: 50px;
+  height: 50px;
+  background-color: #eeeeee;
+}
