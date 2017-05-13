@@ -1,6 +1,8 @@
 import { Book, parseBookInfo, parseBookList } from '../utils/bookUtils'
 import { DoubanCallback, getBookInfo, searchBooks } from '../api/doubanapi'
 
+import { MapData } from '../api/api'
+
 // var Promise = require('../utils/es6-promise.min').Promise
 
 const USER_INFO_KEY = 'user_info'
@@ -177,4 +179,24 @@ const filterBook = (book: Book, allAddedBooks: Array<Book>) => {
             }
         }
     }
+}
+
+export const getMarkersOnMapApi = (data: MapData, cb: Callback) => {
+    let markers: any = []
+    for (let i = 0; i < 15; i++) {
+        markers.push({
+            id: i,
+            latitude: data.latitude + getRandomNum(),
+            longitude: data.longitude + getRandomNum(),
+            title: '测试Title',
+            iconPath: '/resources/img/icon_map_location.png',
+            width: 60,
+            height: 60,
+        })
+    }
+    cb(true, '', markers)
+}
+
+const getRandomNum = () => {
+    return Math.random() * 0.1
 }

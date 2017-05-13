@@ -1,4 +1,4 @@
-import { Address, Callback, addBookApi, getBookApi, removeBookByIdApi } from '../test/backend'
+import { Address, Callback, addBookApi, getBookApi, getMarkersOnMapApi, removeBookByIdApi } from '../test/backend'
 import {
     addAddressApi,
     getAddressApi,
@@ -8,6 +8,12 @@ import {
 } from '../test/backend'
 
 import { Book } from '../utils/bookUtils'
+
+export type MapData = {
+    latitude: number,
+    longitude: number,
+    zoomLevel: number,
+}
 
 export const setUserIntro = (intro: string, cb: Callback) => {
     if (!intro) {
@@ -49,4 +55,8 @@ export const removeBook = (bookId: string, cb: Callback) => {
 
 export const getBookList = (cb: Callback) => {
     getBookApi(cb)
+}
+
+export const getMarkersOnMap = (data: MapData, cb: Callback) => {
+    getMarkersOnMapApi(data, cb)
 }

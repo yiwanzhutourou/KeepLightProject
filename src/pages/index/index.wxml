@@ -3,5 +3,6 @@
     longitude="{{longitude}}"
     latitude="{{latitude}}"
     controls="{{controls}}"
+    markers="{{markers}}"
     bindcontroltap="controltap"
     show-location />

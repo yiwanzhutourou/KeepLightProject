@@ -1,3 +1,4 @@
+import { getMarkersOnMap } from '../../api/api'
 // index.js
 
 const EVENT_TAP_HOME_PAGE = 1
@@ -14,6 +15,7 @@ Page({
     longitude: 0,
     latitude: 0,
     controls: [],
+    markers: [],
   },
 
   onLoad: function(): void {
@@ -35,7 +37,26 @@ Page({
           longitude: locationInfo.longitude,
           latitude: locationInfo.latitude,
         })
+
+        getMarkersOnMap(
+          {
+            latitude: locationInfo.latitude, 
+            longitude: locationInfo.longitude, 
+            zoomLevel: 0,
+          },
+          (success: boolean, errMsg: string, result: any) => {
+            if (success) {
+              indexPage.setData({
+                markers: result,
+              })
+            }
+          },
+        ) 
     })
+  },
+
+  onShow: function(): void {
+    // Do nothing
   },
 
   controltap: (event) => {
