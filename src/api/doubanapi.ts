@@ -14,3 +14,17 @@ export const getBookInfo = (isbn: string, cb: DoubanCallback) => {
         },
     })
 }
+
+export const searchBooks = (key: string, cb: DoubanCallback) => {
+    // 通过关键词从豆瓣搜索图书信息
+    wx.request({
+        url: 'https://api.douban.com/v2/book/search?q=' + key,
+        method: 'GET',
+        success: (res: WeApp.HttpResponse) => {
+            cb(true, res.errMsg, res.statusCode, res.data)
+        },
+        fail: (res: any) => {
+            cb(false)
+        },
+    })
+}

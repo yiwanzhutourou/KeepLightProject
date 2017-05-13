@@ -1,0 +1,20 @@
+<template name="book-item">
+    <view class="common-container">
+        <view class="book-container">
+            <image class="book-pic" src="{{item.cover}}" mode="aspectFit" />
+            <view class="book-detail-container" data-url="{{item.url}}" bindtap="onBookItemTap">
+                <text class="book-title">{{item.title}}</text>
+                <text class="book-author">作者：{{item.author}}</text>
+                <text class="book-publisher">出版社：{{item.publisher}}</text>
+            </view>
+            <view wx:if="{{item.added && !isHomePage}}"
+                class="added-book-text">已添加</view>
+            <view wx:elif="{{!isHomePage}}"
+                class="add-book-button"
+                hover-class="add-book-button-hover"
+                data-book="{{item}}"
+                bindtap="onAddBook">添加</view>
+        </view>
+        <view class="book-item-divider" />
+    </view>
+</template>

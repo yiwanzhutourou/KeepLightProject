@@ -9,10 +9,7 @@ const globalData: GlobalData = {}
 
 App({
   onLaunch: (info: WeApp.LaunchData) => {
-    // 调用API从本地缓存中获取数据
-    let logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
+    // Do nothing
   },
   // 用户信息
   getUserInfo: (cb: (res: Object) => void) => {

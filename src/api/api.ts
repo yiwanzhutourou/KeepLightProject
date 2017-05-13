@@ -1,4 +1,4 @@
-import { Address, Callback } from '../test/backend'
+import { Address, Callback, addBookApi, getBookApi, removeBookByIdApi } from '../test/backend'
 import {
     addAddressApi,
     getAddressApi,
@@ -6,6 +6,8 @@ import {
     removeAddressApi,
     setUserIntroApi,
 } from '../test/backend'
+
+import { Book } from '../utils/bookUtils'
 
 export const setUserIntro = (intro: string, cb: Callback) => {
     if (!intro) {
@@ -35,4 +37,16 @@ export const removeAddress = (address: Address, cb: Callback) => {
 
 export const getAddress = (cb: Callback) => {
     getAddressApi(cb)
+}
+
+export const addBook = (book: Book, cb: Callback) => {
+    addBookApi(book, cb)
+}
+
+export const removeBook = (bookId: string, cb: Callback) => {
+    removeBookByIdApi(bookId, cb)
+}
+
+export const getBookList = (cb: Callback) => {
+    getBookApi(cb)
 }

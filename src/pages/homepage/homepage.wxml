@@ -1,10 +1,19 @@
 <!--pages/homepage/homepage.wxml-->
 <view class="container">
-    <import src="../../template/user/UserInfo.wxml"/>
+    <import src="../../template/user/UserInfo.wxml" />
     <template is="user-info" data="{{userInfo, isCurrentUser}}" />
     <scroll-view class="book-list-container" style="height:{{screenHeight-190}}rpx;" scroll-y="true">
-        <import src="../../template/user/UserIntro.wxml"/>
+        <import src="../../template/user/UserIntro.wxml" />
         <template is="user-intro"
             data="{{userIntro, showIntro, introEditting, isCurrentUser, editUserIntroText, userIntroToEdit}}" />
+        
+        <view class="list-title">书房里的书</view>
+        <view class="book-list-container">
+            <block wx:for="{{bookList}}" wx:key="id">
+                <import src="../../template/book/BookItem.wxml" />
+                <template is="book-item"
+                    data="{{item, isHomePage}}" />
+            </block>
+        </view>
     </scroll-view>
 </view>

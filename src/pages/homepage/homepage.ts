@@ -1,5 +1,5 @@
 // pages/homepage/homepage.js
-import { getUserIntro, setUserIntro } from '../../api/api'
+import { getBookList, getUserIntro, setUserIntro } from '../../api/api'
 import { showErrDialog, showToast } from '../../utils/utils'
 
 let homepage: WeApp.Page
@@ -13,6 +13,8 @@ Page({
     introEditting: false,
     editUserIntroText: '编辑',
     userIntroToEdit: '',
+    bookList: [],
+    isHomePage: true,
   },
   onLoad: function(option: any): void {
     homepage = this
@@ -55,6 +57,18 @@ Page({
     })
   },
 
+  onShow: function (): void {
+      getBookList((success: boolean, errMsg: string, result: any) => {
+        if (success) {
+          this.setData({
+            bookList: result,
+          })
+        } else {
+          showErrDialog('无法获取您的图书列表，请检查您的网络状态')
+        }
+      })
+  },
+
   chooseLocation: () => {
     wx.chooseLocation({
       success: (res: WeApp.ChoosedLoaction) => {
@@ -80,7 +94,6 @@ Page({
   },
 
   onEditIntroDone: (e) => {
-    console.log(e.detail.value.textarea)
     let intro
     if (e.detail.value.textarea && typeof e.detail.value.textarea === 'string') {
       intro = e.detail.value.textarea
