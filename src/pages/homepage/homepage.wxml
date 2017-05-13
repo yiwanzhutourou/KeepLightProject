@@ -1,12 +1,10 @@
 <!--pages/homepage/homepage.wxml-->
 <view class="container">
-    <view class="userinfo">
-        <image class="userinfo-avatar"
-               src="{{userInfo.avatarUrl}}"
-               background-size="cover"></image>
-        <text class="userinfo-nickname">{{userShufangName}}</text>
-    </view>
-    <button class="button" bindtap="addBook">添加图书</button>
-    <button class="button" bindtap="chooseLocation">添加地址</button>
-    <text class="text">地址：{{addressName}}</text>
+    <import src="../../template/user/UserInfo.wxml"/>
+    <template is="user-info" data="{{userInfo, isCurrentUser}}" />
+    <scroll-view class="book-list-container" style="height:{{screenHeight-190}}rpx;" scroll-y="true">
+        <import src="../../template/user/UserIntro.wxml"/>
+        <template is="user-intro"
+            data="{{userIntro, showIntro, introEditting, isCurrentUser, editUserIntroText, userIntroToEdit}}" />
+    </scroll-view>
 </view>

@@ -6,6 +6,14 @@ export const showDialog = (content: string) => {
     })
 }
 
+export const showErrDialog = (err: string) => {
+    wx.showModal({
+        title: '提示',
+        content: err,
+        showCancel: false,
+    })
+}
+
 export const showLoading = (title: string) => {
     wx.showLoading({
         title: title,
@@ -15,4 +23,11 @@ export const showLoading = (title: string) => {
 
 export const hideLoading = () => {
     wx.hideLoading()
+}
+
+export const showToast = (title: string) => {
+    wx.showToast({
+        title: title,
+        duration: 2000,
+    })
 }

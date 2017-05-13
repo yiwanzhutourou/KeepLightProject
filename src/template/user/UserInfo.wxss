@@ -1,0 +1,35 @@
+.user-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    padding-top: 35rpx;
+    padding-bottom: 35rpx;
+    background: #eee;
+}
+
+.user-avatar {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 50%;
+}
+
+.add-book-button{
+    width: 120rpx;
+    height: 138rpx;
+}
+
+.user-detail-container {
+    width: 570rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.user-nickname {
+    font-size: 40rpx;
+    color: rgba(0, 0, 0, 0.87);
+    margin-left: 50rpx;
+    font-weight: 900;
+}

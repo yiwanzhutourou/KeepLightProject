@@ -1,4 +1,4 @@
-// var Promise = require('./utils/es6-promise.min').Promise
+// var Promise = require('../utils/es6-promise.min').Promise
 
 const USER_INFO_KEY = 'user_info'
 const ADDRESS_KEY = 'address'
@@ -11,23 +11,19 @@ export type Address = {
 
 export type Callback = (success: boolean, errMsg: string, result?: any) => void
 
-export const setUserInfoApi = async (info: string, cb: Callback) => {
-    if (!info) {
-        cb(false, '不能设置空的简介')
-    }
-
+export const setUserIntroApi = async (intro: string, cb: Callback) => {
     try {
-        await wx.setStorageSync(USER_INFO_KEY, info)
-        cb(true, '')
+        await wx.setStorageSync(USER_INFO_KEY, intro)
+        cb(true, '', intro)
     } catch (e) {
         cb(false, '设置简介失败')
     }
 }
 
-export const getUserInfoApi = async (cb: Callback) => {
+export const getUserIntroApi = async (cb: Callback) => {
     try {
-        let info = await wx.getStorageSync(USER_INFO_KEY)
-        cb(true, '', info)
+        let intro = await wx.getStorageSync(USER_INFO_KEY)
+        cb(true, '', intro)
     } catch (e) {
         cb(false, '获取简介失败', '')
     }

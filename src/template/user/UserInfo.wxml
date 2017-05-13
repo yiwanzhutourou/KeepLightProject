@@ -1,0 +1,15 @@
+<template name="user-info">
+    <view class="common-container">
+        <view class="user-container">
+            <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
+            <view class="user-detail-container">
+                <text class="user-nickname">{{userInfo.nickName}}的书房</text>
+                <image
+                    wx:if="{{isCurrentUser}}"
+                    class="add-book-button"
+                    src="../../resources/img/icon_add_book.png"
+                    bindtap="onAddBookTap" />
+            </view>
+        </view>
+    </view>
+</template>
