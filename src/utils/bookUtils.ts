@@ -1,12 +1,4 @@
-export type Book = {
-    id: string,
-    title: string,
-    author: Array<string>,
-    url: string,
-    cover: string,
-    publisher: string,
-    added?: boolean,
-}
+import { Book } from '../api/interfaces'
 
 export const parseBookInfo = (data: any) => {
     let bookList: Array<Book> = []

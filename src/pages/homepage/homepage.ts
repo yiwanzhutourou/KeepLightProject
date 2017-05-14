@@ -1,6 +1,8 @@
 // pages/homepage/homepage.js
-import { Result, getBookList, getUserIntro, setUserIntro } from '../../api/api'
+import { getBookList, getUserIntro, setUserIntro } from '../../api/api'
 import { showErrDialog, showToast } from '../../utils/utils'
+
+import { Result } from '../../api/interfaces'
 
 let homepage: WeApp.Page
 
@@ -121,5 +123,9 @@ Page({
     homepage.setData({
       introEditting: false,
     })
+  },
+
+  onBookItemTap: (e) => {
+    // TODO: 微信小程序不支持WebView，需要一个图书详情页吗？
   },
 })

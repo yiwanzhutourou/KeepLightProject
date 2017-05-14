@@ -1,7 +1,6 @@
-import { Result, addBook, getBookInfo, searchBooks } from '../../api/api'
+import { Book, Result } from '../../api/interfaces'
+import { addBook, getBookInfo, searchBooks } from '../../api/api'
 import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
-
-import { Book } from '../../utils/bookUtils'
 
 // pages/book/addBook.js
 let bookPage

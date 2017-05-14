@@ -1,6 +1,6 @@
-import { Book, parseBookInfo, parseBookList } from '../utils/bookUtils'
-import { CODE_BAD_REQUEST, CODE_SERVER_ERROR, CODE_SUCCESS, Callback, MapData, Result, callback, callbackSuccess } from '../api/api'
+import { Address, Book, CODE_BAD_REQUEST, CODE_SERVER_ERROR, CODE_SUCCESS, Callback, MapData, Result } from '../api/interfaces'
 import { getBookInfo, searchBooks } from './doubanapi'
+import { parseBookInfo, parseBookList } from '../utils/bookUtils'
 
 // var Promise = require('../utils/es6-promise.min').Promise
 
@@ -8,12 +8,6 @@ const USER_KEY = 'app_user'
 const USER_INFO_KEY = 'user_info'
 const ADDRESS_KEY = 'address'
 const BOOK_KEY = 'book'
-
-export type Address = {
-    name: string,
-    longitude: number,
-    latitude: number,
-}
 
 export const checkUserApi = async (userToken: string, cb: Callback) => {
     if (!userToken || userToken === '') {
@@ -235,4 +229,23 @@ export const getMarkersOnMapApi = (data: MapData, cb: Callback) => {
 
 const getRandomNum = () => {
     return Math.random() * 0.1
+}
+
+const callbackSuccess = (cb: Callback, data?: any) => {
+    cb({
+        success: true,
+        statusCode: CODE_SUCCESS,
+        errMsg: '',
+        data: data,
+    })
+}
+
+const callback = (
+        cb: Callback, success: boolean, statusCode: number, errMsg: string, data?: any) => {
+    cb({
+        success: success,
+        statusCode: statusCode,
+        errMsg: errMsg,
+        data: data,
+    })
 }

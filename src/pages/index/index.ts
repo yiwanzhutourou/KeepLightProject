@@ -1,4 +1,5 @@
-import { Result, getMarkersOnMap } from '../../api/api'
+import { Result } from '../../api/interfaces'
+import { getMarkersOnMap } from '../../api/api'
 // index.js
 
 const EVENT_TAP_HOME_PAGE = 1

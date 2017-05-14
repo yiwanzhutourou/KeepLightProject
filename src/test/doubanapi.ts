@@ -1,4 +1,4 @@
-import { Callback, callback } from '../api/api'
+import { Callback } from '../api/interfaces'
 
 export const getBookInfo = (isbn: string, cb: Callback) => {
     // 从豆瓣获取图书信息
@@ -25,5 +25,15 @@ export const searchBooks = (key: string, cb: Callback) => {
         fail: (res: any) => {
             callback(cb, false, res.statusCode, res.errMsg, res.data)
         },
+    })
+}
+
+const callback = (
+        cb: Callback, success: boolean, statusCode: number, errMsg: string, data?: any) => {
+    cb({
+        success: success,
+        statusCode: statusCode,
+        errMsg: errMsg,
+        data: data,
     })
 }
