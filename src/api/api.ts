@@ -1,4 +1,4 @@
-import { Address, addBookApi, bindUserApi, checkUserApi, getBookApi, getMarkersOnMapApi, removeBookByIdApi } from '../test/backend'
+import { Address, addBookApi, bindUserApi, checkUserApi, getBookApi, getBookInfoApi, getMarkersOnMapApi, removeBookByIdApi, searchBooksApi } from '../test/backend'
 import {
     addAddressApi,
     getAddressApi,
@@ -116,6 +116,16 @@ export const removeBook = (bookId: string, cb: Callback) => {
 export const getBookList = (cb: Callback) => {
     let userToken = getUserToken()
     getBookApi(userToken, cb)
+}
+
+export const searchBooks = (key: string, cb: Callback) => {
+    let userToken = getUserToken()
+    searchBooksApi(userToken, key, cb)
+}
+
+export const getBookInfo= (isbn: string, cb: Callback) => {
+    let userToken = getUserToken()
+    getBookInfoApi(userToken, isbn, cb)
 }
 
 export const getMarkersOnMap = (data: MapData, cb: Callback) => {

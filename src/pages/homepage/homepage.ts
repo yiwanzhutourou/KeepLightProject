@@ -30,38 +30,40 @@ Page({
     })
 
     // 获取用户简介
-    getUserIntro((success: boolean, errMsg: string, result: any) => {
+    getUserIntro((result: Result) => {
+      let intro = ''
       let showIntro = true
       let editUserIntroText = '编辑'
       let userIntroToEdit = ''
-      if (success) {
-        if (!result || result === '') {
+      if (result && result.success) {
+        if (!result.data || result.data === '') {
           if (isCurrentUser) {
-            result = '您还没有介绍您的书房'
+            intro = '您还没有介绍您的书房'
             editUserIntroText = '添加简介'
           } else {
             showIntro = false
           }
         } else {
-          userIntroToEdit = result
+          intro = result.data
+          userIntroToEdit = result.data
         }
         homepage.setData({
-          userIntro: result,
+          userIntro: intro,
           showIntro: showIntro,
           editUserIntroText: editUserIntroText,
           userIntroToEdit: userIntroToEdit,
         })
       } else {
-        showErrDialog(errMsg)
+        showErrDialog(result.errMsg)
       }
     })
   },
 
   onShow: function (): void {
-      getBookList((success: boolean, errMsg: string, result: any) => {
-        if (success) {
+      getBookList((result: Result) => {
+        if (result && result.success) {
           this.setData({
-            bookList: result,
+            bookList: result.data,
           })
         } else {
           showErrDialog('无法获取您的图书列表，请检查您的网络状态')

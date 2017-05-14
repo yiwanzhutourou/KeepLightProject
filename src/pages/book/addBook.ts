@@ -1,8 +1,7 @@
-import { Book, parseBookInfo, parseBookList } from '../../utils/bookUtils'
-import { getBookInfoApi, searchBooksApi } from '../../test/backend'
+import { Result, addBook, getBookInfo, searchBooks } from '../../api/api'
 import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
-import { addBook } from '../../api/api'
+import { Book } from '../../utils/bookUtils'
 
 // pages/book/addBook.js
 let bookPage
@@ -31,14 +30,14 @@ Page({
 
   onAddBook: (e) => {
     showLoading('正在添加')
-    addBook(e.currentTarget.dataset.book, (success: boolean, errMsg: string, result: Book) => {
+    addBook(e.currentTarget.dataset.book, (result: Result) => {
       hideLoading()
-      if (success && result) {
+      if (result && result.success && result.data) {
         if (bookPage.data.bookList) {
           let bookList: Array<Book> = []
           bookPage.data.bookList.forEach((book: Book) => {
             let added = book.added
-            if (result.id === book.id) {
+            if (result.data.id === book.id) {
               added = true
             }
             bookList.push({
@@ -75,11 +74,10 @@ Page({
         } else {
           // 从豆瓣获取图书信息
           showLoading('正在查找图书信息')
-          getBookInfoApi(res.result,
-            (success: boolean, errMsg: string, statusCode: number, data: any) => {
+          getBookInfo(res.result, (result: Result) => {
               hideLoading()
-              if (success && statusCode === 200) {
-                bookPage.handleSearchResult(data.books)
+              if (result && result.success && result.statusCode === 200) {
+                bookPage.handleSearchResult(result.data.books)
               } else {
                 showErrDialog('无法获取图书信息，请稍后再试')
               }
@@ -95,11 +93,10 @@ Page({
 
   searchBooks: (keyword: string) => {
     showLoading('正在搜索')
-    searchBooksApi(keyword,
-      (success: boolean, errMsg: string, statusCode: number, data: any) => {
+    searchBooks(keyword, (result: Result) => {
         hideLoading()
-        if (success && statusCode === 200) {
-          bookPage.handleSearchResult(data.books)
+        if (result && result.success && result.statusCode === 200) {
+          bookPage.handleSearchResult(result.data.books)
         } else {
           showErrDialog('查询图书失败，请稍后再试')
         }

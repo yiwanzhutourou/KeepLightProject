@@ -1,4 +1,4 @@
-import { getMarkersOnMap } from '../../api/api'
+import { Result, getMarkersOnMap } from '../../api/api'
 // index.js
 
 const EVENT_TAP_HOME_PAGE = 1
@@ -44,10 +44,10 @@ Page({
             longitude: locationInfo.longitude, 
             zoomLevel: 0,
           },
-          (success: boolean, errMsg: string, result: any) => {
-            if (success) {
+          (result: Result) => {
+            if (result && result.success) {
               indexPage.setData({
-                markers: result,
+                markers: result.data,
               })
             }
           },
