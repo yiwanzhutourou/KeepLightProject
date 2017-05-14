@@ -1,5 +1,7 @@
 import { Result } from '../../api/interfaces'
 import { getMarkersOnMap } from '../../api/api'
+import { login } from '../../utils/userUtils'
+import { showErrDialog } from '../../utils/utils'
 // index.js
 
 const EVENT_TAP_HOME_PAGE = 1
@@ -62,9 +64,16 @@ Page({
 
   controltap: (event) => {
     if (EVENT_TAP_HOME_PAGE == event.controlId) {
-      // nav to user homepage
-      wx.navigateTo({
-        url: '../homepage/homepage',
+      // TODO: 什么时机登录（重新获取token）合理？放这里好傻
+      login(userInfo => {
+        if (userInfo) {
+          // nav to user homepage
+          wx.navigateTo({
+            url: '../homepage/homepage',
+          })
+        } else {
+          showErrDialog('获取微信账号信息失败，请稍后再试')
+        }
       })
     } else if (EVENT_TAP_SHOW_CURRENT_LOCATION == event.controlId) {
       mapCtx.moveToLocation()

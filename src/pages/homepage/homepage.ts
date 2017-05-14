@@ -3,6 +3,7 @@ import { getBookList, getUserIntro, setUserIntro } from '../../api/api'
 import { showErrDialog, showToast } from '../../utils/utils'
 
 import { Result } from '../../api/interfaces'
+import { getUserInfo } from '../../utils/userUtils'
 
 let homepage: WeApp.Page
 
@@ -24,11 +25,9 @@ Page({
     // TODO: 判断用户是否为当前登录用户（存什么到服务器用来比较用户唯一性？）
     let isCurrentUser = true
 
-    getApp().getUserInfo((userInfo: any) => {
-      // 更新数据
-      homepage.setData({
-        userInfo: userInfo,
-      })
+    // 更新数据
+    homepage.setData({
+      userInfo: getUserInfo(),
     })
 
     // 获取用户简介

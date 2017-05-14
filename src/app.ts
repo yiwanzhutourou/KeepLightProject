@@ -1,6 +1,5 @@
 // app.js
 export type GlobalData = {
-  userInfo?: Object,
   locationInfo?: WeApp.LocationInfo,
   systemInfo?: WeApp.SystemInfo,
 }
@@ -10,24 +9,6 @@ const globalData: GlobalData = {}
 App({
   onLaunch: (info: WeApp.LaunchData) => {
     // Do nothing
-  },
-  // 用户信息
-  getUserInfo: (cb: (res: Object) => void) => {
-    if (globalData.userInfo) {
-      cb(globalData.userInfo)
-    } else {
-      // 调用登录接口
-      wx.login({
-        success: () => {
-          wx.getUserInfo({
-            success: (res: WeApp.UserInfo) => {
-              globalData.userInfo = res.userInfo
-              cb(globalData.userInfo)
-            },
-          })
-        },
-      })
-    }
   },
   // 定位信息
   getLocationInfo: (cb: (res: WeApp.LocationInfo) => void) => {
