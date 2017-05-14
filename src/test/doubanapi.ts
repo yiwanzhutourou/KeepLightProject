@@ -1,30 +1,29 @@
-export type DoubanCallback =
-    (success: boolean, errMsg?: string, statusCode?: number, result?: any) => void
+import { Callback, callback } from '../api/api'
 
-export const getBookInfo = (isbn: string, cb: DoubanCallback) => {
+export const getBookInfo = (isbn: string, cb: Callback) => {
     // 从豆瓣获取图书信息
     wx.request({
         url: 'https://api.douban.com/v2/book/isbn/' + isbn,
         method: 'GET',
         success: (res: WeApp.HttpResponse) => {
-            cb(true, res.errMsg, res.statusCode, res.data)
+            callback(cb, true, res.statusCode, res.errMsg, res.data)
         },
         fail: (res: any) => {
-            cb(false)
+            callback(cb, false, res.statusCode, res.errMsg, res.data)
         },
     })
 }
 
-export const searchBooks = (key: string, cb: DoubanCallback) => {
+export const searchBooks = (key: string, cb: Callback) => {
     // 通过关键词从豆瓣搜索图书信息
     wx.request({
         url: 'https://api.douban.com/v2/book/search?q=' + key,
         method: 'GET',
         success: (res: WeApp.HttpResponse) => {
-            cb(true, res.errMsg, res.statusCode, res.data)
+            callback(cb, true, res.statusCode, res.errMsg, res.data)
         },
         fail: (res: any) => {
-            cb(false)
+            callback(cb, false, res.statusCode, res.errMsg, res.data)
         },
     })
 }

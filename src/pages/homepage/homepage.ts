@@ -1,5 +1,5 @@
 // pages/homepage/homepage.js
-import { getBookList, getUserIntro, setUserIntro } from '../../api/api'
+import { Result, getBookList, getUserIntro, setUserIntro } from '../../api/api'
 import { showErrDialog, showToast } from '../../utils/utils'
 
 let homepage: WeApp.Page
@@ -100,17 +100,17 @@ Page({
     } else if (e.detail.value && typeof e.detail.value === 'string') {
       intro = e.detail.value
     }
-    setUserIntro(intro, (success: boolean, errMsg: string, result: any) => {
-      if (success) {
+    setUserIntro(intro, (result: Result) => {
+      if (result.success) {
         showToast('更新成功')
         homepage.setData({
-          userIntro: result,
+          userIntro: result.data,
           introEditting: false,
           editUserIntroText: '编辑',
-          userIntroToEdit: result,
+          userIntroToEdit: result.data,
         })
       } else {
-        showErrDialog(errMsg)
+        showErrDialog(result.errMsg)
       }
     })
   },

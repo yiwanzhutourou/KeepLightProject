@@ -1,10 +1,10 @@
 import { Book, parseBookInfo, parseBookList } from '../utils/bookUtils'
-import { DoubanCallback, getBookInfo, searchBooks } from '../api/doubanapi'
-
-import { MapData } from '../api/api'
+import { CODE_BAD_REQUEST, CODE_SERVER_ERROR, CODE_SUCCESS, Callback, MapData, Result, callback, callbackSuccess } from '../api/api'
+import { getBookInfo, searchBooks } from './doubanapi'
 
 // var Promise = require('../utils/es6-promise.min').Promise
 
+const USER_KEY = 'app_user'
 const USER_INFO_KEY = 'user_info'
 const ADDRESS_KEY = 'address'
 const BOOK_KEY = 'book'
@@ -15,54 +15,91 @@ export type Address = {
     latitude: number,
 }
 
-export type Callback = (success: boolean, errMsg: string, result?: any) => void
+export const checkUserApi = async (userToken: string, cb: Callback) => {
+    if (!userToken || userToken === '') {
+        callback(cb, false, CODE_BAD_REQUEST, '请求数据为空')
+    }
 
-export const setUserIntroApi = async (intro: string, cb: Callback) => {
     try {
-        await wx.setStorageSync(USER_INFO_KEY, intro)
-        cb(true, '', intro)
+        let tokens = await wx.getStorageSync(USER_KEY) || []
+        tokens.forEach((token: string) => {
+            if (token === userToken) {
+                callbackSuccess(cb, true)
+                return
+            }
+        });
     } catch (e) {
-        cb(false, '设置简介失败')
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
+    }
+    callbackSuccess(cb, false)
+}
+
+export const bindUserApi = async (userToken: string, cb: Callback) => {
+    if (!userToken || userToken === '') {
+        callback(cb, false, CODE_BAD_REQUEST, '请求数据为空')
+    }
+
+    try {
+        let tokens = await wx.getStorageSync(USER_KEY) || []
+        tokens.forEach((token: string) => {
+            if (token === userToken) {
+                callback(cb, false, CODE_BAD_REQUEST, '用户已经绑定')
+                return
+            }
+        });
+        tokens.unshift(userToken)
+        await wx.setStorageSync(USER_KEY, tokens)
+        callbackSuccess(cb, userToken)
+    } catch (e) {
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
     }
 }
 
-export const getUserIntroApi = async (cb: Callback) => {
+export const setUserIntroApi = async (userToken: string, intro: string, cb: Callback) => {
     try {
-        let intro = await wx.getStorageSync(USER_INFO_KEY)
-        cb(true, '', intro)
+        await wx.setStorageSync(USER_INFO_KEY + userToken, intro)
+        callbackSuccess(cb, intro)
     } catch (e) {
-        cb(false, '获取简介失败', '')
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
     }
 }
 
-export const addAddressApi = async (address: Address, cb: Callback) => {
+export const getUserIntroApi = async (userToken: string, cb: Callback) => {
+    try {
+        let intro = await wx.getStorageSync(USER_INFO_KEY + userToken)
+        callbackSuccess(cb, intro)
+    } catch (e) {
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
+    }
+}
+
+export const addAddressApi = async (userToken: string, address: Address, cb: Callback) => {
     let all
     try {
-        all = await wx.getStorageSync(ADDRESS_KEY) || []
+        all = await wx.getStorageSync(ADDRESS_KEY + userToken) || []
+        all.unshift(address)
+        await wx.setStorageSync(ADDRESS_KEY + userToken, all)
+        callbackSuccess(cb, address)
     } catch (e) {
-        cb(false, '无法获取地址')
-        return
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
     }
-    all.unshift(address)
-    await wx.setStorageSync(ADDRESS_KEY, all)
-    cb(true, '')
 }
 
-export const getAddressApi = async (cb: Callback) => {
+export const getAddressApi = async (userToken: string, cb: Callback) => {
     try {
-        let all = await wx.getStorageSync(ADDRESS_KEY) || []
-        cb(true, '', all)
+        let all = await wx.getStorageSync(ADDRESS_KEY + userToken) || []
+        callbackSuccess(cb, all)
     } catch (e) {
-        cb(false, '无法获取地址')
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
     }
 }
 
-export const removeAddressApi = async (address: Address, cb: Callback) => {
+export const removeAddressApi = async (userToken: string, address: Address, cb: Callback) => {
     let all
     try {
-        all = await wx.getStorageSync(ADDRESS_KEY) || []
+        all = await wx.getStorageSync(ADDRESS_KEY + userToken) || []
     } catch (e) {
-        cb(false, '无法获取地址')
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
         return
     }
     if (address && all && all.length > 0) {
@@ -72,44 +109,44 @@ export const removeAddressApi = async (address: Address, cb: Callback) => {
                 && addr.longitude === address.longitude
                 && addr.latitude === address.latitude) {
                     all.splice(i, 1)
-                    await wx.setStorageSync(ADDRESS_KEY, all)
-                    cb(true, '删除成功')
+                    await wx.setStorageSync(ADDRESS_KEY + userToken, all)
+                    callbackSuccess(cb, address)
                     return
             }
         }
     }
-    cb(false, '地址不存在，无法删除')
+    callback(cb, false, CODE_BAD_REQUEST, '地址不存在，无法删除')
 }
 
-export const addBookApi = async (book: Book, cb: Callback) => {
+export const addBookApi = async (userToken: string, book: Book, cb: Callback) => {
     let all
     try {
-        all = await wx.getStorageSync(BOOK_KEY) || []
+        all = await wx.getStorageSync(BOOK_KEY + userToken) || []
     } catch (e) {
-        cb(false, '无法添加图书')
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
         return
     }
     book.added = true
     all.unshift(book)
-    await wx.setStorageSync(BOOK_KEY, all)
-    cb(true, '', book)
+    await wx.setStorageSync(BOOK_KEY + userToken, all)
+    callbackSuccess(cb, book)
 }
 
-export const getBookApi = async (cb: Callback) => {
+export const getBookApi = async (userToken: string, cb: Callback) => {
     try {
-        let all = await wx.getStorageSync(BOOK_KEY) || []
-        cb(true, '', all)
+        let all = await wx.getStorageSync(BOOK_KEY + userToken) || []
+        callbackSuccess(cb, all)
     } catch (e) {
-        cb(false, '无法获取图书列表')
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
     }
 }
 
-export const removeBookByIdApi = async (bookId: string, cb: Callback) => {
+export const removeBookByIdApi = async (userToken: string, bookId: string, cb: Callback) => {
     let all
     try {
-        all = await wx.getStorageSync(BOOK_KEY) || []
+        all = await wx.getStorageSync(BOOK_KEY + userToken) || []
     } catch (e) {
-        cb(false, '无法获取图书列表')
+        callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
         return
     }
     if (bookId && all && all.length > 0) {
@@ -117,58 +154,57 @@ export const removeBookByIdApi = async (bookId: string, cb: Callback) => {
             let book = all[i]
             if (book && book.id === bookId) {
                     all.splice(i, 1)
-                    await wx.setStorageSync(ADDRESS_KEY, all)
-                    cb(true, '删除成功', bookId)
+                    await wx.setStorageSync(ADDRESS_KEY + userToken, all)
+                    callbackSuccess(cb, bookId)
                     return
             }
         }
     }
-    cb(false, '图书不存在，无法删除')
+    callback(cb, false, CODE_BAD_REQUEST, '图书不存在，无法删除')
 }
 
-export const searchBooksApi = (key: string, cb: DoubanCallback) => {
-    searchBooks(key, (success: boolean, errMsg: string, statusCode: number, result: any) => {
-        if (success && statusCode === 200 && result) {
+export const searchBooksApi = (userToken: string, key: string, cb: Callback) => {
+    searchBooks(key, (result: Result) => {
+        if (result && result.success && result.statusCode === 200 && result.data) {
             let all
             try {
-                all = wx.getStorageSync(BOOK_KEY) || []
+                all = wx.getStorageSync(BOOK_KEY + userToken) || []
             } catch (e) {
-                cb(false, errMsg, statusCode, null)
+                callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
                 return
             }
 
-            let bookList = parseBookList(result)
+            let bookList = parseBookList(result.data)
             bookList.forEach((book: Book) => {
                 filterBook(book, all)
             })
-            result.books = bookList
+            result.data.books = bookList
         }
-        cb(success, errMsg, statusCode, result)
+        callbackSuccess(cb, result.data)
     })
 }
 
-export const getBookInfoApi = (isbn: string, cb: DoubanCallback) => {
-    getBookInfo(isbn, async (success: boolean, errMsg: string, statusCode: number, result: any) => {
-        if (success && statusCode === 200 && result) {
+export const getBookInfoApi = (userToken: string, isbn: string, cb: Callback) => {
+    getBookInfo(isbn, async (result: Result) => {
+        if (result && result.success && result.statusCode === 200 && result.data) {
             let all
             try {
-                all = await wx.getStorageSync(BOOK_KEY) || []
+                all = await wx.getStorageSync(BOOK_KEY + cb) || []
             } catch (e) {
-                cb(false, errMsg, statusCode, null)
+                callback(cb, false, CODE_SERVER_ERROR, '服务器发生未知错误，请稍后再试')
                 return
             }
 
-            let bookList = parseBookInfo(result)
+            let bookList = parseBookInfo(result.data)
             bookList.forEach((book: Book) => {
                 filterBook(book, all)
             })
-            result.books = bookList
+            result.data.books = bookList
         }
-        cb(success, errMsg, statusCode, result)
+        callbackSuccess(cb, result.data)
 
     })
 }
-
 
 const filterBook = (book: Book, allAddedBooks: Array<Book>) => {
     if (book && allAddedBooks && allAddedBooks.length > 0) {
@@ -194,7 +230,7 @@ export const getMarkersOnMapApi = (data: MapData, cb: Callback) => {
             height: 60,
         })
     }
-    cb(true, '', markers)
+    callbackSuccess(cb, markers)
 }
 
 const getRandomNum = () => {
