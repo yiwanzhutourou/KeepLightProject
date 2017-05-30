@@ -1,9 +1,8 @@
 // pages/homepage/homepage.js
-import { getBookList, getUserIntro, setUserIntro } from '../../api/api'
+import { getBookList, getUserInfo, getUserIntro, setUserIntro } from '../../api/api'
 import { showErrDialog, showToast } from '../../utils/utils'
 
 import { Result } from '../../api/interfaces'
-import { getUserInfo } from '../../utils/userUtils'
 
 let homepage: WeApp.Page
 
