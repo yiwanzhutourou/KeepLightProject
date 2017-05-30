@@ -106,12 +106,7 @@ export const bindUser = (code: string, success: (token: string) => void, failure
     }, failure)
 }
 
-export const isUserBound = (cb: Callback) => {
-    let userToken = getUserToken()
-    checkUserApi(userToken, cb)
-}
-
-export const setUserIntro = (intro: string, cb: Callback) => {
+export const setUserIntro = (intro: string, success: () => void, failure?: (res?: any) => void) => {
     if (!intro) {
         showErrDialog('不能设置空的简介')
         return
@@ -122,13 +117,21 @@ export const setUserIntro = (intro: string, cb: Callback) => {
         return
     }
 
-    let userToken = getUserToken()
-    setUserIntroApi(userToken, intro, cb)
+    let url = getUrl('User.setInfo') + buildUrlParam({
+        info: intro,
+    })
+    get(url, (result: Result) => {
+        console.log(result)
+        success()
+    }, failure)
 }
 
-export const getUserIntro = (cb: Callback) => {
-    let userToken = getUserToken()
-    getUserIntroApi(userToken, cb)
+export const getUserIntro = (success: (info: string) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.info')
+    get(url, (result: Result) => {
+        console.log(result)
+        success(result.data.result)
+    }, failure)
 }
 
 export const addAddress = (address: Address, cb: Callback) => {
@@ -230,7 +233,9 @@ const handleClientError = () => {
 
 const getRequestHeader = () => {
     // TODO: put token, hash in header
-    return {}
+    return {
+        'BOCHA-USER-TOKEN': getUserToken(),
+    }
 }
 
 const callbackSuccess = (cb: Callback, data?: any) => {
