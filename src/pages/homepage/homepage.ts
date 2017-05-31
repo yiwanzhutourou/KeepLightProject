@@ -125,7 +125,6 @@ Page({
 
   onRemoveBook: (e) => {
     showLoading('正在删除')
-    console.log(e.currentTarget.dataset.isbn)
     removeBook(e.currentTarget.dataset.isbn, (isbn: string) => {
       hideLoading()
       if (homepage.data.bookList) {

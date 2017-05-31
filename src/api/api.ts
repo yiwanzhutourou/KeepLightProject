@@ -156,14 +156,18 @@ export const getBookList = (success: (books: Array<Book>) => void, failure?: (re
     get(url, success, failure)
 }
 
-export const searchBooks = (key: string, cb: Callback) => {
-    let userToken = getUserToken()
-    searchBooksApi(userToken, key, cb)
+export const searchBooks = (key: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Book.search') + buildUrlParam({
+        key: key,
+    })
+    get(url, success, failure)
 }
 
-export const getBookInfo = (isbn: string, cb: Callback) => {
-    let userToken = getUserToken()
-    getBookInfoApi(userToken, isbn, cb)
+export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Book.getBookByIsbn') + buildUrlParam({
+        isbn: isbn,
+    })
+    get(url, success, failure)
 }
 
 export const getMarkersOnMap = (data: MapData, cb: Callback) => {
@@ -176,11 +180,11 @@ export const get = (url: string, success: (res: any) => void, failure?: (res?: a
         method: 'GET',
         header: getRequestHeader(),
         success: (res) => {
+            console.log(res)
             if (!res) {
                 return
             }
             if (res.statusCode === 200) {
-                console.log(res.data)
                 success(res.data ? res.data.result : null)
             } else {
                 handleServerError(res.data)

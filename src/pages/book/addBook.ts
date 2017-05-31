@@ -71,15 +71,12 @@ Page({
         } else {
           // 从豆瓣获取图书信息
           showLoading('正在查找图书信息')
-          getBookInfo(res.result, (result: Result) => {
+          getBookInfo(res.result, (books: Array<Book>) => {
               hideLoading()
-              if (result && result.success && result.statusCode === 200) {
-                bookPage.handleSearchResult(result.data.books)
-              } else {
-                showErrDialog('无法获取图书信息，请稍后再试')
-              }
-            },
-          )
+              bookPage.handleSearchResult(books)
+            }, (failure) => {
+              hideLoading()
+          })
         }
       },
       fail: (res: any) => {
@@ -90,13 +87,11 @@ Page({
 
   searchBooks: (keyword: string) => {
     showLoading('正在搜索')
-    searchBooks(keyword, (result: Result) => {
+    searchBooks(keyword, (books: Array<Book>) => {
         hideLoading()
-        if (result && result.success && result.statusCode === 200) {
-          bookPage.handleSearchResult(result.data.books)
-        } else {
-          showErrDialog('查询图书失败，请稍后再试')
-        }
+        bookPage.handleSearchResult(books)
+      }, (failure) => {
+        hideLoading()
       })
   },
 
