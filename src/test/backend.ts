@@ -203,7 +203,7 @@ export const getBookInfoApi = (userToken: string, isbn: string, cb: Callback) =>
 const filterBook = (book: Book, allAddedBooks: Array<Book>) => {
     if (book && allAddedBooks && allAddedBooks.length > 0) {
         for (let i = allAddedBooks.length - 1; i >= 0; i--) {
-            if (allAddedBooks[i].id === book.id) {
+            if (allAddedBooks[i].isbn === book.isbn) {
                 book.added = true
                 return
             }

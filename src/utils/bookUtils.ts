@@ -4,7 +4,7 @@ export const parseBookInfo = (data: any) => {
     let bookList: Array<Book> = []
     if (data) {
         bookList.push({
-            id: data.id,
+            isbn: data.isbn13,
             title: data.title,
             author: data.author,
             url: data.alt,
@@ -20,7 +20,7 @@ export const parseBookList = (data: any) => {
     if (data && data.books) {
         data.books.forEach((book: any) => {
             bookList.push({
-                id: book.id,
+                isbn: book.isbn13,
                 title: book.title,
                 author: book.author,
                 url: book.alt,

@@ -29,34 +29,32 @@ Page({
 
   onAddBook: (e) => {
     showLoading('正在添加')
-    addBook(e.currentTarget.dataset.book, (result: Result) => {
+    addBook(e.currentTarget.dataset.book.isbn, (isbn: string) => {
       hideLoading()
-      if (result && result.success && result.data) {
-        if (bookPage.data.bookList) {
-          let bookList: Array<Book> = []
-          bookPage.data.bookList.forEach((book: Book) => {
-            let added = book.added
-            if (result.data.id === book.id) {
-              added = true
-            }
-            bookList.push({
-                id: book.id,
-                title: book.title,
-                author: book.author,
-                url: book.url,
-                cover: book.cover,
-                publisher: book.publisher,
-                added: added,
-            })
+      if (bookPage.data.bookList) {
+        let bookList: Array<Book> = []
+        bookPage.data.bookList.forEach((book: Book) => {
+          let added = book.added
+          if (isbn === book.isbn) {
+            added = true
+          }
+          bookList.push({
+              isbn: book.isbn,
+              title: book.title,
+              author: book.author,
+              url: book.url,
+              cover: book.cover,
+              publisher: book.publisher,
+              added: added,
           })
-          bookPage.setData({
-            bookList: bookList,
-          })
-          showToast('添加成功')
-        }
-      } else {
-        showErrDialog('添加图书失败，请稍后再试')
+        })
+        bookPage.setData({
+          bookList: bookList,
+        })
+        showToast('添加成功')
       }
+    }, (failure) => {
+      hideLoading()
     })
   },
 

@@ -1,8 +1,7 @@
+import { Book, Result } from '../../api/interfaces'
 // pages/homepage/homepage.js
-import { getBookList, getUserInfo, getUserIntro, setUserIntro } from '../../api/api'
-import { showErrDialog, showToast } from '../../utils/utils'
-
-import { Result } from '../../api/interfaces'
+import { getBookList, getUserInfo, getUserIntro, removeBook, setUserIntro } from '../../api/api'
+import { hideLoading, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 let homepage: WeApp.Page
 
@@ -58,14 +57,15 @@ Page({
   },
 
   onShow: function (): void {
-      getBookList((result: Result) => {
-        if (result && result.success) {
-          this.setData({
-            bookList: result.data,
-          })
-        } else {
-          showErrDialog('无法获取您的图书列表，请检查您的网络状态')
-        }
+      showLoading('正在加载')
+      getBookList((books: Array<Book>) => {
+        hideLoading()
+        this.setData({
+          bookList: books,
+        })
+      }, (failure) => {
+        hideLoading()
+        showErrDialog('无法获取您的图书列表，请检查您的网络状态')
       })
   },
 
@@ -121,5 +121,36 @@ Page({
 
   onBookItemTap: (e) => {
     // TODO: 微信小程序不支持WebView，需要一个图书详情页吗？
+  },
+
+  onRemoveBook: (e) => {
+    showLoading('正在删除')
+    console.log(e.currentTarget.dataset.isbn)
+    removeBook(e.currentTarget.dataset.isbn, (isbn: string) => {
+      hideLoading()
+      if (homepage.data.bookList) {
+        let bookList: Array<Book> = []
+        homepage.data.bookList.forEach((book: Book) => {
+          let added = book.added
+          if (isbn !== book.isbn) {
+            bookList.push({
+              isbn: book.isbn,
+              title: book.title,
+              author: book.author,
+              url: book.url,
+              cover: book.cover,
+              publisher: book.publisher,
+              added: true,
+            })
+          }
+        })
+        homepage.setData({
+          bookList: bookList,
+        })
+        showToast('删除成功')
+      }
+    }, (failure) => {
+      hideLoading()
+    })
   },
 })

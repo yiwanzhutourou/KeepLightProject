@@ -14,6 +14,11 @@
                 hover-class="add-book-button-hover"
                 data-book="{{item}}"
                 bindtap="onAddBook">添加</view>
+            <view wx:elif="{{isHomePage}}"
+                class="remove-book-button"
+                hover-class="remove-book-button-hover"
+                data-isbn="{{item.isbn}}"
+                bindtap="onRemoveBook">删除</view>
         </view>
         <view class="book-item-divider" />
     </view>

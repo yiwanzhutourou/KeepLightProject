@@ -101,9 +101,7 @@ export const bindUser = (code: string, success: (token: string) => void, failure
         code: code,
     })
 
-    get(url, (result: Result) => {
-        success(result.data ? result.data.result : '')
-    }, failure)
+    get(url, success, failure)
 }
 
 export const setUserIntro = (intro: string, success: () => void, failure?: (res?: any) => void) => {
@@ -117,21 +115,13 @@ export const setUserIntro = (intro: string, success: () => void, failure?: (res?
         return
     }
 
-    let url = getUrl('User.setInfo') + buildUrlParam({
-        info: intro,
-    })
-    get(url, (result: Result) => {
-        console.log(result)
-        success()
-    }, failure)
+    let url = getUrl('User.setInfo')
+    post(url, {'info': intro}, success, failure)
 }
 
 export const getUserIntro = (success: (info: string) => void, failure?: (res?: any) => void) => {
     let url = getUrl('User.info')
-    get(url, (result: Result) => {
-        console.log(result)
-        success(result.data.result)
-    }, failure)
+    get(url, success, failure)
 }
 
 export const addAddress = (address: Address, cb: Callback) => {
@@ -149,19 +139,21 @@ export const getAddress = (cb: Callback) => {
     getAddressApi(userToken, cb)
 }
 
-export const addBook = (book: Book, cb: Callback) => {
-    let userToken = getUserToken()
-    addBookApi(userToken, book, cb)
+export const addBook = (isbn: string, success: (isbn: string) => void,
+                        failure?: (res?: any) => void) => {
+    let url = getUrl('User.addBook')
+    post(url, { 'isbn': isbn }, success, failure)
 }
 
-export const removeBook = (bookId: string, cb: Callback) => {
-    let userToken = getUserToken()
-    removeBookByIdApi(userToken, bookId, cb)
+export const removeBook = (isbn: string, success: (isbn: string) => void,
+                            failure?: (res?: any) => void) => {
+    let url = getUrl('User.removeBook')
+    post(url, { 'isbn': isbn }, success, failure)
 }
 
-export const getBookList = (cb: Callback) => {
-    let userToken = getUserToken()
-    getBookApi(userToken, cb)
+export const getBookList = (success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.getMyBooks')
+    get(url, success, failure)
 }
 
 export const searchBooks = (key: string, cb: Callback) => {
@@ -178,81 +170,73 @@ export const getMarkersOnMap = (data: MapData, cb: Callback) => {
     getMarkersOnMapApi(data, cb)
 }
 
-export const get = (url: string, success: Callback, failure?: (res?: any) => void) => {
+export const get = (url: string, success: (res: any) => void, failure?: (res?: any) => void) => {
     wx.request({
         url: url,
         method: 'GET',
         header: getRequestHeader(),
         success: (res) => {
             if (!res) {
-                callbackFail(success, -1 , '')
                 return
             }
             if (res.statusCode === 200) {
-                callbackSuccess(success, res.data)
+                console.log(res.data)
+                success(res.data ? res.data.result : null)
             } else {
-                handleServerError()
-                // TODO: get error message
-                callbackFail(success, res.statusCode, '')
+                handleServerError(res.data)
+                if (failure) {
+                    failure(res)
+                }
             }
         },
         fail: (e) => {
             if (failure) {
-                handleClientError()
                 failure(e)
             }
         },
     })
 }
 
-export const post = (url: string, param, success: Callback, failure: (res?: any) => void) => {
+export const post = (url: string, param, success: (res: any) => void, failure?: (res?: any) => void) => {
     wx.request({
         url: url,
         data: param,
         method: 'POST',
         header: getRequestHeader(),
         success: (res) => {
-            // TODO: parse result
+            if (!res) {
+                return
+            }
+            if (res.statusCode === 200) {
+                success(res.data ? res.data.result : null)
+            } else {
+                handleServerError(res.data)
+                if (failure) {
+                    failure(res)
+                }
+            }
         },
         fail: (e) => {
             if (failure) {
-                handleClientError()
                 failure(e)
             }
         },
     })
 }
 
-const handleServerError = () => {
-    // TODO: 服务器返回的错误这里统一弹窗提示
-}
-
-const handleClientError = () => {
-    showErrDialog('无法获取数据，请检查您的网络状态')
-}
-
-const getRequestHeader = () => {
-    // TODO: put token, hash in header
-    return {
-        'BOCHA-USER-TOKEN': getUserToken(),
+const handleServerError = (response: any) => {
+    if (response && response.error) {
+        if (response.message) {
+            showErrDialog(response.message)
+        } else {
+            showErrDialog('服务器发生错误了，请稍后重试~')
+        }
     }
 }
 
-const callbackSuccess = (cb: Callback, data?: any) => {
-    cb({
-        success: true,
-        statusCode: CODE_SUCCESS,
-        errMsg: '',
-        data: data,
-    })
-}
-
-const callbackFail = (
-        cb: Callback, statusCode: number, errMsg: string, data?: any) => {
-    cb({
-        success: false,
-        statusCode: statusCode,
-        errMsg: errMsg,
-        data: data,
-    })
+const getRequestHeader = () => {
+    // TODO: put hash in header
+    return {
+        'BOCHA-USER-TOKEN': getUserToken(),
+    }
 }
