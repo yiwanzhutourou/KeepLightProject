@@ -5,4 +5,5 @@
     controls="{{controls}}"
     markers="{{markers}}"
     bindcontroltap="controltap"
+    bindmarkertap="markertap"
     show-location />

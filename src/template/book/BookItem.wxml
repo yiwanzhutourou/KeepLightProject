@@ -14,11 +14,16 @@
                 hover-class="add-book-button-hover"
                 data-book="{{item}}"
                 bindtap="onAddBook">添加</view>
-            <view wx:elif="{{isHomePage}}"
+            <view wx:elif="{{isHomePage && isCurrentUser}}"
                 class="remove-book-button"
                 hover-class="remove-book-button-hover"
                 data-isbn="{{item.isbn}}"
                 bindtap="onRemoveBook">删除</view>
+            <view wx:elif="{{isHomePage && !isCurrentUser}}"
+                class="borrow-book-button"
+                hover-class="borrow-book-button-hover"
+                data-book="{{item}}"
+                bindtap="onBorrowBook">借阅</view>
         </view>
         <view class="book-item-divider" />
     </view>

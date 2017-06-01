@@ -1,12 +1,4 @@
-import { Address, Book, CODE_SUCCESS, Callback, MapData, Result } from './interfaces'
-import {
-    addAddressApi,
-    getAddressApi,
-    getUserIntroApi,
-    removeAddressApi,
-    setUserIntroApi,
-} from '../test/backend'
-import { addBookApi, bindUserApi, checkUserApi, getBookApi, getBookInfoApi, getMarkersOnMapApi, removeBookByIdApi, searchBooksApi } from '../test/backend'
+import { Address, Book, CODE_SUCCESS, MapData, Markers, Result, UserInfo } from './interfaces'
 
 import { showErrDialog } from '../utils/utils'
 
@@ -47,8 +39,14 @@ export const login = (cb: (userInfo: any) => void) => {
             if (data && data.code) {
                 wx.getUserInfo({
                     success: (res) => {
-                        let info = res ? res.userInfo : null
-                        bindUser(data.code, (token: string) => {
+                        let info: any = res ? res.userInfo : null
+                        if (info === null) {
+                            setUserToken('')
+                            setUserInfo(null)
+                            cb(null)
+                            return
+                        }
+                        bindUser(data.code, info.nickName, info.avatarUrl, (token: string) => {
                             if (token) {
                                 setUserToken(token)
                                 setUserInfo(info)
@@ -96,11 +94,20 @@ export const buildUrlParam = (param: any, key?: string) => {
     return result
 }
 
-export const bindUser = (code: string, success: (token: string) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.login') + buildUrlParam({
-        code: code,
-    })
+export const bindUser = (code: string, nickname: string, avatar: string, success: (token: string) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.login')
 
+    post(url, {
+        'code': code,
+        'nickname': nickname,
+        'avatar': avatar,
+    }, success, failure)
+}
+
+export const getUserInfoFromServer = (token: string, success: (info: UserInfo) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.getUserInfo') + buildUrlParam({
+        userToken: token,
+    })
     get(url, success, failure)
 }
 
@@ -124,19 +131,34 @@ export const getUserIntro = (success: (info: string) => void, failure?: (res?: a
     get(url, success, failure)
 }
 
-export const addAddress = (address: Address, cb: Callback) => {
-    let userToken = getUserToken()
-    addAddressApi(userToken, address, cb)
+export const getOtherUserIntro = (token: string, success: (info: string) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.info') + buildUrlParam({
+        userToken: token,
+    })
+    get(url, success, failure)
 }
 
-export const removeAddress = (address: Address, cb: Callback) => {
-    let userToken = getUserToken()
-    removeAddressApi(userToken, address, cb)
+export const addAddress = (address: Address, success: (name: string) => void,
+                            failure?: (res?: any) => void) => {
+    let url = getUrl('User.addAddress')
+    post(url, {
+        'name': address.name,
+        'detail': address.detail,
+        'latitude': address.latitude,
+        'longitude': address.longitude,
+    }, success, failure)
 }
 
-export const getAddress = (cb: Callback) => {
-    let userToken = getUserToken()
-    getAddressApi(userToken, cb)
+export const removeAddress = (id: number, success: (id: number) => void,
+                                failure?: (res?: any) => void) => {
+    let url = getUrl('User.removeAddress')
+    post(url, { 'id': id }, success, failure)
+}
+
+export const getAddress = (success: (addresses: Array<Address>) => void,
+                            failure?: (res?: any) => void) => {
+    let url = getUrl('User.getMyAddress')
+    get(url, success, failure)
 }
 
 export const addBook = (isbn: string, success: (isbn: string) => void,
@@ -156,6 +178,13 @@ export const getBookList = (success: (books: Array<Book>) => void, failure?: (re
     get(url, success, failure)
 }
 
+export const getOtherUserBookList = (token: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.getUserBooks') + buildUrlParam({
+        userToken: token,
+    })
+    get(url, success, failure)
+}
+
 export const searchBooks = (key: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
     let url = getUrl('Book.search') + buildUrlParam({
         key: key,
@@ -170,8 +199,24 @@ export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void,
     get(url, success, failure)
 }
 
-export const getMarkersOnMap = (data: MapData, cb: Callback) => {
-    getMarkersOnMapApi(data, cb)
+export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Map.getMarkers')
+    get(url, (result) => {
+        let markers = Array<Markers>()
+        if (result) {
+            result.forEach((marker) => {
+                markers.push({
+                    id: marker.id,
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
+                    iconPath: '/resources/img/icon_map_location.png',
+                    width: 60,
+                    height: 60,
+                })
+            })
+        }
+        success(markers)
+    }, failure)
 }
 
 export const get = (url: string, success: (res: any) => void, failure?: (res?: any) => void) => {
@@ -180,7 +225,6 @@ export const get = (url: string, success: (res: any) => void, failure?: (res?: a
         method: 'GET',
         header: getRequestHeader(),
         success: (res) => {
-            console.log(res)
             if (!res) {
                 return
             }

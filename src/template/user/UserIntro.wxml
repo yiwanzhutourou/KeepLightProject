@@ -4,6 +4,7 @@
             <text class="intro-text">{{userIntro}}</text>
             <view wx:if="{{isCurrentUser}}" class="editor-button-container">
                 <view
+                    wx:if="{{isCurrentUser}}"
                     class="edit-intro-button"
                     hover-class="edit-intro-button-hover"
                     bindtap="onEditUserIntroTap">{{editUserIntroText}}</view>

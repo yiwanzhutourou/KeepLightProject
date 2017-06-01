@@ -1,7 +1,6 @@
-import { buildUrlParam, getMarkersOnMap, getUrl, getUserInfo, getUserToken, login } from '../../api/api'
+import { Markers, Result } from '../../api/interfaces'
+import { getMarkers, getUserInfo, getUserToken, login } from '../../api/api'
 import { hideLoading, showErrDialog, showLoading } from '../../utils/utils'
-
-import { Result } from '../../api/interfaces'
 
 // index.js
 
@@ -42,18 +41,11 @@ Page({
           latitude: locationInfo.latitude,
         })
 
-        getMarkersOnMap(
-          {
-            latitude: locationInfo.latitude, 
-            longitude: locationInfo.longitude, 
-            zoomLevel: 0,
-          },
-          (result: Result) => {
-            if (result && result.success) {
-              indexPage.setData({
-                markers: result.data,
-              })
-            }
+        getMarkers(
+          (markers: Array<Markers>) => {
+            indexPage.setData({
+              markers: markers,
+            })
           },
         ) 
     })
@@ -87,6 +79,14 @@ Page({
       }
     } else if (EVENT_TAP_SHOW_CURRENT_LOCATION == event.controlId) {
       mapCtx.moveToLocation()
+    }
+  },
+
+  markertap: (event) => {
+    if (event && event.markerId) {
+      wx.navigateTo({
+          url: '../homepage/homepage?user=' + event.markerId,
+      })
     }
   },
 

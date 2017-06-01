@@ -5,14 +5,14 @@
     <scroll-view class="book-list-container" style="height:{{screenHeight-190}}rpx;" scroll-y="true">
         <import src="../../template/user/UserIntro.wxml" />
         <template is="user-intro"
-            data="{{userIntro, showIntro, introEditting, isCurrentUser, editUserIntroText, userIntroToEdit}}" />
+            data="{{userIntro, showIntro, introEditting, isCurrentUser, editUserIntroText, userIntroToEdit, isCurrentUser}}" />
         
         <view class="list-title">书房里的书</view>
         <view class="book-list-container">
             <block wx:for="{{bookList}}" wx:key="id">
                 <import src="../../template/book/BookItem.wxml" />
                 <template is="book-item"
-                    data="{{item, isHomePage}}" />
+                    data="{{item, isHomePage, isCurrentUser}}" />
             </block>
         </view>
     </scroll-view>

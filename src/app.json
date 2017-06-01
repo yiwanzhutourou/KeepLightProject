@@ -1,10 +1,10 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/homepage/homepage",
     "pages/book/addBook"
   ],
-  "window":{
+  "window": {
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "图书交换",

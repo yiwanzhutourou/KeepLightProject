@@ -24,8 +24,6 @@ export type Result = {
     data?: any,
 }
 
-export type Callback = (result: Result) => void
-
 export type MapData = {
     latitude: number,
     longitude: number,
@@ -34,6 +32,23 @@ export type MapData = {
 
 export type Address = {
     name: string,
+    detail: string,
     longitude: number,
     latitude: number,
+}
+
+export type Markers = {
+    id: number,
+    latitude: number,
+    longitude: number,
+    iconPath: string,
+    width: number,
+    height: number,
+    title?: string,
+    bindcontroltap?: string,
+}
+
+export type UserInfo = {
+    nickname: string,
+    avatar: string,
 }
