@@ -48,11 +48,13 @@
 .borrow-book-button {
     font-size: 25rpx;
     color: rgba(0, 150, 136, 1);
+    border: none;
 }
 
 .borrow-book-button-hover {
     font-size: 25rpx;
     color: rgba(0, 150, 136, 0.6);
+    border: none;
 }
 
 .remove-book-button {

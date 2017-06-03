@@ -199,6 +199,11 @@ export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void,
     get(url, success, failure)
 }
 
+export const borrowBook = (toUser: string, isbn: string, formId: string, success: () => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.borrowBook')
+    post(url, { 'toUser': toUser, 'isbn': isbn, 'formId': formId }, success, failure)
+}
+
 export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (res?: any) => void) => {
     let url = getUrl('Map.getMarkers')
     get(url, (result) => {
@@ -225,6 +230,7 @@ export const get = (url: string, success: (res: any) => void, failure?: (res?: a
         method: 'GET',
         header: getRequestHeader(),
         success: (res) => {
+            console.log(res)
             if (!res) {
                 return
             }
@@ -252,6 +258,7 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
         method: 'POST',
         header: getRequestHeader(),
         success: (res) => {
+            console.log(res)
             if (!res) {
                 return
             }

@@ -1,7 +1,7 @@
 import { Book, Result, UserInfo } from '../../api/interfaces'
 // pages/homepage/homepage.js
-import { addAddress, getBookList, getOtherUserBookList, getOtherUserIntro, getUserInfo, getUserInfoFromServer, getUserIntro, getUserToken, removeBook, setUserIntro } from '../../api/api'
-import { hideLoading, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { addAddress, borrowBook, getBookList, getOtherUserBookList, getOtherUserIntro, getUserInfo, getUserInfoFromServer, getUserIntro, getUserToken, removeBook, setUserIntro } from '../../api/api'
+import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 let homepage: WeApp.Page
 
@@ -125,7 +125,18 @@ Page({
   },
 
   onBorrowBook: (e) => {
-    console.log(e.currentTarget.dataset.book)
+    let formId = e.detail.formId
+    let isbn = e.detail.value.isbn
+    if (formId && isbn) {
+      showLoading('正在发送借书请求')
+      borrowBook(homepage.data.userToken, isbn, formId,
+        () => {
+          hideLoading()
+          showDialog('借书请求已发送，请等待书的主人回复~')
+        }, (failure) => {
+          hideLoading()
+        })
+    }
   },
   
   onAddBookTap: () => {
