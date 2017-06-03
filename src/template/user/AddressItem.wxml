@@ -1,0 +1,17 @@
+<template name="user-address">
+    <view class="common-container">
+        <view class="address-container">
+            <view class="detail-container"
+                data-address="{{item}}"
+                bindtap="onAddressItemTap">
+                <text class="address-title">{{item.name}}</text>
+                <text class="address-detail">{{item.detail}}</text>
+            </view>
+            <view class="delete-button"
+                hover-class="delete-button-hover"
+                data-id="{{item.id}}"
+                bindtap="onRemoveAddress">删除</view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

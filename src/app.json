@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/homepage/homepage",
-    "pages/book/addBook"
+    "pages/book/addBook",
+    "pages/user/address"
   ],
   "window": {
     "backgroundTextStyle":"light",

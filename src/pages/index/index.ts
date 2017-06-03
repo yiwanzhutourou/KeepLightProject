@@ -33,7 +33,9 @@ Page({
         windowHeight = systemInfo.windowHeight
         indexPage.setUpIconOnmap()
     })
+  },
 
+  onShow: function(): void {
     // 获取定位
     app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
         indexPage.setData({
@@ -49,10 +51,6 @@ Page({
           },
         ) 
     })
-  },
-
-  onShow: function(): void {
-    // Do nothing
   },
 
   controltap: (event) => {

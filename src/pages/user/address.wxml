@@ -1,0 +1,20 @@
+<!--pages/homepage/homepage.wxml-->
+<view class="container">
+    <scroll-view class="address-list-container" style="height:{{screenHeight-190}}rpx;" scroll-y="true">
+        <view class="address-list-container">
+            <block wx:for="{{addresses}}" wx:key="id">
+                <import src="../../template/user/AddressItem.wxml" />
+                <template is="user-address"
+                    data="{{item}}" />
+            </block>
+        </view>
+        <view class="common-container">
+            <view class="add-address-container">
+                <view class="add-address-button"
+                    hover-class="add-address-button-hover"
+                    bindtap="onAddAddress">添加地址</view>
+            </view>
+            <view class="item-divider" />
+        </view>
+    </scroll-view>
+</view>

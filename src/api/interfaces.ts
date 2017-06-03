@@ -31,6 +31,7 @@ export type MapData = {
 }
 
 export type Address = {
+    id?: number,
     name: string,
     detail: string,
     longitude: number,

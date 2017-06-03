@@ -1,0 +1,40 @@
+.address-container {
+    height: 120rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+}
+
+.detail-container {
+    width: 600rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+}
+
+.address-title {
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.address-detail {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 10rpx;
+}
+
+.delete-button {
+    font-size: 25rpx;
+    color: rgba(255, 0, 127, 1);
+}
+
+.delete-button-hover {
+    font-size: 25rpx;
+    color: rgba(255, 0, 127, 0.6);
+}

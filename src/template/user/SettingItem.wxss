@@ -1,0 +1,32 @@
+.setting-container {
+    height: 120rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+}
+
+.detail-container {
+    width: 700rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.sub-title {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 10rpx;
+}
+
+.arrow {
+    width: 10rpx;
+}

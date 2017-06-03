@@ -25,6 +25,6 @@
                 data-book="{{item}}"
                 bindtap="onBorrowBook">借阅</view>
         </view>
-        <view class="book-item-divider" />
+        <view class="item-divider" />
     </view>
 </template>

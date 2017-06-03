@@ -1,0 +1,15 @@
+<template name="setting-item">
+    <view class="common-container">
+        <view class="setting-container" data-id="{{settingItem.id}}" bindtap="onSettingItemTap">
+            <view class="detail-container" data-url="{{settingItem.url}}">
+                <text class="title">{{settingItem.title}}</text>
+                <text wx:if="{{settingItem.subTitle}}" class="sub-title">{{settingItem.subTitle}}</text>
+            </view>
+            <image wx:if="{{!settingItem.hideArrow}}"
+                   class="arrow"
+                   mode="widthFix"
+                   src="../../resources/img/arrow.png" />
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

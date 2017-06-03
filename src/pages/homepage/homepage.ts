@@ -17,6 +17,12 @@ Page({
     userIntroToEdit: '',
     bookList: [],
     isHomePage: true,
+
+    // settings
+    settingItem: {
+      title: '管理书房位置',
+      subTitle: '添加书房位置方便其他用户在地图上找到您的书房',
+    },
   },
   onLoad: function(option: any): void {
     homepage = this
@@ -118,25 +124,6 @@ Page({
       }
   },
 
-  chooseLocation: () => {
-    wx.chooseLocation({
-      success: (res: WeApp.ChoosedLoaction) => {
-        showLoading('正在添加地址')
-        addAddress({
-          name: res.name,
-          detail: res.address,
-          latitude: res.latitude,
-          longitude: res.longitude,
-        }, (name: string) => {
-          hideLoading()
-          showToast('添加成功')
-        }, (failure) => {
-          hideLoading()
-        })
-      },
-    })
-  },
-
   onBorrowBook: (e) => {
     console.log(e.currentTarget.dataset.book)
   },
@@ -145,7 +132,6 @@ Page({
     wx.navigateTo({
       url: '../book/addBook',
     })
-    // homepage.chooseLocation()
   },
 
   onEditUserIntroTap: () => {
@@ -211,6 +197,12 @@ Page({
       }
     }, (failure) => {
       hideLoading()
+    })
+  },
+
+  onSettingItemTap: (e) => {
+    wx.navigateTo({
+      url: '../user/address',
     })
   },
 })

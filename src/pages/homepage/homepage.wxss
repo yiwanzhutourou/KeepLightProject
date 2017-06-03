@@ -1,6 +1,7 @@
 /* pages/homepage/homepage.wxss */
 @import "../../template/user/UserInfo.wxss";
 @import "../../template/user/UserIntro.wxss";
+@import "../../template/user/SettingItem.wxss";
 @import "../../template/book/BookItem.wxss";
 
 .search-content-container {
