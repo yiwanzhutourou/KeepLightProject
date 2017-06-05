@@ -1,4 +1,4 @@
-import { Address, Book, CODE_SUCCESS, MapData, Markers, Result, UserInfo } from './interfaces'
+import { Address, Book, BorrowHistory, CODE_SUCCESS, MapData, Markers, Result, UserInfo } from './interfaces'
 
 import { showErrDialog } from '../utils/utils'
 
@@ -202,6 +202,11 @@ export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void,
 export const borrowBook = (toUser: string, isbn: string, formId: string, success: () => void, failure?: (res?: any) => void) => {
     let url = getUrl('User.borrowBook')
     post(url, { 'toUser': toUser, 'isbn': isbn, 'formId': formId }, success, failure)
+}
+
+export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.getBorrowHistory')
+    get(url, success, failure)
 }
 
 export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (res?: any) => void) => {

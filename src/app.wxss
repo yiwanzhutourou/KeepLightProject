@@ -32,3 +32,21 @@
     height: 1rpx;
     background: #eee;
 }
+
+.arrow {
+    width: 10rpx;
+}
+
+.empty_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 500rpx;
+}
+
+.empty_title {
+    font-size: 50rpx;
+    color: rgba(0, 0, 0, 0.54);
+}

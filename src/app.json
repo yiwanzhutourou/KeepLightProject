@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/homepage/homepage",
     "pages/book/addBook",
-    "pages/user/address"
+    "pages/user/address",
+    "pages/user/settings",
+    "pages/user/history"
   ],
   "window": {
     "backgroundTextStyle":"light",

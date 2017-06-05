@@ -17,12 +17,6 @@ Page({
     userIntroToEdit: '',
     bookList: [],
     isHomePage: true,
-
-    // settings
-    settingItem: {
-      title: '管理书房位置',
-      subTitle: '添加书房位置方便其他用户在地图上找到您的书房',
-    },
   },
   onLoad: function(option: any): void {
     homepage = this
@@ -208,12 +202,6 @@ Page({
       }
     }, (failure) => {
       hideLoading()
-    })
-  },
-
-  onSettingItemTap: (e) => {
-    wx.navigateTo({
-      url: '../user/address',
     })
   },
 })

@@ -1,7 +1,6 @@
-<!--pages/homepage/homepage.wxml-->
 <view class="container">
-    <scroll-view class="address-list-container" style="height:{{screenHeight-190}}rpx;" scroll-y="true">
-        <view class="address-list-container">
+    <scroll-view scroll-y="true">
+        <view>
             <block wx:for="{{addresses}}" wx:key="id">
                 <import src="../../template/user/AddressItem.wxml" />
                 <template is="user-address"

@@ -6,6 +6,7 @@ import { hideLoading, showErrDialog, showLoading } from '../../utils/utils'
 
 const EVENT_TAP_HOME_PAGE = 1
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 2
+const EVENT_TAP_SETTINGS = 3
 
 let app = getApp()
 let indexPage
@@ -77,6 +78,27 @@ Page({
       }
     } else if (EVENT_TAP_SHOW_CURRENT_LOCATION == event.controlId) {
       mapCtx.moveToLocation()
+    } else if (EVENT_TAP_SETTINGS == event.controlId) {
+      let token = getUserToken()
+      let info = getUserInfo()
+      if (token && info) {
+        wx.navigateTo({
+            url: '../user/settings',
+        })
+      } else {
+        showLoading('正在验证用户信息...')
+        login((userInfo) => {
+          hideLoading()
+          if (userInfo) {
+            // nav to user homepage
+            wx.navigateTo({
+              url: '../user/settings',
+            })
+          } else {
+            showErrDialog('获取微信账号信息失败，请稍后再试')
+          }
+        })
+      }
     }
   },
 
@@ -102,6 +124,12 @@ Page({
     let cLeft = windowWidth * 0.95 - cWidth
     let cTop = top
 
+    // Settings icon:
+    let sWidth = height * 1.5
+    let sHeight = height * 1.5
+    let sLeft = windowWidth * 0.95 - sWidth
+    let sTop = windowHeight * 0.05
+
     indexPage.setData({
       controls: [
         // 进入主页
@@ -125,6 +153,18 @@ Page({
             top: cTop,
             width: cWidth,
             height: cHeight,
+          },
+          clickable: true,
+        },
+        // 设置
+        {
+          id: EVENT_TAP_SETTINGS,
+          iconPath: '/resources/img/icon_home.png',
+          position: {
+            left: sLeft,
+            top: sTop,
+            width: sWidth,
+            height: sHeight,
           },
           clickable: true,
         },

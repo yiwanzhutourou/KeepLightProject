@@ -53,3 +53,11 @@ export type UserInfo = {
     nickname: string,
     avatar: string,
 }
+
+export type BorrowHistory = {
+    userToken: string,
+    user: string,
+    bookTitle: string,
+    bookCover: string,
+    date: string,
+}

@@ -1,0 +1,16 @@
+<template name="history-item">
+    <view class="common-container">
+        <view class="history-container" data-user="{{item.userToken}}" bindtap="onHistoryItemTap">
+            <image class="book-pic" src="{{item.bookCover}}" mode="aspectFit" />
+            <view class="detail-container">
+                <text class="history-title">{{item.user}}</text>
+                <text class="history-detail">{{item.bookTitle}}</text>
+            </view>
+            <text class="history-date">{{item.date}}</text>
+            <image class="arrow"
+                   mode="widthFix"
+                   src="../../resources/img/arrow.png" />
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

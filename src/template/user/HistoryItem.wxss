@@ -1,5 +1,5 @@
-.setting-container {
-    height: 120rpx;
+.history-container {
+    height: 150rpx;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -10,19 +10,32 @@
 }
 
 .detail-container {
-    width: 700rpx;
+    width: 380rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
 }
 
-.title {
+.history-title {
     font-size: 35rpx;
     color: rgba(0, 0, 0, 0.87);
 }
 
-.sub-title {
-    font-size: 25rpx;
+.history-detail {
+    font-size: 30rpx;
     color: rgba(0, 0, 0, 0.54);
     margin-top: 10rpx;
+}
+
+.history-date {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+    margin-right: 20rpx;
+}
+
+.book-pic {
+    width: 120rpx;
+    height: 120rpx;
 }
