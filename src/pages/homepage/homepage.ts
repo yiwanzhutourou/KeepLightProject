@@ -11,10 +11,6 @@ Page({
     isCurrentUser: true,
     userToken: '',
     userIntro: '',
-    showIntro: false,
-    introEditting: false,
-    editUserIntroText: '编辑',
-    userIntroToEdit: '',
     bookList: [],
     isHomePage: true,
   },
@@ -55,21 +51,13 @@ Page({
     if (isCurrentUser) {
       getUserIntro((result: string) => {
         let intro = ''
-        let showIntro = true
-        let editUserIntroText = '编辑'
-        let userIntroToEdit = ''
         if (!result || result === '') {
-          intro = '您还没有介绍您的书房'
-          editUserIntroText = '添加简介'
+          intro = ''
         } else {
           intro = result
-          userIntroToEdit = result
         }
         homepage.setData({
           userIntro: intro,
-          showIntro: showIntro,
-          editUserIntroText: editUserIntroText,
-          userIntroToEdit: userIntroToEdit,
         })
       }, (failure) => {
         // TODO
@@ -79,13 +67,12 @@ Page({
         let intro = ''
         let showIntro = true
         if (!result || result === '') {
-          showIntro = false
+          intro = ''
         } else {
           intro = result
         }
         homepage.setData({
           userIntro: intro,
-          showIntro: showIntro,
         })
       }, (failure) => {
         // TODO
@@ -136,38 +123,6 @@ Page({
   onAddBookTap: () => {
     wx.navigateTo({
       url: '../book/addBook',
-    })
-  },
-
-  onEditUserIntroTap: () => {
-    homepage.setData({
-      introEditting: true,
-    })
-  },
-
-  onEditIntroDone: (e) => {
-    let intro
-    if (e.detail.value.textarea && typeof e.detail.value.textarea === 'string') {
-      intro = e.detail.value.textarea
-    } else if (e.detail.value && typeof e.detail.value === 'string') {
-      intro = e.detail.value
-    }
-    setUserIntro(intro, () => {
-      showToast('更新成功')
-      homepage.setData({
-        userIntro: intro,
-        introEditting: false,
-        editUserIntroText: '编辑',
-        userIntroToEdit: intro,
-      })
-    }, (failure) => {
-      // TODO
-    })
-  },
-
-  onEditIntroCancel: () => {
-    homepage.setData({
-      introEditting: false,
     })
   },
 

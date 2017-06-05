@@ -1,6 +1,7 @@
 .user-container {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     padding-left: 30rpx;
     padding-right: 30rpx;
     padding-top: 35rpx;
@@ -23,13 +24,25 @@
     width: 570rpx;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
 }
 
 .user-nickname {
     font-size: 40rpx;
     color: rgba(0, 0, 0, 0.87);
-    margin-left: 50rpx;
     font-weight: 900;
+    margin-left: 50rpx;
+}
+
+.user-intro {
+    font-size: 30rpx;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.user-info-container {
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    padding-bottom: 30rpx;
+    background: #eee;
 }
