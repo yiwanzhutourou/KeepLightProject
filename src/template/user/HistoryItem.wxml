@@ -3,8 +3,8 @@
         <view class="history-container" data-user="{{item.userToken}}" bindtap="onHistoryItemTap">
             <image class="book-pic" src="{{item.bookCover}}" mode="aspectFit" />
             <view class="detail-container">
-                <text class="history-title">{{item.user}}</text>
-                <text class="history-detail">{{item.bookTitle}}</text>
+                <text class="history-title">{{item.bookTitle}}</text>
+                <text class="history-detail">{{item.user}}</text>
             </view>
             <text class="history-date">{{item.date}}</text>
             <image class="arrow"

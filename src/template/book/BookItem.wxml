@@ -1,11 +1,13 @@
 <template name="book-item">
     <view class="common-container">
         <view class="book-container">
-            <image class="book-pic" src="{{item.cover}}" mode="aspectFit" />
-            <view class="book-detail-container" data-url="{{item.url}}" bindtap="onBookItemTap">
-                <text class="book-title">{{item.title}}</text>
-                <text class="book-author">作者：{{item.author}}</text>
-                <text class="book-publisher">出版社：{{item.publisher}}</text>
+            <view class="content-container">
+                <image class="book-pic" src="{{item.cover}}" mode="aspectFit" />
+                <view class="book-detail-container" data-url="{{item.url}}" bindtap="onBookItemTap">
+                    <text class="book-title">{{item.title}}</text>
+                    <text class="book-author">作者：{{item.author}}</text>
+                    <text class="book-publisher">出版社：{{item.publisher}}</text>
+                </view>
             </view>
             <view wx:if="{{item.added && !isHomePage}}"
                 class="added-book-text">已添加</view>

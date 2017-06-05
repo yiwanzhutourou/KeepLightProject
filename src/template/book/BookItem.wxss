@@ -2,6 +2,7 @@
     height: 150rpx;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     align-items: center;
     padding-left: 25rpx;
     padding-right: 25rpx;
@@ -9,13 +10,19 @@
     padding-bottom: 5rpx;
 }
 
+.content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 15rpx;
+}
+
 .book-detail-container {
-    width: 480rpx;
+    width: 440rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-left: 15rpx;
-    margin-right: 15rpx;
 }
 
 .book-title {
@@ -46,15 +53,19 @@
 }
 
 .borrow-book-button {
+    height: 50rpx;
+    line-height: 50rpx;
     font-size: 25rpx;
-    color: rgba(0, 150, 136, 1);
-    border: none;
+    color: #fff;
+    background: rgba(0, 150, 136, 1);
 }
 
 .borrow-book-button-hover {
+    height: 50rpx;
+    line-height: 50rpx;
     font-size: 25rpx;
-    color: rgba(0, 150, 136, 0.6);
-    border: none;
+    color: #fff;
+    background: rgba(0, 150, 136, 0.6);
 }
 
 .remove-book-button {
