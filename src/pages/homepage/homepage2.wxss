@@ -1,0 +1,11 @@
+/* pages/homepage/homepage.wxss */
+@import "../../template/user/UserInfo.wxss";
+@import "../../template/user/UserIntro.wxss";
+@import "../../template/book/BookItem.wxss";
+
+.search-content-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

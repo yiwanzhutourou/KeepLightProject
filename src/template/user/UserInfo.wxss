@@ -15,11 +15,6 @@
     border-radius: 50%;
 }
 
-.add-book-button{
-    width: 120rpx;
-    height: 138rpx;
-}
-
 .user-detail-container {
     width: 570rpx;
     display: flex;

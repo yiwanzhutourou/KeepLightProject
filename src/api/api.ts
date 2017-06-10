@@ -2,7 +2,7 @@ import { Address, Book, BorrowHistory, CODE_SUCCESS, MapData, Markers, Result, U
 
 import { showErrDialog } from '../utils/utils'
 
-const BASE_URL = 'http://127.0.0.1/api/'
+const BASE_URL = 'http://192.168.0.104/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'

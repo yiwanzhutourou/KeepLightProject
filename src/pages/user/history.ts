@@ -35,7 +35,7 @@ Page({
 
   onHistoryItemTap: (e) => {
     wx.navigateTo({
-        url: '../homepage/homepage?user=' + e.currentTarget.dataset.user,
+        url: '../homepage/homepage2?user=' + e.currentTarget.dataset.user,
     })
   },
 })

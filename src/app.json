@@ -2,6 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/homepage/homepage",
+    "pages/homepage/homepage2",
     "pages/book/addBook",
     "pages/user/address",
     "pages/user/settings",
@@ -14,5 +15,31 @@
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "有读书房",
     "navigationBarTextStyle":"black"
-  }
+  },
+  "tabBar": {  
+      "color": "#2c2c2c",  
+      "selectedColor": "#d4237a",  
+      "borderStyle":"black",  
+      "list": [{  
+        "selectedIconPath": "resources/img/icon_home_selected.png",  
+        "iconPath": "resources/img/icon_home.png",  
+        "pagePath": "pages/index/index",  
+        "text": "首页"  
+      }, {  
+        "selectedIconPath": "resources/img/icon_add_selected.png",  
+        "iconPath": "resources/img/icon_add.png",  
+        "pagePath": "pages/book/addBook",  
+        "text": "添加图书"  
+      }, {  
+        "selectedIconPath": "resources/img/icon_homepage_selected.png",  
+        "iconPath": "resources/img/icon_homepage.png",  
+        "pagePath": "pages/homepage/homepage",  
+        "text": "我的书房"  
+      }, {  
+        "selectedIconPath": "resources/img/icon_setting_selected.png",  
+        "iconPath": "resources/img/icon_setting.png",  
+        "pagePath": "pages/user/settings",  
+        "text": "设置"  
+      }]  
+    }
 }
