@@ -44,7 +44,7 @@ Page({
                     id: SETTING_BIND_WEIXIN,
                     title: '设置联系方式',
                     subTitle: '设置微信号、QQ或者邮箱方便书友联系您',
-                    subInfo: '已设置' + result.name,
+                    subInfo: result.name ? '已设置' + result.name : '',
                 },
                 {
                     id: SETTING_ADDRESS,

@@ -29,7 +29,7 @@ Page({
       })
     }, (failure) => {
       hideLoading()
-      showErrDialog('无法获取书房位置，请检查您的网络~')
+      showErrDialog('无法获取数据，请检查您的网络~')
     })
   },
 

@@ -12,13 +12,13 @@
     height: 200rpx;
     padding: 30rpx;
     font-size: 35rpx;
-    color: rgba(0, 0, 0, 0.87);
+    color: #666;
     border: 1rpx solid #eee;
 }
 
 .intro-textarea-placeholder {
     font-size: 35rpx;
-    color: rgba(0, 0, 0, 0.38);
+    color: #aaa;
 }
 
 .submit-button {
