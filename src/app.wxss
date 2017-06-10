@@ -33,6 +33,12 @@
     background: #eee;
 }
 
+.item-divider-vertical {
+    height: 100%;
+    width: 1rpx;
+    background: #eee;
+}
+
 .arrow {
     width: 10rpx;
 }

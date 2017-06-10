@@ -5,10 +5,13 @@
                 <text class="title">{{settingItem.title}}</text>
                 <text wx:if="{{settingItem.subTitle}}" class="sub-title">{{settingItem.subTitle}}</text>
             </view>
-            <image wx:if="{{!settingItem.hideArrow}}"
+            <view class="subinfo-container">
+                <text wx:if="{{settingItem.subInfo}}" class="sub-info">{{settingItem.subInfo}}</text>
+                <image wx:if="{{!settingItem.hideArrow}}"
                    class="arrow"
                    mode="widthFix"
                    src="../../resources/img/arrow.png" />
+            </view>
         </view>
         <view class="item-divider" />
     </view>

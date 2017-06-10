@@ -1,4 +1,4 @@
-import { Address, Book, BorrowHistory, CODE_SUCCESS, MapData, Markers, Result, UserInfo } from './interfaces'
+import { Address, Book, BorrowHistory, CODE_SUCCESS, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
 
 import { showErrDialog } from '../utils/utils'
 
@@ -136,6 +136,19 @@ export const getOtherUserIntro = (token: string, success: (info: string) => void
         userToken: token,
     })
     get(url, success, failure)
+}
+
+export const getUserContact = (success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.getUserContact')
+    post(url, [], success, failure)
+}
+
+export const setUserContact = (name: string, contact: string, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.setUserContact')
+    post(url, {
+        'name': name,
+        'contact': contact,
+    }, success, failure)
 }
 
 export const addAddress = (address: Address, success: (name: string) => void,

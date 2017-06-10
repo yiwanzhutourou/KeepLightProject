@@ -1,0 +1,44 @@
+@import "../../template/user/SettingItem.wxss";
+
+.contact-container {
+    width: 100%;
+    height: 80rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.title-container {
+    padding: 30rpx;
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.contact-picker {
+    width: 20%;
+}
+
+.contact-picker-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 30rpx;
+    padding-right: 20rpx;
+    font-size: 30rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.contact-input {
+    width: 80%;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+    font-size: 30rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.submit-button {
+    margin: 30rpx;
+    background-color: rgba(0, 150, 136, 1);
+    color: #fff;
+}

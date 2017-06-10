@@ -5,12 +5,13 @@
     "pages/book/addBook",
     "pages/user/address",
     "pages/user/settings",
-    "pages/user/history"
+    "pages/user/history",
+    "pages/user/contact"
   ],
   "window": {
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "图书交换",
+    "navigationBarTitleText": "有读书房",
     "navigationBarTextStyle":"black"
   }
 }

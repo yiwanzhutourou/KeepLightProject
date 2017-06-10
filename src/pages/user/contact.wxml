@@ -1,0 +1,32 @@
+<view class="container">
+    <import src="../../template/user/SettingItem.wxml" />
+    <template wx:if="{{contact !== ''}}" is="setting-item"
+        data="{{settingItem}}" />
+    <form class="form-container" bindsubmit="formSubmit">
+        <view class="contact-container">
+            <picker class="contact-picker"
+                    name="contact_picker"
+                    bindchange="bindPickerChange"
+                    value="{{methodIndex}}"
+                    range="{{methodRange}}">
+                <view class="contact-picker-container">
+                    <view class="picker">
+                        {{methodRange[methodIndex]}}
+                    </view>
+                    <image class="arrow"
+                        mode="widthFix"
+                        src="../../resources/img/arrow.png" />
+                </view>
+            </picker>
+            <view class="item-divider-vertical" />
+            <input class="contact-input" name="contact_input" placeholder="请输入您的联系方式" />
+        </view>
+        <view class="item-divider" />
+        <view class="title-container">
+            <text>请从微信、QQ或者邮箱中选择一种您最常用的联系方式填写，方便想要借书的书友第一时间联系到您。只支持输入一种联系方式，填写新的联系方式将会覆盖原来的联系方式</text>
+        </view>
+        <button class="submit-button" formType="submit">
+            确定
+        </button>
+    </form>
+</view>

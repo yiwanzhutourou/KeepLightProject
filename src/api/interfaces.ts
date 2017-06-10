@@ -61,3 +61,8 @@ export type BorrowHistory = {
     bookCover: string,
     date: string,
 }
+
+export type UserContact = {
+    name: string,
+    contact: string,
+}

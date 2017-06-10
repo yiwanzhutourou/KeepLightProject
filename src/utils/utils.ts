@@ -6,6 +6,17 @@ export const showDialog = (content: string) => {
     })
 }
 
+export const showConfirmDialog = (title: string, content: string, success: (confirm: boolean) => void) => {
+    wx.showModal({
+        title: title,
+        content: content,
+        success: (res: { confirm: boolean }) => {
+            success(res.confirm)
+        },
+        showCancel: true,
+    })
+}
+
 export const showErrDialog = (err: string) => {
     wx.showModal({
         title: '提示',
