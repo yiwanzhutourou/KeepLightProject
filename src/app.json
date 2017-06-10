@@ -6,7 +6,8 @@
     "pages/user/address",
     "pages/user/settings",
     "pages/user/history",
-    "pages/user/contact"
+    "pages/user/contact",
+    "pages/user/changeintro"
   ],
   "window": {
     "backgroundTextStyle":"light",

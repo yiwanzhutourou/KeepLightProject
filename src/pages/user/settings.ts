@@ -80,7 +80,7 @@ Page({
             break
           case SETTING_CHANGE_INFO:
             wx.navigateTo({
-                url: '../user/address',
+                url: '../user/changeintro',
             })
             break
           case SETTING_BORROW_HISTORY:

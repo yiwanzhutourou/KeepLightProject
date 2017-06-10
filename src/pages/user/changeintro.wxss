@@ -1,0 +1,28 @@
+.form-container {
+    margin-top: 30rpx;
+}
+
+.textarea-container{
+    width: 100%;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+}
+
+.intro-textarea {
+    height: 200rpx;
+    padding: 30rpx;
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.87);
+    border: 1rpx solid #eee;
+}
+
+.intro-textarea-placeholder {
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.submit-button {
+    margin: 30rpx;
+    background-color: rgba(0, 150, 136, 1);
+    color: #fff;
+}

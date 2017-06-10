@@ -112,11 +112,6 @@ export const getUserInfoFromServer = (token: string, success: (info: UserInfo) =
 }
 
 export const setUserIntro = (intro: string, success: () => void, failure?: (res?: any) => void) => {
-    if (!intro) {
-        showErrDialog('不能设置空的简介')
-        return
-    }
-
     if (intro.length > 70) {
         showErrDialog('简介不能超过 70 个字')
         return
