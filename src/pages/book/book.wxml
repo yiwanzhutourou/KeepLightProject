@@ -1,0 +1,37 @@
+<view class="container">
+    <scroll-view>
+        <image class="blur" src="{{bookDetail.bigImage}}" mode="scaleToFill" />
+        <view class="dark" />
+        <view class="detail-container">
+            <view class="title-container">
+                <image class="book-cover" src="{{bookDetail.smallImage}}" mode="aspectFit" />
+                <view class="title-text-container">
+                    <text class="book-title">{{bookDetail.title}}</text>
+                    <text class="book-author">{{bookDetail.author}}</text>
+                    <text class="book-publisher">{{bookDetail.publisher}}</text>
+                </view>
+            </view>
+            <view class="subinfo-container">
+                <text wx:if="{{bookDetail.translator}}" class="subinfo-text">{{bookDetail.translator}}</text>
+                <text wx:if="{{bookDetail.pubdate}}" class="subinfo-text">{{bookDetail.pubdate}}</text>
+                <text wx:if="{{bookDetail.pages}}" class="subinfo-text">{{bookDetail.pages}}</text>
+                <text wx:if="{{bookDetail.binding}}" class="subinfo-text">{{bookDetail.binding}}</text>
+                <text wx:if="{{bookDetail.series}}" class="subinfo-text">{{bookDetail.series}}</text>
+                <text wx:if="{{bookDetail.isbn}}" class="subinfo-text">{{bookDetail.isbn}}</text>
+            </view>
+            <view wx:if="{{bookDetail.summary}}" class="detail-container">
+                <text class="detail-title">内容介绍</text>
+                <text class="detail-content">{{bookDetail.summary}}</text>
+            </view>
+            <view wx:if="{{bookDetail.author_intro}}" class="detail-container">
+                <text class="detail-title">作者介绍</text>
+                <text class="detail-content">{{bookDetail.author_intro}}</text>
+            </view>
+            <view wx:if="{{bookDetail.catalog}}" class="detail-container">
+                <text class="detail-title">目录</text>
+                <text class="detail-content">{{bookDetail.catalog}}</text>
+            </view>
+            <view class="space-holder"></view>
+        </view>
+    </scroll-view>
+</view>

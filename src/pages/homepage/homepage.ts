@@ -121,7 +121,10 @@ Page({
   },
 
   onBookItemTap: (e) => {
-    // TODO: 微信小程序不支持WebView，需要一个图书详情页吗？
+    let book: Book = e.currentTarget.dataset.book
+    wx.navigateTo({
+        url: '../book/book?title=' + book.title + '&isbn=' + book.isbn,
+    })
   },
 
   onRemoveBook: (e) => {

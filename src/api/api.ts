@@ -2,7 +2,7 @@ import { Address, Book, BorrowHistory, CODE_SUCCESS, MapData, Markers, Result, U
 
 import { showErrDialog } from '../utils/utils'
 
-const BASE_URL = 'http://192.168.0.104/api/'
+const BASE_URL = 'http://192.168.0.102/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -235,6 +235,33 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
         }
         success(markers)
     }, failure)
+}
+
+export const getBookDetails = (isbn: string, success: (result: any) => void, failure?: (res?: any) => void) => {
+    let url = 'https://api.douban.com/v2/book/isbn/' + isbn
+    wx.request({
+        url: url,
+        method: 'GET',
+        success: (res) => {
+            console.log(res)
+            if (!res) {
+                return
+            }
+            if (res.statusCode === 200) {
+                success(res.data ? res.data : null)
+            } else {
+                handleServerError(res.data)
+                if (failure) {
+                    failure(res)
+                }
+            }
+        },
+        fail: (e) => {
+            if (failure) {
+                failure(e)
+            }
+        },
+    })
 }
 
 export const get = (url: string, success: (res: any) => void, failure?: (res?: any) => void) => {

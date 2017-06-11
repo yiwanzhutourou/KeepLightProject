@@ -4,6 +4,7 @@
     "pages/homepage/homepage",
     "pages/homepage/homepage2",
     "pages/book/addBook",
+    "pages/book/book",
     "pages/user/address",
     "pages/user/settings",
     "pages/user/history",
