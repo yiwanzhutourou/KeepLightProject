@@ -1,6 +1,7 @@
-import { hideLoading, showErrDialog, showLoading } from '../../utils/utils'
+import { addBook, borrowBook, getBookDetails } from '../../api/api'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
-import { getBookDetails } from '../../api/api'
+import { Book } from '../../api/interfaces'
 import { parseAuthor } from '../../utils/bookUtils'
 
 let bookPage
@@ -8,6 +9,11 @@ let bookPage
 Page({
   data: {
       bookDetail: null,
+      showAddBook: false,
+      showBorrowBook: false,
+      belongTo: '',
+      bookAdded: false,
+      bookIsbn: '',
   },
 
   onLoad: function(option: any): void {
@@ -21,6 +27,23 @@ Page({
     if (option && option.title) {
         wx.setNavigationBarTitle({
             title: option.title,
+        })
+    }
+    bookPage.setData({
+        bookIsbn: option.isbn,
+    })
+    if (option.showBorrowBook === 'true'
+            && option.belongTo !== 'undefined') {
+        bookPage.setData({
+            showBorrowBook: true,
+            belongTo: option.belongTo,
+        })
+    } else if (option.showAddBook === 'true'
+            && option.belongTo !== 'undefined') {
+        bookPage.setData({
+            showAddBook: true,
+            belongTo: option.belongTo,
+            bookAdded: option.isAdded === 'true',
         })
     }
 
@@ -51,4 +74,48 @@ Page({
     })
   },
 
+  onBorrowBook: (e) => {
+      let token = bookPage.data.belongTo
+      if (token) {
+        showConfirmDialog('借阅信息确认', '借阅书名：《' + bookPage.data.bookDetail.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
+        if (confirm) {
+            let formId = e.detail.formId
+            let isbn = bookPage.data.bookIsbn
+            if (formId && isbn) {
+                showLoading('正在发送借书请求')
+                borrowBook(token, isbn, formId,
+                    () => {
+                    hideLoading()
+                    showDialog('借书请求已发送，请等待书的主人回复~')
+                }, (failure) => {
+                    hideLoading()
+                })
+            }
+        }
+        })
+      }
+  },
+
+  onAddBook: (e) => {
+    let bookIsbn = bookPage.data.bookIsbn
+    if (!bookIsbn || bookIsbn === '') {
+        return
+    }
+    showLoading('正在添加')
+    addBook(bookIsbn, (isbn: string) => {
+        hideLoading()
+        let added = false
+        if (isbn === bookPage.data.bookIsbn) {
+            added = true
+        }
+        bookPage.setData({
+            bookAdded: added,
+        })
+        if (added) {
+            showToast('添加成功')
+        }
+    }, (failure) => {
+        hideLoading()
+    })
+  },
 })

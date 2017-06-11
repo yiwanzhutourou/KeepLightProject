@@ -4,20 +4,43 @@
         <view class="dark" />
         <view class="detail-container">
             <view class="title-container">
-                <image class="book-cover" src="{{bookDetail.smallImage}}" mode="aspectFit" />
+                <image class="book-cover" src="{{bookDetail.bigImage}}" mode="aspectFit" />
                 <view class="title-text-container">
                     <text class="book-title">{{bookDetail.title}}</text>
                     <text class="book-author">{{bookDetail.author}}</text>
                     <text class="book-publisher">{{bookDetail.publisher}}</text>
                 </view>
             </view>
-            <view class="subinfo-container">
-                <text wx:if="{{bookDetail.translator}}" class="subinfo-text">{{bookDetail.translator}}</text>
-                <text wx:if="{{bookDetail.pubdate}}" class="subinfo-text">{{bookDetail.pubdate}}</text>
-                <text wx:if="{{bookDetail.pages}}" class="subinfo-text">{{bookDetail.pages}}</text>
-                <text wx:if="{{bookDetail.binding}}" class="subinfo-text">{{bookDetail.binding}}</text>
-                <text wx:if="{{bookDetail.series}}" class="subinfo-text">{{bookDetail.series}}</text>
-                <text wx:if="{{bookDetail.isbn}}" class="subinfo-text">{{bookDetail.isbn}}</text>
+            <view class="subinfo-button-container">
+                <view class="subinfo-container">
+                    <text wx:if="{{bookDetail.translator}}" class="subinfo-text">{{bookDetail.translator}}</text>
+                    <text wx:if="{{bookDetail.pubdate}}" class="subinfo-text">{{bookDetail.pubdate}}</text>
+                    <text wx:if="{{bookDetail.pages}}" class="subinfo-text">{{bookDetail.pages}}</text>
+                    <text wx:if="{{bookDetail.binding}}" class="subinfo-text">{{bookDetail.binding}}</text>
+                    <text wx:if="{{bookDetail.series}}" class="subinfo-text">{{bookDetail.series}}</text>
+                    <text wx:if="{{bookDetail.isbn}}" class="subinfo-text">{{bookDetail.isbn}}</text>
+                </view>
+                <view class="button-container">
+                    <form wx:if="{{showBorrowBook}}"
+                        bindsubmit="onBorrowBook" report-submit="true">
+                        <input name="isbn" value="{{bookDetail.isbn}}" hidden />
+                        <input name="title" value="{{bookDetail.title}}" hidden />
+                        <button class="borrow-book-button"
+                            formType="submit"
+                            hover-class="borrow-book-button-hover">借阅</button>
+                    </form>
+                    <button wx:if="{{showAddBook && !bookAdded}}"
+                        class="borrow-book-button"
+                        hover-class="borrow-book-button-hover"
+                        bindtap="onAddBook">
+                        添加
+                    </button>
+                    <button wx:if="{{showAddBook && bookAdded}}"
+                        class="added-button"
+                        disabled>
+                        已添加
+                    </button>
+                </view>
             </view>
             <view wx:if="{{bookDetail.summary}}" class="detail-container">
                 <text class="detail-title">内容介绍</text>

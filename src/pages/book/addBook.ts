@@ -1,5 +1,5 @@
 import { Book, Result } from '../../api/interfaces'
-import { addBook, getBookInfo, searchBooks } from '../../api/api'
+import { addBook, getBookInfo, getBookList, getUserToken, searchBooks } from '../../api/api'
 import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 // pages/book/addBook.js
@@ -8,10 +8,25 @@ let bookPage
 Page({
   data: {
     bookList: [],
+    keyword: '',
   },
 
   onLoad: function(options: any): void {
     bookPage = this
+  },
+
+  onShow: function (): void {
+      if (bookPage.data.keyword && bookPage.data.keyword !== '') {
+        searchBooks(bookPage.data.keyword, (books: Array<Book>) => {
+          if (books && books.length > 0) {
+            bookPage.setData({
+              bookList: books,
+            })
+          }
+        }, (failure) => {
+          // do nothing
+        })
+      }
   },
 
   completeInput: (e) => {
@@ -20,13 +35,22 @@ Page({
       showErrDialog('请输入关键字')
       return
     }
+    bookPage.setData({
+      keyword: keyword,
+    })
     bookPage.searchBooks(keyword)
   },
 
   onBookItemTap: (e) => {
     let book: Book = e.currentTarget.dataset.book
+
     wx.navigateTo({
-        url: '../book/book?title=' + book.title + '&isbn=' + book.isbn,
+        url: '../book/book?title='
+                  + book.title
+                  + '&isbn=' + book.isbn
+                  + '&showAddBook=' + true
+                  + '&belongTo=' + getUserToken()
+                  + '&isAdded=' + book.added,
     })
   },
 
@@ -109,7 +133,6 @@ Page({
   },
 
   onSearchInput: (e) => {
-    console.log(e)
     bookPage.clearList()
   },
 

@@ -139,13 +139,17 @@ Page({
 
   onBookItemTap: (e) => {
     let book: Book = e.currentTarget.dataset.book
+    let token = homepage.data.userToken
     wx.navigateTo({
-        url: '../book/book?title=' + book.title + '&isbn=' + book.isbn,
+        url: '../book/book?title=' + book.title
+                + '&isbn=' + book.isbn
+                + '&showBorrowBook=' + !homepage.data.isCurrentUser
+                + '&belongTo=' + token,
     })
   },
 
   onRemoveBook: (e) => {
-    showConfirmDialog('', '确认从书房中移除这本书？', (confirm: boolean) => {
+    showConfirmDialog('', '确认从您的书房中移除《' + e.currentTarget.dataset.title + '》？', (confirm: boolean) => {
       if (confirm) {
         showLoading('正在删除')
         removeBook(e.currentTarget.dataset.isbn, (isbn: string) => {
