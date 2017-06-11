@@ -3,9 +3,10 @@
     <view class="search-bar-container">
         <input class="search-bar-input"
             placeholder-class="search-bar-input-placeholder"
-            placeholder="搜索图书，或者点击右侧的按钮扫描图书 ISBN"
+            placeholder="搜索图书，或者点击右侧的按钮扫描图书ISBN"
             value="{{searchKey}}"
-            bindconfirm="completeInput" />
+            bindconfirm="completeInput"
+            bindinput="onSearchInput" />
         <image
             src="../../resources/img/icon_scan.png"
             bindtap="scanISBN"

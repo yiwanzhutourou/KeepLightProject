@@ -107,4 +107,17 @@ Page({
       })
     }
   },
+
+  onSearchInput: (e) => {
+    console.log(e)
+    bookPage.clearList()
+  },
+
+  clearList: () => {
+    if (bookPage.data.bookList.length > 0) {
+      bookPage.setData({
+        bookList: [],
+      })
+    }
+  },
 })
