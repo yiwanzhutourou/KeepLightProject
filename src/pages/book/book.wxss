@@ -88,8 +88,8 @@
 .subinfo-container {
     width: 100%;
     padding-bottom: 20rpx;
-    padding-left: 50rpx;
-    padding-right: 50rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
 }
 
 .subinfo-text {
@@ -111,8 +111,8 @@
 .detail-title {
     font-size: 25rpx;
     color: rgba(0, 0, 0, 0.37);
-    padding-left: 50rpx;
-    padding-right: 50rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
     padding-bottom: 20rpx;
 }
 
@@ -120,8 +120,8 @@
     font-size: 30rpx;
     color: rgba(0, 0, 0, 0.87);
     line-height: 150%;
-    padding-left: 50rpx;
-    padding-right: 50rpx;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
 }
 
 .space-holder {

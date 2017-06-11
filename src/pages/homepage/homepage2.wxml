@@ -3,9 +3,11 @@
     <image class="blur" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
     <view class="dark" />
     <view class="user-info-container">
-        <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
-        <text class="user-nickname">{{userInfo.nickName}}的书房</text>
-        <text wx:if="{{userIntro !== ''}}" class="user-intro">{{userIntro}}</text>
+        <image wx:if="{{userInfo.avatarUrl}}" class="user-avatar" src="{{userInfo.avatarUrl}}" />
+        <view class="user-text-container">
+            <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
+            <text wx:if="{{userIntro !== ''}}" class="user-intro">{{userIntro}}</text>
+        </view>
     </view>
     <view class="detail-container">
         <view class="list-container">

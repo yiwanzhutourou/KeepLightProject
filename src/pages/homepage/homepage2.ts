@@ -7,7 +7,9 @@ let homepage: WeApp.Page
 
 Page({
   data: {
-    userInfo: {},
+    userInfo: {
+
+    },
     isCurrentUser: true,
     userToken: '',
     userIntro: '',
@@ -42,14 +44,20 @@ Page({
     let isCurrentUser = homepage.data.isCurrentUser
     let token = homepage.data.userToken
     if (isCurrentUser) {
-      homepage.setData({
-        userInfo: getUserInfo(),
-      })
+      let weixinUserInfo: any = getUserInfo()
+      if (weixinUserInfo) {
+        homepage.setData({
+          userInfo: {
+            nickName: weixinUserInfo.nickName + '的书房',
+            avatarUrl: weixinUserInfo.avatarUrl ? weixinUserInfo.avatarUrl : '/resources/img/default_avatar.png',
+          },
+        })
+      }
     } else {
       getUserInfoFromServer(token, (result: UserInfo) => {
         homepage.setData({
           userInfo: {
-            nickName: result.nickname,
+            nickName: result.nickname + '的书房',
             avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           },
         })
