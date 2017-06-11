@@ -20,10 +20,12 @@
                 class="remove-book-button"
                 hover-class="remove-book-button-hover"
                 data-isbn="{{item.isbn}}"
+                data-title="{{item.title}}"
                 bindtap="onRemoveBook">删除</view>
             <form wx:elif="{{isHomePage && !isCurrentUser}}"
                   bindsubmit="onBorrowBook" report-submit="true">
                   <input name="isbn" value="{{item.isbn}}" hidden />
+                  <input name="title" value="{{item.title}}" hidden />
                   <button class="borrow-book-button"
                         formType="submit"
                         hover-class="borrow-book-button-hover">借阅</button>

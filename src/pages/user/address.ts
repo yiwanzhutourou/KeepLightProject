@@ -1,5 +1,5 @@
 import { addAddress, getAddress, removeAddress } from '../../api/api'
-import { hideLoading, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showLoading, showToast } from '../../utils/utils'
 
 import { Address } from '../../api/interfaces'
 
@@ -60,24 +60,28 @@ Page({
   },
 
   onRemoveAddress: (e) => {
-    showLoading('正在删除')
-    let id = e.currentTarget.dataset.id
-    removeAddress(id, (result: number) => {
-      hideLoading()
-      let list: Array<Address> = []
-      if (addressPage.data.addresses) {
-        addressPage.data.addresses.forEach((address: Address) => {
-          if (id !== address.id) {
-            list.push(address)
+    showConfirmDialog('', '确认删除地址？', (confirm: boolean) => {
+      if (confirm) {
+        showLoading('正在删除')
+        let id = e.currentTarget.dataset.id
+        removeAddress(id, (result: number) => {
+          hideLoading()
+          let list: Array<Address> = []
+          if (addressPage.data.addresses) {
+            addressPage.data.addresses.forEach((address: Address) => {
+              if (id !== address.id) {
+                list.push(address)
+              }
+            })
+            addressPage.setData({
+              addresses: list,
+            })
           }
-        })
-        addressPage.setData({
-          addresses: list,
+          showToast('删除成功')
+        }, (failure) => {
+          hideLoading()
         })
       }
-      showToast('删除成功')
-    }, (failure) => {
-      hideLoading()
     })
   },
 })
