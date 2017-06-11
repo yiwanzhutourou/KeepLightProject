@@ -1,7 +1,7 @@
 import { Book, Result, UserInfo } from '../../api/interfaces'
 // pages/homepage/homepage.js
 import { addAddress, borrowBook, getBookList, getOtherUserBookList, getOtherUserIntro, getUserInfo, getUserInfoFromServer, getUserIntro, getUserToken, removeBook, setUserIntro } from '../../api/api'
-import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showDialog, showLoading, showToast } from '../../utils/utils'
 
 let homepage: WeApp.Page
 
@@ -97,7 +97,6 @@ Page({
           })
         }, (failure) => {
           hideLoading()
-          showErrDialog('无法获取图书列表，请检查您的网络状态')
         })
       } else {
         getOtherUserBookList(token, (books: Array<Book>) => {
@@ -107,7 +106,6 @@ Page({
           })
         }, (failure) => {
           hideLoading()
-          showErrDialog('无法获取图书列表，请检查您的网络状态')
         })
       }
   },

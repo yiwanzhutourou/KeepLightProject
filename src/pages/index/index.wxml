@@ -2,7 +2,6 @@
 <map id="homeMap"
     longitude="{{longitude}}"
     latitude="{{latitude}}"
-    controls="{{controls}}"
     markers="{{markers}}"
     bindcontroltap="controltap"
     bindmarkertap="markertap"

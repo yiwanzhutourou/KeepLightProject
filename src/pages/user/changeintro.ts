@@ -1,5 +1,5 @@
 import { getUserIntro, setUserIntro } from '../../api/api'
-import { hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { hideLoading, showDialog, showLoading } from '../../utils/utils'
 
 let introPage
 
@@ -37,7 +37,6 @@ Page({
             })
         }, (failure) => {
             hideLoading()
-            showErrDialog('无法获取数据，请检查您的网络~')
         })
   },
 })

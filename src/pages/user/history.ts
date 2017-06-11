@@ -1,4 +1,4 @@
-import { hideLoading, showErrDialog, showLoading } from '../../utils/utils'
+import { hideLoading, showLoading } from '../../utils/utils'
 
 import { BorrowHistory } from '../../api/interfaces'
 import { getBorrowHistory } from '../../api/api'
@@ -29,7 +29,6 @@ Page({
       })
     }, (failure) => {
       hideLoading()
-      showErrDialog('无法获取数据，请检查您的网络~')
     })
   },
 

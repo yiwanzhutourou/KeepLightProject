@@ -1,6 +1,5 @@
 import { Address, Book, BorrowHistory, CODE_SUCCESS, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
-
-import { showErrDialog } from '../utils/utils'
+import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 const BASE_URL = 'http://192.168.0.102/api/'
 
@@ -62,6 +61,27 @@ export const login = (cb: (userInfo: any) => void) => {
                         setUserToken('')
                         setUserInfo(null)
                         cb(null)
+                        if (wx.openSetting) {
+                            showConfirmDialog('授权提醒',
+                                '无法获取您的微信公开信息，您将不能创建书房、借阅图书等。是否重新授权？',
+                                (confirm) => {
+                                    if (confirm) {
+                                        wx.openSetting({
+                                            success: (authRes: any) => {
+                                                if (authRes.authSetting && authRes.authSetting['scope.userInfo']) {
+                                                    login((result) => {
+                                                        if (result) {
+                                                            showDialog('授权成功')
+                                                        }
+                                                    })
+                                                }
+                                            },
+                                        })
+                                    }
+                                })
+                        } else {
+                            showErrDialog('无法获取您的微信公开信息，您将不能创建书房、借阅图书等。请您重新安装有读书房小程序并授权。')
+                        }
                     },
                 })
             }
@@ -117,13 +137,17 @@ export const setUserIntro = (intro: string, success: () => void, failure?: (res?
         return
     }
 
-    let url = getUrl('User.setInfo')
-    post(url, {'info': intro}, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.setInfo')
+        post(url, {'info': intro}, success, failure)
+    }, failure)
 }
 
 export const getUserIntro = (success: (info: string) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.info')
-    get(url, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.info')
+        get(url, success, failure)
+    }, failure)
 }
 
 export const getOtherUserIntro = (token: string, success: (info: string) => void, failure?: (res?: any) => void) => {
@@ -134,56 +158,72 @@ export const getOtherUserIntro = (token: string, success: (info: string) => void
 }
 
 export const getUserContact = (success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.getUserContact')
-    post(url, [], success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.getUserContact')
+        post(url, [], success, failure)
+    }, failure)
 }
 
 export const setUserContact = (name: string, contact: string, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.setUserContact')
-    post(url, {
-        'name': name,
-        'contact': contact,
-    }, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.setUserContact')
+        post(url, {
+            'name': name,
+            'contact': contact,
+        }, success, failure)
+    }, failure)
 }
 
 export const addAddress = (address: Address, success: (name: string) => void,
                             failure?: (res?: any) => void) => {
-    let url = getUrl('User.addAddress')
-    post(url, {
-        'name': address.name,
-        'detail': address.detail,
-        'latitude': address.latitude,
-        'longitude': address.longitude,
-    }, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.addAddress')
+        post(url, {
+            'name': address.name,
+            'detail': address.detail,
+            'latitude': address.latitude,
+            'longitude': address.longitude,
+        }, success, failure)
+    }, failure)
 }
 
 export const removeAddress = (id: number, success: (id: number) => void,
                                 failure?: (res?: any) => void) => {
-    let url = getUrl('User.removeAddress')
-    post(url, { 'id': id }, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.removeAddress')
+        post(url, { 'id': id }, success, failure)
+    }, failure)
 }
 
 export const getAddress = (success: (addresses: Array<Address>) => void,
                             failure?: (res?: any) => void) => {
-    let url = getUrl('User.getMyAddress')
-    get(url, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.getMyAddress')
+        get(url, success, failure)
+    }, failure)
 }
 
 export const addBook = (isbn: string, success: (isbn: string) => void,
                         failure?: (res?: any) => void) => {
-    let url = getUrl('User.addBook')
-    post(url, { 'isbn': isbn }, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.addBook')
+        post(url, { 'isbn': isbn }, success, failure)
+    }, failure)
 }
 
 export const removeBook = (isbn: string, success: (isbn: string) => void,
                             failure?: (res?: any) => void) => {
-    let url = getUrl('User.removeBook')
-    post(url, { 'isbn': isbn }, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.removeBook')
+        post(url, { 'isbn': isbn }, success, failure)
+    }, failure)
 }
 
 export const getBookList = (success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.getMyBooks')
-    get(url, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.getMyBooks')
+        get(url, success, failure)
+    }, failure)
 }
 
 export const getOtherUserBookList = (token: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
@@ -208,13 +248,17 @@ export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void,
 }
 
 export const borrowBook = (toUser: string, isbn: string, formId: string, success: () => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.borrowBook')
-    post(url, { 'toUser': toUser, 'isbn': isbn, 'formId': formId }, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.borrowBook')
+        post(url, { 'toUser': toUser, 'isbn': isbn, 'formId': formId }, success, failure)
+    }, failure)
 }
 
 export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.getBorrowHistory')
-    get(url, success, failure)
+    checkLogin(() => {
+        let url = getUrl('User.getBorrowHistory')
+        get(url, success, failure)
+    }, failure)
 }
 
 export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (res?: any) => void) => {
@@ -315,6 +359,7 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
             if (failure) {
                 failure(e)
             }
+            showErrDialog('无法获取数据，请检查您的网络状态')
         },
     })
 }
@@ -333,5 +378,22 @@ const getRequestHeader = () => {
     // TODO: put hash in header
     return {
         'BOCHA-USER-TOKEN': getUserToken(),
+    }
+}
+
+// TODO 所有需要登录的接口都要调这个函数，好蠢，当时结构没设计好
+const checkLogin = (success: () => void, failure?: (res?: any) => void) => {
+    if (getUserToken()) {
+        success()
+    } else {
+        login((result) => {
+            if (result) {
+                success()
+            } else {
+                if (failure) {
+                    failure()
+                }
+            }
+        })
     }
 }

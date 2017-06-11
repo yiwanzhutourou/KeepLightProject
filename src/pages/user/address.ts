@@ -1,5 +1,5 @@
 import { addAddress, getAddress, removeAddress } from '../../api/api'
-import { hideLoading, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showLoading, showToast } from '../../utils/utils'
 
 import { Address } from '../../api/interfaces'
 
@@ -25,7 +25,6 @@ Page({
       })
     }, (failure) => {
       hideLoading()
-      showErrDialog('无法获取书房位置，请检查您的网络~')
     })
   },
 
