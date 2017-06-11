@@ -1,3 +1,5 @@
 {
-    "navigationBarTitleText": "书房"
+    "navigationBarTitleText": "书房",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
 }

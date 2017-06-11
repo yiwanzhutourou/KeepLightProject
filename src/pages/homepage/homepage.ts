@@ -21,21 +21,32 @@ Page({
     if (option && option.user && option.user !== getUserToken()) {
       isCurrentUser = false
     }
-
     // 更新数据
     homepage.setData({
       isCurrentUser: isCurrentUser,
+      userToken: option.user,
     })
+  },
 
+  onShow: function (): void {
+      homepage.loadData()
+  },
+
+  onPullDownRefresh: () => {
+    wx.stopPullDownRefresh()
+    showLoading('正在加载...')
+    homepage.loadData()
+  },
+
+  loadData: () => {
+    let isCurrentUser = homepage.data.isCurrentUser
+    let token = homepage.data.userToken
     if (isCurrentUser) {
       homepage.setData({
         userInfo: getUserInfo(),
       })
     } else {
-      homepage.setData({
-        userToken: option.user,
-      })
-      getUserInfoFromServer(option.user, (result: UserInfo) => {
+      getUserInfoFromServer(token, (result: UserInfo) => {
         homepage.setData({
           userInfo: {
             nickName: result.nickname,
@@ -63,7 +74,7 @@ Page({
         // TODO
       })
     } else {
-      getOtherUserIntro(option.user, (result: string) => {
+      getOtherUserIntro(token, (result: string) => {
         let intro = ''
         let showIntro = true
         if (!result || result === '') {
@@ -78,14 +89,10 @@ Page({
         // TODO
       })
     }
-  },
-
-  onShow: function (): void {
-      showLoading('正在加载')
-      if (homepage.data.isCurrentUser) {
+    if (isCurrentUser) {
         getBookList((books: Array<Book>) => {
           hideLoading()
-          this.setData({
+          homepage.setData({
             bookList: books,
           })
         }, (failure) => {
@@ -93,9 +100,9 @@ Page({
           showErrDialog('无法获取图书列表，请检查您的网络状态')
         })
       } else {
-        getOtherUserBookList(homepage.data.userToken, (books: Array<Book>) => {
+        getOtherUserBookList(token, (books: Array<Book>) => {
           hideLoading()
-          this.setData({
+          homepage.setData({
             bookList: books,
           })
         }, (failure) => {

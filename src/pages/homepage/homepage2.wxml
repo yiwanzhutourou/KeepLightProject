@@ -1,15 +1,19 @@
 <!--pages/homepage/homepage.wxml-->
 <view class="container">
-    <import src="../../template/user/UserInfo.wxml" />
-    <template is="user-info" data="{{userInfo, userIntro}}" />
-    <scroll-view class="book-list-container" style="height:{{screenHeight-190}}rpx;" scroll-y="true">
-        
-        <view class="book-list-container">
+    <image class="blur" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+    <view class="dark" />
+    <view class="user-info-container">
+        <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
+        <text class="user-nickname">{{userInfo.nickName}}的书房</text>
+        <text wx:if="{{userIntro !== ''}}" class="user-intro">{{userIntro}}</text>
+    </view>
+    <view class="detail-container">
+        <view class="list-container">
             <block wx:for="{{bookList}}" wx:key="id">
                 <import src="../../template/book/BookItem.wxml" />
                 <template is="book-item"
                     data="{{item, isHomePage, isCurrentUser}}" />
             </block>
         </view>
-    </scroll-view>
+    </view>
 </view>
