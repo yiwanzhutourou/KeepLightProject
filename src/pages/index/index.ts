@@ -1,5 +1,5 @@
 import { Markers, Result } from '../../api/interfaces'
-import { getMarkers, getUserInfo, getUserToken } from '../../api/api'
+import { getMarkers, getUserInfo } from '../../api/api'
 
 let app = getApp()
 let indexPage

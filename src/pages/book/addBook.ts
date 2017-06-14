@@ -1,5 +1,5 @@
 import { Book, Result } from '../../api/interfaces'
-import { addBook, getBookInfo, getBookList, getUserToken, searchBooks } from '../../api/api'
+import { addBook, getBookInfo, getBookList, searchBooks } from '../../api/api'
 import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 // pages/book/addBook.js
@@ -49,7 +49,6 @@ Page({
                   + book.title
                   + '&isbn=' + book.isbn
                   + '&showAddBook=' + true
-                  + '&belongTo=' + getUserToken()
                   + '&isAdded=' + book.added,
     })
   },

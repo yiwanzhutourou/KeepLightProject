@@ -38,11 +38,9 @@ Page({
             showBorrowBook: true,
             belongTo: option.belongTo,
         })
-    } else if (option.showAddBook === 'true'
-            && option.belongTo !== 'undefined') {
+    } else if (option.showAddBook === 'true') {
         bookPage.setData({
             showAddBook: true,
-            belongTo: option.belongTo,
             bookAdded: option.isAdded === 'true',
         })
     }
@@ -75,23 +73,22 @@ Page({
   },
 
   onBorrowBook: (e) => {
-      let token = bookPage.data.belongTo
-      if (token) {
+      let userId = bookPage.data.belongTo
+      if (userId) {
         showConfirmDialog('借阅信息确认', '借阅书名：《' + bookPage.data.bookDetail.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
-        if (confirm) {
-            let formId = e.detail.formId
-            let isbn = bookPage.data.bookIsbn
-            if (formId && isbn) {
-                showLoading('正在发送借书请求')
-                borrowBook(token, isbn, formId,
-                    () => {
-                    hideLoading()
-                    showDialog('借书请求已发送，请等待书的主人回复~')
-                }, (failure) => {
-                    hideLoading()
-                })
+            if (confirm) {
+                let isbn = bookPage.data.bookIsbn
+                if (isbn) {
+                    showLoading('正在发送借书请求')
+                    borrowBook(userId, isbn,
+                        () => {
+                        hideLoading()
+                        showDialog('借书请求已发送，请等待书的主人回复~')
+                    }, (failure) => {
+                        hideLoading()
+                    })
+                }
             }
-        }
         })
       }
   },

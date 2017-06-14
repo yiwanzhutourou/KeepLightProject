@@ -1,7 +1,7 @@
-import { Address, Book, BorrowHistory, CODE_SUCCESS, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
+import { Address, Book, BorrowHistory, CODE_SUCCESS, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-const BASE_URL = 'http://192.168.0.102/api/'
+const BASE_URL = 'http://192.168.0.105/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -124,9 +124,28 @@ export const bindUser = (code: string, nickname: string, avatar: string, success
     }, success, failure)
 }
 
-export const getUserInfoFromServer = (token: string, success: (info: UserInfo) => void, failure?: (res?: any) => void) => {
+export const getHomepageData = (userId: string, success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
+    if (userId) {
+        let url = getUrl('User.getHomepageData') + buildUrlParam({
+            userId: userId,
+        })
+        get(url, success, failure)
+    } else {
+        checkLogin(() => {
+            let url = getUrl('User.getHomepageData')
+            get(url, success, failure)
+        }, failure)
+    }
+}
+
+export const getMyUserInfoFromServer = (success: (info: UserInfo) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('User.getUserInfo')
+    get(url, success, failure)
+}
+
+export const getUserInfoFromServer = (userId: string, success: (info: UserInfo) => void, failure?: (res?: any) => void) => {
     let url = getUrl('User.getUserInfo') + buildUrlParam({
-        userToken: token,
+        userId: userId,
     })
     get(url, success, failure)
 }
@@ -150,9 +169,9 @@ export const getUserIntro = (success: (info: string) => void, failure?: (res?: a
     }, failure)
 }
 
-export const getOtherUserIntro = (token: string, success: (info: string) => void, failure?: (res?: any) => void) => {
+export const getOtherUserIntro = (userId: string, success: (info: string) => void, failure?: (res?: any) => void) => {
     let url = getUrl('User.info') + buildUrlParam({
-        userToken: token,
+        userId: userId,
     })
     get(url, success, failure)
 }
@@ -219,16 +238,23 @@ export const removeBook = (isbn: string, success: (isbn: string) => void,
     }, failure)
 }
 
-export const getBookList = (success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('User.getMyBooks')
+export const getBookList = (userId: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+    if (userId) {
+        let url = getUrl('User.getUserBooks') + buildUrlParam({
+            userId: userId,
+        })
         get(url, success, failure)
-    }, failure)
+    } else {
+        checkLogin(() => {
+            let url = getUrl('User.getMyBooks')
+            get(url, success, failure)
+        }, failure)
+    }
 }
 
-export const getOtherUserBookList = (token: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+export const getOtherUserBookList = (userId: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
     let url = getUrl('User.getUserBooks') + buildUrlParam({
-        userToken: token,
+        userId: userId,
     })
     get(url, success, failure)
 }
@@ -247,10 +273,10 @@ export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void,
     get(url, success, failure)
 }
 
-export const borrowBook = (toUser: string, isbn: string, formId: string, success: () => void, failure?: (res?: any) => void) => {
+export const borrowBook = (toUser: string, isbn: string, success: () => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.borrowBook')
-        post(url, { 'toUser': toUser, 'isbn': isbn, 'formId': formId }, success, failure)
+        post(url, { 'toUser': toUser, 'isbn': isbn }, success, failure)
     }, failure)
 }
 

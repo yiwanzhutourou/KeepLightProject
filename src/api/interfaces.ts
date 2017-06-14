@@ -54,8 +54,14 @@ export type UserInfo = {
     avatar: string,
 }
 
+export type HomepageData = {
+    info: string,
+    nickname: string,
+    avatar: string,
+}
+
 export type BorrowHistory = {
-    userToken: string,
+    userId: string,
     user: string,
     bookTitle: string,
     bookCover: string,

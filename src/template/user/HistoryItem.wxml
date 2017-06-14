@@ -1,6 +1,6 @@
 <template name="history-item">
     <view class="common-container">
-        <view class="history-container" data-user="{{item.userToken}}" bindtap="onHistoryItemTap">
+        <view class="history-container" data-user="{{item.userId}}" bindtap="onHistoryItemTap">
             <view class="maininfo-container">
                 <image class="book-pic" src="{{item.bookCover}}" mode="aspectFit" />
                 <view class="detail-container">

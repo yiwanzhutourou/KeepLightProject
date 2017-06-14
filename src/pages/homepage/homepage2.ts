@@ -1,33 +1,27 @@
-import { Book, Result, UserInfo } from '../../api/interfaces'
+import { Book, HomepageData } from '../../api/interfaces'
 // pages/homepage/homepage.js
-import { addAddress, borrowBook, getBookList, getOtherUserBookList, getOtherUserIntro, getUserInfo, getUserInfoFromServer, getUserIntro, getUserToken, removeBook, setUserIntro } from '../../api/api'
+import { addAddress, borrowBook, getBookList, getHomepageData, removeBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showLoading, showToast } from '../../utils/utils'
 
 let homepage: WeApp.Page
 
 Page({
   data: {
-    userInfo: {
-
-    },
-    isCurrentUser: true,
-    userToken: '',
-    userIntro: '',
+    userId: '',
+    homepageData: {},
     bookList: [],
     isHomePage: true,
+    isCurrentUser: true,
   },
   onLoad: function(option: any): void {
     homepage = this
 
-    let isCurrentUser = true
-    if (option && option.user && option.user !== getUserToken()) {
-      isCurrentUser = false
+    if (option && option.user) {
+      homepage.setData({
+        userId: option.user,
+        isCurrentUser: false,
+      })
     }
-    // 更新数据
-    homepage.setData({
-      isCurrentUser: isCurrentUser,
-      userToken: option.user,
-    })
   },
 
   onShow: function (): void {
@@ -41,91 +35,36 @@ Page({
   },
 
   loadData: () => {
-    let isCurrentUser = homepage.data.isCurrentUser
-    let token = homepage.data.userToken
-    if (isCurrentUser) {
-      let weixinUserInfo: any = getUserInfo()
-      if (weixinUserInfo) {
-        homepage.setData({
-          userInfo: {
-            nickName: weixinUserInfo.nickName + '的书房',
-            avatarUrl: weixinUserInfo.avatarUrl ? weixinUserInfo.avatarUrl : '/resources/img/default_avatar.png',
-          },
-        })
-      }
-    } else {
-      getUserInfoFromServer(token, (result: UserInfo) => {
-        homepage.setData({
-          userInfo: {
-            nickName: result.nickname + '的书房',
-            avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
-          },
-        })
-      }, (failure) => {
-        // TODO
+    let id = homepage.data.userId
+    getHomepageData(id, (result: HomepageData) => {
+      homepage.setData({
+        userInfo: {
+          nickName: result.nickname + '的书房',
+          avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
+          userIntro: result.info,
+        },
       })
-    }
+    }, (failure) => {
+      // do nothing
+    })
 
-    // 获取用户简介
-    if (isCurrentUser) {
-      getUserIntro((result: string) => {
-        let intro = ''
-        if (!result || result === '') {
-          intro = ''
-        } else {
-          intro = result
-        }
-        homepage.setData({
-          userIntro: intro,
-        })
-      }, (failure) => {
-        // TODO
+    getBookList(id, (books: Array<Book>) => {
+      hideLoading()
+      homepage.setData({
+        bookList: books,
       })
-    } else {
-      getOtherUserIntro(token, (result: string) => {
-        let intro = ''
-        let showIntro = true
-        if (!result || result === '') {
-          intro = ''
-        } else {
-          intro = result
-        }
-        homepage.setData({
-          userIntro: intro,
-        })
-      }, (failure) => {
-        // TODO
-      })
-    }
-    if (isCurrentUser) {
-        getBookList((books: Array<Book>) => {
-          hideLoading()
-          homepage.setData({
-            bookList: books,
-          })
-        }, (failure) => {
-          hideLoading()
-        })
-      } else {
-        getOtherUserBookList(token, (books: Array<Book>) => {
-          hideLoading()
-          homepage.setData({
-            bookList: books,
-          })
-        }, (failure) => {
-          hideLoading()
-        })
-      }
+    }, (failure) => {
+      hideLoading()
+    })
   },
 
   onBorrowBook: (e) => {
     showConfirmDialog('借阅信息确认', '借阅书名：《' + e.detail.value.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
       if (confirm) {
-        let formId = e.detail.formId
         let isbn = e.detail.value.isbn
-        if (formId && isbn) {
+        if (isbn) {
           showLoading('正在发送借书请求')
-          borrowBook(homepage.data.userToken, isbn, formId,
+          borrowBook(homepage.data.userId, isbn,
             () => {
               hideLoading()
               showDialog('借书请求已发送，请等待书的主人回复~')
@@ -139,12 +78,12 @@ Page({
 
   onBookItemTap: (e) => {
     let book: Book = e.currentTarget.dataset.book
-    let token = homepage.data.userToken
+    let userId = homepage.data.userId
     wx.navigateTo({
         url: '../book/book?title=' + book.title
                 + '&isbn=' + book.isbn
                 + '&showBorrowBook=' + !homepage.data.isCurrentUser
-                + '&belongTo=' + token,
+                + '&belongTo=' + userId,
     })
   },
 
