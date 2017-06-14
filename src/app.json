@@ -7,6 +7,7 @@
     "pages/book/book",
     "pages/user/address",
     "pages/user/settings",
+    "pages/user/request",
     "pages/user/history",
     "pages/user/contact",
     "pages/user/changeintro"

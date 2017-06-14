@@ -77,10 +77,11 @@ Page({
       if (userId) {
         showConfirmDialog('借阅信息确认', '借阅书名：《' + bookPage.data.bookDetail.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
             if (confirm) {
+                let formId = e.detail.formId
                 let isbn = bookPage.data.bookIsbn
                 if (isbn) {
                     showLoading('正在发送借书请求')
-                    borrowBook(userId, isbn,
+                    borrowBook(userId, isbn, formId,
                         () => {
                         hideLoading()
                         showDialog('借书请求已发送，请等待书的主人回复~')

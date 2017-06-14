@@ -1,0 +1,26 @@
+<template name="request-item">
+    <view class="common-container">
+        <view class="request-container">
+            <view class="maininfo-container" data-user="{{item.userId}}" bindtap="onRequestItemTap">
+                <image class="book-pic" src="{{item.bookCover}}" mode="aspectFit" />
+                <view class="detail-container">
+                    <text class="request-title">{{item.title}}</text>
+                    <text class="request-detail">{{item.subtitle}}</text>
+                    <text class="request-date">{{item.date}}</text>
+                </view>
+            </view>
+            <view class="subinfo-container">
+                <view wx:if="{{item.status == 1}}"
+                    class="dealed-text">已处理</view>
+                <button wx:if="{{item.status == 0}}" class="agree-button"
+                        data-request="{{item.requestId}}"
+                        bindtap="onAgreeTap"
+                        hover-class="agree-button-hover">同意</button>
+                <image class="arrow"
+                    mode="widthFix"
+                    src="../../resources/img/arrow.png" />
+            </view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

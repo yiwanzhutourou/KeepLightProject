@@ -3,7 +3,8 @@ import { getUserContact } from '../../api/api'
 const SETTING_BIND_WEIXIN = 0
 const SETTING_ADDRESS = 1
 const SETTING_CHANGE_INFO = 2
-const SETTING_BORROW_HISTORY = 3
+const SETTING_BORROW_REQUEST = 3
+const SETTING_BORROW_HISTORY = 4
 
 let settingsPage
 
@@ -57,6 +58,11 @@ Page({
                     subTitle: '给您的书房添加简短的介绍吧',
                 },
                 {
+                    id: SETTING_BORROW_REQUEST,
+                    title: '处理借阅请求',
+                    subTitle: '点击查看您的所有借阅请求',
+                },
+                {
                     id: SETTING_BORROW_HISTORY,
                     title: '借阅历史',
                 },
@@ -81,6 +87,11 @@ Page({
           case SETTING_CHANGE_INFO:
             wx.navigateTo({
                 url: '../user/changeintro',
+            })
+            break
+          case SETTING_BORROW_REQUEST:
+            wx.navigateTo({
+                url: '../user/request',
             })
             break
           case SETTING_BORROW_HISTORY:

@@ -1,4 +1,4 @@
-import { Address, Book, BorrowHistory, CODE_SUCCESS, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
+import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 const BASE_URL = 'http://192.168.0.105/api/'
@@ -273,16 +273,30 @@ export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void,
     get(url, success, failure)
 }
 
-export const borrowBook = (toUser: string, isbn: string, success: () => void, failure?: (res?: any) => void) => {
+export const borrowBook = (toUser: string, isbn: string, formId: string, success: () => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.borrowBook')
-        post(url, { 'toUser': toUser, 'isbn': isbn }, success, failure)
+        post(url, { 'toUser': toUser, 'isbn': isbn, 'formId': formId }, success, failure)
+    }, failure)
+}
+
+export const agreeRequest = (requestId: string, success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.agreeBorrowRequest')
+        post(url, { 'requestId': requestId }, success, failure)
     }, failure)
 }
 
 export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getBorrowHistory')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getBorrowRequest = (success: (result: Array<BorrowRequest>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getBorrowRequest')
         get(url, success, failure)
     }, failure)
 }

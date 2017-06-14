@@ -1,12 +1,12 @@
 <!--pages/homepage/homepage.wxml-->
 <view class="container">
-    <image class="blur" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+    <image class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
     <view class="dark" />
     <view class="user-info-container">
-        <image wx:if="{{userInfo.avatarUrl}}" class="user-avatar" src="{{userInfo.avatarUrl}}" />
+        <image wx:if="{{homepageData.avatarUrl}}" class="user-avatar" src="{{homepageData.avatarUrl}}" />
         <view class="user-text-container">
-            <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
-            <text wx:if="{{userIntro !== ''}}" class="user-intro">{{userIntro}}</text>
+            <text wx:if="{{homepageData.nickName}}" class="user-nickname">{{homepageData.nickName}}</text>
+            <text wx:if="{{homepageData.userIntro !== ''}}" class="user-intro">{{homepageData.userIntro}}</text>
         </view>
     </view>
     <view class="detail-container">

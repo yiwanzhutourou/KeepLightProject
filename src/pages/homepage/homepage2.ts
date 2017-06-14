@@ -38,7 +38,7 @@ Page({
     let id = homepage.data.userId
     getHomepageData(id, (result: HomepageData) => {
       homepage.setData({
-        userInfo: {
+        homepageData: {
           nickName: result.nickname + '的书房',
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
@@ -61,10 +61,11 @@ Page({
   onBorrowBook: (e) => {
     showConfirmDialog('借阅信息确认', '借阅书名：《' + e.detail.value.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
       if (confirm) {
+        let formId = e.detail.formId
         let isbn = e.detail.value.isbn
-        if (isbn) {
+        if (formId && isbn) {
           showLoading('正在发送借书请求')
-          borrowBook(homepage.data.userId, isbn,
+          borrowBook(homepage.data.userId, isbn, formId,
             () => {
               hideLoading()
               showDialog('借书请求已发送，请等待书的主人回复~')

@@ -1,0 +1,75 @@
+.request-container {
+    height: 180rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+}
+
+.maininfo-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.subinfo-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.detail-container {
+    width: 380rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15rpx;
+    margin-right: 15rpx;
+}
+
+.request-title {
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.request-detail {
+    font-size: 30rpx;
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 10rpx;
+}
+
+.request-date {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 10rpx;
+}
+
+.book-pic {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.agree-button {
+    height: 50rpx;
+    line-height: 50rpx;
+    font-size: 25rpx;
+    color: #fff;
+    background: rgba(0, 150, 136, 1);
+    margin-right: 20rpx;
+}
+
+.agree-hover {
+    background: rgba(0, 150, 136, 0.6);
+}
+
+.dealed-text {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.38);
+    margin-right: 20rpx;
+}
