@@ -1,9 +1,13 @@
-import { agreeRequest, getBorrowRequest } from '../../api/api'
+import { getBorrowRequest, updateRequest } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showLoading } from '../../utils/utils'
 
 import { BorrowRequest } from '../../api/interfaces'
 
 let requestPage
+
+const STATUS_AGREE = 1
+const STATUS_DECLINE = 2
+const STATUS_DISMISS = 3
 
 Page({
   data: {
@@ -54,29 +58,72 @@ Page({
     })
   },
 
-  onAgreeTap: (e) => {
-    let requestId = e.currentTarget.dataset.request
-    if (requestId) {
-      showConfirmDialog('', '同意借阅请求后，对方将能通过您设置的联系方式联系您，确认继续？', (confirm) => {
-        if (confirm) {
-          showLoading('正在处理')
-          agreeRequest(requestId, () => {
-            hideLoading()
-            let list = new Array()
-            requestPage.data.requestList.forEach((request: any) => {
-              if (request.requestId === requestId) {
-                request.status = 1
-              }
-              list.push(request)
-            })
-            requestPage.setData({
-              requestList: list,
-            })
-          }, () => {
-            hideLoading()
-          })
+  onAgree: (requestId: number) => {
+    showConfirmDialog('', '同意借阅请求后，对方将能通过您设置的联系方式联系您，确认继续？', (confirm) => {
+      if (confirm) {
+        showLoading('正在处理')
+        updateRequest(requestId, STATUS_AGREE, () => {
+          hideLoading()
+          requestPage.loadData()
+        }, () => {
+          hideLoading()
+        })
+      }
+    })
+  },
+
+  onDecline: (requestId: number) => {
+    showConfirmDialog('', '确定拒绝？', (confirm) => {
+      if (confirm) {
+        showLoading('正在处理')
+        updateRequest(requestId, STATUS_DECLINE, () => {
+          hideLoading()
+          requestPage.loadData()
+        }, () => {
+          hideLoading()
+        })
+      }
+    })
+  },
+
+  onDismiss: (requestId: number) => {
+    showConfirmDialog('', '确认忽略？', (confirm) => {
+      if (confirm) {
+        showLoading('正在处理')
+        updateRequest(requestId, STATUS_DISMISS, () => {
+          hideLoading()
+          requestPage.loadData()
+        }, () => {
+          hideLoading()
+        })
+      }
+    })
+  },
+
+  onActionTap: (e) => {
+    let requestId = e.currentTarget.dataset.requestid
+    wx.showActionSheet({
+      itemList: ['同意', '拒绝', '忽略'],
+      success: (res) => {
+        let status = -1
+        if (res) {
+          switch (res.tapIndex) {
+            case 0:
+              requestPage.onAgree(requestId)
+            break
+            case 1:
+              requestPage.onDecline(requestId)
+            break
+            case 2:
+              requestPage.onDismiss(requestId)
+            break
+            default:
+          }
         }
-      })
-    }
+      },
+      fail: (res) => {
+        // do nothing
+      },
+    })
   },
 })

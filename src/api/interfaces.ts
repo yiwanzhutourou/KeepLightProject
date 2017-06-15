@@ -61,11 +61,13 @@ export type HomepageData = {
 }
 
 export type BorrowHistory = {
+    requestId: number,
     userId: number,
     user: string,
     bookTitle: string,
     bookCover: string,
     date: string,
+    status: number,
 }
 
 export type BorrowRequest = {

@@ -34,13 +34,13 @@
 }
 
 .request-title {
-    font-size: 35rpx;
-    color: rgba(0, 0, 0, 0.87);
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
 }
 
 .request-detail {
-    font-size: 30rpx;
-    color: rgba(0, 0, 0, 0.54);
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.87);
     margin-top: 10rpx;
 }
 
@@ -55,21 +55,20 @@
     height: 120rpx;
 }
 
-.agree-button {
-    height: 50rpx;
-    line-height: 50rpx;
+.dealed-text {
     font-size: 25rpx;
-    color: #fff;
-    background: rgba(0, 150, 136, 1);
+    color: rgba(0, 150, 136, 1);
     margin-right: 20rpx;
 }
 
-.agree-hover {
-    background: rgba(0, 150, 136, 0.6);
+.declined-text {
+    font-size: 25rpx;
+    color: rgba(255, 0, 127, 1);
+    margin-right: 20rpx;
 }
 
-.dealed-text {
+.action-text {
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.38);
+    color: rgba(0, 0, 0, 0.54);
     margin-right: 20rpx;
 }

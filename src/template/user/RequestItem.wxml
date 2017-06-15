@@ -10,12 +10,14 @@
                 </view>
             </view>
             <view class="subinfo-container">
-                <view wx:if="{{item.status == 1}}"
-                    class="dealed-text">已处理</view>
-                <button wx:if="{{item.status == 0}}" class="agree-button"
-                        data-request="{{item.requestId}}"
-                        bindtap="onAgreeTap"
-                        hover-class="agree-button-hover">同意</button>
+                <text wx:if="{{item.status == 0}}"
+                    class="action-text" data-requestid="{{item.requestId}}" bindtap="onActionTap">点击文字处理</text>
+                <text wx:if="{{item.status == 1}}"
+                    class="dealed-text">已同意</text>
+                <text wx:if="{{item.status == 2}}"
+                    class="declined-text">已拒绝</text>
+                <text wx:if="{{item.status == 3}}"
+                    class="action-text">已忽略</text>
                 <image class="arrow"
                     mode="widthFix"
                     src="../../resources/img/arrow.png" />

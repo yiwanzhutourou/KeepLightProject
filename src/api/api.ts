@@ -183,6 +183,13 @@ export const getUserContact = (success: (contact: UserContact) => void, failure?
     }, failure)
 }
 
+export const getUserContactByRequest = (requestId: number, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getUserContactByRequest')
+        post(url, {'requestId': requestId }, success, failure)
+    }, failure)
+}
+
 export const setUserContact = (name: string, contact: string, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.setUserContact')
@@ -280,10 +287,10 @@ export const borrowBook = (toUser: string, isbn: string, formId: string, success
     }, failure)
 }
 
-export const agreeRequest = (requestId: string, success: () => void, failure?: (res?: any) => void) => {
+export const updateRequest = (requestId: number, status: number, success: () => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
-        let url = getUrl('User.agreeBorrowRequest')
-        post(url, { 'requestId': requestId }, success, failure)
+        let url = getUrl('User.updateBorrowRequest')
+        post(url, { 'requestId': requestId, 'status': status }, success, failure)
     }, failure)
 }
 

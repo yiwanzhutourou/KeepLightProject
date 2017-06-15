@@ -25,7 +25,7 @@
 }
 
 .detail-container {
-    width: 380rpx;
+    width: 300rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -47,10 +47,20 @@
 .history-date {
     font-size: 25rpx;
     color: rgba(0, 0, 0, 0.54);
-    margin-right: 20rpx;
+    margin-top: 10rpx;
 }
 
 .book-pic {
     width: 120rpx;
     height: 120rpx;
+}
+
+.action-text {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.history-arrow {
+    width: 10rpx;
+    margin-left: 20rpx;
 }

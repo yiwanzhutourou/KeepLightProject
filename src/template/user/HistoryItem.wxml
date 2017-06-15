@@ -1,16 +1,22 @@
 <template name="history-item">
     <view class="common-container">
-        <view class="history-container" data-user="{{item.userId}}" bindtap="onHistoryItemTap">
-            <view class="maininfo-container">
+        <view class="history-container">
+            <view class="maininfo-container" data-user="{{item.userId}}" bindtap="onHistoryItemTap">
                 <image class="book-pic" src="{{item.bookCover}}" mode="aspectFit" />
                 <view class="detail-container">
                     <text class="history-title">{{item.bookTitle}}</text>
                     <text class="history-detail">{{item.user}}</text>
+                    <text class="history-date">{{item.date}}</text>
                 </view>
             </view>
             <view class="subinfo-container">
-                <text class="history-date">{{item.date}}</text>
-                <image class="arrow"
+                <text wx:if="{{item.status == 1}}"
+                    class="action-text"
+                    data-requestid="{{item.requestId}}"
+                    data-usernick="{{item.user}}"
+                    bindtap="onActionTap">已同意，点击文字查看联系方式</text>
+                <image wx:if="{{item.status != 1}}"
+                    class="history-arrow"
                     mode="widthFix"
                     src="../../resources/img/arrow.png" />
             </view>

@@ -1,7 +1,6 @@
-import { hideLoading, showLoading } from '../../utils/utils'
-
-import { BorrowHistory } from '../../api/interfaces'
-import { getBorrowHistory } from '../../api/api'
+import { BorrowHistory, UserContact } from '../../api/interfaces'
+import { getBorrowHistory, getUserContactByRequest } from '../../api/api'
+import { hideLoading, showLoading, showToast } from '../../utils/utils'
 
 let historyPage
 
@@ -36,5 +35,39 @@ Page({
     wx.navigateTo({
         url: '../homepage/homepage2?user=' + e.currentTarget.dataset.user,
     })
+  },
+
+  onActionTap: (e) => {
+    let requestId = e.currentTarget.dataset.requestid
+    let usernick = e.currentTarget.dataset.usernick as string
+    showLoading('正在加载')
+    getUserContactByRequest(requestId, (contact: UserContact) => {
+      hideLoading()
+      wx.showModal({
+        title: (usernick.length > 3 ? usernick.substring(0, usernick.length - 3) : usernick) + '的联系方式',
+        content: historyPage.getContactString(contact),
+        confirmText: '点击复制',
+        success: (res) => {
+          if (res && res.confirm) {
+            wx.setClipboardData({
+              data: contact.contact,
+              success: (result) => {
+                showToast(contact.name + '已复制')
+              },
+            })
+          }
+        },
+      })
+    }, () => {
+      hideLoading()
+    })
+  },
+
+  getContactString: (contact: UserContact) => {
+    if (contact && contact.name && contact.contact) {
+      return contact.name + '：' + contact.contact
+    } else {
+      return '抱歉，书房主人好像没有留下联系方式'
+    }
   },
 })
