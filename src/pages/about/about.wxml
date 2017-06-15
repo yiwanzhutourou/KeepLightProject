@@ -1,0 +1,19 @@
+<view class="container">
+    <image class="blur" src="../../resources/img/logo.png" mode="aspectFill" />
+    <view class="dark" />
+    <view class="logo-container">
+        <image class="logo" src="../../resources/img/logo.png" />
+        <text class="about-title">有读书房</text>
+        <text class="about-info">发现1公里内的好书</text>
+        <text class="about-info">尝试解决自有图书闲置问题</text>
+        <text class="about-info">创建个人书房，定位搜索附近书房</text>
+        <text class="about-info">只要你有书，或者想借书</text>
+        <text class="about-info">可能是最好用的借书平台，甚至都不需要注册</text>
+    </view>
+    <view class="url-container">
+        <text class="about-text">应用版本 1.0.0</text>
+        <text class="url" bindtap="onRightTap">知识产权声明</text>
+        <text class="url" bindtap="onLegalTap">免责声明</text>
+        <text class="contact-text">联系我们 youdushufang@163.com</text>
+    </view>
+</view>

@@ -1,0 +1,17 @@
+.detail-container {
+    padding: 30rpx;
+    display: flex;
+    flex-direction: column;
+}
+
+.detail-title {
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.detail-content {
+    font-size: 28rpx;
+    color: rgba(0, 0, 0, 0.54);
+    line-height: 150%;
+    margin-top: 30rpx;
+}

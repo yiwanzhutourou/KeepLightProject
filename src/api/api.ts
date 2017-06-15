@@ -355,6 +355,16 @@ export const getBookDetails = (isbn: string, success: (result: any) => void, fai
     })
 }
 
+export const rights = (success: (result: string) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Youdu.rights')
+    get(url, success, failure)
+}
+
+export const legals = (success: (result: string) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Youdu.legals')
+    get(url, success, failure)
+}
+
 export const get = (url: string, success: (res: any) => void, failure?: (res?: any) => void) => {
     wx.request({
         url: url,

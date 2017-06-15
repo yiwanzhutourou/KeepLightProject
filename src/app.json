@@ -10,7 +10,9 @@
     "pages/user/request",
     "pages/user/history",
     "pages/user/contact",
-    "pages/user/changeintro"
+    "pages/user/changeintro",
+    "pages/about/about",
+    "pages/about/legals"
   ],
   "window": {
     "backgroundTextStyle":"light",

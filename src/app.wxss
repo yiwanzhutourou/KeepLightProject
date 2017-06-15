@@ -14,17 +14,17 @@
 }
 
 .common-container {
-  width: 100%;
+    width: 100%;
 }
 
 .list-title {
-  width: 100%;
-  background: #eee;
-  color: rgba(0, 0, 0, 0.87);
-  font-size: 30rpx;
-  padding-left: 40rpx;
-  padding-top: 20rpx;
-  padding-bottom: 10rpx; 
+    width: 100%;
+    background: #eee;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 30rpx;
+    padding-left: 40rpx;
+    padding-top: 20rpx;
+    padding-bottom: 10rpx; 
 }
 
 .item-divider {

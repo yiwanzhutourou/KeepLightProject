@@ -5,6 +5,7 @@ const SETTING_ADDRESS = 1
 const SETTING_CHANGE_INFO = 2
 const SETTING_BORROW_REQUEST = 3
 const SETTING_BORROW_HISTORY = 4
+const SETTING_ABOUT = 5
 
 let settingsPage
 
@@ -27,8 +28,17 @@ Page({
             subTitle: '给您的书房添加简短的介绍吧',
         },
         {
+            id: SETTING_BORROW_REQUEST,
+            title: '处理借阅请求',
+            subTitle: '点击查看您的所有借阅请求',
+        },
+        {
             id: SETTING_BORROW_HISTORY,
             title: '借阅历史',
+        },
+        {
+            id: SETTING_ABOUT,
+            title: '关于有读书房',
         },
     ],
   },
@@ -66,6 +76,10 @@ Page({
                     id: SETTING_BORROW_HISTORY,
                     title: '借阅历史',
                 },
+                {
+                    id: SETTING_ABOUT,
+                    title: '关于有读书房',
+                },
             ],
         })
     })
@@ -97,6 +111,11 @@ Page({
           case SETTING_BORROW_HISTORY:
             wx.navigateTo({
                 url: '../user/history',
+            })
+            break
+          case SETTING_ABOUT:
+            wx.navigateTo({
+                url: '../about/about',
             })
             break
           default:
