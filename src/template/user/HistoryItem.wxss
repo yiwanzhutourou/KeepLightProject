@@ -25,7 +25,7 @@
 }
 
 .detail-container {
-    width: 300rpx;
+    width: 350rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

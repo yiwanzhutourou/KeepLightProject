@@ -1,7 +1,7 @@
 import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-const BASE_URL = 'http://192.168.0.105/api/'
+const BASE_URL = 'https://cuiyi.mozidev.me/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -334,7 +334,7 @@ export const getBookDetails = (isbn: string, success: (result: any) => void, fai
         url: url,
         method: 'GET',
         success: (res) => {
-            console.log(res)
+            //console.log(res)
             if (!res) {
                 return
             }
@@ -371,7 +371,7 @@ export const get = (url: string, success: (res: any) => void, failure?: (res?: a
         method: 'GET',
         header: getRequestHeader(),
         success: (res) => {
-            console.log(res)
+            //console.log(res)
             if (!res) {
                 return
             }
@@ -399,7 +399,7 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
         method: 'POST',
         header: getRequestHeader(),
         success: (res) => {
-            console.log(res)
+            //console.log(res)
             if (!res) {
                 return
             }

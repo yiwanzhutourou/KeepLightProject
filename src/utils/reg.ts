@@ -1,6 +1,6 @@
 export const pattern = {
     'wechat': /^[a-zA-Z\d_]{5,}$/,
-    'qq': /^[1-9]d{4,15}$/,
+    'qq': /^[0-9]{4,15}$/,
     'email': /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
 }
 

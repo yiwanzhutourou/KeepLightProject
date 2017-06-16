@@ -24,7 +24,6 @@ Page({
   loadData: () => {
     showLoading('正在加载')
     getBorrowRequest((list: Array<BorrowRequest>) => {
-      console.log(list)
       hideLoading()
       requestPage.setData({
         requestList: requestPage.formatList(list),

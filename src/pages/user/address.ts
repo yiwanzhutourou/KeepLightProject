@@ -18,7 +18,6 @@ Page({
   loadData: () => {
     showLoading('正在加载')
     getAddress((list: Array<Address>) => {
-      console.log(list)
       hideLoading()
       addressPage.setData({
         addresses: list,
