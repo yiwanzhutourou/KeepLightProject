@@ -1,6 +1,6 @@
 <view class="container">
-    <form wx:if="{{showUi}}" class="form-container" bindsubmit="formSubmit">
-        <view class="textarea-container">
+    <form class="form" wx:if="{{showUi}}" bindsubmit="formSubmit">
+        <view class="form-container">
             <textarea class="intro-textarea"
                 name="intro_input"
                 value="{{intro}}"
@@ -9,9 +9,9 @@
                 maxlength="70"
                 auto-focus
             />
+            <button class="submit-button" formType="submit">
+                保存
+            </button>
         </view>
-        <button class="submit-button" formType="submit">
-            保存
-        </button>
     </form>
 </view>

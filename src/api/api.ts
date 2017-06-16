@@ -287,7 +287,7 @@ export const borrowBook = (toUser: string, isbn: string, formId: string, success
     }, failure)
 }
 
-export const updateRequest = (requestId: number, status: number, success: () => void, failure?: (res?: any) => void) => {
+export const updateRequest = (requestId: number, status: number, success: (result: string) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.updateBorrowRequest')
         post(url, { 'requestId': requestId, 'status': status }, success, failure)

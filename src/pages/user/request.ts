@@ -61,9 +61,23 @@ Page({
     showConfirmDialog('', '同意借阅请求后，对方将能通过您设置的联系方式联系您，确认继续？', (confirm) => {
       if (confirm) {
         showLoading('正在处理')
-        updateRequest(requestId, STATUS_AGREE, () => {
+        updateRequest(requestId, STATUS_AGREE, (result: string) => {
           hideLoading()
-          requestPage.loadData()
+          if (result === 'no_contact') {
+            wx.showModal({
+              title: '提醒',
+              content: '您还没有设置联系方式，请先设置一个可以方便联系到您的联系方式。前往设置？',
+              success: (res) => {
+                if (res && res.confirm) {
+                  wx.navigateTo({
+                    url: '../user/contact',
+                  })
+                }
+              },
+            })
+          } else {
+            requestPage.loadData()
+          }
         }, () => {
           hideLoading()
         })
@@ -75,7 +89,7 @@ Page({
     showConfirmDialog('', '确定拒绝？', (confirm) => {
       if (confirm) {
         showLoading('正在处理')
-        updateRequest(requestId, STATUS_DECLINE, () => {
+        updateRequest(requestId, STATUS_DECLINE, (result: string) => {
           hideLoading()
           requestPage.loadData()
         }, () => {
@@ -89,7 +103,7 @@ Page({
     showConfirmDialog('', '确认忽略？', (confirm) => {
       if (confirm) {
         showLoading('正在处理')
-        updateRequest(requestId, STATUS_DISMISS, () => {
+        updateRequest(requestId, STATUS_DISMISS, (result: string) => {
           hideLoading()
           requestPage.loadData()
         }, () => {
