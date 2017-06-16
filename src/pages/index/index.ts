@@ -7,8 +7,8 @@ let mapCtx
 
 Page({
   data: {
-    longitude: 0,
-    latitude: 0,
+    longitude: 121.438378,
+    latitude: 31.181471,
     markers: [],
   },
 
