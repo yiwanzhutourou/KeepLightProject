@@ -308,6 +308,13 @@ export const getBorrowRequest = (success: (result: Array<BorrowRequest>) => void
     }, failure)
 }
 
+export const getBorrowRequestCount = (success: (result: number) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getBorrowRequestCount')
+        get(url, success, failure)
+    }, failure)
+}
+
 export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (res?: any) => void) => {
     let url = getUrl('Map.getMarkers')
     get(url, (result) => {
@@ -334,7 +341,7 @@ export const getBookDetails = (isbn: string, success: (result: any) => void, fai
         url: url,
         method: 'GET',
         success: (res) => {
-            //console.log(res)
+            console.log(res)
             if (!res) {
                 return
             }
@@ -371,7 +378,7 @@ export const get = (url: string, success: (res: any) => void, failure?: (res?: a
         method: 'GET',
         header: getRequestHeader(),
         success: (res) => {
-            //console.log(res)
+            console.log(res)
             if (!res) {
                 return
             }
@@ -399,7 +406,7 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
         method: 'POST',
         header: getRequestHeader(),
         success: (res) => {
-            //console.log(res)
+            console.log(res)
             if (!res) {
                 return
             }

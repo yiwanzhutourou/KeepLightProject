@@ -39,5 +39,19 @@
 .sub-info {
     font-size: 25rpx;
     color: rgba(0, 0, 0, 0.54);
-    margin-right: 15rpx;
+    margin-right: 20rpx;
+}
+
+.unread-text {
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    line-height: 40rpx;
+    text-align: center;
+    border-radius: 50%;
+    background: #E64340;
+    color: #fff;
+    font-size: 20rpx;
+    margin-right: 20rpx;
+    box-shadow: 0 0 1rpx #aaa;
 }

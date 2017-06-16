@@ -7,6 +7,10 @@
             </view>
             <view class="subinfo-container">
                 <text wx:if="{{settingItem.subInfo}}" class="sub-info">{{settingItem.subInfo}}</text>
+                <view wx:if="{{settingItem.unreadCount}}"
+                    class="unread-text">
+                    {{settingItem.unreadCount}}
+                </view>
                 <image wx:if="{{!settingItem.hideArrow}}"
                    class="arrow"
                    mode="widthFix"

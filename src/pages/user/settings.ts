@@ -1,5 +1,7 @@
+import { getBorrowRequestCount, getUserContact } from '../../api/api'
+
 import { UserContact } from '../../api/interfaces'
-import { getUserContact } from '../../api/api'
+
 const SETTING_BIND_WEIXIN = 0
 const SETTING_ADDRESS = 1
 const SETTING_CHANGE_INFO = 2
@@ -49,38 +51,50 @@ Page({
 
   onShow: function(): void {
     getUserContact((result: UserContact) => {
+        let settings = new Array()
+        settingsPage.data.settingItems.forEach((item) => {
+            if (item.id === SETTING_BIND_WEIXIN) {
+                settings.push(
+                    {
+                        id: SETTING_BIND_WEIXIN,
+                        title: '设置联系方式',
+                        subTitle: '设置微信号、QQ或者邮箱方便书友联系您',
+                        subInfo: result.name ? '已设置' + result.name : '',
+                    },
+                )
+            } else {
+                settings.push(item)
+            }
+        })
         settingsPage.setData({
-            settingItems: [
-                {
-                    id: SETTING_BIND_WEIXIN,
-                    title: '设置联系方式',
-                    subTitle: '设置微信号、QQ或者邮箱方便书友联系您',
-                    subInfo: result.name ? '已设置' + result.name : '',
-                },
-                {
-                    id: SETTING_ADDRESS,
-                    title: '管理书房位置',
-                    subTitle: '添加书房位置方便书友在地图上找到您的书房',
-                },
-                {
-                    id: SETTING_CHANGE_INFO,
-                    title: '修改书房简介',
-                    subTitle: '给您的书房添加简短的介绍吧',
-                },
-                {
-                    id: SETTING_BORROW_REQUEST,
-                    title: '处理借阅请求',
-                    subTitle: '点击查看您的所有借阅请求',
-                },
-                {
-                    id: SETTING_BORROW_HISTORY,
-                    title: '借阅历史',
-                },
-                {
-                    id: SETTING_ABOUT,
-                    title: '关于有读书房',
-                },
-            ],
+            settingItems: settings,
+        })
+    })
+
+    getBorrowRequestCount((count: number) => {
+        let countText = ''
+        if (count > 0 && count < 100) {
+            countText = '' + count
+        } else if (count >= 100) {
+            countText = '99+'
+        }
+        let settings = new Array()
+        settingsPage.data.settingItems.forEach((item) => {
+            if (item.id === SETTING_BORROW_REQUEST) {
+                settings.push(
+                    {
+                        id: SETTING_BORROW_REQUEST,
+                        title: '处理借阅请求',
+                        subTitle: '点击查看您的所有借阅请求',
+                        unreadCount: countText,
+                    },
+                )
+            } else {
+                settings.push(item)
+            }
+        })
+        settingsPage.setData({
+            settingItems: settings,
         })
     })
   },
