@@ -1,6 +1,6 @@
 <view class="container">
     <scroll-view scroll-y="true">
-        <image class="blur" src="{{bookDetail.bigImage}}" mode="scaleToFill" />
+        <image class="blur" src="{{bookDetail.bigImage}}" mode="aspectFill" />
         <view class="dark" />
         <view class="detail-container">
             <view class="title-container">
