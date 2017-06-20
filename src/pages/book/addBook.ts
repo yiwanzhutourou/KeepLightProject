@@ -139,6 +139,7 @@ Page({
     if (bookPage.data.bookList.length > 0) {
       bookPage.setData({
         bookList: [],
+        keyword: '',
       })
     }
   },
