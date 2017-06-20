@@ -12,6 +12,7 @@ Page({
     bookList: [],
     isHomePage: true,
     isCurrentUser: true,
+    showEmpty: false,
   },
   onLoad: function(option: any): void {
     homepage = this
@@ -52,6 +53,7 @@ Page({
       hideLoading()
       homepage.setData({
         bookList: books,
+        showEmpty: books.length == 0,
       })
     }, (failure) => {
       hideLoading()
@@ -88,6 +90,12 @@ Page({
     })
   },
 
+  onUploadBook: (e) => {
+    wx.switchTab({
+      url: '../book/addBook',
+    })
+  },
+
   onRemoveBook: (e) => {
     showConfirmDialog('', '确认从您的书房中移除《' + e.currentTarget.dataset.title + '》？', (confirm: boolean) => {
       if (confirm) {
@@ -112,6 +120,7 @@ Page({
             })
             homepage.setData({
               bookList: bookList,
+              showEmpty: bookList.length == 0,
             })
             showToast('删除成功')
           }

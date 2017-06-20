@@ -86,3 +86,24 @@
     padding-right: 30rpx;
 }
 
+.empty_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 260rpx;
+}
+
+.empty_title {
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.empty_action {
+    font-size: 30rpx;
+    color: rgba(0, 150, 136, 0.9);
+    text-decoration: underline;
+    margin-top: 10rpx;
+}

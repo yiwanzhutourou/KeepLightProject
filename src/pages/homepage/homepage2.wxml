@@ -17,5 +17,12 @@
                     data="{{item, isHomePage, isCurrentUser}}" />
             </block>
         </view>
+        <view wx:if="{{showEmpty && isCurrentUser}}" class="empty_container">
+            <text class="empty_title">您还没有上传书</text>
+            <text class="empty_action" bindtap="onUploadBook">去上传</text>
+        </view>
+        <view wx:if="{{showEmpty && !isCurrentUser}}" class="empty_container">
+            <text class="empty_title">书房里没有书</text>
+        </view>
     </view>
 </view>
