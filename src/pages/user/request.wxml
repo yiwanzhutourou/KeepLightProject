@@ -1,13 +1,11 @@
-<view class="container">
-    <scroll-view wx:if="{{showList}}" scroll-y="true">
-        <view>
-            <block wx:for="{{requestList}}" wx:key="id">
-                <import src="../../template/user/RequestItem.wxml" />
-                <template is="request-item"
-                    data="{{item}}" />
-            </block>
-        </view>
-    </scroll-view>
+<view class="request-all-container">
+    <view class="list-container">
+        <block wx:for="{{requestList}}" wx:key="id">
+            <import src="../../template/user/RequestItem.wxml" />
+            <template is="request-item"
+                data="{{item}}" />
+        </block>
+    </view>
     <view wx:if="{{showEmpty}}" class="empty_container">
         <text class="empty_title">暂时没有借阅请求</text>
     </view>

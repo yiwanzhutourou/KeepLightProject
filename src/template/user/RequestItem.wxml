@@ -1,7 +1,7 @@
 <template name="request-item">
-    <view class="common-container">
-        <view class="request-container">
-            <view class="maininfo-container" data-user="{{item.userId}}" bindtap="onRequestItemTap">
+    <view class="request-common-container">
+        <view class="request-container" data-user="{{item.userId}}" bindtap="onRequestItemTap">
+            <view class="maininfo-container">
                 <image class="book-pic" src="{{item.bookCover}}" mode="aspectFit" />
                 <view class="detail-container">
                     <text class="request-title">{{item.title}}</text>
@@ -10,19 +10,20 @@
                 </view>
             </view>
             <view class="subinfo-container">
-                <text wx:if="{{item.status == 0}}"
-                    class="action-text" data-requestid="{{item.requestId}}" bindtap="onActionTap">点击文字处理</text>
-                <text wx:if="{{item.status == 1}}"
-                    class="dealed-text">已同意</text>
-                <text wx:if="{{item.status == 2}}"
-                    class="declined-text">已拒绝</text>
-                <text wx:if="{{item.status == 3}}"
-                    class="action-text">已忽略</text>
                 <image class="arrow"
                     mode="widthFix"
                     src="../../resources/img/arrow.png" />
             </view>
         </view>
-        <view class="item-divider" />
+        <view class="action-container">
+            <text wx:if="{{item.status == 0}}"
+                class="action-text" data-requestid="{{item.requestId}}" bindtap="onActionTap">点击文字处理</text>
+            <text wx:if="{{item.status == 1}}"
+                class="dealed-text">已同意</text>
+            <text wx:if="{{item.status == 2}}"
+                class="declined-text">已拒绝</text>
+            <text wx:if="{{item.status == 3}}"
+                class="action-text">已忽略</text>
+        </view>
     </view>
 </template>
