@@ -1,19 +1,14 @@
 <view class="container">
-    <scroll-view scroll-y="true">
-        <view>
-            <block wx:for="{{addresses}}" wx:key="index">
-                <import src="../../template/user/AddressItem.wxml" />
-                <template is="user-address"
-                    data="{{item, index}}" />
-            </block>
-        </view>
-        <view class="common-container">
-            <view class="add-address-container">
-                <view class="add-address-button"
-                    hover-class="add-address-button-hover"
-                    bindtap="onAddAddress">添加地址</view>
-            </view>
-            <view class="item-divider" />
-        </view>
-    </scroll-view>
+    <view class="address-list-container">
+        <block wx:for="{{addresses}}" wx:key="index">
+            <import src="../../template/user/AddressItem.wxml" />
+            <template is="user-address"
+                data="{{item, index}}" />
+        </block>
+    </view>
+    <view class="add-address-container"
+          hover-class="add-address-container-hover"
+          bindtap="onAddAddress">
+        <text class="add-address-button">添加地址</text>
+    </view>
 </view>
