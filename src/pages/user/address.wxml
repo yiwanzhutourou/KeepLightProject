@@ -1,10 +1,10 @@
 <view class="container">
     <scroll-view scroll-y="true">
         <view>
-            <block wx:for="{{addresses}}" wx:key="id">
+            <block wx:for="{{addresses}}" wx:key="index">
                 <import src="../../template/user/AddressItem.wxml" />
                 <template is="user-address"
-                    data="{{item}}" />
+                    data="{{item, index}}" />
             </block>
         </view>
         <view class="common-container">

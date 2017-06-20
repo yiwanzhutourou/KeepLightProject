@@ -7,11 +7,13 @@ let addressPage
 
 Page({
   data: {
+    delBtnWidth: 180, // 删除按钮宽度单位rpx
     addresses: [],
   },
 
   onLoad: function(options: any): void {
     addressPage = this
+    addressPage.initEleWidth()
     addressPage.loadData()
   },
 
@@ -81,6 +83,85 @@ Page({
           hideLoading()
         })
       }
+    })
+  },
+
+  touchS: (e) => {
+    if (e.touches.length == 1) {
+      addressPage.setData({
+        startX: e.touches[0].clientX,
+      })
+    }
+  },
+
+  touchM: (e) => {
+    if (e.touches.length == 1) {
+      let moveX = e.touches[0].clientX
+      let disX = addressPage.data.startX - moveX
+      let delBtnWidth = addressPage.data.delBtnWidth
+      let txtStyle = ''
+      if (disX == 0 || disX < 0) {
+        txtStyle = 'left:0px'
+      } else if (disX > 0 ) {
+        txtStyle = 'left:-' + disX + 'px'
+        if (disX >= delBtnWidth) {
+          txtStyle = 'left:-' + delBtnWidth + 'px'
+        }
+      }
+      let index = e.currentTarget.dataset.index
+      let list = addressPage.data.addresses
+      if (index || index === 0) {
+        list[index].txtStyle = txtStyle
+        addressPage.setData({
+          addresses: list,
+        })
+      }
+    }
+  },
+
+  touchE: (e) => {
+    if (e.changedTouches.length == 1) {
+      let endX = e.changedTouches[0].clientX
+      let disX = addressPage.data.startX - endX
+      let delBtnWidth = addressPage.data.delBtnWidth
+      let show = disX > delBtnWidth / 2
+      let txtStyle = show ? 'left:-' + delBtnWidth + 'px' : 'left:0px'
+      let index = e.currentTarget.dataset.index
+      let list = addressPage.data.addresses
+      if (index || index === 0) {
+        if (show) {
+          if (addressPage.data.lastIndex || addressPage.data.lastIndex === 0) {
+            list[addressPage.data.lastIndex].txtStyle = 'left:0px'
+          }
+          addressPage.setData({
+            lastIndex: index,
+          })
+        }
+        list[index].txtStyle = txtStyle
+        addressPage.setData({
+          addresses: list,
+        })
+      }
+    }
+  },
+
+  // 获取元素自适应后的实际宽度
+  getEleWidth: (w) => {
+    let real = 0
+    try {
+      let res: any = wx.getSystemInfoSync().windowWidth
+      let scale = (750 / 2) / (w / 2) // 以宽度750px设计稿做宽度的自适应
+      real = Math.floor(res / scale)
+      return real
+    } catch (e) {
+      return false
+    }
+  },
+
+  initEleWidth: () => {
+    let delBtnWidth = addressPage.getEleWidth(addressPage.data.delBtnWidth)
+    addressPage.setData({
+      delBtnWidth: delBtnWidth,
     })
   },
 })

@@ -1,16 +1,20 @@
 <template name="user-address">
     <view class="common-container">
         <view class="address-container">
-            <view class="detail-container"
+            <view class="detail-container detail"
                 data-address="{{item}}"
+                bindtouchstart="touchS"
+                bindtouchmove="touchM"
+                bindtouchend="touchE"
+                data-index="{{index}}"
+                style="{{item.txtStyle}}"
                 bindtap="onAddressItemTap">
                 <text class="address-title">{{item.name}}</text>
                 <text class="address-detail">{{item.detail}}</text>
             </view>
-            <view class="delete-button"
-                hover-class="delete-button-hover"
+            <view class="detail-container del"
                 data-id="{{item.id}}"
-                bindtap="onRemoveAddress">删除</view>
+                bindtap="onRemoveAddress"><text>删除</text></view>
         </view>
         <view class="item-divider" />
     </view>
