@@ -3,7 +3,7 @@
         <block wx:for="{{requestList}}" wx:key="id">
             <import src="../../template/user/RequestItem.wxml" />
             <template is="request-item"
-                data="{{item}}" />
+                data="{{item, isFromMe}}" />
         </block>
     </view>
     <view wx:if="{{showEmpty}}" class="empty_container">

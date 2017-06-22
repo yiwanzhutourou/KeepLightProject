@@ -95,3 +95,33 @@
     padding-bottom: 5rpx;
     border-top: #999 dashed 1rpx;
 }
+
+.action-button-container {
+    height: 80rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: 25rpx;
+    margin-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+    border-top: #999 dashed 1rpx;
+}
+
+.action-button-text {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+    background-color: #fff;
+    border: 1rpx solid #ccc;
+    border-radius: 10rpx;
+    padding-left: 20rpx;
+    padding-right: 20rpx;
+    text-align: center;
+    line-height: 50rpx;
+    height: 50rpx;
+}
+
+.action-button-text-hover {
+    background-color: #eee;
+}

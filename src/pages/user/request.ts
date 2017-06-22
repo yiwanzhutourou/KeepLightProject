@@ -14,6 +14,7 @@ Page({
     requestList: [],
     showList: false,
     showEmpty: false,
+    isFromMe: false,
   },
 
   onLoad: function(options: any): void {

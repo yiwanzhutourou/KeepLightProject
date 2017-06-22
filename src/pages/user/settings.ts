@@ -5,6 +5,7 @@ import { UserContact } from '../../api/interfaces'
 const SETTING_BIND_WEIXIN = 0
 const SETTING_ADDRESS = 1
 const SETTING_CHANGE_INFO = 2
+const SETTING_BORROW_HISTORY = 4
 const SETTING_ABOUT = 5
 
 let settingsPage
@@ -26,6 +27,10 @@ Page({
             id: SETTING_CHANGE_INFO,
             title: '修改书房简介',
             subTitle: '给您的书房添加简短的介绍吧',
+        },
+        {
+            id: SETTING_BORROW_HISTORY,
+            title: '借阅历史',
         },
         {
             id: SETTING_ABOUT,
@@ -77,6 +82,11 @@ Page({
           case SETTING_CHANGE_INFO:
             wx.navigateTo({
                 url: '../user/changeintro',
+            })
+            break
+          case SETTING_BORROW_HISTORY:
+            wx.navigateTo({
+                url: '../user/history',
             })
             break
           case SETTING_ABOUT:

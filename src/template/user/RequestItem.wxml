@@ -15,9 +15,22 @@
                     src="../../resources/img/arrow.png" />
             </view>
         </view>
-        <view class="action-container">
-            <text wx:if="{{item.status == 0}}"
-                class="action-text" data-requestid="{{item.requestId}}" bindtap="onActionTap">点击文字处理</text>
+        <view wx:if="{{isFromMe && item.status == 1}}" class="action-button-container">
+            <view
+                class="action-button-text"
+                hover-class="action-button-text-hover"
+                data-requestid="{{item.requestId}}"
+                data-usernick="{{item.nickname}}"
+                bindtap="onContactTap">联系方式</view>
+        </view>
+        <view wx:if="{{!isFromMe && item.status == 0}}" class="action-button-container">
+            <view
+                class="action-button-text"
+                hover-class="action-button-text-hover"
+                data-requestid="{{item.requestId}}"
+                bindtap="onActionTap">处理请求</view>
+        </view>
+        <view wx:elif="{{!isFromMe}}" class="action-container">
             <text wx:if="{{item.status == 1}}"
                 class="dealed-text">已同意</text>
             <text wx:if="{{item.status == 2}}"

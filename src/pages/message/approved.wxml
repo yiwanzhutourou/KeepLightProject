@@ -1,0 +1,14 @@
+<view class="container">
+    <scroll-view wx:if="{{showList}}" scroll-y="true">
+        <view>
+            <block wx:for="{{approvedList}}" wx:key="id">
+                <import src="../../template/user/RequestItem.wxml" />
+                <template is="request-item"
+                    data="{{item, isFromMe}}" />
+            </block>
+        </view>
+    </scroll-view>
+    <view wx:if="{{showEmpty}}" class="empty_container">
+        <text class="empty_title">没有消息</text>
+    </view>
+</view>

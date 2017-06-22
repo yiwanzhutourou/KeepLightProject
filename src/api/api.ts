@@ -301,6 +301,13 @@ export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void
     }, failure)
 }
 
+export const getMyApprovedRequest = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getMyApprovedRequest')
+        get(url, success, failure)
+    }, failure)
+}
+
 export const getBorrowRequest = (success: (result: Array<BorrowRequest>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getBorrowRequest')

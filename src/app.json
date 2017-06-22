@@ -13,7 +13,8 @@
     "pages/user/contact",
     "pages/user/changeintro",
     "pages/about/about",
-    "pages/about/legals"
+    "pages/about/legals",
+    "pages/message/approved"
   ],
   "window": {
     "backgroundTextStyle":"light",
