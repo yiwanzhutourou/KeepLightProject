@@ -7,6 +7,7 @@
     "pages/book/book",
     "pages/user/address",
     "pages/user/settings",
+    "pages/user/my",
     "pages/user/request",
     "pages/user/history",
     "pages/user/contact",
@@ -30,20 +31,25 @@
         "pagePath": "pages/index/index",  
         "text": "首页"  
       }, {  
+        "selectedIconPath": "resources/img/icon_homepage_selected.png",  
+        "iconPath": "resources/img/icon_homepage.png",  
+        "pagePath": "pages/homepage/homepage",  
+        "text": "书房"  
+      }, {  
         "selectedIconPath": "resources/img/icon_add_selected.png",  
         "iconPath": "resources/img/icon_add.png",  
         "pagePath": "pages/book/addBook",  
         "text": "添加图书"  
       }, {  
-        "selectedIconPath": "resources/img/icon_homepage_selected.png",  
-        "iconPath": "resources/img/icon_homepage.png",  
-        "pagePath": "pages/homepage/homepage",  
-        "text": "我的书房"  
+        "selectedIconPath": "resources/img/icon_message_selected.png",  
+        "iconPath": "resources/img/icon_message.png",  
+        "pagePath": "pages/user/my",  
+        "text": "消息"  
       }, {  
-        "selectedIconPath": "resources/img/icon_setting_selected.png",  
-        "iconPath": "resources/img/icon_setting.png",  
+        "selectedIconPath": "resources/img/icon_my_selected.png",  
+        "iconPath": "resources/img/icon_my.png",  
         "pagePath": "pages/user/settings",  
-        "text": "设置"  
+        "text": "我的"  
       }]  
     }
 }

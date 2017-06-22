@@ -5,8 +5,6 @@ import { UserContact } from '../../api/interfaces'
 const SETTING_BIND_WEIXIN = 0
 const SETTING_ADDRESS = 1
 const SETTING_CHANGE_INFO = 2
-const SETTING_BORROW_REQUEST = 3
-const SETTING_BORROW_HISTORY = 4
 const SETTING_ABOUT = 5
 
 let settingsPage
@@ -28,15 +26,6 @@ Page({
             id: SETTING_CHANGE_INFO,
             title: '修改书房简介',
             subTitle: '给您的书房添加简短的介绍吧',
-        },
-        {
-            id: SETTING_BORROW_REQUEST,
-            title: '处理借阅请求',
-            subTitle: '点击查看您的所有借阅请求',
-        },
-        {
-            id: SETTING_BORROW_HISTORY,
-            title: '借阅历史',
         },
         {
             id: SETTING_ABOUT,
@@ -70,33 +59,6 @@ Page({
             settingItems: settings,
         })
     })
-
-    getBorrowRequestCount((count: number) => {
-        let countText = ''
-        if (count > 0 && count < 100) {
-            countText = '' + count
-        } else if (count >= 100) {
-            countText = '99+'
-        }
-        let settings = new Array()
-        settingsPage.data.settingItems.forEach((item) => {
-            if (item.id === SETTING_BORROW_REQUEST) {
-                settings.push(
-                    {
-                        id: SETTING_BORROW_REQUEST,
-                        title: '处理借阅请求',
-                        subTitle: '点击查看您的所有借阅请求',
-                        unreadCount: countText,
-                    },
-                )
-            } else {
-                settings.push(item)
-            }
-        })
-        settingsPage.setData({
-            settingItems: settings,
-        })
-    })
   },
 
   onSettingItemTap: (e) => {
@@ -115,16 +77,6 @@ Page({
           case SETTING_CHANGE_INFO:
             wx.navigateTo({
                 url: '../user/changeintro',
-            })
-            break
-          case SETTING_BORROW_REQUEST:
-            wx.navigateTo({
-                url: '../user/request',
-            })
-            break
-          case SETTING_BORROW_HISTORY:
-            wx.navigateTo({
-                url: '../user/history',
             })
             break
           case SETTING_ABOUT:

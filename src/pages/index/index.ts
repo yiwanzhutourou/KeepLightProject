@@ -44,4 +44,17 @@ Page({
       })
     }
   },
+
+  onRegionChange: (e) => {
+    console.log(e)
+    mapCtx.getCenterLocation({
+      success: (res) => {
+        console.log(res)
+      },
+    })
+  },
+
+  onMapTap: (e) => {
+    console.log(e)
+  },
 })
