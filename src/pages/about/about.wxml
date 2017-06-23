@@ -11,7 +11,7 @@
         <text class="about-info">可能是最好用的借书平台，甚至都不需要注册</text>
     </view>
     <view class="url-container">
-        <text class="about-text">应用版本 1.0.0</text>
+        <text class="about-text">应用版本 1.0.1</text>
         <text class="url" bindtap="onRightTap">知识产权声明</text>
         <text class="url" bindtap="onLegalTap">免责声明</text>
         <text class="contact-text">联系我们 youdushufang@163.com</text>
