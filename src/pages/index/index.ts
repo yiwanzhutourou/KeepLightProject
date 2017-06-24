@@ -57,4 +57,11 @@ Page({
   onMapTap: (e) => {
     console.log(e)
   },
+
+  onShareAppMessage: () => {
+    return {
+      title: '有读书房',
+      path: 'pages/index/index',
+    }
+  },
 })
