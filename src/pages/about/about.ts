@@ -17,4 +17,11 @@ Page({
         url: '../about/legals?content=legals',
     })
   },
+
+  onShareAppMessage: () => {
+    return {
+      title: '有读书房',
+      path: 'pages/about/about',
+    }
+  },
 })

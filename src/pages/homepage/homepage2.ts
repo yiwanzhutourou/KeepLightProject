@@ -130,4 +130,18 @@ Page({
       }
     })
   },
+
+  onShareAppMessage: () => {
+    if (homepage.data.homepageData) {
+      return {
+        title: homepage.data.homepageData.nickName,
+        path: 'pages/homepage/homepage2?user=' + homepage.data.userId,
+      }
+    } else {
+      return {
+        title: '有读书房',
+        path: 'pages/index/index',
+      }
+    }
+  },
 })
