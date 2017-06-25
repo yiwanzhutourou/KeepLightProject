@@ -353,7 +353,11 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
 }
 
 export const getBookDetails = (isbn: string, success: (result: any) => void, failure?: (res?: any) => void) => {
-    let url = 'https://api.douban.com/v2/book/isbn/' + isbn
+    let url = 'https://api.douban.com/v2/book/' + isbn
+    // 特殊处理一下老数据，豆瓣的id不可能是978开头的
+    if (isbn.indexOf('978') === 0) {
+        url = 'https://api.douban.com/v2/book/isbn/' + isbn
+    }
     wx.request({
         url: url,
         method: 'GET',
