@@ -2,6 +2,7 @@ import { Book, HomepageData } from '../../api/interfaces'
 // pages/homepage/homepage.js
 import { addAddress, borrowBook, getBookList, getHomepageData, removeBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showLoading, showToast } from '../../utils/utils'
+import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 
 let homepage: WeApp.Page
 
@@ -55,6 +56,9 @@ Page({
         bookList: books,
         showEmpty: books.length == 0,
       })
+      if (homepage.data.isCurrentUser) {
+        replaceBookList(books)
+      }
     }, (failure) => {
       hideLoading()
     })
@@ -122,6 +126,9 @@ Page({
               bookList: bookList,
               showEmpty: bookList.length == 0,
             })
+            if (homepage.data.isCurrentUser) {
+              updateBookStatus(isbn, false)
+            }
             showToast('删除成功')
           }
         }, (failure) => {

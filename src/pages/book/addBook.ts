@@ -1,5 +1,6 @@
 import { Book, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
 import { addBook, getBookInfo, getBookList, searchBooks } from '../../api/api'
+import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
 import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 const INITIAL_PAGE = 0
@@ -26,7 +27,11 @@ Page({
   },
 
   onShow: function (): void {
-      // TODO 怎么做列表和detail同步？
+      if (bookPage.data.bookList && bookPage.data.bookList.length > 0) {
+        bookPage.setData({
+          bookList: filterBookListByStatus(bookPage.data.bookList),
+        })
+      }
   },
 
   completeInput: (e) => {
@@ -80,6 +85,7 @@ Page({
         bookPage.setData({
           bookList: bookList,
         })
+        updateBookStatus(isbn, true)
         showToast('添加成功')
       }
     }, (failure) => {
@@ -139,6 +145,7 @@ Page({
       bookPage.setData({
         bookList: bookList,
       })
+      updateBookStatusByList(bookList)
     }
   },
 
@@ -147,7 +154,7 @@ Page({
   },
 
   clearList: () => {
-    if (bookPage.data.bookList.length > 0) {
+    if (bookPage.data.bookList && bookPage.data.bookList.length > 0) {
       bookPage.setData({
         bookList: [],
         keyword: '',
@@ -183,6 +190,7 @@ Page({
             bookList: list.concat(books),
           })
         }
+        updateBookStatusByList(books)
       }, (failure) => {
         bookPage.hideLoadingMore()
         showErrDialog('加载失败，请稍后再试')
