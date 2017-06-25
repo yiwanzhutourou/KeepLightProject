@@ -30,7 +30,7 @@
 }
 
 .contact-input {
-    width: 80%;
+    width: 70%;
     padding-left: 20rpx;
     padding-right: 20rpx;
     font-size: 30rpx;
@@ -41,4 +41,10 @@
     margin: 30rpx;
     background-color: rgba(0, 150, 136, 1);
     color: #fff;
+}
+
+.clear-button {
+    width: 30rpx;
+    height: 30rpx;
+    margin-right: 30rpx;
 }

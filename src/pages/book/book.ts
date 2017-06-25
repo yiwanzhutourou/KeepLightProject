@@ -3,6 +3,7 @@ import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading,
 
 import { Book } from '../../api/interfaces'
 import { parseAuthor } from '../../utils/bookUtils'
+import { updateBookStatus } from '../../utils/bookCache'
 
 let bookPage
 
@@ -109,6 +110,7 @@ Page({
         bookPage.setData({
             bookAdded: added,
         })
+        updateBookStatus(isbn, true)
         if (added) {
             showToast('添加成功')
         }

@@ -23,6 +23,7 @@ Page({
         subTitle: '',
         hideArrow: true,
       },
+      inputContact: '',
   },
 
   onLoad: function(options: any): void {
@@ -38,6 +39,7 @@ Page({
   },
 
   bindPickerChange: (e) => {
+      contactPage.clearInput()
       contactPage.setData({
           methodIndex: e.detail.value,
       })
@@ -120,5 +122,15 @@ Page({
             settingItem: {},
           })
       }
+  },
+
+  onClearContact: (e) => {
+      contactPage.clearInput()
+  },
+
+  clearInput: () => {
+      contactPage.setData({
+          inputContact: '',
+      })
   },
 })

@@ -1,10 +1,12 @@
+export const DEFAULT_PAGE_SIZE = 20
+
 export type Book = {
     isbn: string,
-    title: string,
-    author: Array<string>,
-    url: string,
-    cover: string,
-    publisher: string,
+    title?: string,
+    author?: Array<string>,
+    url?: string,
+    cover?: string,
+    publisher?: string,
     added?: boolean,
 }
 

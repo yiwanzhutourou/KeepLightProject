@@ -1,4 +1,5 @@
 @import "../../template/book/BookItem.wxss";
+@import "../../template/widget/LoadMore.wxss";
 
 .container {
     justify-content: flex-start;
@@ -42,7 +43,6 @@
 
 .search-content-container {
     width: 100%;
-    height: calc(100% - 80rpx);
     display: flex;
     flex-direction: column;
     align-items: center;

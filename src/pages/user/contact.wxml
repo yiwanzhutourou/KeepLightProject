@@ -19,7 +19,14 @@
                 </view>
             </picker>
             <view class="item-divider-vertical" />
-            <input class="contact-input" name="contact_input" placeholder="请输入您的联系方式" />
+            <input class="contact-input"
+                   value="{{inputContact}}"
+                   name="contact_input"
+                   placeholder="请输入您的联系方式" />
+            <image class="clear-button"
+                   bindtap="onClearContact"
+                   src="../../resources/img/icon_clear.png"
+                   mode="aspectFit" />
         </view>
         <view class="item-divider" />
         <view class="title-container">

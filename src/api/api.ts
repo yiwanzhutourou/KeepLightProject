@@ -1,7 +1,8 @@
-import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
+import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-const BASE_URL = 'https://cuiyi.mozidev.me/api/'
+// const BASE_URL = 'https://cuiyi.mozidev.me/api/'
+const BASE_URL = 'http://192.168.0.102/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -93,7 +94,7 @@ export const getUrl = (path: string) => {
     return BASE_URL + path
 }
 
-export const buildUrlParam = (param: any, key?: string) => {
+const buildUrlParam = (param: any, key?: string) => {
     if (param === null) {
         return ''
     }
@@ -108,6 +109,11 @@ export const buildUrlParam = (param: any, key?: string) => {
         })
     }
 
+    return result
+}
+
+const getUrlParam = (param: any, key?: string) => {
+    let result = buildUrlParam(param, key)
     if (result.length > 0) {
         result = '?' + result.substring(1, result.length)
     }
@@ -126,7 +132,7 @@ export const bindUser = (code: string, nickname: string, avatar: string, success
 
 export const getHomepageData = (userId: string, success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
     if (userId) {
-        let url = getUrl('User.getHomepageData') + buildUrlParam({
+        let url = getUrl('User.getHomepageData') + getUrlParam({
             userId: userId,
         })
         get(url, success, failure)
@@ -144,7 +150,7 @@ export const getMyUserInfoFromServer = (success: (info: UserInfo) => void, failu
 }
 
 export const getUserInfoFromServer = (userId: string, success: (info: UserInfo) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.getUserInfo') + buildUrlParam({
+    let url = getUrl('User.getUserInfo') + getUrlParam({
         userId: userId,
     })
     get(url, success, failure)
@@ -170,7 +176,7 @@ export const getUserIntro = (success: (info: string) => void, failure?: (res?: a
 }
 
 export const getOtherUserIntro = (userId: string, success: (info: string) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.info') + buildUrlParam({
+    let url = getUrl('User.info') + getUrlParam({
         userId: userId,
     })
     get(url, success, failure)
@@ -247,7 +253,7 @@ export const removeBook = (isbn: string, success: (isbn: string) => void,
 
 export const getBookList = (userId: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
     if (userId) {
-        let url = getUrl('User.getUserBooks') + buildUrlParam({
+        let url = getUrl('User.getUserBooks') + getUrlParam({
             userId: userId,
         })
         get(url, success, failure)
@@ -260,21 +266,25 @@ export const getBookList = (userId: string, success: (books: Array<Book>) => voi
 }
 
 export const getOtherUserBookList = (userId: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('User.getUserBooks') + buildUrlParam({
+    let url = getUrl('User.getUserBooks') + getUrlParam({
         userId: userId,
     })
     get(url, success, failure)
 }
 
-export const searchBooks = (key: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('Book.search') + buildUrlParam({
+export const searchBooks = (
+        key: string, page: number, count = DEFAULT_PAGE_SIZE,
+        success?: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Book.search') + getUrlParam({
         key: key,
+        count: count,
+        page: page,
     })
     get(url, success, failure)
 }
 
 export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('Book.getBookByIsbn') + buildUrlParam({
+    let url = getUrl('Book.getBookByIsbn') + getUrlParam({
         isbn: isbn,
     })
     get(url, success, failure)
@@ -343,10 +353,17 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
 }
 
 export const getBookDetails = (isbn: string, success: (result: any) => void, failure?: (res?: any) => void) => {
-    let url = 'https://api.douban.com/v2/book/isbn/' + isbn
+    let url = 'https://api.douban.com/v2/book/' + isbn
+    // 特殊处理一下老数据，豆瓣的id不可能是978开头的
+    if (isbn.indexOf('978') === 0) {
+        url = 'https://api.douban.com/v2/book/isbn/' + isbn
+    }
     wx.request({
         url: url,
         method: 'GET',
+        header: {
+            'Content-Type': 'json',
+        },
         success: (res) => {
             console.log(res)
             if (!res) {
@@ -379,7 +396,7 @@ export const legals = (success: (result: string) => void, failure?: (res?: any) 
     get(url, success, failure)
 }
 
-export const get = (url: string, success: (res: any) => void, failure?: (res?: any) => void) => {
+export const get = (url: string, success?: (res: any) => void, failure?: (res?: any) => void) => {
     wx.request({
         url: url,
         method: 'GET',
@@ -390,7 +407,9 @@ export const get = (url: string, success: (res: any) => void, failure?: (res?: a
                 return
             }
             if (res.statusCode === 200) {
-                success(res.data ? res.data.result : null)
+                if (success) {
+                    success(res.data ? res.data.result : null)
+                }
             } else {
                 handleServerError(res.data)
                 if (failure) {

@@ -1,30 +1,35 @@
-import { Book, Result } from '../../api/interfaces'
+import { Book, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
 import { addBook, getBookInfo, getBookList, searchBooks } from '../../api/api'
-import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
+import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
-// pages/book/addBook.js
+const INITIAL_PAGE = 0
+
+let app = getApp()
 let bookPage
+let curPage = 0
+let lastRequest = -1
 
 Page({
   data: {
     bookList: [],
     keyword: '',
+    screenHeight: 0,
+    showLoadingMore: false,
+    noMore: false,
   },
 
   onLoad: function(options: any): void {
     bookPage = this
+    bookPage.setData({
+      screenHeight: getScreenSizeInRpx().height,
+    })
   },
 
   onShow: function (): void {
-      if (bookPage.data.keyword && bookPage.data.keyword !== '') {
-        searchBooks(bookPage.data.keyword, (books: Array<Book>) => {
-          if (books && books.length > 0) {
-            bookPage.setData({
-              bookList: books,
-            })
-          }
-        }, (failure) => {
-          // do nothing
+      if (bookPage.data.bookList && bookPage.data.bookList.length > 0) {
+        bookPage.setData({
+          bookList: filterBookListByStatus(bookPage.data.bookList),
         })
       }
   },
@@ -35,8 +40,11 @@ Page({
       showErrDialog('请输入关键字')
       return
     }
+    curPage = 0
     bookPage.setData({
       keyword: keyword,
+      showLoadingMore: false,
+      noMore: false,
     })
     bookPage.searchBooks(keyword)
   },
@@ -77,6 +85,7 @@ Page({
         bookPage.setData({
           bookList: bookList,
         })
+        updateBookStatus(isbn, true)
         showToast('添加成功')
       }
     }, (failure) => {
@@ -99,6 +108,11 @@ Page({
           showLoading('正在查找图书信息')
           getBookInfo(res.result, (books: Array<Book>) => {
               hideLoading()
+              bookPage.setData({
+                keyword: '',
+                showLoadingMore: false,
+                noMore: true,
+              })
               bookPage.handleSearchResult(books)
             }, (failure) => {
               hideLoading()
@@ -113,8 +127,11 @@ Page({
 
   searchBooks: (keyword: string) => {
     showLoading('正在搜索')
-    searchBooks(keyword, (books: Array<Book>) => {
+    searchBooks(keyword, INITIAL_PAGE, DEFAULT_PAGE_SIZE, (books: Array<Book>) => {
         hideLoading()
+        bookPage.setData({
+          noMore: books.length < DEFAULT_PAGE_SIZE,
+        })
         bookPage.handleSearchResult(books)
       }, (failure) => {
         hideLoading()
@@ -128,6 +145,7 @@ Page({
       bookPage.setData({
         bookList: bookList,
       })
+      updateBookStatusByList(bookList)
     }
   },
 
@@ -136,11 +154,65 @@ Page({
   },
 
   clearList: () => {
-    if (bookPage.data.bookList.length > 0) {
+    if (bookPage.data.bookList && bookPage.data.bookList.length > 0) {
       bookPage.setData({
         bookList: [],
         keyword: '',
+        showLoadingMore: false,
+        noMore: false,
       })
     }
+  },
+
+  onLoadMore: (e) => {
+    let keyword = bookPage.data.keyword
+    if (!keyword) {
+      return
+    }
+    if (lastRequest != -1 && e.timeStamp && e.timeStamp - lastRequest < 500) {
+      return
+    }
+    lastRequest = e.timeStamp
+    if (bookPage.data.noMore) {
+      return
+    }
+    bookPage.showLoadingMore()
+
+    curPage++
+    searchBooks(keyword, curPage, DEFAULT_PAGE_SIZE, (books: Array<Book>) => {
+        let noMore = (books.length < DEFAULT_PAGE_SIZE)
+        if (noMore) {
+          bookPage.showNoMore()
+        } else {
+          bookPage.hideLoadingMore()
+          let list = bookPage.data.bookList
+          bookPage.setData({
+            bookList: list.concat(books),
+          })
+        }
+        updateBookStatusByList(books)
+      }, (failure) => {
+        bookPage.hideLoadingMore()
+        showErrDialog('加载失败，请稍后再试')
+      })
+  },
+
+  showLoadingMore: () => {
+    bookPage.setData({
+      showLoadingMore: true,
+    })
+  },
+
+  showNoMore: () => {
+    bookPage.setData({
+      showLoadingMore: true,
+      noMore: true,
+    })
+  },
+
+  hideLoadingMore: () => {
+    bookPage.setData({
+      showLoadingMore: false,
+    })
   },
 })
