@@ -42,3 +42,10 @@ export const showToast = (title: string) => {
         duration: 2000,
     })
 }
+
+export const getScreenSizeInRpx = () => {
+    let res = wx.getSystemInfoSync() as any
+    let windowHeight = res.windowHeight * 750 / res.windowWidth
+    let windowWidth = res.windowWidth * 750 / res.windowWidth
+    return {width: windowWidth, height: windowHeight}
+}

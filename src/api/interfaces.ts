@@ -1,3 +1,5 @@
+export const DEFAULT_PAGE_SIZE = 20
+
 export type Book = {
     isbn: string,
     title: string,

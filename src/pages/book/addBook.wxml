@@ -13,13 +13,18 @@
             class="search-bar-scan-button" />
     </view>
 
-    <view class="search-content-container">
-        <block wx:for="{{bookList}}" wx:key="id">
-            <import src="../../template/book/BookItem.wxml" />
-            <template is="book-item"
-                data="{{item}}" />
-        </block>
-    </view>
+    <scroll-view scroll-y style="height:{{screenHeight-80}}rpx;" bindscrolltolower="onLoadMore">
+        <view class="search-content-container">
+            <block wx:for="{{bookList}}" wx:key="id">
+                <import src="../../template/book/BookItem.wxml" />
+                <template is="book-item"
+                    data="{{item}}" />
+            </block>
+        </view>
+        <import src="../../template/widget/LoadMore.wxml" />
+            <template is="load-more"
+                data="{{showLoadingMore, noMore}}" />
+    </scroll-view>
 
     <view class="empty-view-container">
     </view>
