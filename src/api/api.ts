@@ -1,8 +1,8 @@
 import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-// const BASE_URL = 'https://cuiyi.mozidev.me/api/'
-const BASE_URL = 'http://192.168.0.102/api/'
+const BASE_URL = 'https://cuiyi.mozidev.me/api/'
+// const BASE_URL = 'http://192.168.0.102/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -137,10 +137,17 @@ export const getHomepageData = (userId: string, success: (info: HomepageData) =>
         })
         get(url, success, failure)
     } else {
-        checkLogin(() => {
-            let url = getUrl('User.getHomepageData')
-            get(url, success, failure)
-        }, failure)
+        // 打首页的接口强制更新一下用户数据
+        login((result) => {
+            if (result) {
+                let url = getUrl('User.getHomepageData')
+                get(url, success, failure)
+            } else {
+                if (failure) {
+                    failure()
+                }
+            }
+        })
     }
 }
 
@@ -365,7 +372,6 @@ export const getBookDetails = (isbn: string, success: (result: any) => void, fai
             'Content-Type': 'json',
         },
         success: (res) => {
-            console.log(res)
             if (!res) {
                 return
             }
