@@ -1,9 +1,14 @@
 import { Markers, Result } from '../../api/interfaces'
 import { getMarkers, getUserInfo } from '../../api/api'
 
+const EVENT_TAP_SEARCH = 0
+const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
+
 let app = getApp()
 let indexPage
 let mapCtx
+let windowWidth
+let windowHeight
 
 Page({
   data: {
@@ -17,6 +22,13 @@ Page({
 
     // 使用 wx.createMapContext 获取 map 上下文 
     mapCtx = wx.createMapContext('homeMap')
+
+    // 获取屏幕宽高
+    app.getSystemInfo((systemInfo: WeApp.SystemInfo) => {
+        windowWidth = systemInfo.windowWidth
+        windowHeight = systemInfo.windowHeight
+        indexPage.setUpIconOnmap()
+    })
   },
 
   onShow: function(): void {
@@ -35,6 +47,20 @@ Page({
           },
         ) 
     })
+  },
+
+  controltap: (event) => {
+    switch (event.controlId) {
+      case EVENT_TAP_SEARCH:
+        wx.switchTab({
+          url: '../book/addBook',
+        })
+        break
+      case EVENT_TAP_SHOW_CURRENT_LOCATION:
+        mapCtx.moveToLocation()
+        break
+      default:
+    }
   },
 
   markertap: (event) => {
@@ -63,5 +89,48 @@ Page({
       title: '有读书房',
       path: 'pages/index/index',
     }
+  },
+
+  setUpIconOnmap: () => {
+    // Homepage icon:
+    let width = windowWidth * 0.1
+    let height = width
+    let left = windowWidth * 0.95 - width
+    let top = windowHeight * 0.05
+
+    // Show current location icon:
+    let cWidth = width
+    let cHeight = width
+    let cLeft = windowWidth * 0.95 - cWidth
+    let cTop = windowHeight * 0.95 - height
+
+    indexPage.setData({
+      controls: [
+        // 搜索按钮
+        // {
+        //   id: EVENT_TAP_SEARCH,
+        //   iconPath: '/resources/img/icon_locate.png',
+        //   position: {
+        //     left: left,
+        //     top: top,
+        //     width: width,
+        //     height: height,
+        //   },
+        //   clickable: true,
+        // },
+        // 显示当前位置
+        {
+          id: EVENT_TAP_SHOW_CURRENT_LOCATION,
+          iconPath: '/resources/img/icon_locate.png',
+          position: {
+            left: cLeft,
+            top: cTop,
+            width: cWidth,
+            height: cHeight,
+          },
+          clickable: true,
+        },
+      ],
+    })
   },
 })
