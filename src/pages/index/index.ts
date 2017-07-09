@@ -187,25 +187,7 @@ Page({
       if (markerArray.length > 1) {
         m.isMergeMarker = true
         m.children = JSON.parse(JSON.stringify(markerArray))
-<<<<<<< HEAD
-        m.callout = {
-          content: markerArray.length + '家书房',
-          color: '#ffffff',
-          borderRadius: 5,
-          bgColor: '#ff4466',
-          padding: 5
-        }
-      } else {
-        m.callout = {
-          content: m.title + '的书房',
-          color: '#ff4466',
-          borderRadius: 5,
-          bgColor: '#ff0000',
-          padding: 5
-        }
-=======
-        m.callout.content = m.title + '的书房'
->>>>>>> reform
+        m.callout.content = markerArray.length + '家书房'
       }
       result.push(m)
     }
