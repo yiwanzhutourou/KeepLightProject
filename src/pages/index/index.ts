@@ -179,9 +179,9 @@ Page({
       const m = markerArray[0]
       m.callout = {
         content: m.title + '的书房',
-        color: '#ff4466',
+        color: '#ffffff',
         borderRadius: 5,
-        bgColor: '#ff0000',
+        bgColor: '#ff4466',
         padding: 5
       }
       if (markerArray.length > 1) {
