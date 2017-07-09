@@ -49,6 +49,9 @@ export type Markers = {
     height: number,
     title?: string,
     bindcontroltap?: string,
+    isMergeMarker: boolean,
+    callout?: any,
+    children?: Array<Markers>,
 }
 
 export type UserInfo = {

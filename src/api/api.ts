@@ -2,7 +2,7 @@ import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 // const BASE_URL = 'https://cuiyi.mozidev.me/api/'
-const BASE_URL = 'http://192.168.0.102/api/'
+const BASE_URL = 'http://127.0.0.1/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -343,8 +343,10 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
                     latitude: marker.latitude,
                     longitude: marker.longitude,
                     iconPath: '/resources/img/icon_map_location.png',
-                    width: 60,
-                    height: 60,
+                    width: 40,
+                    height: 40,
+                    isMergeMarker: false,
+                    title: marker.title,
                 })
             })
         }
