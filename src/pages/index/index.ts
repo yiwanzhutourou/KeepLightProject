@@ -10,6 +10,10 @@ let mapCtx
 let windowWidth
 let windowHeight
 
+// 每一公里所跨越的经纬度
+const KILOMETER_LAT = 0.0019
+const KILOMETER_LNG = 0.0017
+
 Page({
   data: {
     longitude: 121.438378,
@@ -41,8 +45,10 @@ Page({
 
         getMarkers(
           (markers: Array<Markers>) => {
+            const mergedMarkers = indexPage.mergeMarkers(markers)
+            const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
             indexPage.setData({
-              markers: markers,
+              markers: transformedMarkers,
             })
           },
         ) 
@@ -133,4 +139,65 @@ Page({
       ],
     })
   },
+
+  shouldMerge: (m1: Markers, m2: Markers) => {
+    if (Math.abs(m1.latitude - m2.latitude) < KILOMETER_LAT &&
+          Math.abs(m1.longitude - m2.longitude) < KILOMETER_LNG) {
+      return true
+    }
+    return false
+  },
+
+  mergeMarkers: (markers: Array<Markers>) => {
+    if (!markers) {
+      return markers
+    }
+    const result: Array<Array<Markers>> = []
+    markers.forEach((marker) => {
+      if (result.length === 0) {
+        result.push([marker])
+      } else {
+        let shouldAppend = true
+        for (const markerArray of result) {
+          if (indexPage.shouldMerge(markerArray[0], marker)) {
+            markerArray.push(marker)
+            shouldAppend = false
+            break
+          }
+        }
+        if (shouldAppend) {
+          result.push([marker])
+        }
+      }
+    })
+    return result
+  },
+
+  transformMarkers: (markers: Array<Array<Markers>>) => {
+    const result: Array<Markers> = []
+    for (const markerArray of markers) {
+      const m = markerArray[0]
+      if (markerArray.length > 1) {
+        m.isMergeMarker = true
+        m.children = JSON.parse(JSON.stringify(markerArray))
+        m.callout = {
+          content: markerArray.length + '家书房',
+          color: '#ffffff',
+          borderRadius: 5,
+          bgColor: '#ff4466',
+          padding: 5
+        }
+      } else {
+        m.callout = {
+          content: m.title + '的书房',
+          color: '#ff4466',
+          borderRadius: 5,
+          bgColor: '#ff0000',
+          padding: 5
+        }
+      }
+      result.push(m)
+    }
+    return result
+  }
 })
