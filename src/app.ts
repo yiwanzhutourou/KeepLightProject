@@ -1,6 +1,4 @@
 
-import TD from './utils/tdweapp'
-
 // app.js
 export type GlobalData = {
   locationInfo?: WeApp.LocationInfo,
@@ -11,18 +9,6 @@ const globalData: GlobalData = {}
 
 App({
   onLaunch: (info: WeApp.LaunchData) => {
-    TD.launch({
-      appkey: '0F4EAE3EA27B4A15AD5E56A2DB2501F0',
-      appName: '有读',      // 这个可以改
-      versionName: '1.0.0',
-      versionCode: '42',
-      autoOnAppShow: true,
-      autoOnAppHide: true,
-      autoOnPageUnload: true,
-      autoOnPullDownRefresh: true,
-      autoOnReachBottom: true,
-      autoOnShare: true
-    });
   },
   // 定位信息
   getLocationInfo: (cb: (res: WeApp.LocationInfo) => void) => {
