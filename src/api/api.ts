@@ -1,8 +1,8 @@
-import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, MapData, Markers, Result, UserContact, UserInfo } from './interfaces'
+import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, MapData, Markers, Result, SearchResult, UserContact, UserInfo } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 const BASE_URL = 'https://cuiyi.mozidev.me/api/'
-// const BASE_URL = 'http://192.168.0.102/api/'
+// const BASE_URL = 'http://127.0.0.1/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -337,6 +337,19 @@ export const getBorrowRequestCount = (success: (result: number) => void, failure
         let url = getUrl('User.getBorrowRequestCount')
         get(url, success, failure)
     }, failure)
+}
+
+export const search = (keyword: string, latitude: number, longitude: number,
+                      count: number, page: number,
+                      success: (result: Array<SearchResult>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Search.books') + getUrlParam({
+        keyword: keyword,
+        latitude: latitude,
+        longitude: longitude,
+        count: count,
+        page: page,
+    })
+    get(url, success, failure)
 }
 
 export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (res?: any) => void) => {

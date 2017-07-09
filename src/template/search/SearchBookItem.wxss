@@ -1,0 +1,68 @@
+@import "SearchUserItem.wxss";
+
+.book-container {
+    height: 180rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+}
+
+.book-detail-container {
+    width: 440rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15rpx;
+}
+
+.book-left-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.book-title {
+    font-size: 35rpx;
+    color: rgba(0, 0, 0, 0.87);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-author {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-publisher {
+    font-size: 25rpx;
+    color: rgba(0, 0, 0, 0.54);
+    margin-top: 5rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-pic {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.show-users-button {
+    font-size: 25rpx;
+    color: rgba(0, 150, 136, 1);
+}
+
+.show-users-button-hover {
+    font-size: 25rpx;
+    color: rgba(0, 150, 136, 0.6);
+}

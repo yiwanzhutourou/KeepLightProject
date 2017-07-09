@@ -1,4 +1,5 @@
 export const DEFAULT_PAGE_SIZE = 20
+export const DEFAULT_SEARCH_PAGE_SIZE = 30
 
 export type Book = {
     isbn: string,
@@ -85,4 +86,25 @@ export type BorrowRequest = {
 export type UserContact = {
     name: string,
     contact: string,
+}
+
+export type SearchResult = {
+    book: Book,
+    users: Array<SearchUser>,
+}
+
+export type SearchUser = {
+    id: number,
+    nickname: string,
+    avatar: string,
+    address: SearchAddress,
+}
+
+export type SearchAddress = {
+    distance: number,
+    distanceText: string,
+    latitude: number,
+    longitude: number,
+    name: string,
+    detail: string,
 }

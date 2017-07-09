@@ -1,0 +1,20 @@
+<view class="container">
+    <view class="search-bar-container">
+        <input class="search-bar-input"
+            placeholder-class="search-bar-input-placeholder"
+            placeholder="搜索看看附近的书房里都有什么书"
+            value="{{searchKey}}"
+            bindconfirm="completeInput" />
+    </view>
+
+    <view class="search-content-container">
+        <block wx:for="{{searchResultList}}" wx:key="index">
+            <import src="../../template/search/SearchBookItem.wxml" />
+            <template is="search-book-item"
+                data="{{item, index}}" />
+        </block>
+    </view>
+    <import src="../../template/widget/LoadMore.wxml" />
+        <template is="load-more"
+            data="{{showLoadingMore, noMore}}" />
+</view>
