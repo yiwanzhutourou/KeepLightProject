@@ -108,24 +108,17 @@ Page({
     const result: Array<Markers> = []
     for (const markerArray of markers) {
       const m = markerArray[0]
+      m.callout = {
+        content: m.title + '的书房',
+        color: '#ff4466',
+        borderRadius: 5,
+        bgColor: '#ff0000',
+        padding: 5
+      }
       if (markerArray.length > 1) {
         m.isMergeMarker = true
         m.children = JSON.parse(JSON.stringify(markerArray))
-        m.callout = {
-          content: markerArray.length + '家书房',
-          color: '#ff4466',
-          borderRadius: 5,
-          bgColor: '#ff0000',
-          padding: 5
-        }
-      } else {
-        m.callout = {
-          content: m.title + '的书房',
-          color: '#ff4466',
-          borderRadius: 5,
-          bgColor: '#ff0000',
-          padding: 5
-        }
+        m.callout.content = m.title + '的书房'
       }
       result.push(m)
     }
