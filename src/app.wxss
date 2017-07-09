@@ -33,6 +33,12 @@
     background: #eee;
 }
 
+.item-divider-white {
+    width: 100%;
+    height: 1rpx;
+    background: #fff;
+}
+
 .item-divider-vertical {
     height: 100%;
     width: 1rpx;

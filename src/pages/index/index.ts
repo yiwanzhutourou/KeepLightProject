@@ -52,8 +52,8 @@ Page({
   controltap: (event) => {
     switch (event.controlId) {
       case EVENT_TAP_SEARCH:
-        wx.switchTab({
-          url: '../book/addBook',
+        wx.navigateTo({
+          url: '../search/search',
         })
         break
       case EVENT_TAP_SHOW_CURRENT_LOCATION:
@@ -93,31 +93,31 @@ Page({
 
   setUpIconOnmap: () => {
     // Homepage icon:
-    let width = windowWidth * 0.1
+    let width = windowWidth * 0.15
     let height = width
     let left = windowWidth * 0.95 - width
     let top = windowHeight * 0.05
 
     // Show current location icon:
-    let cWidth = width
-    let cHeight = width
+    let cWidth = windowWidth * 0.1
+    let cHeight = cWidth
     let cLeft = windowWidth * 0.95 - cWidth
-    let cTop = windowHeight * 0.95 - height
+    let cTop = windowHeight * 0.95 - cHeight
 
     indexPage.setData({
       controls: [
         // 搜索按钮
-        // {
-        //   id: EVENT_TAP_SEARCH,
-        //   iconPath: '/resources/img/icon_locate.png',
-        //   position: {
-        //     left: left,
-        //     top: top,
-        //     width: width,
-        //     height: height,
-        //   },
-        //   clickable: true,
-        // },
+        {
+          id: EVENT_TAP_SEARCH,
+          iconPath: '/resources/img/icon_search.png',
+          position: {
+            left: left,
+            top: top,
+            width: width,
+            height: height,
+          },
+          clickable: true,
+        },
         // 显示当前位置
         {
           id: EVENT_TAP_SHOW_CURRENT_LOCATION,
