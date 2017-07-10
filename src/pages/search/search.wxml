@@ -17,7 +17,7 @@
         <block wx:for="{{searchResultList}}" wx:key="index">
             <import src="../../template/search/SearchBookItem.wxml" />
             <template is="search-book-item"
-                data="{{item, index}}" />
+                data="{{item, index, showBorrowButton}}" />
         </block>
     </view>
     <import src="../../template/widget/LoadMore.wxml" />

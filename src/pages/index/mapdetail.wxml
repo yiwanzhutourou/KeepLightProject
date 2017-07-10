@@ -1,0 +1,8 @@
+<view class="container">
+    <view class="container">
+        <block wx:for="{{bookshelves}}" wx:key="id">
+            <import src="../../template/search/SearchUserItem.wxml" />
+            <template is="search-user-item" data="{{item, index, showBorrowButton}}" />
+        </block>
+    </view>
+</view>

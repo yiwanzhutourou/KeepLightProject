@@ -73,10 +73,24 @@ Page({
 
   markertap: (event) => {
     if (event && event.markerId) {
-      wx.navigateTo({
-          url: '../homepage/homepage2?user=' + event.markerId,
-      })
+      const marker = indexPage.findMarker(event.markerId) as Markers
+      if (marker.isMergeMarker) {
+        wx.navigateTo({
+          url: 'mapdetail?users=' + marker.children
+        })
+      } else {
+        wx.navigateTo({
+            url: '../homepage/homepage2?user=' + event.markerId,
+        })
+      }
     }
+  },
+
+  findMarker: (id: string) => {
+    if (indexPage.data.markers) {
+      return indexPage.data.markers.find((marker) => (marker.id + '') === id)
+    }
+    return { markerId: id }
   },
 
   onRegionChange: (e) => {
@@ -185,20 +199,29 @@ Page({
     const result: Array<Markers> = []
     for (const markerArray of markers) {
       const m = markerArray[0]
-      m.callout = {
-        content: m.title + '的书房',
-        color: '#ffffff',
-        borderRadius: 5,
-        bgColor: '#ff4466',
-        padding: 5
-      }
       if (markerArray.length > 1) {
         m.isMergeMarker = true
-        m.children = JSON.parse(JSON.stringify(markerArray))
-        m.callout.content = markerArray.length + '家书房'
+        m.children = markerArray.reduce((prev, cur, index) => {
+          if (index === 0) {
+            return cur.id + ''
+          }
+          return prev + ',' + cur.id
+        }, '')
+        m.iconPath = indexPage.getMapIcon(markerArray.length)
       }
       result.push(m)
     }
     return result
   },
+
+  getMapIcon: (num: number) => {
+    switch (num) {
+      case 2:
+        return '/resources/img/icon_two.png'
+      case 3:
+        return '/resources/img/icon_three.png'
+      default:
+        return '/resources/img/icon_four.png'
+    }
+  }
 })
