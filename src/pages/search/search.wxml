@@ -1,23 +1,46 @@
 <view class="container-no-line">
     <view class="search-bar-container">
-        <view class="input-container">
-            <input class="search-bar-input"
-                placeholder-class="search-bar-input-placeholder"
-                placeholder="搜索看看附近的书房里都有什么书"
-                value="{{searchKey}}"
-                bindconfirm="completeInput"
-                auto-focus />
+        <view class="search-bar-inner-container">
+            <picker class="search-picker"
+                    name="search_picker"
+                    bindchange="bindPickerChange"
+                    value="{{searchIndex}}"
+                    range="{{searchRange}}">
+                <view class="search-picker-container">
+                    <view class="picker">
+                        {{searchRange[searchIndex]}}
+                    </view>
+                    <image class="arrow"
+                        mode="widthFix"
+                        src="../../resources/img/arrow.png" />
+                </view>
+            </picker>
+            <view class="input-container">
+                <input class="search-bar-input"
+                    placeholder-class="search-bar-input-placeholder"
+                    placeholder="搜索图书 书房"
+                    value="{{searchKey}}"
+                    bindconfirm="completeInput"
+                    auto-focus />
+            </view>
         </view>
         <view class="cancel-text" bindtap="onCancelTap">
             <text>取消</text>
         </view>
     </view>
 
-    <view class="search-content-container">
+    <view wx:if="{{searchIndex === 0}}" class="search-content-container">
         <block wx:for="{{searchResultList}}" wx:key="index">
             <import src="../../template/search/SearchBookItem.wxml" />
             <template is="search-book-item"
                 data="{{item, index}}" />
+        </block>
+    </view>
+    <view wx:else class="search-content-container">
+        <block wx:for="{{searchUserResultList}}" wx:key="index">
+            <import src="../../template/search/SearchUserItemBig.wxml" />
+            <template is="search-user-item-big"
+                data="{{item}}" />
         </block>
     </view>
     <import src="../../template/widget/LoadMore.wxml" />

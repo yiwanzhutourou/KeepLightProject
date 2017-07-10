@@ -1,4 +1,4 @@
-import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, MapData, Markers, Result, SearchResult, UserContact, UserInfo } from './interfaces'
+import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, MapData, Markers, Result, SearchResult, SearchUser, UserContact, UserInfo } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 const BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -349,6 +349,20 @@ export const search = (keyword: string, latitude: number, longitude: number,
         count: count,
         page: page,
     })
+    get(url, success, failure)
+}
+
+export const searchUsers = (keyword: string, latitude: number, longitude: number,
+                      count: number, page: number,
+                      success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Search.users') + getUrlParam({
+        keyword: keyword,
+        latitude: latitude,
+        longitude: longitude,
+        count: count,
+        page: page,
+    })
+    console.log(url)
     get(url, success, failure)
 }
 

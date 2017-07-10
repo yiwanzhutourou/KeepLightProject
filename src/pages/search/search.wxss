@@ -1,4 +1,5 @@
 @import "../../template/search/SearchBookItem.wxss";
+@import "../../template/search/SearchUserItemBig.wxss";
 @import "../../template/widget/LoadMore.wxss";
 
 .container {
@@ -18,11 +19,38 @@
     justify-content: center;
 }
 
-.input-container {
+.search-bar-inner-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
     width: 640rpx;
     height: 40rpx;
     background-color: #f2f2f2;
     border-radius: 20rpx;
+}
+
+.search-picker {
+    width: 100rpx;
+    height: 40rpx;
+}
+
+.search-picker-container {
+    height: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 10rpx;
+    font-size: 22rpx;
+    color: rgba(0, 0, 0, 0.87);
+    border-right: 1rpx solid #bbb;
+}
+
+.input-container {
+    width: 540rpx;
+    height: 40rpx;
 }
 
 .cancel-text {
@@ -39,7 +67,7 @@
 .search-bar-input {
     height: 40rpx;
     font-size: 22rpx;
-    padding-left: 25rpx;
+    padding-left: 10rpx;
     padding-right: 25rpx;
 }
 
