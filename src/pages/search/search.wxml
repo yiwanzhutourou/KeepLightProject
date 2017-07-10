@@ -1,10 +1,16 @@
-<view class="container">
+<view class="container-no-line">
     <view class="search-bar-container">
-        <input class="search-bar-input"
-            placeholder-class="search-bar-input-placeholder"
-            placeholder="搜索看看附近的书房里都有什么书"
-            value="{{searchKey}}"
-            bindconfirm="completeInput" />
+        <view class="input-container">
+            <input class="search-bar-input"
+                placeholder-class="search-bar-input-placeholder"
+                placeholder="搜索看看附近的书房里都有什么书"
+                value="{{searchKey}}"
+                bindconfirm="completeInput"
+                auto-focus />
+        </view>
+        <view class="cancel-text" bindtap="onCancelTap">
+            <text>取消</text>
+        </view>
     </view>
 
     <view class="search-content-container">

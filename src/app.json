@@ -19,13 +19,13 @@
   ],
   "window": {
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#535354",
     "navigationBarTitleText": "有读书房",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle":"white"
   },
   "tabBar": {  
-      "color": "#2c2c2c",  
-      "selectedColor": "#d4237a",  
+      "color": "#535354",  
+      "selectedColor": "#f8b62d",  
       "borderStyle":"black",  
       "list": [{  
         "selectedIconPath": "resources/img/icon_home_selected.png",  

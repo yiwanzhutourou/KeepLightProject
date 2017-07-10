@@ -1,5 +1,5 @@
 export const DEFAULT_PAGE_SIZE = 20
-export const DEFAULT_SEARCH_PAGE_SIZE = 30
+export const DEFAULT_SEARCH_PAGE_SIZE = 50
 
 export type Book = {
     isbn: string,
@@ -50,6 +50,9 @@ export type Markers = {
     height: number,
     title?: string,
     bindcontroltap?: string,
+    isMergeMarker: boolean,
+    callout?: any,
+    children?: Array<Markers>,
 }
 
 export type UserInfo = {
