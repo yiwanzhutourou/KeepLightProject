@@ -16,6 +16,8 @@ Page({
     screenHeight: 0,
     showLoadingMore: false,
     noMore: false,
+    latitude: 0,
+    longitude: 0,
   },
 
   onLoad: function(options: any): void {
@@ -37,10 +39,7 @@ Page({
       noMore: false,
     })
     showLoading('正在定位并搜索')
-    let latitude = 31.181471
-    let longitude = 121.438378
-    searchPage.searchResult(keyword, latitude, longitude)
-    // searchPage.requestLocation()
+    searchPage.requestLocation()
   },
 
   onBookItemTap: (e) => {
@@ -62,6 +61,10 @@ Page({
         if (res) {
           let latitude = res.latitude
           let longitude = res.longitude
+          searchPage.setData({
+            latitude: latitude,
+            longitude: longitude,
+          })
           let keyword = searchPage.data.keyword
           searchPage.searchResult(keyword, latitude, longitude)
         }
@@ -76,9 +79,10 @@ Page({
     search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
         (result: Array<SearchResult>) => {
           hideLoading()
-          searchPage.setData({
-            noMore: result.length === 0,
-          })
+          let noMore = (result.length === 0)
+          if (noMore) {
+            searchPage.showNoMore()
+          }
           if (!result || result.length === 0) {
             // TODO show empty view
           } else {
@@ -104,10 +108,31 @@ Page({
     if (searchPage.data.noMore) {
       return
     }
+    let latitude = searchPage.data.latitude
+    let longitude = searchPage.data.longitude
     searchPage.showLoadingMore()
-
     curPage++
-    searchPage.requestLocation()
+
+    // load more
+    search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
+        (result: Array<SearchResult>) => {
+          hideLoading()
+
+          let noMore = (result.length === 0)
+          if (noMore) {
+            searchPage.showNoMore()
+          } else {
+            searchPage.hideLoadingMore()
+            let list = searchPage.data.searchResultList
+            searchPage.setData({
+              searchResultList: list.concat(searchPage.formatResult(result)),
+            })
+          }
+        },
+        (failure) => {
+          hideLoading()
+          showErrDialog('加载失败')
+        })
   },
 
   showLoadingMore: () => {
