@@ -1,4 +1,9 @@
-import { Address, Book, BorrowHistory, BorrowRequest, CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, MapData, Markers, Result, SearchResult, UserContact, UserInfo } from './interfaces'
+import {
+    Address, Book, BorrowHistory, BorrowRequest, 
+    CODE_SUCCESS, DEFAULT_PAGE_SIZE, HomepageData, 
+    MapData, Markers, Result, SearchResult, UserContact, 
+    UserInfo, SearchUser 
+} from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 const BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -149,6 +154,11 @@ export const getHomepageData = (userId: string, success: (info: HomepageData) =>
             }
         })
     }
+}
+
+export const getMapDetails = (userIds: string, success: (info: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    const url = getUrl('Map.getUserAddresses') + getUrlParam({ userIds })
+    get(url, success, failure)
 }
 
 export const getMyUserInfoFromServer = (success: (info: UserInfo) => void, failure?: (res?: any) => void) => {
@@ -366,7 +376,6 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
                     width: 40,
                     height: 40,
                     isMergeMarker: false,
-                    title: marker.title,
                 })
             })
         }

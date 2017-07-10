@@ -52,7 +52,7 @@ export type Markers = {
     bindcontroltap?: string,
     isMergeMarker: boolean,
     callout?: any,
-    children?: Array<Markers>,
+    children?: string,
 }
 
 export type UserInfo = {

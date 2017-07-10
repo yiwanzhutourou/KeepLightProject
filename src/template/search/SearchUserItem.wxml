@@ -23,7 +23,7 @@
                     </view>
                 </view>
             </view>
-            <view class="action-container">
+            <view class="action-container" wx:if="{{showBorrowButton}}">
                 <form bindsubmit="onBorrowBook" report-submit="true">
                     <input name="user" value="{{item.id}}" hidden />
                     <input name="index" value="{{index}}" hidden />

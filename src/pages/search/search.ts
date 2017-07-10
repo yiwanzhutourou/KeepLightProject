@@ -18,6 +18,7 @@ Page({
     noMore: false,
     latitude: 0,
     longitude: 0,
+    showBorrowButton: true,
   },
 
   onLoad: function(options: any): void {
