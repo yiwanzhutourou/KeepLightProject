@@ -1,11 +1,19 @@
 <!--index.wxml-->
-<map id="homeMap"
-    longitude="{{longitude}}"
-    latitude="{{latitude}}"
-    controls="{{controls}}"
-    markers="{{markers}}"
-    bindcontroltap="controltap"
-    bindmarkertap="markertap"
-    bindregionchange="onRegionChange"
-    bindtap="onMapTap"
-    show-location />
+<view class="container-no-line">
+    <view class="search-contaner">
+        <view class="fake-input-container" bindtap="onSearchTap">
+            <image class="search-image" src="../../resources/img/icon_home_search.png" />
+            <view class="search-text">搜索看看附近的书房里都有什么书</view>
+        </view>
+    </view>
+    <map id="homeMap"
+        longitude="{{longitude}}"
+        latitude="{{latitude}}"
+        controls="{{controls}}"
+        markers="{{markers}}"
+        bindcontroltap="controltap"
+        bindmarkertap="markertap"
+        bindregionchange="onRegionChange"
+        bindtap="onMapTap"
+        show-location />
+</view>

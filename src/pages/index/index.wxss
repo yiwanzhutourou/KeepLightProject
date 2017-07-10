@@ -4,6 +4,38 @@
   主页map式样
 */
 #homeMap {
-  width: 100%;
-  height: 100vh;
+    width: 100%;
+    height: calc(100vh - 56rpx);
+}
+
+.search-contaner {
+    width: 100%;
+    height: 56rpx;
+    background-color: #535354;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.fake-input-container {
+    width: calc(100% - 40rpx);
+    height: 40rpx;
+    background-color: #f2f2f2;
+    border-radius: 20rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-image {
+    width: 36rpx;
+    height: 36rpx;
+}
+
+.search-text {
+  font-size: 22rpx;
+  color: #8a8a8a;
+  margin-left: 6rpx;
 }

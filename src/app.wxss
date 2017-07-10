@@ -13,6 +13,19 @@
     border-top: 1rpx solid #e6e6e6;
 }
 
+.container-no-line {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
 .common-container {
     width: 100%;
 }

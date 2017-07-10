@@ -37,7 +37,10 @@ Page({
       noMore: false,
     })
     showLoading('正在定位并搜索')
-    searchPage.requestLocation()
+    let latitude = 31.181471
+    let longitude = 121.438378
+    searchPage.searchResult(keyword, latitude, longitude)
+    // searchPage.requestLocation()
   },
 
   onBookItemTap: (e) => {
@@ -169,6 +172,12 @@ Page({
   onUserItemTap: (e) => {
     wx.navigateTo({
         url: '../homepage/homepage2?user=' + e.currentTarget.dataset.user,
+    })
+  },
+
+  onCancelTap: (e) => {
+    wx.navigateBack({
+        delta: 1,
     })
   },
 })

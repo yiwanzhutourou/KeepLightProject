@@ -1,6 +1,8 @@
 import { Markers, Result } from '../../api/interfaces'
 import { getMarkers, getUserInfo } from '../../api/api'
 
+import { rpx2px } from '../../utils/utils'
+
 const EVENT_TAP_SEARCH = 0
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
 
@@ -51,11 +53,11 @@ Page({
 
   controltap: (event) => {
     switch (event.controlId) {
-      case EVENT_TAP_SEARCH:
-        wx.navigateTo({
-          url: '../search/search',
-        })
-        break
+      // case EVENT_TAP_SEARCH:
+      //   wx.navigateTo({
+      //     url: '../search/search',
+      //   })
+      //   break
       case EVENT_TAP_SHOW_CURRENT_LOCATION:
         mapCtx.moveToLocation()
         break
@@ -92,32 +94,32 @@ Page({
   },
 
   setUpIconOnmap: () => {
-    // Homepage icon:
-    let width = windowWidth * 0.15
-    let height = width
-    let left = windowWidth * 0.95 - width
-    let top = windowHeight * 0.05
+    // // Homepage icon:
+    // let width = windowWidth * 0.15
+    // let height = width
+    // let left = windowWidth * 0.95 - width
+    // let top = windowHeight * 0.05
 
     // Show current location icon:
     let cWidth = windowWidth * 0.1
     let cHeight = cWidth
-    let cLeft = windowWidth * 0.95 - cWidth
-    let cTop = windowHeight * 0.95 - cHeight
+    let cLeft = windowWidth * 0.97 - cWidth
+    let cTop = windowHeight * 0.92 - cHeight
 
     indexPage.setData({
       controls: [
         // 搜索按钮
-        {
-          id: EVENT_TAP_SEARCH,
-          iconPath: '/resources/img/icon_search.png',
-          position: {
-            left: left,
-            top: top,
-            width: width,
-            height: height,
-          },
-          clickable: true,
-        },
+        // {
+        //   id: EVENT_TAP_SEARCH,
+        //   iconPath: '/resources/img/icon_search.png',
+        //   position: {
+        //     left: left,
+        //     top: top,
+        //     width: width,
+        //     height: height,
+        //   },
+        //   clickable: true,
+        // },
         // 显示当前位置
         {
           id: EVENT_TAP_SHOW_CURRENT_LOCATION,
@@ -131,6 +133,12 @@ Page({
           clickable: true,
         },
       ],
+    })
+  },
+
+  onSearchTap: (e) => {
+    wx.navigateTo({
+      url: '../search/search',
     })
   },
 })
