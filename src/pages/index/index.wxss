@@ -9,6 +9,8 @@
 }
 
 .search-contaner {
+    position: fixed;
+    z-index: 5;
     width: 100%;
     height: 56rpx;
     background-color: #535354;

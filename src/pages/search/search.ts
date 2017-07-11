@@ -27,6 +27,7 @@ Page({
     latitude: 0,
     longitude: 0,
     showBorrowButton: true,
+    locationAquried: false,
   },
 
   onLoad: function(options: any): void {
@@ -90,6 +91,18 @@ Page({
   },
 
   requestLocation: () => {
+    if (searchPage.data.locationAquried) {
+      let keyword = searchPage.data.keyword
+      let latitude = searchPage.data.latitude
+      let longitude = searchPage.data.longitude
+      let index = searchPage.data.searchIndex
+      if (index === SEARCH_BOOK) {
+          searchPage.searchBookResult(keyword, latitude, longitude)
+      } else if (index === SEARCH_USER) {
+          searchPage.searchUserResult(keyword, latitude, longitude)
+      }
+      return
+    }
     wx.getLocation({
       type: 'wgs84',
       success: (res) => {
@@ -99,6 +112,7 @@ Page({
           searchPage.setData({
             latitude: latitude,
             longitude: longitude,
+            locationAquried: true,
           })
           let keyword = searchPage.data.keyword
           let index = searchPage.data.searchIndex
