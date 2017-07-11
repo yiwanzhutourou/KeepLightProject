@@ -13,7 +13,7 @@ gulp.task('clean', () => {
 });
 
 gulp.task('build', () => {
-    execSync('tsc', {
+    execSync('./node_modules/.bin/tsc', {
         stdio: 'inherit'
     });
 });
@@ -41,4 +41,12 @@ gulp.task('addPromise', () => {
         .pipe(gulp.dest('dist'));
 });
 
-gulp.task('default', ['build', 'move', 'addPromise']);
+gulp.task('watch', () => {
+    gulp.watch('src/**/*.ts', ['build', 'addPromise']);
+    gulp.watch('src/**/*.wxml', ['move']);
+    gulp.watch('src/**/*.wxss', ['move']);
+    gulp.watch('src/**/*.json', ['move']);
+    gulp.watch('src/resources/img/*.*', ['move']);
+})
+
+gulp.task('default', ['watch']);
