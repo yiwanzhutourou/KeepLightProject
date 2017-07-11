@@ -48,8 +48,14 @@ Page({
       showLoadingMore: false,
       noMore: false,
     })
-    showLoading('正在定位并搜索')
+    showLoading('正在搜索')
     searchPage.requestLocation()
+  },
+
+  onInputText: (e) => {
+    searchPage.setData({
+      keyword: e.detail.value,
+    })
   },
 
   bindPickerChange: (e) => {
@@ -313,9 +319,17 @@ Page({
     })
   },
 
-  onCancelTap: (e) => {
-    wx.navigateBack({
-        delta: 1,
+  onConfirmTap: (e) => {
+    let keyword = searchPage.data.keyword
+    if (!keyword || keyword === '') {
+      return
+    }
+    curPage = 0
+    searchPage.setData({
+      showLoadingMore: false,
+      noMore: false,
     })
+    showLoading('正在搜索')
+    searchPage.requestLocation()
   },
 })

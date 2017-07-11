@@ -20,12 +20,13 @@
                     placeholder-class="search-bar-input-placeholder"
                     placeholder="搜索图书 书房"
                     value="{{searchKey}}"
+                    bindinput="onInputText"
                     bindconfirm="completeInput"
                     auto-focus />
             </view>
         </view>
-        <view class="cancel-text" bindtap="onCancelTap">
-            <text>取消</text>
+        <view class="cancel-text" bindtap="onConfirmTap">
+            <text>确定</text>
         </view>
     </view>
 
