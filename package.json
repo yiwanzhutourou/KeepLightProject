@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "debug": "tsc --watch"
+    "setup": "npm install && typings install",
+    "debug": "gulp build move && gulp"
   },
   "keywords": [],
   "author": "",
