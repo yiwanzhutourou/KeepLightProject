@@ -1,3 +1,4 @@
+
 // app.js
 export type GlobalData = {
   locationInfo?: WeApp.LocationInfo,
@@ -8,7 +9,6 @@ const globalData: GlobalData = {}
 
 App({
   onLaunch: (info: WeApp.LaunchData) => {
-    // Do nothing
   },
   // 定位信息
   getLocationInfo: (cb: (res: WeApp.LocationInfo) => void) => {

@@ -1,0 +1,81 @@
+.search-user-container {
+    height: 140rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 50rpx;
+    padding-right: 50rpx;
+    background: #eee;
+}
+
+.maininfo-container {
+    width: 530rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.action-container {
+    width: 120rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.detail-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30rpx;
+}
+
+.search-address-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 12rpx;
+}
+
+.user-nickname {
+    font-size: 30rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.location_icon {
+    width: 20rpx;
+    height: 20rpx;
+}
+
+.distance-text {
+    max-width: 200rpx;
+    font-size: 20rpx;
+    color: #8a8a8a;
+    padding-left: 8rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.user-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+    border: 1rpx solid #bbb;
+    -webkit-box-shadow: 0rpx 0rpx 5rpx 0rpx #eee;
+    -moz-box-shadow: 0rpx 0rpx 5px 0rpx #eee;
+    box-shadow: 0rpx 0rpx 5rpx 0rpx #eee;
+}
+
+.borrow-book-button {
+    height: 50rpx;
+    line-height: 50rpx;
+    font-size: 25rpx;
+    color: #fff;
+    background: rgba(0, 150, 136, 1);
+}
+
+.borrow-book-button-hover {
+    background: rgba(0, 150, 136, 0.6);
+}

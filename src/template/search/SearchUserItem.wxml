@@ -1,0 +1,38 @@
+<template name="search-user-item">
+    <view class="common-container">
+        <view class="search-user-container">
+            <view class="maininfo-container" data-user="{{item.id}}" bindtap="onUserItemTap">
+                <image class="user-avatar" src="{{item.avatar}}" />
+                <view class="detail-container">
+                    <text class="user-nickname">{{item.nickname}}的书房</text>
+                    <view class="search-address-container">
+                        <image class="location_icon"
+                            src="../../resources/img/icon_location_small.png" />
+                        <view wx:if="{{item.address.name}}" class="distance-text">
+                            {{item.address.name}}
+                        </view>
+                        <view wx:elif="{{item.address.detail}}" class="distance-text">
+                            {{item.address.detail}}
+                        </view>
+                        <view wx:else class="distance-text">
+                            暂无地址
+                        </view>
+                        <view class="distance-text">
+                            {{item.address.distanceText}}
+                        </view>
+                    </view>
+                </view>
+            </view>
+            <view class="action-container" wx:if="{{showBorrowButton}}">
+                <form bindsubmit="onBorrowBook" report-submit="true">
+                    <input name="user" value="{{item.id}}" hidden />
+                    <input name="index" value="{{index}}" hidden />
+                    <button class="borrow-book-button"
+                            formType="submit"
+                            hover-class="borrow-book-button-hover">借阅</button>
+                </form>
+            </view>
+        </view>
+        <view class="item-divider-white" />
+    </view>
+</template>

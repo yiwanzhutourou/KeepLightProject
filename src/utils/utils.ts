@@ -49,3 +49,8 @@ export const getScreenSizeInRpx = () => {
     let windowWidth = res.windowWidth * 750 / res.windowWidth
     return {width: windowWidth, height: windowHeight}
 }
+
+export const rpx2px = (rpx: number) => {
+    let res = wx.getSystemInfoSync() as any
+    return rpx * 750 / res.windowWidth
+}
