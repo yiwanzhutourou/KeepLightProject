@@ -1,0 +1,69 @@
+.search-user-container-big {
+    height: 180rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 30rpx;
+    padding-right: 30rpx;
+    background: #fff;
+}
+
+.maininfo-container-big {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.detail-container-big {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30rpx;
+}
+
+.search-address-container-big {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-top: 12rpx;
+}
+
+.user-nickname-big {
+    font-size: 30rpx;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.location_icon-big {
+    width: 20rpx;
+    height: 20rpx;
+}
+
+.distance-text-big {
+    font-size: 20rpx;
+    color: #8a8a8a;
+    padding-left: 8rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.distance-number-text-big {
+    font-size: 20rpx;
+    color: #8a8a8a;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-top: 12rpx;
+}
+
+.user-avatar-big {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    border: 1rpx solid #bbb;
+    -webkit-box-shadow: 0rpx 0rpx 5rpx 0rpx #eee;
+    -moz-box-shadow: 0rpx 0rpx 5px 0rpx #eee;
+    box-shadow: 0rpx 0rpx 5rpx 0rpx #eee;
+}

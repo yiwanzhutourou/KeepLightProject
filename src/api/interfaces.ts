@@ -103,6 +103,12 @@ export type SearchUser = {
     address: SearchAddress,
 }
 
+export type CityInfo = {
+    province: string,
+    city: string,
+    district: string,
+}
+
 export type SearchAddress = {
     distance: number,
     distanceText: string,
@@ -110,4 +116,5 @@ export type SearchAddress = {
     longitude: number,
     name: string,
     detail: string,
+    city?: CityInfo,
 }

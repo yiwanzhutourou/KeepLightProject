@@ -1,5 +1,5 @@
-import { Book, DEFAULT_SEARCH_PAGE_SIZE, SearchResult } from '../../api/interfaces'
-import { borrowBook, search } from '../../api/api'
+import { Book, DEFAULT_SEARCH_PAGE_SIZE, SearchResult, SearchUser } from '../../api/interfaces'
+import { borrowBook, search, searchUsers } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 const INITIAL_PAGE = 0
@@ -9,9 +9,17 @@ let searchPage
 let curPage = 0
 let lastRequest = -1
 
+const SEARCH_BOOK = 0
+const SEARCH_USER = 1
+
 Page({
   data: {
     searchResultList: [],
+    searchUserResultList: [],
+    searchRange: [
+          '图书', '书房',
+    ],
+    searchIndex: SEARCH_BOOK,
     keyword: '',
     screenHeight: 0,
     showLoadingMore: false,
@@ -43,6 +51,32 @@ Page({
     searchPage.requestLocation()
   },
 
+  bindPickerChange: (e) => {
+      let index = Number(e.detail.value)
+      searchPage.setData({
+          searchIndex: index,
+      })
+      curPage = 0
+      searchPage.setData({
+          searchResultList: [],
+          searchUserResultList: [],
+          showLoadingMore: false,
+          noMore: false,
+      })
+      let keyword = searchPage.data.keyword
+      if (!keyword || keyword === '') {
+          return
+      }
+      showLoading('正在搜索')
+      let latitude = searchPage.data.latitude
+      let longitude = searchPage.data.longitude
+      if (index === SEARCH_BOOK) {
+          searchPage.searchBookResult(keyword, latitude, longitude)
+      } else if (index === SEARCH_USER) {
+          searchPage.searchUserResult(keyword, latitude, longitude)
+      }
+  },
+
   onBookItemTap: (e) => {
     let book: Book = e.currentTarget.dataset.book
 
@@ -67,28 +101,60 @@ Page({
             longitude: longitude,
           })
           let keyword = searchPage.data.keyword
-          searchPage.searchResult(keyword, latitude, longitude)
+          let index = searchPage.data.searchIndex
+          if (index === SEARCH_BOOK) {
+              searchPage.searchBookResult(keyword, latitude, longitude)
+          } else if (index === SEARCH_USER) {
+              searchPage.searchUserResult(keyword, latitude, longitude)
+          }
         }
       },
       fail: () => {
         showErrDialog('无法获取您的定位')
       },
-})
+    })
   },
 
-  searchResult: (keyword: string, latitude: number, longitude: number) => {
+  searchBookResult: (keyword: string, latitude: number, longitude: number) => {
     search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
         (result: Array<SearchResult>) => {
           hideLoading()
           let noMore = (result.length === 0)
           if (noMore) {
-            searchPage.showNoMore()
+            searchPage.setData({
+              showLoadingMore: false,
+              noMore: true,
+            })
           }
           if (!result || result.length === 0) {
-            // TODO show empty view
+            showDialog('没有对应的图书信息')
           } else {
             searchPage.setData({
               searchResultList: searchPage.formatResult(result),
+            })
+          }
+        },
+        (failure) => {
+          hideLoading()
+        })
+  },
+
+  searchUserResult: (keyword: string, latitude: number, longitude: number) => {
+    searchUsers(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
+        (result: Array<SearchUser>) => {
+          hideLoading()
+          let noMore = (result.length === 0)
+          if (noMore) {
+            searchPage.setData({
+              showLoadingMore: false,
+              noMore: true,
+            })
+          }
+          if (!result || result.length === 0) {
+            showDialog('没有对应的书房信息')
+          } else {
+            searchPage.setData({
+              searchUserResultList: result,
             })
           }
         },
@@ -114,7 +180,16 @@ Page({
     searchPage.showLoadingMore()
     curPage++
 
-    // load more
+    let index = searchPage.data.searchIndex
+    if (index === SEARCH_BOOK) {
+        searchPage.loadMoreBooks(keyword, latitude, longitude)
+    } else if (index === SEARCH_USER) {
+        searchPage.loadMoreUsers(keyword, latitude, longitude)
+    }
+  },
+
+  loadMoreBooks: (keyword: string, latitude: number, longitude: number) => {
+     // load more
     search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
         (result: Array<SearchResult>) => {
           hideLoading()
@@ -127,6 +202,29 @@ Page({
             let list = searchPage.data.searchResultList
             searchPage.setData({
               searchResultList: list.concat(searchPage.formatResult(result)),
+            })
+          }
+        },
+        (failure) => {
+          hideLoading()
+          showErrDialog('加载失败')
+        })
+  },
+
+  loadMoreUsers: (keyword: string, latitude: number, longitude: number) => {
+     // load more
+    searchUsers(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
+        (result: Array<SearchUser>) => {
+          hideLoading()
+
+          let noMore = (result.length === 0)
+          if (noMore) {
+            searchPage.showNoMore()
+          } else {
+            searchPage.hideLoadingMore()
+            let list = searchPage.data.searchUserResultList
+            searchPage.setData({
+              searchUserResultList: list.concat(result),
             })
           }
         },
