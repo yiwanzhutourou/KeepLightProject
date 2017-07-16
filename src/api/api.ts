@@ -18,12 +18,30 @@ import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 import { LoginData } from './interfaces'
 
-// const BASE_URL = 'https://cuiyi.mozidev.me/api/'
-const BASE_URL = 'http://127.0.0.1/api/'
+export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+export const TEST_BASE_URL = 'https://cuiyi.mozidev.me:8082/api/'
 
+const URL_KEY = 'url_key'
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
 const MOBILE_KEY = 'user_has_mobile'
+
+let baseUrl = ''
+
+export const getBaseUrl = () => {
+    if (baseUrl === '') {
+        baseUrl = wx.getStorageSync(URL_KEY)
+        if (!baseUrl) {
+            setBaseUrl(DEFAULT_BASE_URL)
+        }
+    }
+    return baseUrl
+}
+
+export const setBaseUrl = (url: string) => {
+    baseUrl = url
+    wx.setStorage({ key: URL_KEY, data: baseUrl })
+}
 
 let userInfo = null
 
@@ -132,7 +150,7 @@ export const login = (cb: (userInfo: any) => void) => {
 }
 
 export const getUrl = (path: string) => {
-    return BASE_URL + path
+    return getBaseUrl() + path
 }
 
 const buildUrlParam = (param: any, key?: string) => {

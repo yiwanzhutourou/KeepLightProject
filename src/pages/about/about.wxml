@@ -2,7 +2,7 @@
     <image class="blur" src="../../resources/img/logo.png" mode="aspectFill" />
     <view class="dark" />
     <view class="logo-container">
-        <image class="logo" src="../../resources/img/logo.png" />
+        <image class="logo" src="../../resources/img/logo.png" bindtap="onLogoTap" />
         <text class="about-title">有读书房</text>
         <text class="about-info">发现1公里内的好书</text>
         <text class="about-info">尝试解决自有图书闲置问题</text>
