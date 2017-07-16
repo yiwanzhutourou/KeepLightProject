@@ -1,6 +1,11 @@
 export const DEFAULT_PAGE_SIZE = 20
 export const DEFAULT_SEARCH_PAGE_SIZE = 50
 
+export type LoginData = {
+    token: string,
+    hasMobile: boolean,
+}
+
 export type Book = {
     isbn: string,
     title?: string,

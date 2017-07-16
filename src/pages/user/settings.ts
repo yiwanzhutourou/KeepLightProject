@@ -21,7 +21,7 @@ Page({
         },
         {
             id: SETTING_BIND_MOBILE,
-            title: '修改手机号',
+            title: '修改绑定的手机号',
             subTitle: '有读书房获取您的手机号只用于向您发送借阅相关的通知',
         },
         {
