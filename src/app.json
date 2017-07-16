@@ -12,6 +12,7 @@
     "pages/user/request",
     "pages/user/history",
     "pages/user/contact",
+    "pages/user/bind",
     "pages/user/changeintro",
     "pages/about/about",
     "pages/about/legals",
