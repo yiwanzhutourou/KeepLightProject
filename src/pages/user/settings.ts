@@ -3,8 +3,9 @@ import { getBorrowRequestCount, getUserContact } from '../../api/api'
 import { UserContact } from '../../api/interfaces'
 
 const SETTING_BIND_WEIXIN = 0
-const SETTING_ADDRESS = 1
-const SETTING_CHANGE_INFO = 2
+const SETTING_BIND_MOBILE = 1
+const SETTING_ADDRESS = 2
+const SETTING_CHANGE_INFO = 3
 const SETTING_BORROW_HISTORY = 4
 const SETTING_ABOUT = 5
 
@@ -17,6 +18,11 @@ Page({
             id: SETTING_BIND_WEIXIN,
             title: '设置联系方式',
             subTitle: '设置微信号、QQ或者邮箱方便书友联系您',
+        },
+        {
+            id: SETTING_BIND_MOBILE,
+            title: '修改手机号',
+            subTitle: '有读书房获取您的手机号只用于向您发送借阅相关的通知',
         },
         {
             id: SETTING_ADDRESS,
@@ -72,6 +78,11 @@ Page({
           case SETTING_BIND_WEIXIN:
             wx.navigateTo({
                 url: '../user/contact',
+            })
+            break
+          case SETTING_BIND_MOBILE:
+            wx.navigateTo({
+                url: '../user/bind',
             })
             break
           case SETTING_ADDRESS:

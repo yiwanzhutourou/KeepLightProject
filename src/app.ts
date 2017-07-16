@@ -9,6 +9,7 @@ const globalData: GlobalData = {}
 
 App({
   onLaunch: (info: WeApp.LaunchData) => {
+    // do nothing
   },
   // 定位信息
   getLocationInfo: (cb: (res: WeApp.LocationInfo) => void) => {

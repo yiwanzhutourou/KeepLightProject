@@ -1,0 +1,27 @@
+<view class="container">
+    <form class="form" bindsubmit="formSubmit">
+        <view class="form-container">
+            <view class="input-container">
+                <view class="input-title">手机号</view>
+                <input class="mobile-input"
+                    name="mobile_input"
+                    bindinput="onInputMobile"
+                    placeholder="请输入您的手机号" />
+            </view>
+            <view class="input-container">
+                <view class="input-title">验证码</view>
+                <input class="code-input"
+                    name="code_input"
+                    placeholder="请输入短信验证码" />
+                <view class="request_code_button"
+                    hover-class="request_code_button-hover"
+                    bindtap="onRequestCode">
+                    {{requestText}}
+                </view>
+            </view>
+            <button class="submit-button" hover-class="submit-button-hover" formType="submit">
+                确定
+            </button>
+        </view>
+    </form>
+</view>

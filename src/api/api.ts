@@ -16,8 +16,8 @@ import {
 } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-const BASE_URL = 'https://cuiyi.mozidev.me/api/'
-// const BASE_URL = 'http://127.0.0.1/api/'
+// const BASE_URL = 'https://cuiyi.mozidev.me/api/'
+const BASE_URL = 'http://127.0.0.1/api/'
 
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -359,6 +359,26 @@ export const getBorrowRequestCount = (success: (result: number) => void, failure
     }, failure)
 }
 
+export const requestVerifyCode = (mobile: string, success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.requestVerifyCode') + getUrlParam({
+            mobile: mobile,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const verifyCode = (mobile: string, code: string, success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.verifyCode') + getUrlParam({
+            mobile: mobile,
+            code: code,
+        })
+        console.log(url)
+        get(url, success, failure)
+    }, failure)
+}
+
 export const search = (keyword: string, latitude: number, longitude: number,
                       count: number, page: number,
                       success: (result: Array<SearchResult>) => void, failure?: (res?: any) => void) => {
@@ -475,6 +495,7 @@ export const get = (url: string, success?: (res: any) => void, failure?: (res?: 
             if (failure) {
                 failure(e)
             }
+            showErrDialog('无法获取数据，请检查您的网络状态')
         },
     })
 }

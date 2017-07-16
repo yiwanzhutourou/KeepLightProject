@@ -1,14 +1,27 @@
 /**index.wxss**/
 
+.container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    justify-content: flex-start;
+}
+
 /*
   主页map式样
 */
 #homeMap {
     width: 100%;
     height: calc(100vh - 56rpx);
+    margin-top: 56rpx;
 }
 
 .search-contaner {
+    position: fixed;
+    top: 0;
     width: 100%;
     height: 56rpx;
     background-color: #535354;
