@@ -1,2 +1,7 @@
-ts写微信小程序参照：https://github.com/Emeryao/we-app-typescript
-本地环境安装后，用gulp命令编译。微信小程序的目录设置为编译出来的dist目录。
+## 安装步骤
+
+1. 删除 node_modules
+2. npm run setup
+3. npm run debug
+
+就ok了

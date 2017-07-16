@@ -21,6 +21,7 @@ Page({
     longitude: 121.438378,
     latitude: 31.181471,
     markers: [],
+    includePoints: [],
   },
 
   onLoad: function(): void {
@@ -51,6 +52,7 @@ Page({
             const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
             indexPage.setData({
               markers: transformedMarkers,
+              includePoints: indexPage.composeIncludePoints(transformedMarkers),
             })
           },
         ) 
@@ -94,16 +96,17 @@ Page({
   },
 
   onRegionChange: (e) => {
-    console.log(e)
+    // 地图拖动的时候，把包含点设置为空
+    indexPage.setData({
+      includePoints: []
+    })
     mapCtx.getCenterLocation({
       success: (res) => {
-        console.log(res)
       },
     })
   },
 
   onMapTap: (e) => {
-    console.log(e)
   },
 
   onShareAppMessage: () => {
@@ -223,5 +226,50 @@ Page({
       default:
         return '/resources/img/icon_four.png'
     }
-  }
+  },
+
+  composeIncludePoints: (markers: Array<Markers>) => {
+    // 如果内存中有缓存了，就不再设置包含点了，不然会有多余的缩放
+    if (indexPage.data.markers.length !== 0) {
+      return []
+    }
+    let minDist = 9999
+    let result
+    const myLat = indexPage.data.latitude
+    const myLon = indexPage.data.longitude
+
+    // 找出最近的点
+    markers.forEach((marker) => {
+      const latOff = Math.abs(myLat - marker.latitude)
+      const lonOff = Math.abs(myLon - marker.longitude)
+      if ((latOff + lonOff) < minDist) {
+        minDist = latOff + lonOff
+        result = {
+          latitude: parseFloat(marker.latitude.toString()),
+          longitude: parseFloat(marker.longitude.toString())
+        }
+      }
+    })
+
+    console.log(result)
+    
+    // 范围再扩大一些
+    result.latitude = result.latitude + (result.latitude - myLat) * 0.5
+    result.longitude = result.longitude + (result.longitude - myLon) * 0.5
+
+    console.log(result)
+
+    // 做一个镜像点，使得我的位置能够居中
+    const mirrorPoint = {
+      latitude: myLat + (myLat - result.latitude),
+      longitude: myLon + (myLon - result.longitude)
+    }
+    const myPoint = {
+      latitude: myLat,
+      longitude: myLon
+    }
+
+    // 三个点都要显示在地图上，就可以了
+    return [myPoint, mirrorPoint, result]
+  },
 })
