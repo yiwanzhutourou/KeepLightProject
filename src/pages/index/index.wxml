@@ -11,6 +11,7 @@
         latitude="{{latitude}}"
         controls="{{controls}}"
         markers="{{markers}}"
+        include-points="{{includePoints}}"
         bindcontroltap="controltap"
         bindmarkertap="markertap"
         bindregionchange="onRegionChange"

@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "debug": "tsc --watch"
+    "setup": "npm install && typings install",
+    "debug": "gulp build move && gulp"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "gulp-replace": "^0.5.4"
+    "gulp": "^3.9.1",
+    "gulp-replace": "^0.5.4",
+    "tslint": "^5.5.0",
+    "typescript": "^2.4.1",
+    "typings": "^2.1.1"
   }
 }
