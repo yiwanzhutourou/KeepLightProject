@@ -410,7 +410,7 @@ export const requestVerifyCode = (mobile: string, success: (result: string) => v
             mobile: mobile,
         })
         get(url, success, failure)
-    }, failure)
+    }, failure, true, true/* 验证短信当然不能要求人家已经绑了手机啦 */)
 }
 
 export const verifyCode = (mobile: string, code: string, success: (result: string) => void, failure?: (res?: any) => void) => {
@@ -421,7 +421,7 @@ export const verifyCode = (mobile: string, code: string, success: (result: strin
         })
         console.log(url)
         get(url, success, failure)
-    }, failure)
+    }, failure, true, true)
 }
 
 export const search = (keyword: string, latitude: number, longitude: number,
@@ -592,9 +592,10 @@ const getRequestHeader = () => {
 }
 
 // TODO 所有需要登录的接口都要调这个函数，好蠢，当时结构没设计好
-const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLogin = true) => {
+// 接口越写越复杂，=。=
+const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLogin = true, skipSms = false) => {
     if (getUserToken()) {
-        if (hasMobile()) {
+        if (hasMobile() || skipSms) {
             success()
         } else {
             if (forceLogin) {
@@ -606,7 +607,7 @@ const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLog
         }
     } else if (forceLogin) {
         login((result) => {
-            if (result && result.userInfo && result.hasMobile) {
+            if (result && result.userInfo && (result.hasMobile || skipSms)) {
                 success()
             } else {
                 if (failure) {
