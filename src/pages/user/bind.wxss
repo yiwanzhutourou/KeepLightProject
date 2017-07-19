@@ -69,7 +69,7 @@
     width: 90%;
     color: #fff;
     background-color: #f8b62d;
-    margin-top: 20rpx;
+    margin-top: 60rpx;
 }
 
 .submit-button-hover {

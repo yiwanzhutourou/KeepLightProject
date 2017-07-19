@@ -16,13 +16,35 @@ import {
 } from './interfaces'
 import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-// const BASE_URL = 'https://cuiyi.mozidev.me/api/'
-const BASE_URL = 'http://127.0.0.1/api/'
+import { LoginData } from './interfaces'
 
+export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+export const TEST_BASE_URL = 'https://cuiyi.mozidev.me:8082/api/'
+
+const URL_KEY = 'url_key'
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
+const MOBILE_KEY = 'user_has_mobile'
+
+let baseUrl = ''
+
+export const getBaseUrl = () => {
+    if (baseUrl === '') {
+        baseUrl = wx.getStorageSync(URL_KEY)
+        if (!baseUrl) {
+            setBaseUrl(DEFAULT_BASE_URL)
+        }
+    }
+    return baseUrl
+}
+
+export const setBaseUrl = (url: string) => {
+    baseUrl = url
+    wx.setStorage({ key: URL_KEY, data: baseUrl })
+}
 
 let userInfo = null
+
 export const setUserInfo = (info) => {
     userInfo = info
     wx.setStorage({ key: USER_INFO_KEY, data: info })
@@ -36,6 +58,7 @@ export const getUserInfo = () => {
 }
 
 let userToken: string = ''
+
 export const setUserToken = (newToken: string) => {
     userToken = newToken
     wx.setStorage({ key: TOKEN_KEY, data: newToken })
@@ -46,6 +69,23 @@ export const getUserToken = () => {
         userToken = wx.getStorageSync(TOKEN_KEY)
     }
     return userToken
+}
+
+let hasMobileBound: number = -1
+
+export const setMobileBound = (bound: boolean) => {
+    hasMobileBound = bound ? 1 : 0
+    wx.setStorage({ key: MOBILE_KEY, data: hasMobileBound })
+}
+
+export const hasMobile = () => {
+    if (hasMobileBound === -1) {
+        hasMobileBound = wx.getStorageSync(MOBILE_KEY)
+        if (!hasMobileBound) {
+            hasMobileBound = 0
+        }
+    }
+    return hasMobileBound === 1
 }
 
 export const login = (cb: (userInfo: any) => void) => {
@@ -61,11 +101,15 @@ export const login = (cb: (userInfo: any) => void) => {
                             cb(null)
                             return
                         }
-                        bindUser(data.code, info.nickName, info.avatarUrl, (token: string) => {
-                            if (token) {
-                                setUserToken(token)
+                        bindUser(data.code, info.nickName, info.avatarUrl, (result: LoginData) => {
+                            if (result && result.token) {
+                                setUserToken(result.token)
                                 setUserInfo(info)
-                                cb(userInfo)
+                                setMobileBound(result.hasMobile)
+                                cb({
+                                    userInfo: userInfo,
+                                    hasMobile: result.hasMobile,
+                                })
                             }
                         }, (failure) => {
                             setUserToken('')
@@ -106,7 +150,7 @@ export const login = (cb: (userInfo: any) => void) => {
 }
 
 export const getUrl = (path: string) => {
-    return BASE_URL + path
+    return getBaseUrl() + path
 }
 
 const buildUrlParam = (param: any, key?: string) => {
@@ -135,7 +179,8 @@ const getUrlParam = (param: any, key?: string) => {
     return result
 }
 
-export const bindUser = (code: string, nickname: string, avatar: string, success: (token: string) => void, failure?: (res?: any) => void) => {
+export const bindUser = (code: string, nickname: string, avatar: string,
+                        success: (result: LoginData) => void, failure?: (res?: any) => void) => {
     let url = getUrl('User.login')
 
     post(url, {
@@ -154,7 +199,7 @@ export const getHomepageData = (userId: string, success: (info: HomepageData) =>
     } else {
         // 打首页的接口强制更新一下用户数据
         login((result) => {
-            if (result) {
+            if (result && result.userInfo && result.hasMobile) {
                 let url = getUrl('User.getHomepageData')
                 get(url, success, failure)
             } else {
@@ -213,7 +258,7 @@ export const getUserContact = (success: (contact: UserContact) => void, failure?
     checkLogin(() => {
         let url = getUrl('User.getUserContact')
         post(url, [], success, failure)
-    }, failure)
+    }, failure, false/* 不进行登录行为 */)
 }
 
 export const getUserContactByRequest = (requestId: number, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
@@ -356,7 +401,7 @@ export const getBorrowRequestCount = (success: (result: number) => void, failure
     checkLogin(() => {
         let url = getUrl('User.getBorrowRequestCount')
         get(url, success, failure)
-    }, failure)
+    }, failure, false/* 不强制登录 */)
 }
 
 export const requestVerifyCode = (mobile: string, success: (result: string) => void, failure?: (res?: any) => void) => {
@@ -365,7 +410,7 @@ export const requestVerifyCode = (mobile: string, success: (result: string) => v
             mobile: mobile,
         })
         get(url, success, failure)
-    }, failure)
+    }, failure, true, true/* 验证短信当然不能要求人家已经绑了手机啦 */)
 }
 
 export const verifyCode = (mobile: string, code: string, success: (result: string) => void, failure?: (res?: any) => void) => {
@@ -376,7 +421,7 @@ export const verifyCode = (mobile: string, code: string, success: (result: strin
         })
         console.log(url)
         get(url, success, failure)
-    }, failure)
+    }, failure, true, true)
 }
 
 export const search = (keyword: string, latitude: number, longitude: number,
@@ -547,18 +592,46 @@ const getRequestHeader = () => {
 }
 
 // TODO 所有需要登录的接口都要调这个函数，好蠢，当时结构没设计好
-const checkLogin = (success: () => void, failure?: (res?: any) => void) => {
+// 接口越写越复杂，=。=
+const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLogin = true, skipSms = false) => {
     if (getUserToken()) {
-        success()
-    } else {
+        if (hasMobile() || skipSms) {
+            success()
+        } else {
+            if (forceLogin) {
+                showBindMobileDialog()
+            }
+            if (failure) {
+                failure()
+            }
+        }
+    } else if (forceLogin) {
         login((result) => {
-            if (result) {
+            if (result && result.userInfo && (result.hasMobile || skipSms)) {
                 success()
             } else {
                 if (failure) {
                     failure()
                 }
+                if (result && !result.hasMobile) {
+                    showBindMobileDialog()
+                }
             }
         })
+    } else {
+        if (failure) {
+            failure()
+        }
     }
+}
+
+const showBindMobileDialog = () => {
+    showConfirmDialog('您还没有绑定手机号', '有读书房获取您的手机号，仅用于向您推送借阅请求相关的短信。不绑定手机号将不能使用有读书房的完整功能，是否绑定？',
+        (confirm: boolean) => {
+            if (confirm) {
+                wx.navigateTo({
+                    url: '../user/bind',
+                })
+            }
+        })
 }

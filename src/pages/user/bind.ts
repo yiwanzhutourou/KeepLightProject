@@ -1,5 +1,5 @@
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
-import { requestVerifyCode, verifyCode } from '../../api/api'
+import { requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
 
 import { verifyReg } from '../../utils/reg'
 
@@ -87,7 +87,7 @@ Page({
       verifyCode(mobile, code, (result: string) => {
           hideLoading()
           if (result === 'ok') {
-              showDialog('绑定成功~')
+              setMobileBound(true)
               showConfirmDialog('提示', '绑定成功~', (confirm: boolean) => {
                   wx.navigateBack({
                     delta: 1,

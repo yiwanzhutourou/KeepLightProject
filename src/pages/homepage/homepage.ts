@@ -4,7 +4,7 @@ import { addAddress, borrowBook, getBookList, getHomepageData, removeBook } from
 import { hideLoading, showConfirmDialog, showDialog, showLoading, showToast } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 
-let homepage: WeApp.Page
+let homepage
 
 Page({
   data: {

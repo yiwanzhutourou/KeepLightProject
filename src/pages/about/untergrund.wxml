@@ -1,0 +1,28 @@
+<view class="container-right-aligned">
+    <view class="title-contaiber"><text class="title">选择服务器</text></view>
+    <view class="radio-container">
+        <radio-group class="radio-group" bindchange="radioChange">
+            <label class="radio" wx:for="{{items}}" wx:key="id">
+                <radio value="{{item.value}}" checked="{{item.checked}}"/>{{item.name}}
+            </label>
+        </radio-group>
+    </view>
+    <view class="title-contaiber"><text class="title">添加自定义服务器</text></view>
+    <form class="form" bindsubmit="formSubmit">
+        <view class="input-container">
+            <input class="server-input"
+                name="server_input"
+                placeholder="输入自定义服务器地址" />
+            <view class="server-button-container">
+                <button class="server-submit-button" hover-class="server-submit-button-hover" formType="submit">
+                    添加
+                </button>
+            </view>
+        </view>
+    </form>
+    <view class="tips-container">
+        <view class="tips">
+            如果添加的地址不以http开头，会自动添加http://在前面；结尾不用加/，会自动添加/api/
+        </view>
+    </view>
+</view>

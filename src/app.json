@@ -16,6 +16,7 @@
     "pages/user/changeintro",
     "pages/about/about",
     "pages/about/legals",
+    "pages/about/untergrund",
     "pages/message/approved",
     "pages/search/search"
   ],
