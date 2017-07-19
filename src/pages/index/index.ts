@@ -6,6 +6,10 @@ import { rpx2px } from '../../utils/utils'
 const EVENT_TAP_SEARCH = 0
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
 
+// 如果算出来的离我最近的点，十分的近的话，就会把地图的缩放level提到最高，体验不好
+// 所以如果离我最近的点的距离小于这个的话，就不对地图进行缩放了
+const MIN_DISTANCE_FLOOR = 0.002
+
 let app = getApp()
 let indexPage
 let mapCtx
@@ -50,6 +54,7 @@ Page({
           (markers: Array<Markers>) => {
             const mergedMarkers = indexPage.mergeMarkers(markers)
             const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
+            console.log(markers.length, transformedMarkers.length)
             indexPage.setData({
               markers: transformedMarkers,
               includePoints: indexPage.composeIncludePoints(transformedMarkers),
@@ -233,7 +238,7 @@ Page({
     if (indexPage.data.markers.length !== 0) {
       return []
     }
-    let minDist = 9999
+    let minDist = 99999999
     let result
     const myLat = indexPage.data.latitude
     const myLon = indexPage.data.longitude
@@ -242,8 +247,9 @@ Page({
     markers.forEach((marker) => {
       const latOff = Math.abs(myLat - marker.latitude)
       const lonOff = Math.abs(myLon - marker.longitude)
-      if ((latOff + lonOff) < minDist) {
-        minDist = latOff + lonOff
+      const dist = latOff * latOff + lonOff * lonOff
+      if (dist < minDist) {
+        minDist = dist
         result = {
           latitude: parseFloat(marker.latitude.toString()),
           longitude: parseFloat(marker.longitude.toString())
@@ -251,13 +257,14 @@ Page({
       }
     })
 
-    console.log(result)
+    console.log(minDist)
+    if (minDist < MIN_DISTANCE_FLOOR) {
+      return []
+    }
     
     // 范围再扩大一些
     result.latitude = result.latitude + (result.latitude - myLat) * 0.5
     result.longitude = result.longitude + (result.longitude - myLon) * 0.5
-
-    console.log(result)
 
     // 做一个镜像点，使得我的位置能够居中
     const mirrorPoint = {
