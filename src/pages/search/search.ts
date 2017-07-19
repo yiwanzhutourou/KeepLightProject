@@ -1,5 +1,5 @@
 import { Book, DEFAULT_SEARCH_PAGE_SIZE, SearchResult, SearchUser } from '../../api/interfaces'
-import { borrowBook, search, searchUsers } from '../../api/api'
+import { borrowBook, search, searchBooks, searchUsers } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 const INITIAL_PAGE = 0
@@ -8,18 +8,16 @@ let app = getApp()
 let searchPage
 let curPage = 0
 let lastRequest = -1
+let keywords = ['', '']
 
 const SEARCH_BOOK = 0
 const SEARCH_USER = 1
 
 Page({
   data: {
+    currentTab: 0,
     searchResultList: [],
     searchUserResultList: [],
-    searchRange: [
-          '图书', '书房',
-    ],
-    searchIndex: SEARCH_BOOK,
     keyword: '',
     screenHeight: 0,
     showLoadingMore: false,
@@ -58,19 +56,32 @@ Page({
     })
   },
 
-  bindPickerChange: (e) => {
-      let index = Number(e.detail.value)
+  bindChange: (e) => {
+      let index = Number(e.detail.current)
       searchPage.setData({
-          searchIndex: index,
+          currentTab: index,
       })
-      curPage = 0
-      searchPage.setData({
-          searchResultList: [],
-          searchUserResultList: [],
-          showLoadingMore: false,
-          noMore: false,
-      })
+      searchPage.loadTabData(index)
+  },
+
+  swichNav: (e) => {
+      if (searchPage.data.currentTab === e.target.dataset.current) {
+          return false
+      } else {
+          let index = Number(e.target.dataset.current)
+          searchPage.setData({
+              currentTab: index,
+          })
+          searchPage.loadTabData(index)
+      }
+  },
+
+  loadTabData: (index: number) => {
       let keyword = searchPage.data.keyword
+      if (keywords[index] !== '' && keywords[index] === keyword) {
+          return
+      }
+      curPage = 0
       if (!keyword || keyword === '') {
           return
       }
@@ -78,8 +89,18 @@ Page({
       let latitude = searchPage.data.latitude
       let longitude = searchPage.data.longitude
       if (index === SEARCH_BOOK) {
+          searchPage.setData({
+              searchResultList: [],
+              showLoadingMore: false,
+              noMore: false,
+          })
           searchPage.searchBookResult(keyword, latitude, longitude)
       } else if (index === SEARCH_USER) {
+          searchPage.setData({
+              searchUserResultList: [],
+              showLoadingMore: false,
+              noMore: false,
+          })
           searchPage.searchUserResult(keyword, latitude, longitude)
       }
   },
@@ -101,7 +122,7 @@ Page({
       let keyword = searchPage.data.keyword
       let latitude = searchPage.data.latitude
       let longitude = searchPage.data.longitude
-      let index = searchPage.data.searchIndex
+      let index = searchPage.data.currentTab
       if (index === SEARCH_BOOK) {
           searchPage.searchBookResult(keyword, latitude, longitude)
       } else if (index === SEARCH_USER) {
@@ -121,7 +142,7 @@ Page({
             locationAquried: true,
           })
           let keyword = searchPage.data.keyword
-          let index = searchPage.data.searchIndex
+          let index = searchPage.data.currentTab
           if (index === SEARCH_BOOK) {
               searchPage.searchBookResult(keyword, latitude, longitude)
           } else if (index === SEARCH_USER) {
@@ -136,6 +157,7 @@ Page({
   },
 
   searchBookResult: (keyword: string, latitude: number, longitude: number) => {
+    keywords[0] = keyword
     search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
         (result: Array<SearchResult>) => {
           hideLoading()
@@ -160,6 +182,7 @@ Page({
   },
 
   searchUserResult: (keyword: string, latitude: number, longitude: number) => {
+    keywords[1] = keyword
     searchUsers(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
         (result: Array<SearchUser>) => {
           hideLoading()
@@ -183,7 +206,7 @@ Page({
         })
   },
 
-  onReachBottom: (e) => {
+  onLoadMore: (e) => {
     let keyword = searchPage.data.keyword
     if (!keyword) {
       return
@@ -200,7 +223,7 @@ Page({
     searchPage.showLoadingMore()
     curPage++
 
-    let index = searchPage.data.searchIndex
+    let index = searchPage.data.currentTab
     if (index === SEARCH_BOOK) {
         searchPage.loadMoreBooks(keyword, latitude, longitude)
     } else if (index === SEARCH_USER) {
