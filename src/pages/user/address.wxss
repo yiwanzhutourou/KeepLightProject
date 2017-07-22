@@ -14,7 +14,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0, 150, 136, 0.8);
+    background-color: #f8b62d;
 }
 
 .add-address-button {
@@ -23,5 +23,5 @@
 }
 
 .add-address-container-hover {
-    color: rgba(0, 150, 136, 0.6);
+    color: rgba(248, 182, 45, 0.6);
 }

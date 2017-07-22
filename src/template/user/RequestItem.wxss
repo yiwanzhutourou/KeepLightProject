@@ -70,7 +70,7 @@
 
 .dealed-text {
     font-size: 25rpx;
-    color: rgba(0, 150, 136, 1);
+    color: #f8b62d;
 }
 
 .declined-text {

@@ -59,10 +59,10 @@
 
 .show-users-button {
     font-size: 25rpx;
-    color: rgba(0, 150, 136, 1);
+    color: #f8b62d;
 }
 
 .show-users-button-hover {
     font-size: 25rpx;
-    color: rgba(0, 150, 136, 0.6);
+    color: rgba(248, 182, 45, 0.6);
 }

@@ -73,9 +73,9 @@
     line-height: 50rpx;
     font-size: 25rpx;
     color: #fff;
-    background: rgba(0, 150, 136, 1);
+    background: #f8b62d;
 }
 
 .borrow-book-button-hover {
-    background: rgba(0, 150, 136, 0.6);
+    background: rgba(248, 182, 45, 0.6);
 }

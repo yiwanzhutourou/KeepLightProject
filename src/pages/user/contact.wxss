@@ -39,7 +39,7 @@
 
 .submit-button {
     margin: 30rpx;
-    background-color: rgba(0, 150, 136, 1);
+    background-color: #f8b62d;
     color: #fff;
 }
 

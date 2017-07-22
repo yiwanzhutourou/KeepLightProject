@@ -466,7 +466,7 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
                     latitude: marker.latitude,
                     longitude: marker.longitude,
                     iconPath: '/resources/img/icon_map_location.png',
-                    width: 40,
+                    width: 33,
                     height: 40,
                     isMergeMarker: false,
                 })

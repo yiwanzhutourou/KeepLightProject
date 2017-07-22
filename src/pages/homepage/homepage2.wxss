@@ -103,7 +103,7 @@
 
 .empty_action {
     font-size: 30rpx;
-    color: rgba(0, 150, 136, 0.9);
+    color: #f8b62d;
     text-decoration: underline;
     margin-top: 10rpx;
 }
