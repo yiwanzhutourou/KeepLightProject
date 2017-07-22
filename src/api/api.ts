@@ -19,7 +19,7 @@ import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 import { LoginData } from './interfaces'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
-export const TEST_BASE_URL = 'https://cuiyi.mozidev.me:8082/api/'
+export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
 
 const URL_KEY = 'url_key'
 const USER_INFO_KEY = 'user_info'
