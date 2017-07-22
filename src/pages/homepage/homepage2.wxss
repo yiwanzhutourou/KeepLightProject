@@ -88,22 +88,9 @@
 
 .empty_container {
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    margin-top: 260rpx;
-}
-
-.empty_title {
-    font-size: 35rpx;
-    color: rgba(0, 0, 0, 0.54);
-}
-
-.empty_action {
-    font-size: 30rpx;
-    color: #f8b62d;
-    text-decoration: underline;
-    margin-top: 10rpx;
+    padding-top: 700rpx;
 }

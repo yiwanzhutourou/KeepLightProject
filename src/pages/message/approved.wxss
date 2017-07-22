@@ -1,1 +1,5 @@
 @import "../../template/user/RequestItem.wxss";
+
+.list-container {
+    width: 100%;
+}

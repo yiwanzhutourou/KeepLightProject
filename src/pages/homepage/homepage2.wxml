@@ -9,12 +9,8 @@
         </view>
     </view>
     <view class="detail-container">
-        <view wx:if="{{showEmpty && isCurrentUser}}" class="empty_container">
-            <text class="empty_title">您的书房空空如也</text>
-            <text class="empty_action" bindtap="onUploadBook">去添加第一本书</text>
-        </view>
-        <view wx:elif="{{showEmpty && !isCurrentUser}}" class="empty_container">
-            <text class="empty_title">书房空空如也</text>
+        <view wx:if="{{showEmpty}}" class="empty_container">
+            <text class="empty_title">这个书房「空空如也」</text>
         </view>
         <view wx:else class="list-container">
             <block wx:for="{{bookList}}" wx:key="id">

@@ -83,4 +83,10 @@ Page({
       hideLoading()
     })
   },
+
+  onGotoIndex: (e) => {
+    wx.switchTab({
+      url: '../index/index',
+    })
+  },
 })

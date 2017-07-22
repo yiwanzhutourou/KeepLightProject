@@ -1,14 +1,14 @@
 <view class="container">
-    <scroll-view wx:if="{{showList}}" scroll-y="true">
-        <view>
-            <block wx:for="{{approvedList}}" wx:key="id">
-                <import src="../../template/user/RequestItem.wxml" />
-                <template is="request-item"
-                    data="{{item, isFromMe}}" />
-            </block>
-        </view>
-    </scroll-view>
     <view wx:if="{{showEmpty}}" class="empty_container">
-        <text class="empty_title">没有消息</text>
+        <image class="empty-pic" src="../../resources/img/icon_empty_message.png" />
+        <text class="empty_title">暂时没有消息哦</text>
+        <button class="empty_action" bindtap="onGotoIndex">再去借一本书吧</button>
+    </view>
+    <view wx:elif="{{showList}}" class="list-container">
+        <block wx:for="{{approvedList}}" wx:key="id">
+            <import src="../../template/user/RequestItem.wxml" />
+            <template is="request-item"
+                data="{{item, isFromMe}}" />
+        </block>
     </view>
 </view>

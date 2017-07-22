@@ -1,12 +1,14 @@
 <view class="request-all-container">
-    <view class="list-container">
+    <view wx:if="{{showEmpty}}" class="empty_container">
+        <image class="empty-pic" src="../../resources/img/icon_empty_request.png" />
+        <text class="empty_title">还没有人找你借书</text>
+        <button class="empty_action" bindtap="onGotoIndex">我去借一本书</button>
+    </view>
+    <view wx:else class="list-container">
         <block wx:for="{{requestList}}" wx:key="id">
             <import src="../../template/user/RequestItem.wxml" />
             <template is="request-item"
                 data="{{item, isFromMe}}" />
         </block>
-    </view>
-    <view wx:if="{{showEmpty}}" class="empty_container">
-        <text class="empty_title">暂时没有借阅请求</text>
     </view>
 </view>
