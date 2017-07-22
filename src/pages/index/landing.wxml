@@ -1,0 +1,24 @@
+<view class="container">
+    <swiper class="swiper-box"
+            duration="300"
+            indicator-dots="true"
+            style="height: {{screenHeight}}rpx;">
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[0]}}" mode="aspectFill" />
+        </swiper-item>
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[1]}}" mode="aspectFill" />
+        </swiper-item>
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[2]}}" mode="aspectFill" />
+        </swiper-item>
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[3]}}" mode="aspectFill" />
+            <button class="confirm-button"
+                    hover-class="confirm-button-hover"
+                    bindtap="onConfirmTap">
+                进入有读书房
+            </button>
+        </swiper-item>
+    </swiper>
+</view>
