@@ -9,6 +9,7 @@ Page({
     historyList: [],
     showList: false,
     showEmpty: false,
+    showNetworkError: false,
   },
 
   onLoad: function(options: any): void {
@@ -27,6 +28,11 @@ Page({
       })
     }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+        historyPage.setData({
+          showNetworkError: true,
+        })
+      }
     })
   },
 
@@ -36,39 +42,13 @@ Page({
     })
   },
 
-  onActionTap: (e) => {
-    let requestId = e.currentTarget.dataset.requestid
-    let usernick = e.currentTarget.dataset.usernick as string
-    showLoading('正在加载')
-    getUserContactByRequest(requestId, (contact: UserContact) => {
-      hideLoading()
-      if (contact && contact.name && contact.contact) {
-        wx.showModal({
-          title: (usernick.length > 3 ? usernick.substring(0, usernick.length - 3) : usernick) + '的联系方式',
-          content: contact.name + '：' + contact.contact,
-          confirmText: '点击复制',
-          success: (res) => {
-            if (res && res.confirm) {
-              wx.setClipboardData({
-                data: contact.contact,
-                success: (result) => {
-                  showToast(contact.name + '已复制')
-                },
-              })
-            }
-          },
-        })
-      } else {
-        showDialog('抱歉，书房主人好像没有留下联系方式')
-      }
-    }, () => {
-      hideLoading()
-    })
-  },
-
   onGotoIndex: (e) => {
     wx.switchTab({
       url: '../index/index',
     })
+  },
+
+  onReload: (e) => {
+    historyPage.loadData()
   },
 })

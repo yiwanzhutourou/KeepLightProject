@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 import { LoginData } from './interfaces'
 
@@ -544,7 +544,6 @@ export const get = (url: string, success?: (res: any) => void, failure?: (res?: 
             if (failure) {
                 failure(e)
             }
-            showErrDialog('无法获取数据，请检查您的网络状态')
         },
     })
 }
@@ -573,7 +572,6 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
             if (failure) {
                 failure(e)
             }
-            showErrDialog('无法获取数据，请检查您的网络状态')
         },
     })
 }

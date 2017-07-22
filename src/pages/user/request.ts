@@ -1,5 +1,5 @@
 import { getBorrowRequest, updateRequest } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showLoading } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { BorrowRequest } from '../../api/interfaces'
 
@@ -14,6 +14,7 @@ Page({
     requestList: [],
     showList: false,
     showEmpty: false,
+    showNetworkError: false,
     isFromMe: false,
   },
 
@@ -33,7 +34,16 @@ Page({
       })
     }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+        requestPage.setData({
+          showNetworkError: true,
+        })
+      }
     })
+  },
+
+  onReload: (e) => {
+    requestPage.loadData()
   },
 
   formatList: (list: Array<BorrowRequest>) => {
@@ -79,8 +89,11 @@ Page({
           } else {
             requestPage.loadData()
           }
-        }, () => {
+        }, (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('处理失败，检查您的网络')
+          }
         })
       }
     })
@@ -93,8 +106,11 @@ Page({
         updateRequest(requestId, STATUS_DECLINE, (result: string) => {
           hideLoading()
           requestPage.loadData()
-        }, () => {
+        }, (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('处理失败，检查您的网络')
+          }
         })
       }
     })
@@ -107,8 +123,11 @@ Page({
         updateRequest(requestId, STATUS_DISMISS, (result: string) => {
           hideLoading()
           requestPage.loadData()
-        }, () => {
+        }, (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('处理失败，检查您的网络')
+          }
         })
       }
     })

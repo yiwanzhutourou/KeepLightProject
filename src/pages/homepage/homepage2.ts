@@ -1,6 +1,6 @@
 import { Book, HomepageData } from '../../api/interfaces'
 import { addAddress, borrowBook, getBookList, getHomepageData, removeBook } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 
 let homepage2
@@ -14,12 +14,15 @@ Page({
 
     homepageData: {},
     bookList: [],
+    showContent: false,
     showEmpty: false,
+    showNetworkError: false,
   },
 
   onLoad: function(option: any): void {
     homepage2 = this
 
+    showLoading('正在加载...')
     if (option && option.user) {
       homepage2.setData({
         userId: option.user,
@@ -29,6 +32,11 @@ Page({
 
   onShow: function (): void {
       homepage2.loadData()
+  },
+
+  onReload: (e) => {
+    showLoading('正在加载...')
+    homepage2.loadData()
   },
 
   loadData: () => {
@@ -43,11 +51,21 @@ Page({
           userIntro: result.info,
         },
         bookList: books,
+        showContent: true,
         showEmpty: books.length == 0,
+        showNetworkError: false,
         isCurrentUser: result.isMe,
       })
     }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+        if (!homepage2.data.homepageData.nickName) {
+          homepage2.setData({
+            showNetworkError: true,
+            showContent: false,
+          })
+        }
+      }
     })
   },
 
@@ -64,6 +82,11 @@ Page({
               showDialog('借书请求已发送，请等待书的主人回复~')
             }, (failure) => {
               hideLoading()
+              if (!failure.data) {
+                if (!failure.data) {
+                  showErrDialog('无法借阅，请检查您的网络')
+                }
+              }
             })
         }
       }

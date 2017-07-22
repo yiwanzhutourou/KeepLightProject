@@ -35,6 +35,15 @@ Page({
         contactPage.fillContact(result.name, result.contact)
     }, (failure) => {
         hideLoading()
+        if (!failure.data) {
+            showConfirmDialog('提示', '无法获取数据，请检查您的网络状态', (confirm) => {
+                if (confirm) {
+                    wx.navigateBack({
+                        delta: 1,
+                    })
+                }
+            }, false)
+        }
     })
   },
 
@@ -85,6 +94,9 @@ Page({
             contactPage.fillContact(result.name, result.contact)
         }, (failure) => {
             hideLoading()
+            if (!failure.data) {
+                showErrDialog('无法获取数据，请检查您的网络状态')
+            }
         })
   },
 
@@ -98,6 +110,9 @@ Page({
                     contactPage.fillContact(result.name, result.contact)
                 }, (failure) => {
                     hideLoading()
+                    if (!failure.data) {
+                        showErrDialog('无法删除，请检查您的网络状态')
+                    }
                 })
           }
       })

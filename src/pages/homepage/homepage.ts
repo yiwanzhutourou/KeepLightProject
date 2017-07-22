@@ -1,6 +1,6 @@
 import { Book, HomepageData } from '../../api/interfaces'
 import { addAddress, borrowBook, getBookList, getHomepageData, getMyHomepageData, removeBook } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 
 let homepage
@@ -19,7 +19,6 @@ Page({
   
   onLoad: function(option: any): void {
     homepage = this
-    showLoading('正在加载')
   },
 
   onShow: function (): void {
@@ -43,6 +42,9 @@ Page({
       replaceBookList(books)
     }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+        showErrDialog('无法加载，请检查您的网络')
+      }
     })
   },
 
@@ -96,6 +98,9 @@ Page({
           }
         }, (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('无法删除图书，请检查您的网络')
+          }
         })
       }
     })

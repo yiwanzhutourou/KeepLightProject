@@ -1,6 +1,6 @@
 import { BorrowHistory, UserContact } from '../../api/interfaces'
 import { getMyApprovedRequest, getUserContactByRequest } from '../../api/api'
-import { hideLoading, showDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 let approvedPage
 
@@ -9,6 +9,7 @@ Page({
     approvedList: [],
     showList: false,
     showEmpty: false,
+    showNetworkError: false,
     isFromMe: true,
   },
 
@@ -28,7 +29,16 @@ Page({
       })
     }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+        approvedPage.setData({
+          showNetworkError: true,
+        })
+      }
     })
+  },
+
+  onReload: (e) => {
+    approvedPage.loadData()
   },
 
   onRequestItemTap: (e) => {
@@ -79,8 +89,11 @@ Page({
       } else {
         showDialog('抱歉，书房主人好像没有留下联系方式')
       }
-    }, () => {
+    }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+          showErrDialog('获取失败，检查您的网络')
+      }
     })
   },
 

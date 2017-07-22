@@ -187,6 +187,9 @@ Page({
         },
         (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('加载失败，请稍后再试')
+          }
         })
   },
 
@@ -216,6 +219,9 @@ Page({
         },
         (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('加载失败，请稍后再试')
+          }
         })
   },
 
@@ -282,8 +288,10 @@ Page({
           }
         },
         (failure) => {
-          hideLoading()
-          showErrDialog('加载失败')
+          searchPage.hideLoadingMore()
+          if (!failure.data) {
+            showErrDialog('加载失败')
+          }
         })
   },
 
@@ -305,8 +313,10 @@ Page({
           }
         },
         (failure) => {
-          hideLoading()
-          showErrDialog('加载失败')
+          searchPage.hideLoadingMore2()
+          if (!failure.data) {
+            showErrDialog('加载失败')
+          }
         })
   },
 
@@ -381,7 +391,9 @@ Page({
               hideLoading()
               showDialog('借书请求已发送，请等待书的主人回复~')
             }, (failure) => {
-              hideLoading()
+              if (!failure.data) {
+                hideLoading()
+              }
             })
         }
       }

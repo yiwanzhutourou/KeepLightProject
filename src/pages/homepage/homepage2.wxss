@@ -94,3 +94,12 @@
     align-items: center;
     padding-top: 700rpx;
 }
+
+.empty_container2 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 250rpx;
+}

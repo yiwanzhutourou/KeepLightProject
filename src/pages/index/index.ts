@@ -1,7 +1,7 @@
 import { Markers, Result } from '../../api/interfaces'
 import { getMarkers, getUserInfo } from '../../api/api'
+import { rpx2px, showErrDialog } from '../../utils/utils'
 
-import { rpx2px } from '../../utils/utils'
 import { shouldShowLanding } from '../../utils/urlCache'
 
 const EVENT_TAP_SEARCH = 0
@@ -66,6 +66,10 @@ Page({
                 markers: transformedMarkers,
                 includePoints: indexPage.composeIncludePoints(transformedMarkers),
               })
+            }, (failure) => {
+              if (!failure.data) {
+                showErrDialog('无法获取数据，请检查您的网络状态')
+              }
             },
           ) 
       })
