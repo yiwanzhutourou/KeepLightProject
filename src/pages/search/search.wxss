@@ -79,11 +79,9 @@
 }
   
 .swiper-box {
+    position: fixed;
+    top: 148rpx;
     display: block;
     width: 100%;
     overflow: hidden;
-}
-
-.kong {
-    height: 148rpx;
 }

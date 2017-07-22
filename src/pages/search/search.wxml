@@ -20,10 +20,9 @@
     </view>
 
     <swiper current="{{currentTab}}" class="swiper-box"
-            duration="300" style="height: {{screenHeight - 10}}rpx;" bindchange="bindChange">
+            duration="300" style="height: {{screenHeight - 148}}rpx;" bindchange="bindChange">
         <swiper-item>
-            <scroll-view scroll-y="true" style="height: {{screenHeight - 10}}rpx;" bindscrolltolower="onLoadMore">
-                <view class="kong"></view>
+            <scroll-view scroll-y="true" style="height: {{screenHeight - 148}}rpx;" bindscrolltolower="onLoadMoreBooks">
                 <view class="search-content-container">
                     <block wx:for="{{searchResultList}}" wx:key="index">
                         <import src="../../template/search/SearchBookItem.wxml" />
@@ -37,8 +36,7 @@
             </scroll-view>
         </swiper-item>
         <swiper-item>
-            <scroll-view scroll-y="true" style="height: {{screenHeight - 10}}rpx;" bindscrolltolower="onLoadMore">
-                <view class="kong"></view>
+            <scroll-view scroll-y="true" style="height: {{screenHeight - 148}}rpx;" bindscrolltolower="onLoadMoreUsers">
                 <view class="search-content-container">
                     <block wx:for="{{searchUserResultList}}" wx:key="index">
                         <import src="../../template/search/SearchUserItemBig.wxml" />
@@ -46,9 +44,13 @@
                             data="{{item}}" />
                     </block>
                 </view>
-                <import src="../../template/widget/LoadMore.wxml" />
-                <template is="load-more"
-                    data="{{showLoadingMore, noMore}}" />
+                <view wx:if="{{showLoadingMore2}}" class="loading-container">
+                    <text wx:if="{{noMore2}}" class="loading-text">没有更多了</text>
+                    <view wx:else class="loading">
+                        <view class="dot">
+                        </view>
+                    </view>
+                </view>
             </scroll-view>
         </swiper-item>
     </swiper>
