@@ -73,6 +73,12 @@ export type HomepageData = {
     isMe: boolean,
 }
 
+export type GuideData = {
+    info: string,
+    address: Array<Address>,
+    contact: UserContact,
+}
+
 export type BorrowHistory = {
     requestId: number,
     userId: number,

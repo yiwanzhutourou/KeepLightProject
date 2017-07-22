@@ -1,9 +1,11 @@
 
 const URL_LIST_KEY = 'url_list'
 const SHOW_LANDING_KEY = 'show_landing'
+const SHOW_GUIDE_KEY = 'show_guide'
 
 let urlList: Array<string>
 let showLanding: number = -1
+let showGuide: number = -1
 
 export const getUrlList = () => {
     if (!urlList) {
@@ -36,6 +38,23 @@ export const shouldShowLanding = () => {
 export const setShowLanding = () => {
     wx.setStorage({
         key: SHOW_LANDING_KEY,
+        data: 1,
+    })
+}
+
+export const shouldShowGuide = () => {
+    if (showGuide === -1) {
+        showGuide = wx.getStorageSync(SHOW_GUIDE_KEY)
+        if (!showGuide && showGuide !== 0) {
+            showGuide = -1
+        }
+    }
+    return showGuide !== 1
+}
+
+export const setShowGuide = () => {
+    wx.setStorage({
+        key: SHOW_GUIDE_KEY,
         data: 1,
     })
 }

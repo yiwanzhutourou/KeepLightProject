@@ -14,9 +14,8 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
+import { GuideData, LoginData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
-
-import { LoginData } from './interfaces'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
 export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
@@ -202,17 +201,17 @@ export const getHomepageData = (userId: string, success: (info: HomepageData) =>
 }
 
 export const getMyHomepageData = (success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
-    // 打首页的接口强制更新一下用户数据
-    login((result) => {
-        if (result && result.userInfo && result.hasMobile) {
-            let url = getUrl('User.getHomepageData')
-            get(url, success, failure)
-        } else {
-            if (failure) {
-                failure()
-            }
-        }
-    })
+    checkLogin(() => {
+        let url = getUrl('User.getHomepageData')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getGuideData = (success: (info: GuideData) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getGuideInfo')
+        get(url, success, failure)
+    }, failure)
 }
 
 export const getMapDetails = (userIds: string, success: (info: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
@@ -590,6 +589,28 @@ const getRequestHeader = () => {
     // TODO: put hash in header
     return {
         'BOCHA-USER-TOKEN': getUserToken(),
+    }
+}
+
+export const checkLoginFirstLaunch = (success: () => void, failure?: () => void) => {
+    if (getUserToken()) {
+        if (hasMobile()) {
+            success()
+        } else {
+            if (failure) {
+                failure()
+            }
+        }
+    } else {
+        login((result) => {
+            if (result && result.userInfo && result.hasMobile) {
+                success()
+            } else {
+                if (failure) {
+                    failure()
+                }
+            }
+        })
     }
 }
 
