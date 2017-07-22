@@ -49,11 +49,17 @@
 .request-title {
     font-size: 25rpx;
     color: rgba(0, 0, 0, 0.54);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .request-detail {
     font-size: 35rpx;
     color: rgba(0, 0, 0, 0.87);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     margin-top: 10rpx;
 }
 
