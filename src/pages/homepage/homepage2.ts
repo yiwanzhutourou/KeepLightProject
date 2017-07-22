@@ -1,64 +1,51 @@
 import { Book, HomepageData } from '../../api/interfaces'
-// pages/homepage/homepage.js
 import { addAddress, borrowBook, getBookList, getHomepageData, removeBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showLoading, showToast } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 
-let homepage: WeApp.Page
+let homepage2
 
 Page({
   data: {
     userId: '',
+    isHomePage: true, // always true
+    isCurrentUser: false,
+    isMyPage: false, // always false
+
     homepageData: {},
     bookList: [],
-    isHomePage: true,
-    isCurrentUser: true,
     showEmpty: false,
   },
+
   onLoad: function(option: any): void {
-    homepage = this
+    homepage2 = this
 
     if (option && option.user) {
-      homepage.setData({
+      homepage2.setData({
         userId: option.user,
-        isCurrentUser: false,
       })
     }
   },
 
   onShow: function (): void {
-      homepage.loadData()
-  },
-
-  onPullDownRefresh: () => {
-    wx.stopPullDownRefresh()
-    showLoading('正在加载...')
-    homepage.loadData()
+      homepage2.loadData()
   },
 
   loadData: () => {
-    let id = homepage.data.userId
+    let id = homepage2.data.userId
     getHomepageData(id, (result: HomepageData) => {
-      homepage.setData({
+      hideLoading()
+      let books = result.books
+      homepage2.setData({
         homepageData: {
           nickName: result.nickname + '的书房',
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
-      })
-    }, (failure) => {
-      // do nothing
-    })
-
-    getBookList(id, (books: Array<Book>) => {
-      hideLoading()
-      homepage.setData({
         bookList: books,
         showEmpty: books.length == 0,
+        isCurrentUser: result.isMe,
       })
-      if (homepage.data.isCurrentUser) {
-        replaceBookList(books)
-      }
     }, (failure) => {
       hideLoading()
     })
@@ -71,7 +58,7 @@ Page({
         let isbn = e.detail.value.isbn
         if (formId && isbn) {
           showLoading('正在发送借书请求')
-          borrowBook(homepage.data.userId, isbn, formId,
+          borrowBook(homepage2.data.userId, isbn, formId,
             () => {
               hideLoading()
               showDialog('借书请求已发送，请等待书的主人回复~')
@@ -85,11 +72,11 @@ Page({
 
   onBookItemTap: (e) => {
     let book: Book = e.currentTarget.dataset.book
-    let userId = homepage.data.userId
+    let userId = homepage2.data.userId
     wx.navigateTo({
         url: '../book/book?title=' + book.title
                 + '&isbn=' + book.isbn
-                + '&showBorrowBook=' + !homepage.data.isCurrentUser
+                + '&showBorrowBook=' + !homepage2.data.isCurrentUser
                 + '&belongTo=' + userId,
     })
   },
@@ -100,49 +87,11 @@ Page({
     })
   },
 
-  onRemoveBook: (e) => {
-    showConfirmDialog('', '确认从您的书房中移除《' + e.currentTarget.dataset.title + '》？', (confirm: boolean) => {
-      if (confirm) {
-        showLoading('正在删除')
-        removeBook(e.currentTarget.dataset.isbn, (isbn: string) => {
-          hideLoading()
-          if (homepage.data.bookList) {
-            let bookList: Array<Book> = []
-            homepage.data.bookList.forEach((book: Book) => {
-              let added = book.added
-              if (isbn !== book.isbn) {
-                bookList.push({
-                  isbn: book.isbn,
-                  title: book.title,
-                  author: book.author,
-                  url: book.url,
-                  cover: book.cover,
-                  publisher: book.publisher,
-                  added: true,
-                })
-              }
-            })
-            homepage.setData({
-              bookList: bookList,
-              showEmpty: bookList.length == 0,
-            })
-            if (homepage.data.isCurrentUser) {
-              updateBookStatus(isbn, false)
-            }
-            showToast('删除成功')
-          }
-        }, (failure) => {
-          hideLoading()
-        })
-      }
-    })
-  },
-
   onShareAppMessage: () => {
-    if (homepage.data.homepageData) {
+    if (homepage2.data.homepageData) {
       return {
-        title: homepage.data.homepageData.nickName,
-        path: 'pages/homepage/homepage2?user=' + homepage.data.userId,
+        title: homepage2.data.homepageData.nickName,
+        path: 'pages/homepage/homepage2?user=' + homepage2.data.userId,
       }
     } else {
       return {

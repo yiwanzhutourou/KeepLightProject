@@ -197,18 +197,22 @@ export const getHomepageData = (userId: string, success: (info: HomepageData) =>
         })
         get(url, success, failure)
     } else {
-        // 打首页的接口强制更新一下用户数据
-        login((result) => {
-            if (result && result.userInfo && result.hasMobile) {
-                let url = getUrl('User.getHomepageData')
-                get(url, success, failure)
-            } else {
-                if (failure) {
-                    failure()
-                }
-            }
-        })
+        // 走到这肯定出bug了
     }
+}
+
+export const getMyHomepageData = (success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
+    // 打首页的接口强制更新一下用户数据
+    login((result) => {
+        if (result && result.userInfo && result.hasMobile) {
+            let url = getUrl('User.getHomepageData')
+            get(url, success, failure)
+        } else {
+            if (failure) {
+                failure()
+            }
+        }
+    })
 }
 
 export const getMapDetails = (userIds: string, success: (info: Array<SearchUser>) => void, failure?: (res?: any) => void) => {

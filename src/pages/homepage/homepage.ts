@@ -1,6 +1,5 @@
 import { Book, HomepageData } from '../../api/interfaces'
-// pages/homepage/homepage.js
-import { addAddress, borrowBook, getBookList, getHomepageData, removeBook } from '../../api/api'
+import { addAddress, borrowBook, getBookList, getHomepageData, getMyHomepageData, removeBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showLoading, showToast } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 
@@ -8,78 +7,42 @@ let homepage
 
 Page({
   data: {
-    userId: '',
+    isHomePage: true, // always true
+    // 我的书房页面，这两个参数一直是true
+    isCurrentUser: true,
+    isMyPage: true, // always true
+
     homepageData: {},
     bookList: [],
-    isHomePage: true,
-    isCurrentUser: true,
     showEmpty: false,
   },
+  
   onLoad: function(option: any): void {
     homepage = this
-
-    if (option && option.user) {
-      homepage.setData({
-        userId: option.user,
-        isCurrentUser: false,
-      })
-    }
+    showLoading('正在加载')
   },
 
   onShow: function (): void {
       homepage.loadData()
   },
 
-  onPullDownRefresh: () => {
-    wx.stopPullDownRefresh()
-    showLoading('正在加载...')
-    homepage.loadData()
-  },
-
   loadData: () => {
-    let id = homepage.data.userId
-    getHomepageData(id, (result: HomepageData) => {
+    // 主页的所有信息打在一个接口里，后面要做图书分页
+    getMyHomepageData((result: HomepageData) => {
+      hideLoading()
+      let books = result.books
       homepage.setData({
         homepageData: {
           nickName: result.nickname + '的书房',
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
-      })
-    }, (failure) => {
-      // do nothing
-    })
-
-    getBookList(id, (books: Array<Book>) => {
-      hideLoading()
-      homepage.setData({
         bookList: books,
         showEmpty: books.length == 0,
       })
-      if (homepage.data.isCurrentUser) {
-        replaceBookList(books)
-      }
+      replaceBookList(books)
     }, (failure) => {
       hideLoading()
-    })
-  },
-
-  onBorrowBook: (e) => {
-    showConfirmDialog('借阅信息确认', '借阅书名：《' + e.detail.value.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
-      if (confirm) {
-        let formId = e.detail.formId
-        let isbn = e.detail.value.isbn
-        if (formId && isbn) {
-          showLoading('正在发送借书请求')
-          borrowBook(homepage.data.userId, isbn, formId,
-            () => {
-              hideLoading()
-              showDialog('借书请求已发送，请等待书的主人回复~')
-            }, (failure) => {
-              hideLoading()
-            })
-        }
-      }
     })
   },
 
