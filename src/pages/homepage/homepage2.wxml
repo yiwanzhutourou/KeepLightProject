@@ -1,7 +1,6 @@
-<!--pages/homepage/homepage.wxml-->
 <view class="container">
-    <image class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
-    <view class="dark" />
+    <image wx:if="{{homepageData.avatarUrl}}" class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
+    <view wx:if="{{homepageData.avatarUrl}}" class="dark" />
     <view class="user-info-container">
         <image wx:if="{{homepageData.avatarUrl}}" class="user-avatar" src="{{homepageData.avatarUrl}}" />
         <view class="user-text-container">
@@ -10,19 +9,19 @@
         </view>
     </view>
     <view class="detail-container">
-        <view class="list-container">
+        <view wx:if="{{showEmpty && isCurrentUser}}" class="empty_container">
+            <text class="empty_title">您的书房空空如也</text>
+            <text class="empty_action" bindtap="onUploadBook">去添加第一本书</text>
+        </view>
+        <view wx:elif="{{showEmpty && !isCurrentUser}}" class="empty_container">
+            <text class="empty_title">书房空空如也</text>
+        </view>
+        <view wx:else class="list-container">
             <block wx:for="{{bookList}}" wx:key="id">
                 <import src="../../template/book/BookItem.wxml" />
                 <template is="book-item"
-                    data="{{item, isHomePage, isCurrentUser}}" />
+                    data="{{item, isHomePage, isCurrentUser, isMyPage}}" />
             </block>
-        </view>
-        <view wx:if="{{showEmpty && isCurrentUser}}" class="empty_container">
-            <text class="empty_title">您还没有上传书</text>
-            <text class="empty_action" bindtap="onUploadBook">去上传</text>
-        </view>
-        <view wx:if="{{showEmpty && !isCurrentUser}}" class="empty_container">
-            <text class="empty_title">书房里没有书</text>
         </view>
     </view>
 </view>

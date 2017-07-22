@@ -19,7 +19,7 @@ import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 import { LoginData } from './interfaces'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
-export const TEST_BASE_URL = 'https://cuiyi.mozidev.me:8082/api/'
+export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
 
 const URL_KEY = 'url_key'
 const USER_INFO_KEY = 'user_info'
@@ -197,18 +197,22 @@ export const getHomepageData = (userId: string, success: (info: HomepageData) =>
         })
         get(url, success, failure)
     } else {
-        // 打首页的接口强制更新一下用户数据
-        login((result) => {
-            if (result && result.userInfo && result.hasMobile) {
-                let url = getUrl('User.getHomepageData')
-                get(url, success, failure)
-            } else {
-                if (failure) {
-                    failure()
-                }
-            }
-        })
+        // 走到这肯定出bug了
     }
+}
+
+export const getMyHomepageData = (success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
+    // 打首页的接口强制更新一下用户数据
+    login((result) => {
+        if (result && result.userInfo && result.hasMobile) {
+            let url = getUrl('User.getHomepageData')
+            get(url, success, failure)
+        } else {
+            if (failure) {
+                failure()
+            }
+        }
+    })
 }
 
 export const getMapDetails = (userIds: string, success: (info: Array<SearchUser>) => void, failure?: (res?: any) => void) => {

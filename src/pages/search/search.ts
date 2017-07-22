@@ -6,8 +6,10 @@ const INITIAL_PAGE = 0
 
 let app = getApp()
 let searchPage
-let curPage = 0
-let lastRequest = -1
+let curPageBooks = 0
+let curPageUsers = 0
+let lastRequestBooks = -1
+let lastRequestUsers = -1
 let keywords = ['', '']
 
 const SEARCH_BOOK = 0
@@ -22,6 +24,8 @@ Page({
     screenHeight: 0,
     showLoadingMore: false,
     noMore: false,
+    showLoadingMore2: false,
+    noMore2: false,
     latitude: 0,
     longitude: 0,
     showBorrowButton: true,
@@ -40,11 +44,11 @@ Page({
     if (!keyword || keyword === '') {
       return
     }
-    curPage = 0
+    // 输入新的关键词，全部搜索数据重置
+    curPageBooks = 0
+    curPageUsers = 0
     searchPage.setData({
       keyword: keyword,
-      showLoadingMore: false,
-      noMore: false,
     })
     showLoading('正在搜索')
     searchPage.requestLocation()
@@ -81,7 +85,6 @@ Page({
       if (keywords[index] !== '' && keywords[index] === keyword) {
           return
       }
-      curPage = 0
       if (!keyword || keyword === '') {
           return
       }
@@ -89,6 +92,7 @@ Page({
       let latitude = searchPage.data.latitude
       let longitude = searchPage.data.longitude
       if (index === SEARCH_BOOK) {
+          curPageBooks = 0
           searchPage.setData({
               searchResultList: [],
               showLoadingMore: false,
@@ -96,10 +100,11 @@ Page({
           })
           searchPage.searchBookResult(keyword, latitude, longitude)
       } else if (index === SEARCH_USER) {
+          curPageUsers = 0
           searchPage.setData({
               searchUserResultList: [],
-              showLoadingMore: false,
-              noMore: false,
+              showLoadingMore2: false,
+              noMore2: false,
           })
           searchPage.searchUserResult(keyword, latitude, longitude)
       }
@@ -158,7 +163,11 @@ Page({
 
   searchBookResult: (keyword: string, latitude: number, longitude: number) => {
     keywords[0] = keyword
-    search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
+    searchPage.setData({
+      showLoadingMore: false,
+      noMore: false,
+    })
+    search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPageBooks,
         (result: Array<SearchResult>) => {
           hideLoading()
           let noMore = (result.length === 0)
@@ -183,14 +192,18 @@ Page({
 
   searchUserResult: (keyword: string, latitude: number, longitude: number) => {
     keywords[1] = keyword
-    searchUsers(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
+    searchPage.setData({
+      showLoadingMore2: false,
+      noMore2: false,
+    })
+    searchUsers(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPageUsers,
         (result: Array<SearchUser>) => {
           hideLoading()
           let noMore = (result.length === 0)
           if (noMore) {
             searchPage.setData({
-              showLoadingMore: false,
-              noMore: true,
+              showLoadingMore2: false,
+              noMore2: true,
             })
           }
           if (!result || result.length === 0) {
@@ -206,34 +219,54 @@ Page({
         })
   },
 
-  onLoadMore: (e) => {
+  onLoadMoreBooks: (e) => {
     let keyword = searchPage.data.keyword
     if (!keyword) {
       return
     }
-    if (lastRequest != -1 && e.timeStamp && e.timeStamp - lastRequest < 500) {
+    if (lastRequestBooks != -1 && e.timeStamp && e.timeStamp - lastRequestBooks < 500) {
       return
     }
-    lastRequest = e.timeStamp
+    lastRequestBooks = e.timeStamp
     if (searchPage.data.noMore) {
       return
     }
     let latitude = searchPage.data.latitude
     let longitude = searchPage.data.longitude
+    curPageBooks++
     searchPage.showLoadingMore()
-    curPage++
+    searchPage.loadMoreBooks(keyword, latitude, longitude)
+  },
+
+  onLoadMoreUsers: (e) => {
+    let keyword = searchPage.data.keyword
+    if (!keyword) {
+      return
+    }
+    if (lastRequestUsers != -1 && e.timeStamp && e.timeStamp - lastRequestUsers < 500) {
+      return
+    }
+    lastRequestUsers = e.timeStamp
+    if (searchPage.data.noMore2) {
+      return
+    }
+    let latitude = searchPage.data.latitude
+    let longitude = searchPage.data.longitude
+    curPageUsers++
 
     let index = searchPage.data.currentTab
     if (index === SEARCH_BOOK) {
+        searchPage.showLoadingMore()
         searchPage.loadMoreBooks(keyword, latitude, longitude)
     } else if (index === SEARCH_USER) {
+        searchPage.showLoadingMore2()
         searchPage.loadMoreUsers(keyword, latitude, longitude)
     }
   },
 
   loadMoreBooks: (keyword: string, latitude: number, longitude: number) => {
      // load more
-    search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
+    search(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPageBooks,
         (result: Array<SearchResult>) => {
           hideLoading()
 
@@ -256,15 +289,15 @@ Page({
 
   loadMoreUsers: (keyword: string, latitude: number, longitude: number) => {
      // load more
-    searchUsers(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPage,
+    searchUsers(keyword, latitude, longitude, DEFAULT_SEARCH_PAGE_SIZE, curPageUsers,
         (result: Array<SearchUser>) => {
           hideLoading()
 
           let noMore = (result.length === 0)
           if (noMore) {
-            searchPage.showNoMore()
+            searchPage.showNoMore2()
           } else {
-            searchPage.hideLoadingMore()
+            searchPage.hideLoadingMore2()
             let list = searchPage.data.searchUserResultList
             searchPage.setData({
               searchUserResultList: list.concat(result),
@@ -283,6 +316,12 @@ Page({
     })
   },
 
+  showLoadingMore2: () => {
+    searchPage.setData({
+      showLoadingMore2: true,
+    })
+  },
+
   showNoMore: () => {
     searchPage.setData({
       showLoadingMore: true,
@@ -290,9 +329,22 @@ Page({
     })
   },
 
+  showNoMore2: () => {
+    searchPage.setData({
+      showLoadingMore2: true,
+      noMore2: true,
+    })
+  },
+
   hideLoadingMore: () => {
     searchPage.setData({
       showLoadingMore: false,
+    })
+  },
+
+  hideLoadingMore2: () => {
+    searchPage.setData({
+      showLoadingMore2: false,
     })
   },
 
@@ -347,11 +399,8 @@ Page({
     if (!keyword || keyword === '') {
       return
     }
-    curPage = 0
-    searchPage.setData({
-      showLoadingMore: false,
-      noMore: false,
-    })
+    curPageBooks = 0
+    curPageUsers = 0
     showLoading('正在搜索')
     searchPage.requestLocation()
   },

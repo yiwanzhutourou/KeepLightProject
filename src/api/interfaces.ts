@@ -69,6 +69,8 @@ export type HomepageData = {
     info: string,
     nickname: string,
     avatar: string,
+    books: Array<Book>,
+    isMe: boolean,
 }
 
 export type BorrowHistory = {
