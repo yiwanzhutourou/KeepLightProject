@@ -9,13 +9,3 @@
     width: 100%;
     height: 100%;
 }
-
-.confirm-button {
-    z-index: 5;
-    position: fixed;
-    left: 5%;
-    bottom: 10%;
-    width: 90%;
-    color: #fff;
-    background-color: #f8b62d;
-}

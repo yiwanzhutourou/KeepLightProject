@@ -7,10 +7,10 @@ Page({
   data: {
     screenHeight: 0,
     landings: [
-      'http://othb16dht.bkt.clouddn.com/landing1.png',
-      'http://othb16dht.bkt.clouddn.com/landing2.png',
-      'http://othb16dht.bkt.clouddn.com/landing3.png',
-      'http://othb16dht.bkt.clouddn.com/landing4.png',
+      '../../resources/img/landing1.png',
+      '../../resources/img/landing2.png',
+      '../../resources/img/landing3.png',
+      '../../resources/img/landing4.png',
     ],
   },
 
@@ -23,8 +23,8 @@ Page({
   },
 
   onConfirmTap: () => {
-    wx.navigateBack({
-      delta: 1,
+    wx.switchTab({
+      url: '../homepage/homepage',
     })
   },
 })
