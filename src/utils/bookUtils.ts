@@ -34,9 +34,11 @@ export const parseBookList = (data: any) => {
 
 export const parseAuthor = (authors: Array<string>, s: string) => {
     let result = ''
-    authors.forEach((author) => {
-        result += author + s
-    })
+    if (authors && authors.length > 0) {
+        authors.forEach((author) => {
+            result += author + s
+        })
+    }
     if (result.length > 0) {
         result = result.substring(0, result.length - 1)
     }

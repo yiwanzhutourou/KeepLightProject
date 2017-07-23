@@ -97,8 +97,7 @@ Page({
     let book: Book = e.currentTarget.dataset.book
     let userId = homepage2.data.userId
     wx.navigateTo({
-        url: '../book/book?title=' + book.title
-                + '&isbn=' + book.isbn
+        url: '../book/book?isbn=' + book.isbn
                 + '&showBorrowBook=' + !homepage2.data.isCurrentUser
                 + '&belongTo=' + userId,
     })

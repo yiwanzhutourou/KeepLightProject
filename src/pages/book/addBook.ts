@@ -54,9 +54,7 @@ Page({
     let book: Book = e.currentTarget.dataset.book
 
     wx.navigateTo({
-        url: '../book/book?title='
-                  + book.title
-                  + '&isbn=' + book.isbn
+        url: '../book/book?isbn=' + book.isbn
                   + '&showAddBook=' + true
                   + '&isAdded=' + book.added,
     })

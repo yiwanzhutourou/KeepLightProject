@@ -31,7 +31,6 @@ Page({
   onLoad: function(options: any): void {
     contactPage = this
 
-    console.log(options)
     if (options && options.autoClose) {
         contactPage.setData({
             autoClose: true,
@@ -101,7 +100,6 @@ Page({
         (result: UserContact) => {
             hideLoading()
             contactPage.fillContact(result.name, result.contact)
-            console.log(contactPage.data.autoClose)
             if (contactPage.data.autoClose) {
                 wx.navigateBack({
                     delta: 1,

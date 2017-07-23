@@ -14,7 +14,6 @@ Page({
 
   onLoad: function(options: any): void {
     addressPage = this
-    console.log(options)
     if (options && options.autoClose) {
         addressPage.setData({
             autoClose: true,
@@ -68,7 +67,6 @@ Page({
           longitude: res.longitude,
         }, (name: string) => {
           hideLoading()
-          console.log(addressPage.data.autoClose)
           if (addressPage.data.autoClose) {
               wx.navigateBack({
                   delta: 1,
