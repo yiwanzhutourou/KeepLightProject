@@ -131,7 +131,7 @@ export const login = (cb: (userInfo: any) => void) => {
                         cb(null)
                         if (wx.openSetting) {
                             showConfirmDialog('授权提醒',
-                                '无法获取您的微信公开信息，您将不能创建书房、借阅图书等。是否重新授权？',
+                                '无法获取你的微信公开信息，你将不能创建书房、借阅图书等。是否重新授权？',
                                 (confirm) => {
                                     if (confirm) {
                                         wx.openSetting({
@@ -148,7 +148,7 @@ export const login = (cb: (userInfo: any) => void) => {
                                     }
                                 })
                         } else {
-                            showErrDialog('无法获取您的微信公开信息，您将不能创建书房、借阅图书等。请您重新安装有读书房小程序并授权。')
+                            showErrDialog('无法获取你的微信公开信息，你将不能创建书房、借阅图书等。请你重新安装有读书房小程序并授权。')
                         }
                     },
                 })
@@ -669,7 +669,7 @@ const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLog
 }
 
 const showBindMobileDialog = () => {
-    showConfirmDialog('您还没有绑定手机号', '有读书房获取您的手机号，仅用于向您推送借阅请求相关的短信。不绑定手机号将不能使用有读书房的完整功能，是否绑定？',
+    showConfirmDialog('你还没有绑定手机号', '有读书房获取你的手机号，仅用于向你推送借阅请求相关的短信。不绑定手机号将不能使用有读书房的完整功能，是否绑定？',
         (confirm: boolean) => {
             if (confirm) {
                 wx.navigateTo({

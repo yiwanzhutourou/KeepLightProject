@@ -84,7 +84,7 @@ Page({
               hideLoading()
               if (!failure.data) {
                 if (!failure.data) {
-                  showErrDialog('无法借阅，请检查您的网络')
+                  showErrDialog('无法借阅，请检查你的网络')
                 }
               }
             })

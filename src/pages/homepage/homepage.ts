@@ -108,7 +108,7 @@ Page({
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
-              showErrDialog('加载失败，请检查您的网络')
+              showErrDialog('加载失败，请检查你的网络')
             }
           })
       } else {
@@ -136,7 +136,7 @@ Page({
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
-        showErrDialog('无法加载，请检查您的网络')
+        showErrDialog('无法加载，请检查你的网络')
       }
     })
   },
@@ -159,7 +159,7 @@ Page({
   },
 
   onRemoveBook: (e) => {
-    showConfirmDialog('', '确认从您的书房中移除《' + e.currentTarget.dataset.title + '》？', (confirm: boolean) => {
+    showConfirmDialog('', '确认从你的书房中移除《' + e.currentTarget.dataset.title + '》？', (confirm: boolean) => {
       if (confirm) {
         showLoading('正在删除')
         removeBook(e.currentTarget.dataset.isbn, (isbn: string) => {
@@ -192,7 +192,7 @@ Page({
         }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('无法删除图书，请检查您的网络')
+            showErrDialog('无法删除图书，请检查你的网络')
           }
         })
       }
@@ -240,7 +240,7 @@ Page({
       }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('无法获取数据，请检查您的网络状态')
+            showErrDialog('无法获取数据，请检查你的网络状态')
           }
       })
   },
@@ -269,7 +269,7 @@ Page({
       }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('无法获取数据，请检查您的网络状态')
+            showErrDialog('无法获取数据，请检查你的网络状态')
           }
       })
   },

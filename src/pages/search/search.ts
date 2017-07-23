@@ -156,7 +156,7 @@ Page({
         }
       },
       fail: () => {
-        showErrDialog('无法获取您的定位')
+        showErrDialog('无法获取你的定位')
       },
     })
   },

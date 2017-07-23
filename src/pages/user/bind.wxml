@@ -6,7 +6,7 @@
                 <input class="mobile-input"
                     name="mobile_input"
                     bindinput="onInputMobile"
-                    placeholder="请输入您的手机号" />
+                    placeholder="请输入你的手机号" />
             </view>
             <view class="input-container">
                 <view class="input-title">验证码</view>

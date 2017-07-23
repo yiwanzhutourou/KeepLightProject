@@ -36,7 +36,7 @@ Page({
     }, (failure) => {
         hideLoading()
         if (!failure.data) {
-            showConfirmDialog('提示', '无法获取数据，请检查您的网络状态', (confirm) => {
+            showConfirmDialog('提示', '无法获取数据，请检查你的网络状态', (confirm) => {
                 if (confirm) {
                     wx.navigateBack({
                         delta: 1,
@@ -57,7 +57,7 @@ Page({
   formSubmit: (e) => {
       let contact = e.detail.value.contact_input
       if (contact === '') {
-          showErrDialog('请输入您的联系方式')
+          showErrDialog('请输入你的联系方式')
           return
       }
 
@@ -87,7 +87,7 @@ Page({
           default:
       }
 
-      showLoading('正在更新您的联系方式')
+      showLoading('正在更新你的联系方式')
       setUserContact(contactPage.data.methodRange[pickerIndex], contact,
         (result: UserContact) => {
             hideLoading()
@@ -95,7 +95,7 @@ Page({
         }, (failure) => {
             hideLoading()
             if (!failure.data) {
-                showErrDialog('无法获取数据，请检查您的网络状态')
+                showErrDialog('无法获取数据，请检查你的网络状态')
             }
         })
   },
@@ -111,7 +111,7 @@ Page({
                 }, (failure) => {
                     hideLoading()
                     if (!failure.data) {
-                        showErrDialog('无法删除，请检查您的网络状态')
+                        showErrDialog('无法删除，请检查你的网络状态')
                     }
                 })
           }

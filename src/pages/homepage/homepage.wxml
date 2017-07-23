@@ -17,7 +17,7 @@
                     <input class="mobile-input"
                         name="mobile_input"
                         bindinput="onInputMobile"
-                        placeholder="请输入您的手机号" />
+                        placeholder="请输入你的手机号" />
                 </view>
                 <view class="input-container">
                     <view class="input-title">验证码</view>
@@ -39,7 +39,7 @@
     <view wx:elif="{{showGuide}}" class="guide-container">
         <view class="title-continer">
             <text class="guide-title">
-                通过简单的设置来创建您自己的书房，方便有读书房的其他用户看到您
+                通过简单的设置来创建你自己的书房，方便有读书房的其他用户看到你
             </text>
         </view>
         <view class="guide-item">
@@ -91,7 +91,7 @@
         </view>
         <view class="detail-container">
             <view wx:if="{{showEmpty}}" class="empty_container">
-                <text class="empty_title">您的书房「空空如也」</text>
+                <text class="empty_title">你的书房「空空如也」</text>
                 <button class="empty_action" bindtap="onUploadBook">去添加第一本书</button>
             </view>
             <view wx:else class="list-container">

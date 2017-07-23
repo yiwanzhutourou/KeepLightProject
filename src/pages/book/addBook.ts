@@ -91,7 +91,7 @@ Page({
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
-        showErrDialog('无法添加图书，请检查您的网络')
+        showErrDialog('无法添加图书，请检查你的网络')
       }
     })
   },

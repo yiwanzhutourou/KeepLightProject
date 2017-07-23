@@ -22,7 +22,7 @@
             <input class="contact-input"
                    value="{{inputContact}}"
                    name="contact_input"
-                   placeholder="请输入您的联系方式" />
+                   placeholder="请输入你的联系方式" />
             <image class="clear-button"
                    bindtap="onClearContact"
                    src="../../resources/img/icon_clear.png"
@@ -30,7 +30,7 @@
         </view>
         <view class="item-divider" />
         <view class="title-container">
-            <text>请从微信、QQ或者邮箱中选择一种您最常用的联系方式填写，方便想要借书的书友第一时间联系到您。只支持输入一种联系方式，填写新的联系方式将会覆盖原来的联系方式</text>
+            <text>请从微信、QQ或者邮箱中选择一种你最常用的联系方式填写，方便想要借书的书友第一时间联系到你。只支持输入一种联系方式，填写新的联系方式将会覆盖原来的联系方式</text>
         </view>
         <button class="submit-button" formType="submit">
             确定

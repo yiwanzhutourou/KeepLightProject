@@ -51,7 +51,7 @@ Page({
     let formattedList = new Array()
     list.forEach((request: BorrowHistory) => {
       formattedList.push({
-        title: '书友' + request.user + '同意了您的借阅请求',
+        title: '书友' + request.user + '同意了你的借阅请求',
         subtitle: '《' + request.bookTitle + '》',
         userId: request.userId,
         bookCover: request.bookCover,
@@ -92,7 +92,7 @@ Page({
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
-          showErrDialog('获取失败，检查您的网络')
+          showErrDialog('获取失败，检查你的网络')
       }
     })
   },

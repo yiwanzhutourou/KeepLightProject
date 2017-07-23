@@ -17,22 +17,22 @@ Page({
         {
             id: SETTING_BIND_WEIXIN,
             title: '设置联系方式',
-            subTitle: '设置微信号、QQ或者邮箱方便书友联系您',
+            subTitle: '设置微信号、QQ或者邮箱方便书友联系你',
         },
         {
             id: SETTING_BIND_MOBILE,
             title: '修改绑定的手机号',
-            subTitle: '有读书房获取您的手机号只用于向您发送借阅相关的通知',
+            subTitle: '有读书房获取你的手机号只用于向你发送借阅相关的通知',
         },
         {
             id: SETTING_ADDRESS,
             title: '管理书房位置',
-            subTitle: '添加书房位置方便书友在地图上找到您的书房',
+            subTitle: '添加书房位置方便书友在地图上找到你的书房',
         },
         {
             id: SETTING_CHANGE_INFO,
             title: '修改书房简介',
-            subTitle: '给您的书房添加简短的介绍吧',
+            subTitle: '给你的书房添加简短的介绍吧',
         },
         {
             id: SETTING_BORROW_HISTORY,
@@ -58,7 +58,7 @@ Page({
                     {
                         id: SETTING_BIND_WEIXIN,
                         title: '设置联系方式',
-                        subTitle: '设置微信号、QQ或者邮箱方便书友联系您',
+                        subTitle: '设置微信号、QQ或者邮箱方便书友联系你',
                         subInfo: result.name ? '已设置' + result.name : '',
                     },
                 )

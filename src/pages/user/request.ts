@@ -50,7 +50,7 @@ Page({
     let formattedList = new Array()
     list.forEach((request: BorrowRequest) => {
       formattedList.push({
-        title: '书友' + request.fromUser + '想要借阅您的',
+        title: '书友' + request.fromUser + '想要借阅你的',
         subtitle: '《' + request.bookTitle + '》',
         userId: request.fromUserId,
         bookCover: request.bookCover,
@@ -69,7 +69,7 @@ Page({
   },
 
   onAgree: (requestId: number) => {
-    showConfirmDialog('', '同意借阅请求后，对方将能通过您设置的联系方式联系您，确认继续？', (confirm) => {
+    showConfirmDialog('', '同意借阅请求后，对方将能通过你设置的联系方式联系你，确认继续？', (confirm) => {
       if (confirm) {
         showLoading('正在处理')
         updateRequest(requestId, STATUS_AGREE, (result: string) => {
@@ -77,7 +77,7 @@ Page({
           if (result === 'no_contact') {
             wx.showModal({
               title: '提醒',
-              content: '您还没有设置联系方式，请先设置一个可以方便联系到您的联系方式。前往设置？',
+              content: '你还没有设置联系方式，请先设置一个可以方便联系到你的联系方式。前往设置？',
               success: (res) => {
                 if (res && res.confirm) {
                   wx.navigateTo({
@@ -92,7 +92,7 @@ Page({
         }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('处理失败，检查您的网络')
+            showErrDialog('处理失败，检查你的网络')
           }
         })
       }
@@ -109,7 +109,7 @@ Page({
         }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('处理失败，检查您的网络')
+            showErrDialog('处理失败，检查你的网络')
           }
         })
       }
@@ -126,7 +126,7 @@ Page({
         }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('处理失败，检查您的网络')
+            showErrDialog('处理失败，检查你的网络')
           }
         })
       }
