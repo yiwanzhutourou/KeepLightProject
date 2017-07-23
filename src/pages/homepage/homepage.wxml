@@ -43,7 +43,7 @@
             </text>
         </view>
         <view class="guide-item">
-            <view class="guide-content">书房位置</view>
+            <view class="guide-content">书房位置 *</view>
             <view wx:if="{{guideData.address && guideData.address.length > 0}}"
                 class="guide-action-text">已设置</view>
             <view wx:else class="guide-action"
@@ -72,7 +72,8 @@
                 去设置
             </view>
         </view>
-        <view class="guide-item-no-border">
+        <view wx:if="{{guideData.address && guideData.address.length > 0}}"
+            class="guide-item-no-border">
             <text class="skip-action"
                 hover-class="skip-action-hover"
                 bindtap="onSkip">跳过</text>
