@@ -65,9 +65,11 @@ Page({
           if (result === 'ok') {
               showDialog('验证码已发送，请注意查收')
           }
-      }, () => {
+      }, (failure) => {
           hideLoading()
-          showErrDialog('无法获取数据，请检查你的网络状态')
+          if (!failure.data) {
+            showErrDialog('加载失败，请检查你的网络')
+          }
       })
   },
 
@@ -95,9 +97,11 @@ Page({
                   })
               }, false)
           }
-      }, () => {
+      }, (failure) => {
           hideLoading()
-          showErrDialog('无法获取数据，请检查你的网络状态')
+          if (!failure.data) {
+            showErrDialog('加载失败，请检查你的网络')
+          }
       })
   },
 })

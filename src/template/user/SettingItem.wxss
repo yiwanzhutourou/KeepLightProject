@@ -27,18 +27,18 @@
 
 .title {
     font-size: 30rpx;
-    color: rgba(0, 0, 0, 0.87);
+    color: #333;
 }
 
 .sub-title {
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666;
     margin-top: 10rpx;
 }
 
 .sub-info {
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666;
     margin-right: 20rpx;
 }
 

@@ -70,12 +70,12 @@
 
 .about-text {
     font-size: 28rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666;
     margin-top: 20rpx;
 }
 
 .contact-text {
     font-size: 28rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666;
     margin-top: 20rpx;
 }

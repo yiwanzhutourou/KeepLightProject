@@ -9,10 +9,17 @@ Page({
   data: {
     delBtnWidth: 180, // 删除按钮宽度单位rpx
     addresses: [],
+    autoClose: false,
   },
 
   onLoad: function(options: any): void {
     addressPage = this
+    console.log(options)
+    if (options && options.autoClose) {
+        addressPage.setData({
+            autoClose: true,
+        })
+    }
     addressPage.initEleWidth()
     addressPage.loadData()
   },
@@ -61,7 +68,14 @@ Page({
           longitude: res.longitude,
         }, (name: string) => {
           hideLoading()
-          addressPage.loadData()
+          console.log(addressPage.data.autoClose)
+          if (addressPage.data.autoClose) {
+              wx.navigateBack({
+                  delta: 1,
+              })
+          } else {
+              addressPage.loadData()
+          }
         }, (failure) => {
           hideLoading()
           if (!failure.data) {

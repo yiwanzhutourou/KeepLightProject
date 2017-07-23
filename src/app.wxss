@@ -52,7 +52,7 @@
 .list-title {
     width: 100%;
     background: #eee;
-    color: rgba(0, 0, 0, 0.87);
+    color: #333;
     font-size: 30rpx;
     padding-left: 40rpx;
     padding-top: 20rpx;
@@ -98,7 +98,7 @@
 .empty_title {
     margin-top: 45rpx;
     font-size: 36rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666;
 }
 
 .empty_action {

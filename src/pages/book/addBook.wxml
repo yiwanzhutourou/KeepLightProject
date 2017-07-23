@@ -13,7 +13,7 @@
             class="search-bar-scan-button" />
     </view>
 
-    <scroll-view scroll-y style="height:{{screenHeight-80}}rpx;" bindscrolltolower="onLoadMore">
+    <view wx:if="{{!showEmpty}}" class="search-view-container">
         <view class="search-content-container">
             <block wx:for="{{bookList}}" wx:key="id">
                 <import src="../../template/book/BookItem.wxml" />
@@ -24,8 +24,9 @@
         <import src="../../template/widget/LoadMore.wxml" />
             <template is="load-more"
                 data="{{showLoadingMore, noMore}}" />
-    </scroll-view>
+    </view>
 
-    <view class="empty-view-container">
+    <view wx:else class="empty-view-container">
+        <image class="empty-pic-alpha" src="../../resources/img/icon_empty_room.png" />
     </view>
 </view>

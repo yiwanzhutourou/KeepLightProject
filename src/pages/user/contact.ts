@@ -24,10 +24,19 @@ Page({
         hideArrow: true,
       },
       inputContact: '',
+
+      autoClose: false,
   },
 
   onLoad: function(options: any): void {
     contactPage = this
+
+    console.log(options)
+    if (options && options.autoClose) {
+        contactPage.setData({
+            autoClose: true,
+        })
+    }
 
     showLoading('正在加载数据...')
     getUserContact((result: UserContact) => {
@@ -92,6 +101,12 @@ Page({
         (result: UserContact) => {
             hideLoading()
             contactPage.fillContact(result.name, result.contact)
+            console.log(contactPage.data.autoClose)
+            if (contactPage.data.autoClose) {
+                wx.navigateBack({
+                    delta: 1,
+                })
+            }
         }, (failure) => {
             hideLoading()
             if (!failure.data) {

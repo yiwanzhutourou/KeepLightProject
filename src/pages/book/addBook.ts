@@ -17,6 +17,7 @@ Page({
     screenHeight: 0,
     showLoadingMore: false,
     noMore: false,
+    showEmpty: true,
   },
 
   onLoad: function(options: any): void {
@@ -153,6 +154,7 @@ Page({
     } else {
       bookPage.setData({
         bookList: bookList,
+        showEmpty: false,
       })
       updateBookStatusByList(bookList)
     }
@@ -169,11 +171,12 @@ Page({
         keyword: '',
         showLoadingMore: false,
         noMore: false,
+        showEmpty: true,
       })
     }
   },
 
-  onLoadMore: (e) => {
+  onReachBottom: (e) => {
     let keyword = bookPage.data.keyword
     if (!keyword) {
       return
