@@ -40,13 +40,13 @@
 
 .history-detail {
     font-size: 30rpx;
-    color: #666
+    color: #666;
     margin-top: 10rpx;
 }
 
 .history-date {
     font-size: 25rpx;
-    color: #666
+    color: #666;
 }
 
 .book-pic {

@@ -36,7 +36,7 @@
 
 .book-author {
     font-size: 25rpx;
-    color: #666
+    color: #666;
     margin-top: 10rpx;
     overflow: hidden;
     white-space: nowrap;
@@ -45,7 +45,7 @@
 
 .book-publisher {
     font-size: 25rpx;
-    color: #666
+    color: #666;
     margin-top: 5rpx;
     overflow: hidden;
     white-space: nowrap;

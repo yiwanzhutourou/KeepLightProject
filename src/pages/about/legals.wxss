@@ -11,7 +11,7 @@
 
 .detail-content {
     font-size: 28rpx;
-    color: #666
+    color: #666;
     line-height: 150%;
     margin-top: 30rpx;
 }

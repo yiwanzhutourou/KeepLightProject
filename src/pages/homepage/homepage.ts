@@ -276,19 +276,19 @@ Page({
 
   onAddAddress: (e) => {
     wx.navigateTo({
-        url: '../user/address',
+        url: '../user/address?autoClose=1',
     })
   },
 
   onAddContact: (e) => {
     wx.navigateTo({
-        url: '../user/contact',
+        url: '../user/contact?autoClose=1',
     })
   },
 
   onAddIntro: (e) => {
     wx.navigateTo({
-        url: '../user/changeintro',
+        url: '../user/changeintro?autoClose=1',
     })
   },
 

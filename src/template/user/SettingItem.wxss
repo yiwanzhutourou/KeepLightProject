@@ -32,13 +32,13 @@
 
 .sub-title {
     font-size: 25rpx;
-    color: #666
+    color: #666;
     margin-top: 10rpx;
 }
 
 .sub-info {
     font-size: 25rpx;
-    color: #666
+    color: #666;
     margin-right: 20rpx;
 }
 

@@ -47,7 +47,7 @@
 
 .address-detail {
     font-size: 25rpx;
-    color: #666
+    color: #666;
     margin-top: 10rpx;
     padding-left: 30rpx;
     padding-right: 30rpx;

@@ -98,7 +98,7 @@
 .empty_title {
     margin-top: 45rpx;
     font-size: 36rpx;
-    color: #666
+    color: #666;
 }
 
 .empty_action {
