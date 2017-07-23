@@ -28,7 +28,7 @@
 
 .book-title {
     font-size: 35rpx;
-    color: rgba(0, 0, 0, 0.87);
+    color: #333;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -36,7 +36,7 @@
 
 .book-author {
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666
     margin-top: 10rpx;
     overflow: hidden;
     white-space: nowrap;
@@ -45,7 +45,7 @@
 
 .book-publisher {
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666
     margin-top: 5rpx;
     overflow: hidden;
     white-space: nowrap;

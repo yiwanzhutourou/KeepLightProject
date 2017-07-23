@@ -35,18 +35,18 @@
 
 .history-title {
     font-size: 35rpx;
-    color: rgba(0, 0, 0, 0.87);
+    color: #333;
 }
 
 .history-detail {
     font-size: 30rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666
     margin-top: 10rpx;
 }
 
 .history-date {
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666
 }
 
 .book-pic {

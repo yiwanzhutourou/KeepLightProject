@@ -40,14 +40,14 @@
 
 .address-title {
     font-size: 35rpx;
-    color: rgba(0, 0, 0, 0.87);
+    color: #333;
     padding-left: 30rpx;
     padding-right: 30rpx;
 }
 
 .address-detail {
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666
     margin-top: 10rpx;
     padding-left: 30rpx;
     padding-right: 30rpx;

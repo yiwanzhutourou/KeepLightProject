@@ -11,7 +11,7 @@
 .title-container {
     padding: 30rpx;
     font-size: 25rpx;
-    color: rgba(0, 0, 0, 0.54);
+    color: #666
 }
 
 .contact-picker {
@@ -26,7 +26,7 @@
     padding-left: 30rpx;
     padding-right: 20rpx;
     font-size: 30rpx;
-    color: rgba(0, 0, 0, 0.87);
+    color: #333;
 }
 
 .contact-input {
@@ -34,7 +34,7 @@
     padding-left: 20rpx;
     padding-right: 20rpx;
     font-size: 30rpx;
-    color: rgba(0, 0, 0, 0.87);
+    color: #333;
 }
 
 .submit-button {
