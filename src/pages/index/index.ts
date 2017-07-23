@@ -9,7 +9,7 @@ const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
 
 // 如果算出来的离我最近的点，十分的近的话，就会把地图的缩放level提到最高，体验不好
 // 所以如果离我最近的点的距离小于这个的话，就不对地图进行缩放了
-const MIN_DISTANCE_FLOOR = 0.002
+const MIN_DISTANCE_FLOOR = 0.001
 
 let app = getApp()
 let indexPage
@@ -52,26 +52,30 @@ Page({
     } else {
       // 获取定位
       app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
+        // 只有在第一次进入地图页面的时候，才设置中心点
+        if (indexPage.data.markers.length === 0) {
           indexPage.setData({
             longitude: locationInfo.longitude,
             latitude: locationInfo.latitude,
           })
+        }
 
-          getMarkers(
-            (markers: Array<Markers>) => {
-              const mergedMarkers = indexPage.mergeMarkers(markers)
-              const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
-              console.log(markers.length, transformedMarkers.length)
-              indexPage.setData({
-                markers: transformedMarkers,
-                includePoints: indexPage.composeIncludePoints(transformedMarkers),
-              })
-            }, (failure) => {
-              if (!failure.data) {
-                showErrDialog('无法获取数据，请检查你的网络状态')
-              }
-            },
-          ) 
+        getMarkers(
+          (markers: Array<Markers>) => {
+            const mergedMarkers = indexPage.mergeMarkers(markers)
+            const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
+            const includePoints = indexPage.composeIncludePoints(transformedMarkers)
+
+            indexPage.setData({
+              markers: transformedMarkers,
+              includePoints: includePoints,
+            })
+          }, (failure) => {
+            if (!failure.data) {
+              showErrDialog('无法获取数据，请检查你的网络状态')
+            }
+          },
+        ) 
       })
     }
   },
@@ -269,7 +273,6 @@ Page({
       }
     })
 
-    console.log(minDist)
     if (minDist < MIN_DISTANCE_FLOOR) {
       return []
     }
