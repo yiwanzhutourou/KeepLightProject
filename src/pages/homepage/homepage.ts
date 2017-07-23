@@ -112,10 +112,7 @@ Page({
             }
           })
       } else {
-          homepage.setData({
-            showBindMobile: false,
-            showGuide: false,
-          })
+          homepage.loadData()
       }
   },
 
@@ -240,9 +237,11 @@ Page({
           if (result === 'ok') {
               showDialog('验证码已发送，请注意查收')
           }
-      }, () => {
+      }, (failure) => {
           hideLoading()
-          showErrDialog('无法获取数据，请检查您的网络状态')
+          if (!failure.data) {
+            showErrDialog('无法获取数据，请检查您的网络状态')
+          }
       })
   },
 
@@ -267,9 +266,11 @@ Page({
               showDialog('绑定成功')
               homepage.checkShowGuide()
           }
-      }, () => {
+      }, (failure) => {
           hideLoading()
-          showErrDialog('无法获取数据，请检查您的网络状态')
+          if (!failure.data) {
+            showErrDialog('无法获取数据，请检查您的网络状态')
+          }
       })
   },
 

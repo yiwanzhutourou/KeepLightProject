@@ -7,17 +7,19 @@ Page({
   data: {
     screenHeight: 0,
     landings: [
-      '../../resources/img/landing1.png',
-      '../../resources/img/landing2.png',
-      '../../resources/img/landing3.png',
-      '../../resources/img/landing4.png',
+      'http://othb16dht.bkt.clouddn.com/open1.png',
+      'http://othb16dht.bkt.clouddn.com/open2.png',
+      'http://othb16dht.bkt.clouddn.com/open3.png',
+      'http://othb16dht.bkt.clouddn.com/open4.png',
     ],
   },
 
   onLoad: function(): void {
     landingPage = this
+    let screen = getScreenSizeInRpx()
     landingPage.setData({
-      screenHeight: getScreenSizeInRpx().height,
+      screenHeight: screen.height,
+      screenWidth: screen.width,
     })
     setShowLanding()
   },

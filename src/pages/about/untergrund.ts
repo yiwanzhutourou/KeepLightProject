@@ -1,5 +1,5 @@
 import { DEFAULT_BASE_URL, TEST_BASE_URL, clearUserData, clearUserToken, getBaseUrl, setBaseUrl } from '../../api/api'
-import { addUrlToList, clearShowGuide, getUrlList } from '../../utils/urlCache'
+import { addUrlToList, clearShowGuide, clearShowLanding, getUrlList } from '../../utils/urlCache'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 let unterPage
@@ -70,6 +70,11 @@ Page({
               })
             }
         })
+  },
+
+  onResetLanding: (e) => {
+    clearShowLanding()
+    showDialog('已重置')
   },
 })
 

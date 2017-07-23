@@ -42,6 +42,11 @@ export const setShowLanding = () => {
     })
 }
 
+export const clearShowLanding = () => {
+    wx.removeStorageSync(SHOW_LANDING_KEY)
+    showLanding = -1
+}
+
 export const shouldShowGuide = () => {
     if (showGuide === -1) {
         showGuide = wx.getStorageSync(SHOW_GUIDE_KEY)
@@ -61,4 +66,5 @@ export const setShowGuide = () => {
 
 export const clearShowGuide = () => {
     wx.removeStorageSync(SHOW_GUIDE_KEY)
+    showGuide = -1
 }

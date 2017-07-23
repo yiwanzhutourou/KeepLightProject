@@ -30,5 +30,8 @@
         <button class="clear-button" hover-class="clear-button-hover" bindtap="onClearUser">
             清空服务器用户数据
         </button>
+        <button class="clear-button" hover-class="clear-button-hover" bindtap="onResetLanding">
+            重置开屏
+        </button>
     </view>
 </view>
