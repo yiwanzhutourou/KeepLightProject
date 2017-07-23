@@ -58,3 +58,7 @@ export const setShowGuide = () => {
         data: 1,
     })
 }
+
+export const clearShowGuide = () => {
+    wx.removeStorageSync(SHOW_GUIDE_KEY)
+}

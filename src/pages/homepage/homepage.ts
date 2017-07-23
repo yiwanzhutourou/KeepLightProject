@@ -292,7 +292,7 @@ Page({
   },
 
   onSkip: (e) => {
-    showConfirmDialog('确认', '确定要跳过剩下的设置项？', () => {
+    showConfirmDialog('确认', '确定要跳过剩下的设置项？', (confirm) => {
       if (confirm) {
         setShowGuide()
         homepage.loadData()

@@ -58,6 +58,15 @@ export const getUserInfo = () => {
 
 let userToken: string = ''
 
+export const clearUserToken = () => {
+    wx.removeStorageSync(TOKEN_KEY)
+    wx.removeStorageSync(USER_INFO_KEY)
+    wx.removeStorageSync(MOBILE_KEY)
+    hasMobileBound = -1
+    userToken = ''
+    userInfo = null
+}
+
 export const setUserToken = (newToken: string) => {
     userToken = newToken
     wx.setStorage({ key: TOKEN_KEY, data: newToken })
@@ -271,6 +280,19 @@ export const getUserContactByRequest = (requestId: number, success: (contact: Us
     }, failure)
 }
 
+/**
+ * 测试函数！！！！！ 
+ */
+export const clearUserData = (success: (result: string) => void, failure?: (res?: any) => void) => {
+    if (!getUserToken()) {
+        showErrDialog('本地没有token，暂时不能操作')
+        hideLoading()
+        return
+    }
+    let url = getUrl('Haribo.clearUser')
+    post(url, [], success, failure)
+}
+
 export const setUserContact = (name: string, contact: string, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.setUserContact')
@@ -422,7 +444,6 @@ export const verifyCode = (mobile: string, code: string, success: (result: strin
             mobile: mobile,
             code: code,
         })
-        console.log(url)
         get(url, success, failure)
     }, failure, true, true)
 }
@@ -450,7 +471,6 @@ export const searchUsers = (keyword: string, latitude: number, longitude: number
         count: count,
         page: page,
     })
-    console.log(url)
     get(url, success, failure)
 }
 

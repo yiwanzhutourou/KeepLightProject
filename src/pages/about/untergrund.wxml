@@ -25,4 +25,10 @@
             如果添加的地址不以http开头，会自动添加http://在前面；结尾不用加/，会自动添加/api/
         </view>
     </view>
+    <view class="title-contaiber"><text class="title">清空用户数据</text></view>
+    <view class="clear-action-container">
+        <button class="clear-button" hover-class="clear-button-hover" bindtap="onClearUser">
+            清空服务器用户数据
+        </button>
+    </view>
 </view>

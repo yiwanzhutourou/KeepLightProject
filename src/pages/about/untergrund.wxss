@@ -79,3 +79,21 @@
     margin-left: 40rpx;
     margin-right: 40rpx;
 }
+
+.clear-action-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.clear-button {
+    width: 300rpx;
+    font-size: 20rpx;
+    color: #fff;
+    background-color: #f8b62d;
+    margin-left: 40rpx;
+}
+
+.clear-button-hover {
+    background-color: rgba(248, 182, 45, 0.6);
+}
