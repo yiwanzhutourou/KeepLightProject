@@ -1,25 +1,106 @@
-<!--pages/homepage/homepage.wxml-->
-<view class="container">
-    <image wx:if="{{homepageData.avatarUrl}}" class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
-    <view wx:if="{{homepageData.avatarUrl}}" class="dark" />
-    <view class="user-info-container">
-        <image wx:if="{{homepageData.avatarUrl}}" class="user-avatar" src="{{homepageData.avatarUrl}}" />
-        <view class="user-text-container">
-            <text wx:if="{{homepageData.nickName}}" class="user-nickname">{{homepageData.nickName}}</text>
-            <text wx:if="{{homepageData.userIntro !== ''}}" class="user-intro">{{homepageData.userIntro}}</text>
+<view class="full-container">
+    <view wx:if="{{showBindMobile || showGuide}}" class="welcome-container">
+        <image class="blur" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
+        <view class="dark" />
+        <view class="user-info-container">
+            <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
+            <view class="user-text-container2">
+                <text class="user-nickname">{{welcomeText}}</text>
+            </view>
         </view>
     </view>
-    <view class="detail-container">
-        <view wx:if="{{showEmpty}}" class="empty_container">
-            <text class="empty_title">您还没有上传书</text>
-            <text class="empty_action" bindtap="onUploadBook">去上传</text>
+    <view wx:if="{{showBindMobile}}" class="bind-container">
+        <form class="form" bindsubmit="formSubmit">
+            <view class="form-container">
+                <view class="input-container">
+                    <view class="input-title">手机号</view>
+                    <input class="mobile-input"
+                        name="mobile_input"
+                        bindinput="onInputMobile"
+                        placeholder="请输入你的手机号" />
+                </view>
+                <view class="input-container">
+                    <view class="input-title">验证码</view>
+                    <input class="code-input"
+                        name="code_input"
+                        placeholder="请输入短信验证码" />
+                    <view class="request_code_button"
+                        hover-class="request_code_button-hover"
+                        bindtap="onRequestCode">
+                        {{requestText}}
+                    </view>
+                </view>
+                <button class="submit-button" hover-class="submit-button-hover" formType="submit">
+                    确定
+                </button>
+            </view>
+        </form>
+    </view>
+    <view wx:elif="{{showGuide}}" class="guide-container">
+        <view class="title-continer">
+            <text class="guide-title">
+                通过简单的设置来创建你自己的书房，方便有读书房的其他用户看到你
+            </text>
         </view>
-        <view wx:else class="list-container">
-            <block wx:for="{{bookList}}" wx:key="id">
-                <import src="../../template/book/BookItem.wxml" />
-                <template is="book-item"
-                    data="{{item, isHomePage, isCurrentUser, isMyPage}}" />
-            </block>
+        <view class="guide-item">
+            <view class="guide-content">书房位置 *</view>
+            <view wx:if="{{guideData.address && guideData.address.length > 0}}"
+                class="guide-action-text">已设置</view>
+            <view wx:else class="guide-action"
+                    hover-class="guide-button-hover"
+                    bindtap="onAddAddress">
+                去设置
+            </view>
+        </view>
+        <view class="guide-item">
+            <view class="guide-content">联系方式</view>
+            <view wx:if="{{guideData.contact && guideData.contact.contact}}"
+                class="guide-action-text">已设置</view>
+            <view wx:else class="guide-action"
+                    hover-class="guide-button-hover"
+                    bindtap="onAddContact">
+                去设置
+            </view>
+        </view>
+        <view class="guide-item">
+            <view class="guide-content">书房简介</view>
+            <view wx:if="{{guideData.info && guideData.info !== ''}}"
+                class="guide-action-text">已设置</view>
+            <view wx:else class="guide-action"
+                    hover-class="guide-action-hover"
+                    bindtap="onAddIntro">
+                去设置
+            </view>
+        </view>
+        <view wx:if="{{guideData.address && guideData.address.length > 0}}"
+            class="guide-item-no-border">
+            <text class="skip-action"
+                hover-class="skip-action-hover"
+                bindtap="onSkip">跳过</text>
+        </view>
+    </view>
+    <view wx:else class="container">
+        <image wx:if="{{homepageData.avatarUrl}}" class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
+        <view wx:if="{{homepageData.avatarUrl}}" class="dark" />
+        <view class="user-info-container">
+            <image wx:if="{{homepageData.avatarUrl}}" class="user-avatar" src="{{homepageData.avatarUrl}}" />
+            <view class="user-text-container">
+                <text wx:if="{{homepageData.nickName}}" class="user-nickname">{{homepageData.nickName}}</text>
+                <text wx:if="{{homepageData.userIntro !== ''}}" class="user-intro">{{homepageData.userIntro}}</text>
+            </view>
+        </view>
+        <view class="detail-container">
+            <view wx:if="{{showEmpty}}" class="empty_container">
+                <text class="empty_title">你的书房「空空如也」</text>
+                <button class="empty_action" bindtap="onUploadBook">去添加第一本书</button>
+            </view>
+            <view wx:else class="list-container">
+                <block wx:for="{{bookList}}" wx:key="id">
+                    <import src="../../template/book/BookItem.wxml" />
+                    <template is="book-item"
+                        data="{{item, isHomePage, isCurrentUser, isMyPage}}" />
+                </block>
+            </view>
         </view>
     </view>
 </view>

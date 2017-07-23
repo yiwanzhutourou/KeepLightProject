@@ -51,40 +51,16 @@
     text-overflow: ellipsis;
 }
 
-.add-book-button {
-    font-size: 25rpx;
-    color: rgba(0, 150, 136, 1);
-}
-
-.add-book-button-hover {
-    font-size: 25rpx;
-    color: rgba(0, 150, 136, 0.6);
-}
-
-.borrow-book-button {
+.action-button {
     height: 50rpx;
     line-height: 50rpx;
     font-size: 25rpx;
     color: #fff;
-    background: rgba(0, 150, 136, 1);
+    background: #f8b62d;
 }
 
-.borrow-book-button-hover {
-    height: 50rpx;
-    line-height: 50rpx;
-    font-size: 25rpx;
-    color: #fff;
-    background: rgba(0, 150, 136, 0.6);
-}
-
-.remove-book-button {
-    font-size: 25rpx;
-    color: rgba(255, 0, 127, 1);
-}
-
-.remove-book-button-hover {
-    font-size: 25rpx;
-    color: rgba(255, 0, 127, 0.6);
+.action-button-hover {
+    background: rgba(248, 182, 45, 0.6);
 }
 
 .added-book-text {

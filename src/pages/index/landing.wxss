@@ -1,0 +1,18 @@
+.swiper-box {
+    display: block;
+    overflow: hidden;
+}
+
+.landing-pic {
+    width: 100%;
+    height: 100%;
+}
+
+.confirm-button {
+    position: fixed;
+    z-index: 5;
+    height: 200rpx;
+    width: 80%;
+    bottom: 200rpx;
+    left: 10%;
+}

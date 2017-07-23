@@ -67,6 +67,7 @@ Page({
           }
       }, () => {
           hideLoading()
+          showErrDialog('无法获取数据，请检查你的网络状态')
       })
   },
 
@@ -96,6 +97,7 @@ Page({
           }
       }, () => {
           hideLoading()
+          showErrDialog('无法获取数据，请检查你的网络状态')
       })
   },
 })

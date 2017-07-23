@@ -1,0 +1,21 @@
+<view class="container">
+    <swiper class="swiper-box"
+            duration="300"
+            style="height: {{screenHeight}}rpx; width: {{screenWidth}}rpx;">
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[0]}}" mode="aspectFill" />
+        </swiper-item>
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[1]}}" mode="aspectFill" />
+        </swiper-item>
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[2]}}" mode="aspectFill" />
+        </swiper-item>
+        <swiper-item>
+            <image class="landing-pic" src="{{landings[3]}}" mode="aspectFill" />
+            <view class="confirm-button"
+                bindtap="onConfirmTap">
+            </view>
+        </swiper-item>
+    </swiper>
+</view>

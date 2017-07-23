@@ -20,7 +20,7 @@
                     <text wx:if="{{bookDetail.series}}" class="subinfo-text">{{bookDetail.series}}</text>
                     <text wx:if="{{bookDetail.isbn}}" class="subinfo-text">{{bookDetail.isbn}}</text>
                 </view>
-                <view class="button-container">
+                <view wx:if="{{bookDetail !== null}}" class="button-container">
                     <form wx:if="{{showBorrowBook}}"
                         bindsubmit="onBorrowBook" report-submit="true">
                         <input name="isbn" value="{{bookDetail.isbn}}" hidden />

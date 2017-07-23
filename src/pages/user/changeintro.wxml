@@ -4,7 +4,7 @@
             <textarea class="intro-textarea"
                 name="intro_input"
                 value="{{intro}}"
-                placeholder="请简短介绍您的书房里的书，最多可以输入70个字"
+                placeholder="请简短介绍你的书房里的书，最多可以输入70个字"
                 placeholder-class="intro-textarea-placeholder"
                 maxlength="70"
                 auto-focus

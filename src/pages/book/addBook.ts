@@ -90,6 +90,9 @@ Page({
       }
     }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+        showErrDialog('无法添加图书，请检查你的网络')
+      }
     })
   },
 
@@ -116,6 +119,9 @@ Page({
               bookPage.handleSearchResult(books)
             }, (failure) => {
               hideLoading()
+              if (!failure.data) {
+                showErrDialog('网络错误，请稍后再试')
+              }
           })
         }
       },
@@ -135,6 +141,9 @@ Page({
         bookPage.handleSearchResult(books)
       }, (failure) => {
         hideLoading()
+        if (!failure.data) {
+          showErrDialog('网络错误，请稍后再试')
+        }
       })
   },
 
@@ -193,7 +202,9 @@ Page({
         updateBookStatusByList(books)
       }, (failure) => {
         bookPage.hideLoadingMore()
-        showErrDialog('加载失败，请稍后再试')
+        if (!failure.data) {
+          showErrDialog('加载失败，请稍后再试')
+        }
       })
   },
 

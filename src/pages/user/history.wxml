@@ -1,14 +1,19 @@
 <view class="container">
-    <scroll-view wx:if="{{showList}}" scroll-y="true">
-        <view>
-            <block wx:for="{{historyList}}" wx:key="id">
-                <import src="../../template/user/HistoryItem.wxml" />
-                <template is="history-item"
-                    data="{{item}}" />
-            </block>
-        </view>
-    </scroll-view>
-    <view wx:if="{{showEmpty}}" class="empty_container">
-        <text class="empty_title">没有借阅历史</text>
+    <view wx:if="{{showList}}" class="list-container">
+        <block wx:for="{{historyList}}" wx:key="id">
+            <import src="../../template/user/HistoryItem.wxml" />
+            <template is="history-item"
+                data="{{item}}" />
+        </block>
+    </view>
+    <view wx:elif="{{showEmpty}}" class="empty_container">
+        <image class="empty-pic" src="../../resources/img/icon_empty_room.png" />
+        <text class="empty_title">你还没有在有读书房借过书</text>
+        <button class="empty_action" bindtap="onGotoIndex">去借一本书</button>
+    </view>
+    <view wx:elif="{{showNetworkError}}" class="empty_container">
+        <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
+        <text class="empty_title">网络连接失败啦</text>
+        <button class="empty_action" bindtap="onReload">点击重新加载</button>
     </view>
 </view>

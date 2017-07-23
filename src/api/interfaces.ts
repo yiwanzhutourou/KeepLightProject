@@ -1,3 +1,5 @@
+export const VERSION_CODE = '1.0.0'
+
 export const DEFAULT_PAGE_SIZE = 20
 export const DEFAULT_SEARCH_PAGE_SIZE = 50
 
@@ -71,6 +73,12 @@ export type HomepageData = {
     avatar: string,
     books: Array<Book>,
     isMe: boolean,
+}
+
+export type GuideData = {
+    info: string,
+    address: Array<Address>,
+    contact: UserContact,
 }
 
 export type BorrowHistory = {

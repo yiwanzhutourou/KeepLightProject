@@ -1,7 +1,6 @@
-import { DEFAULT_BASE_URL, TEST_BASE_URL, getBaseUrl, setBaseUrl } from '../../api/api'
-import { addUrlToList, getUrlList } from '../../utils/urlCache'
-
-import { showDialog } from '../../utils/utils'
+import { DEFAULT_BASE_URL, TEST_BASE_URL, clearUserData, clearUserToken, getBaseUrl, setBaseUrl } from '../../api/api'
+import { addUrlToList, clearShowGuide, clearShowLanding, getUrlList } from '../../utils/urlCache'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 let unterPage
 
@@ -51,6 +50,31 @@ Page({
           items: items,
         })
       }
+  },
+
+  onClearUser: (e) => {
+    showConfirmDialog('提示', '会清空当前登录的用户的所有地址、联系方式、绑定的手机号、书房简介，是否继续？',
+        (confirm) => {
+            if (confirm) {
+              showLoading('正在操作...')
+              clearUserData((result: string) => {
+                hideLoading()
+                if (result === 'ok') {
+                  clearUserToken()
+                  clearShowGuide()
+                  showDialog('成功')
+                }
+              }, () => {
+                hideLoading()
+                showErrDialog('网络出错了')
+              })
+            }
+        })
+  },
+
+  onResetLanding: (e) => {
+    clearShowLanding()
+    showDialog('已重置')
   },
 })
 

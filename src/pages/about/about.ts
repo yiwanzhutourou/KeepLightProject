@@ -1,9 +1,11 @@
+import { VERSION_CODE } from '../../api/interfaces'
 let aboutPage
 let lastLogoTap = -1
 let logoTapCount = 0
 
 Page({
   data: {
+    versionCode: VERSION_CODE,
   },
 
   onLoad: function(options: any): void {

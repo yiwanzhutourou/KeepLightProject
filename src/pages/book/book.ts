@@ -69,7 +69,9 @@ Page({
         })
     }, (failure) => {
         hideLoading()
-        showErrDialog('无法加载图书详情，请检查您的网络状态')
+        if (!failure.data) {
+            showErrDialog('无法加载图书详情，请检查你的网络状态')
+        }
     })
   },
 
@@ -88,6 +90,9 @@ Page({
                         showDialog('借书请求已发送，请等待书的主人回复~')
                     }, (failure) => {
                         hideLoading()
+                        if (!failure.data) {
+                            showErrDialog('无法借阅，请检查你的网络状态')
+                        }
                     })
                 }
             }
@@ -116,6 +121,9 @@ Page({
         }
     }, (failure) => {
         hideLoading()
+        if (!failure.data) {
+            showErrDialog('无法添加图书，请检查你的网络状态')
+        }
     })
   },
 })

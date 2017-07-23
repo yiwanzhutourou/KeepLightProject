@@ -1,5 +1,5 @@
 import { addAddress, getAddress, removeAddress } from '../../api/api'
-import { hideLoading, showConfirmDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 import { Address } from '../../api/interfaces'
 
@@ -26,6 +26,15 @@ Page({
       })
     }, (failure) => {
       hideLoading()
+      if (!failure.data) {
+        showConfirmDialog('提示', '无法获取数据，请检查你的网络状态', (confirm) => {
+            if (confirm) {
+                wx.navigateBack({
+                    delta: 1,
+                })
+            }
+        }, false)
+      }
     })
   },
 
@@ -55,6 +64,9 @@ Page({
           addressPage.loadData()
         }, (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('无法获取数据，请检查你的网络状态')
+          }
         })
       },
     })
@@ -81,6 +93,9 @@ Page({
           showToast('删除成功')
         }, (failure) => {
           hideLoading()
+          if (!failure.data) {
+            showErrDialog('无法获取数据，请检查你的网络状态')
+          }
         })
       }
     })

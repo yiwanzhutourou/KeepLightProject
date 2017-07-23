@@ -1,7 +1,8 @@
 import { Markers, Result } from '../../api/interfaces'
 import { getMarkers, getUserInfo } from '../../api/api'
+import { rpx2px, showErrDialog } from '../../utils/utils'
 
-import { rpx2px } from '../../utils/utils'
+import { shouldShowLanding } from '../../utils/urlCache'
 
 const EVENT_TAP_SEARCH = 0
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
@@ -43,25 +44,36 @@ Page({
   },
 
   onShow: function(): void {
-    // 获取定位
-    app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
-        indexPage.setData({
-          longitude: locationInfo.longitude,
-          latitude: locationInfo.latitude,
-        })
+    let showLanding = shouldShowLanding()
+    if (showLanding) {
+      wx.navigateTo({
+        url: '../index/landing',
+      })
+    } else {
+      // 获取定位
+      app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
+          indexPage.setData({
+            longitude: locationInfo.longitude,
+            latitude: locationInfo.latitude,
+          })
 
-        getMarkers(
-          (markers: Array<Markers>) => {
-            const mergedMarkers = indexPage.mergeMarkers(markers)
-            const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
-            console.log(markers.length, transformedMarkers.length)
-            indexPage.setData({
-              markers: transformedMarkers,
-              includePoints: indexPage.composeIncludePoints(transformedMarkers),
-            })
-          },
-        ) 
-    })
+          getMarkers(
+            (markers: Array<Markers>) => {
+              const mergedMarkers = indexPage.mergeMarkers(markers)
+              const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
+              console.log(markers.length, transformedMarkers.length)
+              indexPage.setData({
+                markers: transformedMarkers,
+                includePoints: indexPage.composeIncludePoints(transformedMarkers),
+              })
+            }, (failure) => {
+              if (!failure.data) {
+                showErrDialog('无法获取数据，请检查你的网络状态')
+              }
+            },
+          ) 
+      })
+    }
   },
 
   controltap: (event) => {

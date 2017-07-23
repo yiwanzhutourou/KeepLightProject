@@ -11,12 +11,12 @@ Page({
         {
             id: SETTING_BORROW_REQUEST,
             title: '处理借阅请求',
-            subTitle: '点击查看您的所有借阅请求',
+            subTitle: '点击查看你的所有借阅请求',
         },
         {
             id: SETTING_BORROW_HISTORY,
             title: '我的消息',
-            subTitle: '如果其他书友同意了您的借阅请求，可以在这里查看联系方式',
+            subTitle: '如果其他书友同意了你的借阅请求，可以在这里查看联系方式',
         },
     ],
   },
@@ -40,7 +40,7 @@ Page({
                     {
                         id: SETTING_BORROW_REQUEST,
                         title: '处理借阅请求',
-                        subTitle: '点击查看您的所有借阅请求',
+                        subTitle: '点击查看你的所有借阅请求',
                         unreadCount: countText,
                     },
                 )

@@ -11,24 +11,24 @@
             </view>
             <view wx:if="{{item.added && !isHomePage}}"
                 class="added-book-text">已添加</view>
-            <view wx:elif="{{!isHomePage}}"
-                class="add-book-button"
-                hover-class="add-book-button-hover"
+            <button wx:elif="{{!isHomePage}}"
+                class="action-button"
+                hover-class="action-button-hover"
                 data-book="{{item}}"
-                bindtap="onAddBook">添加</view>
-            <view wx:elif="{{isHomePage && isCurrentUser && isMyPage}}"
-                class="remove-book-button"
-                hover-class="remove-book-button-hover"
+                bindtap="onAddBook">添加</button>
+            <button wx:elif="{{isHomePage && isCurrentUser && isMyPage}}"
+                class="action-button"
+                hover-class="action-button-hover"
                 data-isbn="{{item.isbn}}"
                 data-title="{{item.title}}"
-                bindtap="onRemoveBook">删除</view>
+                bindtap="onRemoveBook">删除</button>
             <form wx:elif="{{isHomePage && !isCurrentUser}}"
                   bindsubmit="onBorrowBook" report-submit="true">
                   <input name="isbn" value="{{item.isbn}}" hidden />
                   <input name="title" value="{{item.title}}" hidden />
-                  <button class="borrow-book-button"
+                  <button class="action-button"
                         formType="submit"
-                        hover-class="borrow-book-button-hover">借阅</button>
+                        hover-class="action-button-hover">借阅</button>
             </form>
         </view>
         <view class="item-divider" />

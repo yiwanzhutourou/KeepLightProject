@@ -14,9 +14,8 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
-
-import { LoginData } from './interfaces'
+import { GuideData, LoginData } from './interfaces'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
 export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
@@ -58,6 +57,15 @@ export const getUserInfo = () => {
 }
 
 let userToken: string = ''
+
+export const clearUserToken = () => {
+    wx.removeStorageSync(TOKEN_KEY)
+    wx.removeStorageSync(USER_INFO_KEY)
+    wx.removeStorageSync(MOBILE_KEY)
+    hasMobileBound = -1
+    userToken = ''
+    userInfo = null
+}
 
 export const setUserToken = (newToken: string) => {
     userToken = newToken
@@ -123,7 +131,7 @@ export const login = (cb: (userInfo: any) => void) => {
                         cb(null)
                         if (wx.openSetting) {
                             showConfirmDialog('授权提醒',
-                                '无法获取您的微信公开信息，您将不能创建书房、借阅图书等。是否重新授权？',
+                                '无法获取你的微信公开信息，你将不能创建书房、借阅图书等。是否重新授权？',
                                 (confirm) => {
                                     if (confirm) {
                                         wx.openSetting({
@@ -140,7 +148,7 @@ export const login = (cb: (userInfo: any) => void) => {
                                     }
                                 })
                         } else {
-                            showErrDialog('无法获取您的微信公开信息，您将不能创建书房、借阅图书等。请您重新安装有读书房小程序并授权。')
+                            showErrDialog('无法获取你的微信公开信息，你将不能创建书房、借阅图书等。请你重新安装有读书房小程序并授权。')
                         }
                     },
                 })
@@ -202,17 +210,17 @@ export const getHomepageData = (userId: string, success: (info: HomepageData) =>
 }
 
 export const getMyHomepageData = (success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
-    // 打首页的接口强制更新一下用户数据
-    login((result) => {
-        if (result && result.userInfo && result.hasMobile) {
-            let url = getUrl('User.getHomepageData')
-            get(url, success, failure)
-        } else {
-            if (failure) {
-                failure()
-            }
-        }
-    })
+    checkLogin(() => {
+        let url = getUrl('User.getHomepageData')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getGuideData = (success: (info: GuideData) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getGuideInfo')
+        get(url, success, failure)
+    }, failure)
 }
 
 export const getMapDetails = (userIds: string, success: (info: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
@@ -270,6 +278,19 @@ export const getUserContactByRequest = (requestId: number, success: (contact: Us
         let url = getUrl('User.getUserContactByRequest')
         post(url, {'requestId': requestId }, success, failure)
     }, failure)
+}
+
+/**
+ * 测试函数！！！！！ 
+ */
+export const clearUserData = (success: (result: string) => void, failure?: (res?: any) => void) => {
+    if (!getUserToken()) {
+        showErrDialog('本地没有token，暂时不能操作')
+        hideLoading()
+        return
+    }
+    let url = getUrl('Haribo.clearUser')
+    post(url, [], success, failure)
 }
 
 export const setUserContact = (name: string, contact: string, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
@@ -423,7 +444,6 @@ export const verifyCode = (mobile: string, code: string, success: (result: strin
             mobile: mobile,
             code: code,
         })
-        console.log(url)
         get(url, success, failure)
     }, failure, true, true)
 }
@@ -451,7 +471,6 @@ export const searchUsers = (keyword: string, latitude: number, longitude: number
         count: count,
         page: page,
     })
-    console.log(url)
     get(url, success, failure)
 }
 
@@ -466,7 +485,7 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
                     latitude: marker.latitude,
                     longitude: marker.longitude,
                     iconPath: '/resources/img/icon_map_location.png',
-                    width: 40,
+                    width: 33,
                     height: 40,
                     isMergeMarker: false,
                 })
@@ -544,7 +563,6 @@ export const get = (url: string, success?: (res: any) => void, failure?: (res?: 
             if (failure) {
                 failure(e)
             }
-            showErrDialog('无法获取数据，请检查您的网络状态')
         },
     })
 }
@@ -573,7 +591,6 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
             if (failure) {
                 failure(e)
             }
-            showErrDialog('无法获取数据，请检查您的网络状态')
         },
     })
 }
@@ -592,6 +609,28 @@ const getRequestHeader = () => {
     // TODO: put hash in header
     return {
         'BOCHA-USER-TOKEN': getUserToken(),
+    }
+}
+
+export const checkLoginFirstLaunch = (success: () => void, failure?: () => void) => {
+    if (getUserToken()) {
+        if (hasMobile()) {
+            success()
+        } else {
+            if (failure) {
+                failure()
+            }
+        }
+    } else {
+        login((result) => {
+            if (result && result.userInfo && result.hasMobile) {
+                success()
+            } else {
+                if (failure) {
+                    failure()
+                }
+            }
+        })
     }
 }
 
@@ -630,7 +669,7 @@ const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLog
 }
 
 const showBindMobileDialog = () => {
-    showConfirmDialog('您还没有绑定手机号', '有读书房获取您的手机号，仅用于向您推送借阅请求相关的短信。不绑定手机号将不能使用有读书房的完整功能，是否绑定？',
+    showConfirmDialog('你还没有绑定手机号', '有读书房获取你的手机号，仅用于向你推送借阅请求相关的短信。不绑定手机号将不能使用有读书房的完整功能，是否绑定？',
         (confirm: boolean) => {
             if (confirm) {
                 wx.navigateTo({

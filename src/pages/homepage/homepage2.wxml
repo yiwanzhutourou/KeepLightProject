@@ -1,20 +1,16 @@
 <view class="container">
-    <image wx:if="{{homepageData.avatarUrl}}" class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
-    <view wx:if="{{homepageData.avatarUrl}}" class="dark" />
-    <view class="user-info-container">
+    <image wx:if="{{showContent}}" class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
+    <view wx:if="{{showContent}}" class="dark" />
+    <view wx:if="{{showContent}}" class="user-info-container">
         <image wx:if="{{homepageData.avatarUrl}}" class="user-avatar" src="{{homepageData.avatarUrl}}" />
         <view class="user-text-container">
             <text wx:if="{{homepageData.nickName}}" class="user-nickname">{{homepageData.nickName}}</text>
             <text wx:if="{{homepageData.userIntro !== ''}}" class="user-intro">{{homepageData.userIntro}}</text>
         </view>
     </view>
-    <view class="detail-container">
-        <view wx:if="{{showEmpty && isCurrentUser}}" class="empty_container">
-            <text class="empty_title">您的书房空空如也</text>
-            <text class="empty_action" bindtap="onUploadBook">去添加第一本书</text>
-        </view>
-        <view wx:elif="{{showEmpty && !isCurrentUser}}" class="empty_container">
-            <text class="empty_title">书房空空如也</text>
+    <view wx:if="{{showContent}}" class="detail-container">
+        <view wx:if="{{showEmpty}}" class="empty_container">
+            <text class="empty_title">这个书房「空空如也」</text>
         </view>
         <view wx:else class="list-container">
             <block wx:for="{{bookList}}" wx:key="id">
@@ -23,5 +19,10 @@
                     data="{{item, isHomePage, isCurrentUser, isMyPage}}" />
             </block>
         </view>
+    </view>
+    <view wx:elif="{{showNetworkError}}" class="empty_container2">
+        <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
+        <text class="empty_title">网络连接失败啦</text>
+        <button class="empty_action" bindtap="onReload">点击重新加载</button>
     </view>
 </view>
