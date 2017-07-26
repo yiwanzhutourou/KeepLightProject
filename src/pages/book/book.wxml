@@ -22,9 +22,8 @@
                 </view>
                 <view wx:if="{{bookDetail !== null}}" class="button-container">
                     <form wx:if="{{showBorrowBook}}"
-                        bindsubmit="onBorrowBook" report-submit="true">
-                        <input name="isbn" value="{{bookDetail.isbn}}" hidden />
-                        <input name="title" value="{{bookDetail.title}}" hidden />
+                        bindsubmit="onBorrowBook"
+                        report-submit="true">
                         <button class="borrow-book-button"
                             formType="submit"
                             hover-class="borrow-book-button-hover">借阅</button>

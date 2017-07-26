@@ -372,7 +372,7 @@ Page({
   },
 
   onBorrowBook: (e) => {
-    let index = Number(e.detail.value.index)
+    let index = Number(e.currentTarget.dataset.index)
     let list = searchPage.data.searchResultList
     if (index < 0 || index >= list.length) {
       return
@@ -381,7 +381,7 @@ Page({
     showConfirmDialog('借阅信息确认', '借阅书名：《' + book.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
       if (confirm) {
         let formId = e.detail.formId
-        let userId = e.detail.value.user
+        let userId = e.currentTarget.dataset.user
         if (formId && userId && book.isbn) {
           showLoading('正在发送借书请求')
           borrowBook(userId, book.isbn, formId,
