@@ -597,7 +597,10 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
 
 const handleServerError = (response: any) => {
     if (response && response.error) {
-        if (response.message) {
+        if (response.error === 2009) {
+            // 单独处理未绑定手机号的情况
+            showBindMobileDialog()
+        } else if (response.message) {
             showErrDialog(response.message)
         } else {
             showErrDialog('服务器发生错误了，请稍后重试~')
