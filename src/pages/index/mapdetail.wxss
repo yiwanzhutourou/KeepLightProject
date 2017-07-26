@@ -1,4 +1,4 @@
-@import "../../template/search/SearchBookItem.wxss";
+@import "../../template/search/SearchUserItemBig.wxss";
 
 .container {
   width: 100%;
