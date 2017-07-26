@@ -389,8 +389,9 @@ Page({
               hideLoading()
               showDialog('借书请求已发送，请等待书的主人回复~')
             }, (failure) => {
+              hideLoading()
               if (!failure.data) {
-                hideLoading()
+                showErrDialog('网络错误，请检查你的网络')
               }
             })
         }
