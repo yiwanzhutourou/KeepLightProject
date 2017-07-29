@@ -1,4 +1,4 @@
-export const VERSION_CODE = '1.1.0'
+export const VERSION_CODE = '1.1.1'
 
 export const DEFAULT_PAGE_SIZE = 20
 export const DEFAULT_SEARCH_PAGE_SIZE = 50
