@@ -3,7 +3,7 @@ import { getBorrowRequestCount } from '../../api/api'
 const SETTING_BORROW_REQUEST = 3
 const SETTING_BORROW_HISTORY = 4
 
-let myPage
+let messagePage
 
 Page({
   data: {
@@ -22,7 +22,7 @@ Page({
   },
 
   onLoad: function(options: any): void {
-    myPage = this
+    messagePage = this
   },
 
   onShow: function(): void {
@@ -34,7 +34,7 @@ Page({
             countText = '99+'
         }
         let mys = new Array()
-        myPage.data.myItems.forEach((item) => {
+        messagePage.data.myItems.forEach((item) => {
             if (item.id === SETTING_BORROW_REQUEST) {
                 mys.push(
                     {
@@ -48,7 +48,7 @@ Page({
                 mys.push(item)
             }
         })
-        myPage.setData({
+        messagePage.setData({
             myItems: mys,
         })
     })

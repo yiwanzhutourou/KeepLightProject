@@ -1,5 +1,5 @@
 import { addAddress, getAddress, removeAddress } from '../../api/api'
-import { hideLoading, showConfirmDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { Address } from '../../api/interfaces'
 
@@ -102,7 +102,6 @@ Page({
               addresses: list,
             })
           }
-          showToast('删除成功')
         }, (failure) => {
           hideLoading()
           if (!failure.data) {

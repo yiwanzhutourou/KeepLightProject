@@ -7,18 +7,20 @@
     "pages/homepage/homepage2",
     "pages/book/addBook",
     "pages/book/book",
+    "pages/user/mine",
     "pages/user/address",
     "pages/user/settings",
-    "pages/user/my",
-    "pages/user/request",
     "pages/user/history",
     "pages/user/contact",
     "pages/user/bind",
     "pages/user/changeintro",
+    "pages/user/mybooks",
     "pages/about/about",
     "pages/about/legals",
     "pages/about/untergrund",
     "pages/message/approved",
+    "pages/message/message",
+    "pages/message/request",
     "pages/search/search"
   ],
   "window": {
@@ -49,12 +51,12 @@
       }, {  
         "selectedIconPath": "resources/img/icon_message_selected.png",  
         "iconPath": "resources/img/icon_message.png",  
-        "pagePath": "pages/user/my",  
+        "pagePath": "pages/message/message",  
         "text": "消息"  
       }, {  
         "selectedIconPath": "resources/img/icon_my_selected.png",  
         "iconPath": "resources/img/icon_my.png",  
-        "pagePath": "pages/user/settings",  
+        "pagePath": "pages/user/mine",  
         "text": "我的"  
       }]  
     }

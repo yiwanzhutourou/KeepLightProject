@@ -56,8 +56,10 @@
     display: block;
     font-size: 45rpx;
     color: #fff;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
-    white-space: nowrap;
     text-overflow: ellipsis;
 }
 

@@ -1,0 +1,23 @@
+<view class="container">
+    <image wx:if="{{userInfo.avatarUrl}}"
+        class="blur"
+        src="{{userInfo.avatarUrl}}"
+        mode="aspectFill" />
+    <view class="dark" />
+    <view class="user-info-container">
+        <image wx:if="{{userInfo.avatarUrl}}"
+            class="user-avatar" src="{{userInfo.avatarUrl}}" />
+        <view class="user-text-container">
+            <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
+        </view>
+    </view>
+    <view class="detail-container">
+        <view class="list-container">
+            <block wx:for="{{mineItems}}" wx:for-item="settingItem" wx:key="id">
+                <import src="../../template/user/SettingItemWithIcon.wxml" />
+                <template is="setting-item-with-icon"
+                    data="{{settingItem}}" />
+            </block>
+        </view>
+    </view>
+</view>

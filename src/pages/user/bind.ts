@@ -91,11 +91,10 @@ Page({
           hideLoading()
           if (result === 'ok') {
               setMobileBound(true)
-              showConfirmDialog('提示', '绑定成功~', (confirm: boolean) => {
-                  wx.navigateBack({
-                    delta: 1,
-                  })
-              }, false)
+              showDialog('绑定成功')
+              wx.navigateBack({
+                delta: 1,
+              })
           }
       }, (failure) => {
           hideLoading()

@@ -1,6 +1,6 @@
 import { BorrowHistory, UserContact } from '../../api/interfaces'
 import { getBorrowHistory, getUserContactByRequest } from '../../api/api'
-import { hideLoading, showDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showDialog, showLoading } from '../../utils/utils'
 
 let historyPage
 

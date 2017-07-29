@@ -1,5 +1,5 @@
 import { addBook, borrowBook, getBookDetails } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { Book } from '../../api/interfaces'
 import { parseAuthor } from '../../utils/bookUtils'
@@ -119,9 +119,6 @@ Page({
             bookAdded: added,
         })
         updateBookStatus(isbn, true)
-        if (added) {
-            showToast('添加成功')
-        }
     }, (failure) => {
         hideLoading()
         if (!failure.data) {

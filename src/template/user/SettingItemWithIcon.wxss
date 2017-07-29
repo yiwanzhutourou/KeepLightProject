@@ -1,8 +1,7 @@
-.setting-container {
-    height: 120rpx;
+.setting-container-with-icon {
+    height: 100rpx;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     padding-left: 30rpx;
     padding-right: 30rpx;
@@ -10,11 +9,17 @@
     padding-bottom: 5rpx;
 }
 
-.detail-container {
-    width: 500rpx;
+.setting-icon {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.detail-container-with-icon {
+    width: 430rpx;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    margin-left: 20rpx;
 }
 
 .subinfo-container {
@@ -25,22 +30,11 @@
     align-items: center;
 }
 
-.title {
-    font-size: 30rpx;
+.title-with-icon {
+    font-size: 32rpx;
     color: #333;
     overflow: hidden;
     white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.sub-title {
-    font-size: 25rpx;
-    color: #666;
-    margin-top: 10rpx;
-    word-break: break-all;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 

@@ -109,3 +109,7 @@
     color: #fff;
     margin-top: 65rpx;
 }
+
+.empty_action-hover {
+    background: rgba(248, 182, 45, 0.6);
+}

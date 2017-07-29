@@ -1,7 +1,7 @@
 import { Book, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
 import { addBook, getBookInfo, getBookList, searchBooks } from '../../api/api'
 import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
-import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 const INITIAL_PAGE = 0
 
@@ -85,7 +85,6 @@ Page({
           bookList: bookList,
         })
         updateBookStatus(isbn, true)
-        showToast('添加成功')
       }
     }, (failure) => {
       hideLoading()

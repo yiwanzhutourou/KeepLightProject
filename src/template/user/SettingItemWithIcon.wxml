@@ -1,0 +1,24 @@
+<template name="setting-item-with-icon">
+    <view class="common-container">
+        <view class="setting-container-with-icon" data-id="{{settingItem.id}}" bindtap="onSettingItemTap">
+            <image
+                src="{{settingItem.icon}}"
+                class="setting-icon" />
+            <view class="detail-container-with-icon">
+                <text class="title-with-icon">{{settingItem.title}}</text>
+            </view>
+            <view class="subinfo-container">
+                <text wx:if="{{settingItem.subInfo}}" class="sub-info">{{settingItem.subInfo}}</text>
+                <view wx:if="{{settingItem.unreadCount}}"
+                    class="unread-text">
+                    {{settingItem.unreadCount}}
+                </view>
+                <image wx:if="{{!settingItem.hideArrow}}"
+                   class="arrow"
+                   mode="widthFix"
+                   src="../../resources/img/arrow.png" />
+            </view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

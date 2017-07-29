@@ -14,10 +14,11 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { GuideData, LoginData } from './interfaces'
+import { GuideData, LoginData, MinePageData, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+// export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+export const DEFAULT_BASE_URL = 'http://127.0.0.1/api/'
 export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
 
 const URL_KEY = 'url_key'
@@ -269,7 +270,21 @@ export const getOtherUserIntro = (userId: string, success: (info: string) => voi
 export const getUserContact = (success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getUserContact')
-        post(url, [], success, failure)
+        get(url, success, failure)
+    }, failure, false/* 不进行登录行为 */)
+}
+
+export const getSettingsData = (success: (data: SettingsData) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getSettingsData')
+        get(url, success, failure)
+    }, failure, false/* 不进行登录行为 */)
+}
+
+export const getMinePageData = (success: (data: MinePageData) => void, failure?: (res?: any) => void) => {  
+    checkLogin(() => {
+        let url = getUrl('User.getMinePageData')
+        get(url, success, failure)
     }, failure, false/* 不进行登录行为 */)
 }
 

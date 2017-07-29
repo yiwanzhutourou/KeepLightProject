@@ -1,6 +1,6 @@
 import { Book, GuideData, HomepageData } from '../../api/interfaces'
 import { addAddress, borrowBook, checkLoginFirstLaunch, getBookList, getGuideData, getHomepageData, getMyHomepageData, getUserInfo, removeBook, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 import { setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
@@ -186,7 +186,6 @@ Page({
             if (homepage.data.isCurrentUser) {
               updateBookStatus(isbn, false)
             }
-            showToast('删除成功')
           }
         }, (failure) => {
           hideLoading()

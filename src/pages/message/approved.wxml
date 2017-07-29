@@ -9,11 +9,11 @@
     <view wx:elif="{{showEmpty}}" class="empty_container">
         <image class="empty-pic" src="../../resources/img/icon_empty_message.png" />
         <text class="empty_title">暂时没有消息哦</text>
-        <button class="empty_action" bindtap="onGotoIndex">再去借一本书吧</button>
+        <button class="empty_action" hover-class="empty_action-hover" bindtap="onGotoIndex">再去借一本书吧</button>
     </view>
     <view wx:elif="{{showNetworkError}}" class="empty_container">
         <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
         <text class="empty_title">网络连接失败啦</text>
-        <button class="empty_action" bindtap="onReload">点击重新加载</button>
+        <button class="empty_action" hover-class="empty_action-hover" bindtap="onReload">点击重新加载</button>
     </view>
 </view>

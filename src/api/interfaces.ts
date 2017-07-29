@@ -133,3 +133,14 @@ export type SearchAddress = {
     detail: string,
     city?: CityInfo,
 }
+
+export type SettingsData = {
+    contact: UserContact,
+    mobileTail: string,
+    address: Array<CityInfo>,
+}
+
+export type MinePageData = {
+    bookCount: number,
+    cardCount: number,
+}

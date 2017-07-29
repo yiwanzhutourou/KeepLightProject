@@ -36,10 +36,10 @@ export const hideLoading = () => {
     wx.hideLoading()
 }
 
+// TODO：不知道为什么iphone上显示不出来，可以自己做一个toast
 export const showToast = (title: string) => {
     wx.showToast({
         title: title,
-        duration: 2000,
     })
 }
 

@@ -92,7 +92,7 @@
         <view class="detail-container">
             <view wx:if="{{showEmpty}}" class="empty_container">
                 <text class="empty_title">你的书房「空空如也」</text>
-                <button class="empty_action" bindtap="onUploadBook">去添加第一本书</button>
+                <button class="empty_action" hover-class="empty_action-hover" bindtap="onUploadBook">去添加第一本书</button>
             </view>
             <view wx:else class="list-container">
                 <block wx:for="{{bookList}}" wx:key="id">
