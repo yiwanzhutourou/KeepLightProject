@@ -24,9 +24,10 @@
                 </view>
             </view>
             <view class="action-container" wx:if="{{showBorrowButton}}">
-                <form bindsubmit="onBorrowBook" report-submit="true">
-                    <input name="user" value="{{item.id}}" hidden />
-                    <input name="index" value="{{index}}" hidden />
+                <form bindsubmit="onBorrowBook"
+                      data-user="{{item.id}}"
+                      data-index="{{index}}"
+                      report-submit="true">
                     <button class="borrow-book-button"
                             formType="submit"
                             hover-class="borrow-book-button-hover">借阅</button>
