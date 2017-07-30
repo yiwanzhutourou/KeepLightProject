@@ -41,8 +41,8 @@
       }, {  
         "selectedIconPath": "resources/img/icon_homepage_selected.png",  
         "iconPath": "resources/img/icon_homepage.png",  
-        "pagePath": "pages/homepage/homepage",  
-        "text": "书房"  
+        "pagePath": "pages/index/landing",  
+        "text": "发现"  
       }, {  
         "selectedIconPath": "resources/img/icon_add_selected.png",  
         "iconPath": "resources/img/icon_add.png",  

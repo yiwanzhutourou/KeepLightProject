@@ -82,4 +82,10 @@ Page({
           default:
       }
   },
+
+  onShowMyRoom: (e) => {
+      wx.navigateTo({
+        url: '../homepage/homepage',
+      })
+  },
 })

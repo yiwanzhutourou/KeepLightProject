@@ -21,6 +21,9 @@ Page({
   
   onLoad: function(option: any): void {
     mybooksPage = this
+  },
+
+  onShow: function (): void {
     mybooksPage.loadData()
   },
 

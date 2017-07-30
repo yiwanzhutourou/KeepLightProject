@@ -5,10 +5,12 @@
         mode="aspectFill" />
     <view class="dark" />
     <view class="user-info-container">
-        <image wx:if="{{userInfo.avatarUrl}}"
-            class="user-avatar" src="{{userInfo.avatarUrl}}" />
+        <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
         <view class="user-text-container">
             <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
+            <view wx:if="{{userInfo}}"
+                class="show-my-room"
+                bindtap="onShowMyRoom">查看我的书房</view>
         </view>
     </view>
     <view class="detail-container">

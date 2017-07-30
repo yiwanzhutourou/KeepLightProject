@@ -14,6 +14,9 @@ Page({
 
   onLoad: function(options: any): void {
     historyPage = this
+  },
+
+  onShow: function (): void {
     historyPage.loadData()
   },
 

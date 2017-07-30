@@ -33,7 +33,7 @@ Page({
     isHomePage: true, // always true
     // 我的书房页面，这两个参数一直是true
     isCurrentUser: true,
-    isMyPage: true, // always true
+    isMyPage: false, // 不显示删除按钮
 
     homepageData: {},
     bookList: [],

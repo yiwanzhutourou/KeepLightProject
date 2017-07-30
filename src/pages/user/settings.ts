@@ -27,7 +27,7 @@ Page({
         {
             id: SETTING_ADDRESS,
             title: '管理书房位置',
-            subTitle: '添加的位置会显示在有读书房首页的地图上',
+            subTitle: '添加的位置会显示在首页的地图上',
         },
         {
             id: SETTING_CHANGE_INFO,

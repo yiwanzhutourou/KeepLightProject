@@ -10,19 +10,19 @@
 
 .list-container {
     width: 100%;
-    height: calc(100% - 400rpx);
+    height: calc(100% - 300rpx);
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 400rpx;
+    margin-top: 300rpx;
     z-index: 0;
 }
 
 .blur {
     width: 100%;
-    filter: blur(50rpx);
-    -webkit-filter: blur(50rpx);
-    height: 400rpx;
+    /* filter: blur(10rpx);
+    -webkit-filter: blur(10rpx); */
+    height: 300rpx;
     z-index: 1;
     position: absolute;
     top: 0;
@@ -30,9 +30,9 @@
 
 .dark {
     width: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     width: 100%;
-    height: 400rpx;
+    height: 300rpx;
     z-index: 2;
     position: absolute;
     top: 0;
@@ -40,9 +40,9 @@
 
 .user-info-container {
     width: 100%;
-    height: 400rpx;
+    height: 300rpx;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     z-index: 3;
     position: absolute;
@@ -50,25 +50,31 @@
 }
 
 .user-avatar {
-    width: 180rpx;
-    height: 180rpx;
+    width: 150rpx;
+    height: 150rpx;
     border-radius: 50%;
-    border: 2rpx solid #fff;
-    margin-top: 70rpx;
+    border: 4rpx solid #fff;
+    margin-left: 50rpx;
 }
 
 .user-text-container {
-    width: 100%;
-    height: 150rpx;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
+    margin-left: 40rpx;
+    margin-right: 50rpx;
 }
 
 .user-nickname {
     font-size: 40rpx;
     color: #fafafa;
-    font-weight: 900;
-    margin-top: 30rpx;
+}
+
+.show-my-room {
+    font-size: 20rpx;
+    color: #fafafa;
+    margin-top: 20rpx;
+    border: 1rpx solid #fafafa;
+    border-radius: 8rpx;
+    padding: 6rpx;
 }
