@@ -6,12 +6,10 @@
                 <view class="detail-container">
                     <text class="user-nickname">{{item.nickname}}的书房</text>
                     <view class="search-address-container">
-                        <image class="location_icon"
-                            src="../../resources/img/icon_location_small.png" />
                         <view wx:if="{{item.address.name}}" class="distance-text">
                             {{item.address.name}}
                         </view>
-                        <view wx:elif="{{item.address.detail}}" class="distance-text">
+                        <view wx:elif="{{item.address.detail}}" class="distance-text2">
                             {{item.address.detail}}
                         </view>
                         <view wx:else class="distance-text">
@@ -34,6 +32,5 @@
                 </form>
             </view>
         </view>
-        <view class="item-divider-white" />
     </view>
 </template>

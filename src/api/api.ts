@@ -409,6 +409,22 @@ export const borrowBook = (toUser: string, isbn: string, formId: string, success
     }, failure)
 }
 
+export const follow = (toUser: string, success: (result: string) => void,
+        failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.follow')
+        post(url, { 'toUser': toUser }, success, failure)
+    }, failure)
+}
+
+export const unfollow = (toUser: string, success: (result: string) => void,
+        failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.unfollow')
+        post(url, { 'toUser': toUser }, success, failure)
+    }, failure)
+}
+
 export const updateRequest = (requestId: number, status: number, success: (result: string) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.updateBorrowRequest')
@@ -419,6 +435,20 @@ export const updateRequest = (requestId: number, status: number, success: (resul
 export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getBorrowHistory')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getFollowings = (success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getMyFollowings')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getFollowers = (success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getMyFollowers')
         get(url, success, failure)
     }, failure)
 }

@@ -1,7 +1,9 @@
 import { Book, HomepageData } from '../../api/interfaces'
-import { addAddress, borrowBook, getBookList, getHomepageData, removeBook } from '../../api/api'
+import { addAddress, borrowBook, follow, getBookList, getHomepageData, removeBook, unfollow } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
+
+import { getAddressDisplayText } from '../../utils/addrUtils'
 
 let homepage2
 
@@ -13,9 +15,12 @@ Page({
     isMyPage: false, // always false
 
     homepageData: {},
+    addressText: '',
+    followed: false,
+    followerNumber: 0,
+    followingNumber: 0,
     bookList: [],
     showContent: false,
-    showEmpty: false,
     showNetworkError: false,
   },
 
@@ -51,10 +56,13 @@ Page({
           userIntro: result.info,
         },
         bookList: books,
+        addressText: getAddressDisplayText(result.address),
         showContent: true,
-        showEmpty: books.length == 0,
         showNetworkError: false,
         isCurrentUser: result.isMe,
+        followed: result.followed,
+        followerNumber: result.followerCount,
+        followingNumber: result.followingCount,
       })
     }, (failure) => {
       hideLoading()
@@ -120,6 +128,50 @@ Page({
         title: '有读书房',
         path: 'pages/index/index',
       }
+    }
+  },
+
+  onFollowTap: (e) => {
+    let userId = homepage2.data.userId
+    if (userId) {
+      showLoading('正在关注')
+      follow(userId, (result: string) => {
+        hideLoading()
+        showDialog('已关注')
+        homepage2.setData({
+          followed: true,
+          followerNumber: homepage2.data.followerNumber + 1,
+        })
+      }, (failure) => {
+        hideLoading()
+        if (!failure.data) {
+            if (!failure.data) {
+                showErrDialog('无法关注，请检查你的网络')
+            }
+        }
+      })
+    }
+  },
+
+  onUnfollowTap: (e) => {
+    let userId = homepage2.data.userId
+    if (userId) {
+      showLoading('正在取消')
+      unfollow(userId, (result: string) => {
+        hideLoading()
+        showDialog('已取消')
+        homepage2.setData({
+          followed: false,
+          followerNumber: homepage2.data.followerNumber - 1,
+        })
+      }, (failure) => {
+        hideLoading()
+        if (!failure.data) {
+            if (!failure.data) {
+                showErrDialog('取消关注失败，请检查你的网络')
+            }
+        }
+      })
     }
   },
 })

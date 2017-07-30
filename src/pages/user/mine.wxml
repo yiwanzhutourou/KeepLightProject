@@ -7,10 +7,19 @@
     <view class="user-info-container">
         <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
         <view class="user-text-container">
-            <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
-            <view wx:if="{{userInfo}}"
-                class="show-my-room"
-                bindtap="onShowMyRoom">查看我的书房</view>
+            <view class="user-nick-container">
+                <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
+                <view wx:if="{{userInfo}}"
+                    class="show-my-room"
+                    bindtap="onShowMyRoom"><text>查看我的书房</text></view>
+            </view>
+            <view class="border-between" />
+            <view wx:if="{{userInfo}}" class="user-follow-container">
+                <text class="following-text"
+                    bindtap="onFollowingTap">{{followingText}}</text>
+                <text class="follower-text"
+                    bindtap="onFollowerTap">{{followerText}}</text>
+            </view>
         </view>
     </view>
     <view class="detail-container">

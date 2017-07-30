@@ -1,15 +1,15 @@
 <view class="full-container">
-    <view wx:if="{{showBindMobile || showGuide}}" class="welcome-container">
+    <view wx:if="{{showContent && (showBindMobile || showGuide)}}" class="welcome-container">
         <image class="blur" src="{{userInfo.avatarUrl}}" mode="aspectFill" />
         <view class="dark" />
-        <view class="user-info-container">
-            <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
+        <view class="user-info-container2">
+            <image class="user-avatar2" src="{{userInfo.avatarUrl}}" />
             <view class="user-text-container2">
-                <text class="user-nickname">{{welcomeText}}</text>
+                <text class="welcome-text">{{welcomeText}}</text>
             </view>
         </view>
     </view>
-    <view wx:if="{{showBindMobile}}" class="bind-container">
+    <view wx:if="{{showContent && showBindMobile}}" class="bind-container">
         <form class="form" bindsubmit="formSubmit">
             <view class="form-container">
                 <view class="input-container">
@@ -36,7 +36,7 @@
             </view>
         </form>
     </view>
-    <view wx:elif="{{showGuide}}" class="guide-container">
+    <view wx:elif="{{showContent && showGuide}}" class="guide-container">
         <view class="title-continer">
             <text class="guide-title">
                 通过简单的设置来创建你自己的书房，方便有读书房的其他用户看到你
@@ -79,28 +79,70 @@
                 bindtap="onSkip">跳过</text>
         </view>
     </view>
-    <view wx:else class="container">
-        <image wx:if="{{homepageData.avatarUrl}}" class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
-        <view wx:if="{{homepageData.avatarUrl}}" class="dark" />
-        <view class="user-info-container">
+    <view wx:elif="{{showContent}}" class="container">
+        <image class="blur" src="{{homepageData.avatarUrl}}" mode="aspectFill" />
+        <view class="dark" />
+        <view class="user-avatar-container">
             <image wx:if="{{homepageData.avatarUrl}}" class="user-avatar" src="{{homepageData.avatarUrl}}" />
-            <view class="user-text-container">
-                <text wx:if="{{homepageData.nickName}}" class="user-nickname">{{homepageData.nickName}}</text>
-                <text wx:if="{{homepageData.userIntro !== ''}}" class="user-intro">{{homepageData.userIntro}}</text>
-            </view>
         </view>
         <view class="detail-container">
-            <view wx:if="{{showEmpty}}" class="empty_container">
-                <text class="empty_title">你的书房「空空如也」</text>
-                <button class="empty_action" hover-class="empty_action-hover" bindtap="onUploadBook">去添加第一本书</button>
-            </view>
-            <view wx:else class="list-container">
-                <block wx:for="{{bookList}}" wx:key="id">
-                    <import src="../../template/book/BookItem.wxml" />
-                    <template is="book-item"
-                        data="{{item, isHomePage, isCurrentUser, isMyPage}}" />
-                </block>
+            <view class="user-content-container">
+                <view class="user-nick-container">
+                    <view class="user-text-container">
+                        <text wx:if="{{homepageData.nickName}}"
+                            class="user-nickname">{{homepageData.nickName}}</text>
+                        <text wx:if="{{addressText}}"
+                            class="user-address">{{addressText}}</text>
+                    </view>
+                    <view wx:if="{{followed && !isCurrentUser}}" class="user-action-container">
+                        <view class="unfollow-button"
+                            hover-class="unfollow-button-hover"
+                            bindtap="onUnfollowTap"><text>取消关注</text></view>
+                    </view>
+                    <view wx:if="{{!followed && !isCurrentUser}}" class="user-action-container">
+                        <view class="follow-button"
+                            hover-class="follow-button-hover"
+                            bindtap="onFollowTap"><text>关注</text></view>
+                    </view>
+                </view>
+                <view wx:if="{{homepageData.userIntro !== ''}}" class="user-intro-container">
+                    <text class="user-intro">{{homepageData.userIntro}}</text>
+                </view>
+                <view class="content-divider" />
+                <view class="follow-container">
+                    <view class="follow-sub-container">
+                        <view class="follow-number-text">
+                            {{followingNumber}}
+                        </view>
+                        <view class="follow-content-text">
+                            关注
+                        </view>
+                    </view>
+                    <view class="follow-sub-container2">
+                        <view class="follow-number-text">
+                            {{followerNumber}}
+                        </view>
+                        <view class="follow-content-text">
+                            被关注
+                        </view>
+                    </view>
+                </view>
+                <view class="list-container">
+                    <view class="title-container">
+                        <text>{{bookList.length}} 本书</text>
+                    </view>
+                    <block wx:for="{{bookList}}" wx:key="id">
+                        <import src="../../template/book/BookItem.wxml" />
+                        <template is="book-item"
+                            data="{{item, isHomePage, isCurrentUser, isMyPage}}" />
+                    </block>
+                </view>
             </view>
         </view>
+    </view>
+    <view wx:elif="{{showNetworkError}}" class="empty_container2">
+        <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
+        <text class="empty_title">网络连接失败啦</text>
+        <button class="empty_action" hover-class="empty_action-hover" bindtap="onReload">点击重新加载</button>
     </view>
 </view>

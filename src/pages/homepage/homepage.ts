@@ -4,6 +4,7 @@ import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading 
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 import { setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
+import { getAddressDisplayText } from '../../utils/addrUtils'
 import { verifyReg } from '../../utils/reg'
 
 let homepage
@@ -36,8 +37,13 @@ Page({
     isMyPage: false, // 不显示删除按钮
 
     homepageData: {},
+    addressText: '',
+    followed: false,
+    followerNumber: 0,
+    followingNumber: 0,
     bookList: [],
-    showEmpty: false,
+    showContent: false,
+    showNetworkError: false,
 
     showBindMobile: false,
     showGuide: false,
@@ -71,6 +77,7 @@ Page({
           welcomeText = userInfo.nickName + '，' + welcomeText
         }
         homepage.setData({
+          showContent: true,
           showBindMobile: true,
           showGuide: false,
           userInfo: userInfo,
@@ -98,6 +105,7 @@ Page({
                   welcomeText = userInfo.nickName + '，' + welcomeText
                 }
                 homepage.setData({
+                  showContent: true,
                   showBindMobile: false,
                   showGuide: true,
                   guideData: result,
@@ -108,7 +116,10 @@ Page({
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
-              showErrDialog('加载失败，请检查你的网络')
+              homepage.setData({
+                showNetworkError: true,
+                showContent: false,
+              })
             }
           })
       } else {
@@ -128,7 +139,12 @@ Page({
           userIntro: result.info,
         },
         bookList: books,
-        showEmpty: books.length == 0,
+        showContent: true,
+        showNetworkError: false,
+        addressText: getAddressDisplayText(result.address),
+        followed: result.followed,
+        followerNumber: result.followerCount,
+        followingNumber: result.followingCount,
         showBindMobile: false,
         showGuide: false,
       })
@@ -136,7 +152,10 @@ Page({
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
-        showErrDialog('无法加载，请检查你的网络')
+        homepage.setData({
+          showNetworkError: true,
+          showContent: false,
+        })
       }
     })
   },
@@ -181,7 +200,6 @@ Page({
             })
             homepage.setData({
               bookList: bookList,
-              showEmpty: bookList.length == 0,
             })
             if (homepage.data.isCurrentUser) {
               updateBookStatus(isbn, false)
@@ -238,7 +256,10 @@ Page({
       }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('无法获取数据，请检查你的网络状态')
+            homepage.setData({
+              showNetworkError: true,
+              showContent: false,
+            })
           }
       })
   },

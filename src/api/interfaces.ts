@@ -46,6 +46,7 @@ export type Address = {
     detail: string,
     longitude: number,
     latitude: number,
+    city: CityInfo,
 }
 
 export type Markers = {
@@ -71,8 +72,12 @@ export type HomepageData = {
     info: string,
     nickname: string,
     avatar: string,
+    address: Array<Address>,
     books: Array<Book>,
     isMe: boolean,
+    followed: boolean,
+    followerCount: number,
+    followingCount: number,
 }
 
 export type GuideData = {
@@ -116,6 +121,7 @@ export type SearchUser = {
     nickname: string,
     avatar: string,
     address: SearchAddress,
+    bookCount: number,
 }
 
 export type CityInfo = {
@@ -143,4 +149,6 @@ export type SettingsData = {
 export type MinePageData = {
     bookCount: number,
     cardCount: number,
+    followerCount: number,
+    followingCount: number,
 }

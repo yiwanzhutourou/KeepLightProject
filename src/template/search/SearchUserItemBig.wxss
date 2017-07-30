@@ -9,10 +9,17 @@
 }
 
 .maininfo-container-big {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: space-between;
+}
+
+.maininfo-container-big2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .detail-container-big {
@@ -20,6 +27,11 @@
     flex-direction: column;
     justify-content: center;
     margin-left: 30rpx;
+}
+
+.room-number-text {
+    font-size: 25rpx;
+    color: #999;
 }
 
 .search-address-container-big {
@@ -35,12 +47,15 @@
     color: #333;
 }
 
-.location_icon-big {
-    width: 20rpx;
-    height: 20rpx;
+.distance-text-big {
+    font-size: 20rpx;
+    color: #8a8a8a;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.distance-text-big {
+.distance-text-big2 {
     font-size: 20rpx;
     color: #8a8a8a;
     padding-left: 8rpx;

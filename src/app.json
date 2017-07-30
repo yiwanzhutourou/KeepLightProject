@@ -15,6 +15,7 @@
     "pages/user/bind",
     "pages/user/changeintro",
     "pages/user/mybooks",
+    "pages/user/follow",
     "pages/about/about",
     "pages/about/legals",
     "pages/about/untergrund",

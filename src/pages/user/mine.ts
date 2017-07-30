@@ -34,6 +34,8 @@ Page({
             icon: '../../resources/img/icon_setting.png',
         },
     ],
+    followingText: '',
+    followerText: '',
   },
 
   onLoad: function(options: any): void {
@@ -55,6 +57,8 @@ Page({
         })
         minePage.setData({
             mineItems: mines,
+            followingText: '关注 ' + result.followingCount,
+            followerText: '被关注 ' + result.followerCount,
         })
     })
   },
@@ -86,6 +90,18 @@ Page({
   onShowMyRoom: (e) => {
       wx.navigateTo({
         url: '../homepage/homepage',
+      })
+  },
+
+  onFollowingTap: (e) => {
+      wx.navigateTo({
+        url: './follow?content=followings',
+      })
+  },
+
+  onFollowerTap: (e) => {
+      wx.navigateTo({
+        url: './follow?content=followers',
       })
   },
 })

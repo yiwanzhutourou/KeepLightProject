@@ -20,7 +20,7 @@
 }
 
 .input-container {
-    width: 640rpx;
+    width: 630rpx;
     height: 60rpx;
     background-color: #f2f2f2;
     border-radius: 8rpx;
@@ -31,7 +31,7 @@
     width: 60rpx;
     font-size: 26rpx;
     color: white;
-    margin-left: 10rpx;
+    margin-left: 20rpx;
     display: flex;
     align-items: center;
     justify-content: center;
