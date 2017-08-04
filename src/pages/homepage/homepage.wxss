@@ -125,7 +125,7 @@
 }
 
 .user-text-container {
-    width: 440rpx;
+    width: 560rpx;
     display: flex;
     flex-direction: column;
     margin-left: 30rpx;
@@ -190,42 +190,6 @@
     justify-content: flex-start;
     align-items: center;
     padding-top: 250rpx;
-}
-
-.follow-button {
-    width: 100rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 26rpx;
-    color: #f8b62d;
-    background: #fff;
-    border: 1rpx solid #f8b62d;
-    padding: 6rpx;
-    border-radius: 8rpx;
-}
-
-.follow-button-hover {
-    color: #fff;
-    background: #f8b62d;
-}
-
-.unfollow-button {
-    width: 120rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 26rpx;
-    color: #999;
-    background: #fff;
-    border: 1rpx solid #535354;
-    padding: 6rpx;
-    border-radius: 8rpx;
-}
-
-.unfollow-button-hover {
-    color: #fff;
-    background: #535354;
 }
 
 .follow-container {

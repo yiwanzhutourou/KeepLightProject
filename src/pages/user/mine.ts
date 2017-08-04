@@ -34,8 +34,8 @@ Page({
             icon: '../../resources/img/icon_setting.png',
         },
     ],
-    followingText: '',
-    followerText: '',
+    followingNumber: 0,
+    followerNumber: 0,
   },
 
   onLoad: function(options: any): void {
@@ -57,8 +57,8 @@ Page({
         })
         minePage.setData({
             mineItems: mines,
-            followingText: '关注 ' + result.followingCount,
-            followerText: '被关注 ' + result.followerCount,
+            followingNumber: result.followingCount,
+            followerNumber: result.followerCount,
         })
     })
   },

@@ -94,16 +94,6 @@
                         <text wx:if="{{addressText}}"
                             class="user-address">{{addressText}}</text>
                     </view>
-                    <view wx:if="{{followed && !isCurrentUser}}" class="user-action-container">
-                        <view class="unfollow-button"
-                            hover-class="unfollow-button-hover"
-                            bindtap="onUnfollowTap"><text>取消关注</text></view>
-                    </view>
-                    <view wx:if="{{!followed && !isCurrentUser}}" class="user-action-container">
-                        <view class="follow-button"
-                            hover-class="follow-button-hover"
-                            bindtap="onFollowTap"><text>关注</text></view>
-                    </view>
                 </view>
                 <view wx:if="{{homepageData.userIntro !== ''}}" class="user-intro-container">
                     <text class="user-intro">{{homepageData.userIntro}}</text>

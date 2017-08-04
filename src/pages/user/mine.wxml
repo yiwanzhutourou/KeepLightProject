@@ -1,27 +1,35 @@
 <view class="container">
-    <image wx:if="{{userInfo.avatarUrl}}"
-        class="blur"
-        src="{{userInfo.avatarUrl}}"
-        mode="aspectFill" />
-    <view class="dark" />
-    <view class="user-info-container">
+    <view class="user-info-container" bindtap="onShowMyRoom">
         <image class="user-avatar" src="{{userInfo.avatarUrl}}" />
         <view class="user-text-container">
-            <view class="user-nick-container">
-                <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
-                <view wx:if="{{userInfo}}"
-                    class="show-my-room"
-                    bindtap="onShowMyRoom"><text>查看我的书房</text></view>
+            <text wx:if="{{userInfo.nickName}}" class="user-nickname">{{userInfo.nickName}}</text>
+            <text wx:if="{{userInfo}}"
+                class="show-my-room">查看我的书房</text>
+        </view>
+        <image class="user-container-arrow"
+            mode="widthFix"
+            src="../../resources/img/arrow.png" />
+    </view>
+    <view class="item-divider" />
+    <view class="follow-container">
+        <view class="follow-sub-container" bindtap="onFollowingTap">
+            <view class="follow-number-text">
+                {{followingNumber}}
             </view>
-            <view class="border-between" />
-            <view wx:if="{{userInfo}}" class="user-follow-container">
-                <text class="following-text"
-                    bindtap="onFollowingTap">{{followingText}}</text>
-                <text class="follower-text"
-                    bindtap="onFollowerTap">{{followerText}}</text>
+            <view class="follow-content-text">
+                关注
+            </view>
+        </view>
+        <view class="follow-sub-container2" bindtap="onFollowerTap">
+            <view class="follow-number-text">
+                {{followerNumber}}
+            </view>
+            <view class="follow-content-text">
+                被关注
             </view>
         </view>
     </view>
+    <view class="thick-divider" />
     <view class="detail-container">
         <view class="list-container">
             <block wx:for="{{mineItems}}" wx:for-item="settingItem" wx:key="id">
