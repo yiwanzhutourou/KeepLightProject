@@ -46,7 +46,7 @@ export type Address = {
     detail: string,
     longitude: number,
     latitude: number,
-    city: CityInfo,
+    city?: CityInfo,
 }
 
 export type Markers = {
@@ -151,4 +151,33 @@ export type MinePageData = {
     cardCount: number,
     followerCount: number,
     followingCount: number,
+}
+
+export type User = {
+    id: number,
+    nickname: string,
+    avatar: string,
+}
+
+export type ChatData = {
+    self: User,
+    other: User,
+    messages: Array<Message>,
+}
+
+export type Message = {
+    type: string,
+    from: number,
+    to: number,
+    timeStamp: number,
+    content?: string,
+    extra?: any,
+}
+
+export type ExtraBorrowRequest = {
+    isbn: string,
+    title: string,
+    cover: string,
+    status: number,
+    requestId: number,
 }

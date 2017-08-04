@@ -23,6 +23,11 @@
                         hover-class="follow-button-hover"
                         bindtap="onFollowTap"><text>关注</text></view>
                 </view>
+                <view wx:if="{{!isCurrentUser}}" class="user-action-container">
+                    <view class="chat-button"
+                        hover-class="chat-button-hover"
+                        bindtap="onChatTap"><text>留言</text></view>
+                </view>
             </view>
             <view wx:if="{{homepageData.userIntro !== ''}}" class="user-intro-container">
                 <text class="user-intro">{{homepageData.userIntro}}</text>

@@ -22,7 +22,8 @@
     "pages/message/approved",
     "pages/message/message",
     "pages/message/request",
-    "pages/search/search"
+    "pages/search/search",
+    "pages/chat/chat"
   ],
   "window": {
     "backgroundTextStyle":"light",

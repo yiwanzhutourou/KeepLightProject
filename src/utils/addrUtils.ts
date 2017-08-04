@@ -29,9 +29,11 @@ export const getAddressDisplayText = (addressList: Array<Address>) => {
 
     let result = new Array<string>()
     addressList.forEach((address) => {
-        let cityText = getCityShortString(address.city)
-        if (cityText) {
-            result.push(cityText)
+        if (address.city) {
+            let cityText = getCityShortString(address.city as CityInfo)
+            if (cityText) {
+                result.push(cityText)
+            }
         }
     })
 

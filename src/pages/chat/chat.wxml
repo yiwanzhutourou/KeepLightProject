@@ -1,0 +1,31 @@
+<view class="container">
+    <view class="chat-container">
+        <view class="chat-input-container">
+            <input class="chat-input"
+                value="{{inputValue}}"
+                confirm-type="send"
+                bindinput="onInput"
+                bindconfirm="onInputComplete" />
+            <view class="send-container"
+                hover-class="send-container-hover"
+                bindtap="onSendTap">
+                <image
+                    src="../../resources/img/icon_send.png"
+                    mode="aspectFit"
+                    class="send-image" />
+            </view>
+        </view>
+    </view>
+    
+    <scroll-view
+        class="chat-message-container"
+        scroll-y="true"
+        scroll-top="{{scrollTop}}"
+        style="height: {{listHeight}}rpx;">
+        <block wx:for="{{messages}}" wx:key="id">
+            <import src="../../template/chat/ChatMessageItem.wxml" />
+                <template is="chat-message-item"
+                    data="{{item, self, other}}" />
+        </block>
+    </scroll-view>
+</view>

@@ -1,0 +1,44 @@
+<template name="chat-message-item">
+    <view class="common-container">
+        <view wx:if="{{item.type === 'message' && item.to === self.id}}"
+            class="left-message-container">
+            <image class="left-avatar" src="{{other.avatar}}" />
+            <view class="left-message-wrapper">
+                <view class="left-message">
+                    {{item.content}}
+                </view>
+            </view>
+        </view>
+        <view wx:elif="{{item.type === 'message' && item.from === self.id}}"
+            class="right-message-container">
+            <view class="right-message-wrapper">
+                <view class="right-message">
+                    {{item.content}}
+                </view>
+            </view>
+            <image class="right-avatar" src="{{self.avatar}}" />
+        </view>
+        <view wx:elif="{{item.type === 'request' && item.from === self.id}}"
+            class="self-request-container">
+            <view class="self-request-wrapper">
+                <view class="request-detail-container">
+                    <text class="request-title">你想要借阅{{other.nickname}}的</text>
+                    <text class="request-detail">{{item.extra.title}}</text>
+                    <text class="request-date">{{item.extra.date}}</text>
+                </view>
+                <image class="book-cover" mode="aspectFit" src="{{item.extra.cover}}" />
+            </view>
+        </view>
+        <view wx:elif="{{item.type === 'request' && item.to === self.id}}"
+            class="other-request-container">
+            <view class="other-request-wrapper">
+                <image class="other-book-cover" mode="aspectFit" src="{{item.extra.cover}}" />
+                <view class="other-request-detail-container">
+                    <text class="other-request-title">{{other.nickname}}想要借阅你的</text>
+                    <text class="other-request-detail">{{item.extra.title}}</text>
+                    <text class="other-request-date">{{item.extra.date}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>

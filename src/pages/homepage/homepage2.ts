@@ -174,4 +174,13 @@ Page({
       })
     }
   },
+
+  onChatTap: (e) => {
+      let otherId = homepage2.data.userId
+      if (otherId) {
+          wx.navigateTo({
+              url: '../chat/chat?otherId=' + otherId,
+          })
+      }
+  },
 })
