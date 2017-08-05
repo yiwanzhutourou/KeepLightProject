@@ -1,14 +1,14 @@
 .request-common-container {
     background-color: #fff;
-    border: 1rpx solid #bbb;
+    border: 1rpx solid #eee;
     border-radius: 15rpx;
-    -webkit-box-shadow: 0rpx 0rpx 10rpx 0rpx #eee;
-    -moz-box-shadow: 0rpx 0rpx 10px 0rpx #eee;
-    box-shadow: 0rpx 0rpx 10rpx 0rpx #eee;
+    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
+    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
+    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
     margin-left: 30rpx;
     margin-right: 30rpx;
-    margin-top: 30rpx;
-    margin-bottom: 30rpx;
+    margin-top: 40rpx;
+    margin-bottom: 40rpx;
 }
 
 .request-container {
@@ -72,62 +72,4 @@
 .book-pic {
     width: 120rpx;
     height: 120rpx;
-}
-
-.dealed-text {
-    font-size: 25rpx;
-    color: #f8b62d;
-}
-
-.declined-text {
-    font-size: 25rpx;
-    color: #666;
-}
-
-.action-text {
-    font-size: 25rpx;
-    color: #666;
-}
-
-.action-container {
-    height: 60rpx;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin-left: 25rpx;
-    margin-right: 25rpx;
-    padding-top: 5rpx;
-    padding-bottom: 5rpx;
-    border-top: #999 dashed 1rpx;
-}
-
-.action-button-container {
-    height: 80rpx;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-    align-items: center;
-    margin-left: 25rpx;
-    margin-right: 25rpx;
-    padding-top: 5rpx;
-    padding-bottom: 5rpx;
-    border-top: #999 dashed 1rpx;
-}
-
-.action-button-text {
-    font-size: 25rpx;
-    color: #666;
-    background-color: #fff;
-    border: 1rpx solid #ccc;
-    border-radius: 10rpx;
-    padding-left: 20rpx;
-    padding-right: 20rpx;
-    text-align: center;
-    line-height: 50rpx;
-    height: 50rpx;
-}
-
-.action-button-text-hover {
-    background-color: #eee;
 }

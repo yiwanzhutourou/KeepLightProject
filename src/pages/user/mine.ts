@@ -4,8 +4,9 @@ import { MinePageData } from '../../api/interfaces'
 
 const SETTING_MY_BOOKS = 0
 const SETTING_MY_CARDS = 1
-const SETTING_BORROW_HISTORY = 2
-const SETTING_SETTINGS = 3
+const SETTING_BORROW_REQUEST = 2
+const SETTING_BORROW_HISTORY = 3
+const SETTING_SETTINGS = 4
 
 let minePage
 
@@ -22,6 +23,11 @@ Page({
             id: SETTING_MY_CARDS,
             title: '读书卡片',
             icon: '../../resources/img/icon_card.png',
+        },
+        {
+            id: SETTING_BORROW_REQUEST,
+            title: '借阅请求',
+            icon: '../../resources/img/icon_request.png',
         },
         {
             id: SETTING_BORROW_HISTORY,
@@ -72,6 +78,11 @@ Page({
             })
             break
           case SETTING_MY_CARDS:
+            break
+          case SETTING_BORROW_REQUEST:
+            wx.navigateTo({
+                url: '../message/request',
+            })
             break
           case SETTING_BORROW_HISTORY:
             wx.navigateTo({

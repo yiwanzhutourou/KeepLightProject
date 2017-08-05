@@ -83,11 +83,11 @@
 
 .send-container {
     width: 100rpx;
-    height: 52rpx;
+    height: 56rpx;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-bottom: 24rpx;
+    margin-bottom: 22rpx;
     background: #f8b62d;
     border-radius: 8rpx;
     border: 1rpx solid #eee;

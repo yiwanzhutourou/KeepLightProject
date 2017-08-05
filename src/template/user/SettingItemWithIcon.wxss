@@ -10,12 +10,12 @@
 }
 
 .setting-icon {
-    width: 50rpx;
-    height: 50rpx;
+    width: 40rpx;
+    height: 40rpx;
 }
 
 .detail-container-with-icon {
-    width: 430rpx;
+    flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

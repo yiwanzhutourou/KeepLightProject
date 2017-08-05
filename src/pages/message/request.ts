@@ -1,13 +1,9 @@
-import { getBorrowRequest, updateRequest } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { hideLoading, showLoading } from '../../utils/utils'
 
 import { BorrowRequest } from '../../api/interfaces'
+import { getBorrowRequest } from '../../api/api'
 
 let requestPage
-
-const STATUS_AGREE = 1
-const STATUS_DECLINE = 2
-const STATUS_DISMISS = 3
 
 Page({
   data: {
@@ -65,98 +61,6 @@ Page({
   onRequestItemTap: (e) => {
     wx.navigateTo({
         url: '../homepage/homepage2?user=' + e.currentTarget.dataset.user,
-    })
-  },
-
-  onAgree: (requestId: number) => {
-    showConfirmDialog('', '同意借阅请求后，对方将能通过你设置的联系方式联系你，确认继续？', (confirm) => {
-      if (confirm) {
-        showLoading('正在处理')
-        updateRequest(requestId, STATUS_AGREE, (result: string) => {
-          hideLoading()
-          if (result === 'no_contact') {
-            wx.showModal({
-              title: '提醒',
-              content: '你还没有设置联系方式，请先设置一个可以方便联系到你的联系方式。前往设置？',
-              success: (res) => {
-                if (res && res.confirm) {
-                  wx.navigateTo({
-                    url: '../user/contact',
-                  })
-                }
-              },
-            })
-          } else {
-            requestPage.loadData()
-          }
-        }, (failure) => {
-          hideLoading()
-          if (!failure.data) {
-            showErrDialog('处理失败，检查你的网络')
-          }
-        })
-      }
-    })
-  },
-
-  onDecline: (requestId: number) => {
-    showConfirmDialog('', '确定拒绝？', (confirm) => {
-      if (confirm) {
-        showLoading('正在处理')
-        updateRequest(requestId, STATUS_DECLINE, (result: string) => {
-          hideLoading()
-          requestPage.loadData()
-        }, (failure) => {
-          hideLoading()
-          if (!failure.data) {
-            showErrDialog('处理失败，检查你的网络')
-          }
-        })
-      }
-    })
-  },
-
-  onDismiss: (requestId: number) => {
-    showConfirmDialog('', '确认忽略？', (confirm) => {
-      if (confirm) {
-        showLoading('正在处理')
-        updateRequest(requestId, STATUS_DISMISS, (result: string) => {
-          hideLoading()
-          requestPage.loadData()
-        }, (failure) => {
-          hideLoading()
-          if (!failure.data) {
-            showErrDialog('处理失败，检查你的网络')
-          }
-        })
-      }
-    })
-  },
-
-  onActionTap: (e) => {
-    let requestId = e.currentTarget.dataset.requestid
-    wx.showActionSheet({
-      itemList: ['同意', '拒绝', '忽略'],
-      success: (res) => {
-        let status = -1
-        if (res) {
-          switch (res.tapIndex) {
-            case 0:
-              requestPage.onAgree(requestId)
-            break
-            case 1:
-              requestPage.onDecline(requestId)
-            break
-            case 2:
-              requestPage.onDismiss(requestId)
-            break
-            default:
-          }
-        }
-      },
-      fail: (res) => {
-        // do nothing
-      },
     })
   },
 
