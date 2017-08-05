@@ -15,7 +15,7 @@
 }
 
 .chat-info-container {
-    flex-grow: 1;
+    width: 560rpx;
     display: flex;
     flex-direction: column;
     margin-left: 30rpx;
