@@ -159,6 +159,13 @@ export type User = {
     avatar: string,
 }
 
+export type ChatListItem = {
+    user: User,
+    message: string,
+    timeStamp: number,
+    timeString?: string,
+}
+
 export type ChatData = {
     self: User,
     other: User,
@@ -172,6 +179,7 @@ export type Message = {
     timeStamp: number,
     content?: string,
     extra?: any,
+    timeString?: string,
 }
 
 export type ExtraBorrowRequest = {

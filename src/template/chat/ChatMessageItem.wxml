@@ -1,5 +1,10 @@
 <template name="chat-message-item">
     <view class="common-container">
+        <view wx:if="{{item.timeString}}" class="chat-time-container">
+            <view class="chat-time">
+                {{item.timeString}}
+            </view>
+        </view>
         <view wx:if="{{item.type === 'message' && item.to === self.id}}"
             class="left-message-container">
             <image class="left-avatar" src="{{other.avatar}}" />

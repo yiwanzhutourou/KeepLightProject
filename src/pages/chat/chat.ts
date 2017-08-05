@@ -1,14 +1,24 @@
-import { getScreenSizeInRpx, hideLoading, showErrDialog, showLoading } from '../../utils/utils'
+import { ChatData, Message } from '../../api/interfaces'
+import { getScreenSizeInRpx, hideLoading, showErrDialog, showLoading, timestamp2TextComplex } from '../../utils/utils'
 
-import { ChatData } from '../../api/interfaces'
 import { startChat } from '../../api/api'
 
 let chatPage
 
-let screenHeight
+let formatList = (list: Array<Message>) => {
+    let lastTime = -1
+    list.forEach((item: Message) => {
+        if (lastTime === -1 || (item.timeStamp - lastTime) > 60) {
+            item.timeString = timestamp2TextComplex(item.timeStamp)
+        }
+        lastTime = item.timeStamp
+    })
+    return list
+}
 
 Page({
   data: {
+      screenHeight: 0,
       self: {},
       other: {},
       messages: [],
@@ -19,9 +29,8 @@ Page({
     chatPage = this
 
     if (options && options.otherId) {
-        screenHeight = getScreenSizeInRpx().height
         chatPage.setData({
-            listHeight: screenHeight - 100,
+            screenHeight: getScreenSizeInRpx().height,
         })
         showLoading('正在加载...')
         startChat(options.otherId, (data: ChatData) => {
@@ -32,7 +41,7 @@ Page({
             chatPage.setData({
                 self: data.self,
                 other: data.other,
-                messages: data.messages,
+                messages: formatList(data.messages),
             })
             chatPage.scrollToBottom()
         }, (failure) => {
@@ -94,5 +103,17 @@ Page({
       chatPage.setData({
           scrollTop: 99999999,
       })
+  },
+
+  onSendContactTap: (e) => {
+      // TODO
+  },
+
+  onShowUserTap: (e) => {
+      if (chatPage.data.other) {
+          wx.navigateTo({
+            url: '../homepage/homepage2?user=' + chatPage.data.other.id,
+          })
+      }
   },
 })

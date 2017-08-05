@@ -1,5 +1,53 @@
 @import "../../template/chat/ChatMessageItem.wxss";
 
+.chat-action-container {
+    position: fixed;
+    top: 0;
+    z-index: 5;
+    height: 100rpx;
+    width: 100%;
+    border-bottom: 1px solid #efefef;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #fafafa;
+}
+
+.send-contact-container {
+    height: 70%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #efefef;
+}
+
+.show-user-container {
+    height: 70%;
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-action-text {
+    font-size: 28rpx;
+    color: #666;
+    margin-left: 20rpx;
+}
+
+.chat-action-icon {
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.chat-action-icon2 {
+    width: 50rpx;
+    height: 50rpx;
+}
+
 .chat-container {
     position: fixed;
     bottom: 0;
@@ -55,42 +103,8 @@
     height: 40rpx;
 }
 
-.default-message-container {
-    width: 100%;
-    background-color: #eee;
-    display: flex;
-    flex-direction: column;
-}
-
-.default-message-text {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 80rpx;
-    border-top: 1rpx solid #eee;
-    color: #666;
-    background-color: #fafafa;
-    font-size: 30rpx;
-    padding-left: 40rpx;
-}
-
-.default-message-text-hover {
-    color: #999;
-}
-
 .chat-message-container {
+    margin-top: 100rpx;
     width: 100%;
     background: #edeff2;
-}
-
-.message-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 200rpx;
-    background: #fafafa;
-    border-bottom: 1rpx solid #eee;
-    color: #333;
-    font-size: 40rpx;
 }

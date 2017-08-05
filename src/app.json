@@ -23,7 +23,8 @@
     "pages/message/message",
     "pages/message/request",
     "pages/search/search",
-    "pages/chat/chat"
+    "pages/chat/chat",
+    "pages/chat/list"
   ],
   "window": {
     "backgroundTextStyle":"light",
@@ -53,7 +54,7 @@
       }, {  
         "selectedIconPath": "resources/img/icon_message_selected.png",  
         "iconPath": "resources/img/icon_message.png",  
-        "pagePath": "pages/message/message",  
+        "pagePath": "pages/chat/list",  
         "text": "消息"  
       }, {  
         "selectedIconPath": "resources/img/icon_my_selected.png",  

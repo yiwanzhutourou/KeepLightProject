@@ -1,0 +1,21 @@
+@import "../../template/chat/ChatUserItem.wxss";
+
+.list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.nomore-container {
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+.nomore-text {
+    color: #aaa;
+    font-size: 25rpx;
+}

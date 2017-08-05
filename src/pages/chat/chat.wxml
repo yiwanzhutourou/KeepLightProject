@@ -1,4 +1,20 @@
 <view class="container">
+    <view class="chat-action-container">
+        <view class="send-contact-container"
+            bindtap="onSendContactTap">
+            <image class="chat-action-icon2" src="../../resources/img/icon_send_contact.png" />
+            <view class="chat-action-text">
+                发送联系方式
+            </view>
+        </view>
+        <view class="show-user-container"
+            bindtap="onShowUserTap">
+            <image class="chat-action-icon" src="../../resources/img/icon_show_homepage.png" />
+            <view class="chat-action-text">
+                查看TA的书房
+            </view>
+        </view>
+    </view>
     <view class="chat-container">
         <view class="chat-input-container">
             <input class="chat-input"
@@ -21,7 +37,7 @@
         class="chat-message-container"
         scroll-y="true"
         scroll-top="{{scrollTop}}"
-        style="height: {{listHeight}}rpx;">
+        style="height: {{screenHeight - 200}}rpx;">
         <block wx:for="{{messages}}" wx:key="id">
             <import src="../../template/chat/ChatMessageItem.wxml" />
                 <template is="chat-message-item"
