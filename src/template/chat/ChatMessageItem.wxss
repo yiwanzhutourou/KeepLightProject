@@ -82,11 +82,11 @@
 }
 
 .right-message {
-    color: #45829b;
+    color: #6AA0F0;
     font-size: 30rpx;
     line-height: 36rpx;
-    background: #c7eafc;
-    border: 1rpx solid #c7eafc;
+    background: #DCEAF7;
+    border: 1rpx solid #BFE3EE;
     border-radius: 15rpx;
     display: flex;
     align-items: center;
@@ -97,7 +97,6 @@
 
 /** self request **/
 .self-request-container {
-    height: 240rpx;
     width: 100%;
     display: flex;
     justify-content: flex-end;
@@ -125,6 +124,7 @@
 }
 
 .request-detail-container {
+    width: 300rpx;
     display: flex;
     flex-direction: column;
     margin-right: 30rpx;
@@ -154,7 +154,6 @@
 
 /** other request **/
 .other-request-container {
-    height: 240rpx;
     width: 100%;
     display: flex;
     justify-content: flex-start;
@@ -182,6 +181,7 @@
 }
 
 .other-request-detail-container {
+    width: 300rpx;
     display: flex;
     flex-direction: column;
     margin-left: 30rpx;
@@ -208,3 +208,71 @@
     font-size: 25rpx;
     color: #666;
 }
+
+/** self contact **/
+.self-contact-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 30rpx;
+}
+
+.self-contact-detail-container {
+    height: 160rpx;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FDFCF5;
+    border: 1rpx solid #E2E2E2;
+    border-radius: 8rpx;
+    margin-right: 30rpx;
+}
+
+/** other contact **/
+.other-contact-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-bottom: 30rpx;
+}
+
+.other-contact-detail-container {
+    height: 180rpx;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #FDFCF5;
+    border: 1rpx solid #E2E2E2;
+    border-radius: 8rpx;
+    margin-left: 30rpx;
+}
+
+.contact-title {
+    font-size: 25rpx;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-left: 30rpx;
+}
+
+.contact-detail {
+    font-size: 38rpx;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-left: 30rpx;
+}
+
+.contact-extra {
+    font-size: 25rpx;
+    color: #666;
+    margin-left: 30rpx;
+    margin-top: 10rpx;
+}
+

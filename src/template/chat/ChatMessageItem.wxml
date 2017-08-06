@@ -25,10 +25,12 @@
         </view>
         <view wx:elif="{{item.type === 'request' && item.from === self.id}}"
             class="self-request-container">
-            <view class="self-request-wrapper">
+            <view class="self-request-wrapper"
+                data-isbn="{{item.extra.isbn}}"
+                bindtap="onRequestTap">
                 <view class="request-detail-container">
                     <text class="request-title">你想要借阅{{other.nickname}}的</text>
-                    <text class="request-detail">{{item.extra.title}}</text>
+                    <text class="request-detail">《{{item.extra.title}}》</text>
                     <text class="request-date">{{item.extra.date}}</text>
                 </view>
                 <image class="book-cover" mode="aspectFit" src="{{item.extra.cover}}" />
@@ -36,13 +38,37 @@
         </view>
         <view wx:elif="{{item.type === 'request' && item.to === self.id}}"
             class="other-request-container">
-            <view class="other-request-wrapper">
+            <view class="other-request-wrapper"
+                data-isbn="{{item.extra.isbn}}"
+                bindtap="onRequestTap">
                 <image class="other-book-cover" mode="aspectFit" src="{{item.extra.cover}}" />
                 <view class="other-request-detail-container">
                     <text class="other-request-title">{{other.nickname}}想要借阅你的</text>
-                    <text class="other-request-detail">{{item.extra.title}}</text>
+                    <text class="other-request-detail">《{{item.extra.title}}》</text>
                     <text class="other-request-date">{{item.extra.date}}</text>
                 </view>
+            </view>
+        </view>
+        <view wx:if="{{item.type === 'contact' && item.from === self.id}}"
+            class="self-contact-container">
+            <view class="self-contact-detail-container">
+                <view class="contact-title">
+                    你向{{other.nickname}}发送了{{item.extra.name}}
+                </view>
+                <view class="contact-detail">{{item.extra.contact}}</view>
+            </view>
+        </view>
+        <view wx:if="{{item.type === 'contact' && item.to === self.id}}"
+            class="other-contact-container"
+            bindtap="onCopyContact"
+            data-name="{{item.extra.name}}"
+            data-contact="{{item.extra.contact}}">
+            <view class="other-contact-detail-container">
+                <view class="contact-title">
+                    {{other.nickname}}向你发送了{{item.extra.name}}
+                </view>
+                <view class="contact-detail">{{item.extra.contact}}</view>
+                <view class="contact-extra">点击复制</view>
             </view>
         </view>
     </view>

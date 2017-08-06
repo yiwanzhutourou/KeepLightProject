@@ -467,6 +467,13 @@ export const getBorrowRequest = (success: (result: Array<BorrowRequest>) => void
     }, failure)
 }
 
+export const getChatList = (success: (data: Array<ChatListItem>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.getChatList')
+        get(url, success, failure)
+    }, failure)
+}
+
 export const startChat = (otherId: number,
         success: (data: ChatData) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
@@ -477,9 +484,23 @@ export const startChat = (otherId: number,
     }, failure)
 }
 
-export const getChatList = (success: (data: Array<ChatListItem>) => void, failure?: (res?: any) => void) => {
+export const sendMessage = (otherId: number, message: string,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
-        let url = getUrl('Chat.getChatList')
+        let url = getUrl('Chat.sendMessage') + getUrlParam({
+            otherId: otherId,
+            message: message,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const sendContact = (otherId: number,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.sendContact') + getUrlParam({
+            otherId: otherId,
+        })
         get(url, success, failure)
     }, failure)
 }

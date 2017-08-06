@@ -1,7 +1,6 @@
 import { ChatData, Message } from '../../api/interfaces'
-import { getScreenSizeInRpx, hideLoading, showErrDialog, showLoading, timestamp2TextComplex } from '../../utils/utils'
-
-import { startChat } from '../../api/api'
+import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast, timestamp2TextComplex } from '../../utils/utils'
+import { sendContact, sendMessage, startChat } from '../../api/api'
 
 let chatPage
 
@@ -14,6 +13,21 @@ let formatList = (list: Array<Message>) => {
         lastTime = item.timeStamp
     })
     return list
+}
+
+let fakeAdd = (message: Message, list: Array<Message>) => {
+    if (message && list) {
+        let timestamp = message.timeStamp
+        if (list.length > 0) {
+            let lastMessage = list[list.length - 1]
+            if ((timestamp - lastMessage.timeStamp) > 60) {
+                message.timeString = timestamp2TextComplex(timestamp)
+            }
+        } else {
+            message.timeString = timestamp2TextComplex(timestamp)
+        }
+        list.push(message)
+    }
 }
 
 Page({
@@ -70,21 +84,39 @@ Page({
   },
 
   sendMessage: (message) => {
+      let otherId = chatPage.data.other.id
+      if (!otherId) {
+          return
+      }
       if (!message || message === '') {
           return
       }
+
+      // 本地fake一个message
       let messages = chatPage.data.messages
-      messages.push({
+      let timestamp = new Date().getTime() / 1000
+      fakeAdd({
           'type': 'message',
           'from': chatPage.data.self.id,
-          'to': chatPage.data.other.id,
+          'to': otherId,
           'content': message,
-          'timeStamp': new Date().getTime(),
-      })
+          'timeStamp': timestamp,
+      }, messages)
       chatPage.setData({
           messages: messages,
       })
       chatPage.scrollToBottom()
+
+      showLoading('正在发送')
+      sendMessage(otherId, message, (result: string) => {
+          hideLoading()
+          showDialog('发送成功')
+      }, (failure) => {
+          hideLoading()
+          if (!failure.data) {
+              showErrDialog('消息发送失败，请检查你的网络')
+          }
+      })
   },
 
   onInput: (e) => {
@@ -106,7 +138,52 @@ Page({
   },
 
   onSendContactTap: (e) => {
-      // TODO
+    let otherId = chatPage.data.other.id
+    if (!otherId) {
+        return
+    }
+    showConfirmDialog('', '将发送你设置的联系方式给对方，是否继续？', (confirm) => {
+        if (confirm) {
+            showLoading('正在发送')
+            sendContact(otherId, (result: string) => {
+                hideLoading()
+                if (result === 'no') {
+                    wx.showModal({
+                        title: '提醒',
+                        content: '你还没有设置联系方式',
+                        confirmText: '去设置',
+                        success: (res) => {
+                            if (res && res.confirm) {
+                                wx.navigateTo({
+                                    url: '../user/contact?autoClose=1',
+                                })
+                            }
+                        },
+                    })
+                } else {
+                    // 本地fake一个contact message
+                    let messages = chatPage.data.messages
+                    let timestamp = new Date().getTime() / 1000
+                    fakeAdd({
+                        'type': 'contact',
+                        'from': chatPage.data.self.id,
+                        'to': otherId,
+                        'timeStamp': timestamp,
+                        'extra': JSON.parse(result),
+                    }, messages)
+                    chatPage.setData({
+                        messages: messages,
+                    })
+                    chatPage.scrollToBottom()
+                }
+            }, (failure) => {
+                hideLoading()
+                if (!failure.data) {
+                    showErrDialog('发送失败，请检查你的网络')
+                }
+            })
+        }
+    })
   },
 
   onShowUserTap: (e) => {
@@ -115,5 +192,28 @@ Page({
             url: '../homepage/homepage2?user=' + chatPage.data.other.id,
           })
       }
+  },
+
+  onCopyContact: (e) => {
+      let name = e.currentTarget.dataset.name
+      let contact = e.currentTarget.dataset.contact
+      if (name && contact) {
+        wx.setClipboardData({
+            data: contact,
+            success: (result) => {
+                showToast(name + '已复制')
+            },
+        })
+      }
+  },
+
+  onRequestTap: (e) => {
+        let isbn = e.currentTarget.dataset.isbn
+
+        if (isbn) {
+            wx.navigateTo({
+                url: '../book/book?isbn=' + isbn,
+            })
+        }
   },
 })
