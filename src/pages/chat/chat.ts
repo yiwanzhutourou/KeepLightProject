@@ -44,6 +44,7 @@ Page({
       inputValue: '',
       showLoadingMore: false,
       noMore: false,
+      showContent: false,
   },
 
   onLoad: function(options: any): void {
@@ -66,6 +67,7 @@ Page({
                 other: data.other,
                 messages: formatList(data.messages),
                 noMore: noMore,
+                showContent: true,
             })
             chatPage.scrollToBottom()
         }, (failure) => {

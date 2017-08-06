@@ -130,6 +130,21 @@
     justify-content: center;
 }
 
+.loading-text {
+    width: 60%;
+    color: #bbb;
+    font-size: 26rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border: 1rpx solid #ddd;
+    border-radius: 12rpx;
+    background: #eee;
+    padding-top: 16rpx;
+    padding-bottom: 16rpx;
+}
+
 .loading {
     display: block;
     width: 100%;
