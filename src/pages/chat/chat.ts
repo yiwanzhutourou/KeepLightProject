@@ -7,7 +7,6 @@ const DEFAULT_CHAT_PAGE_COUNT = 15
 let chatPage
 let curPage = 0
 let lastRequest = -1
-let noMore = false
 
 let formatList = (list: Array<Message>) => {
     let lastTime = -1
@@ -31,6 +30,7 @@ let fakeAdd = (message: Message, list: Array<Message>) => {
         } else {
             message.timeString = timestamp2TextComplex(timestamp)
         }
+        message.showLoading = true
         list.push(message)
     }
 }
@@ -43,6 +43,7 @@ Page({
       messages: [],
       inputValue: '',
       showLoadingMore: false,
+      noMore: false,
   },
 
   onLoad: function(options: any): void {
@@ -56,7 +57,7 @@ Page({
         showLoading('正在加载...')
         startChat(options.otherId, DEFAULT_CHAT_PAGE_COUNT, curPage, (data: ChatData) => {
             hideLoading()
-            noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
+            let noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
             wx.setNavigationBarTitle({
                 title: data.other.nickname,
             })
@@ -64,6 +65,7 @@ Page({
                 self: data.self,
                 other: data.other,
                 messages: formatList(data.messages),
+                noMore: noMore,
             })
             chatPage.scrollToBottom()
         }, (failure) => {
@@ -87,18 +89,19 @@ Page({
             return
         }
         lastRequest = e.timeStamp
-        if (noMore || chatPage.data.showLoadingMore) {
+        if (chatPage.data.noMore || chatPage.data.showLoadingMore) {
             return
         }
         curPage++
         chatPage.showLoadingMore()
         startChat(otherId, DEFAULT_CHAT_PAGE_COUNT, curPage, (data: ChatData) => {
             chatPage.hideLoadingMore()
-            noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
+            let noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
             let newData = formatList(data.messages)
             let oldData = chatPage.data.messages
             chatPage.setData({
                 messages: newData.concat(oldData),
+                noMore: noMore,
             })
         }, (failure) => {
             chatPage.hideLoadingMore()
@@ -133,6 +136,7 @@ Page({
       // 本地fake一个message
       let messages = chatPage.data.messages
       let timestamp = new Date().getTime() / 1000
+      let newIndex = messages.length
       fakeAdd({
           'type': 'message',
           'from': chatPage.data.self.id,
@@ -145,16 +149,53 @@ Page({
       })
       chatPage.scrollToBottom()
 
-      showLoading('正在发送')
       sendMessage(otherId, message, (result: string) => {
-          hideLoading()
-          showDialog('发送成功')
+          messages[newIndex].showLoading = false
+          messages[newIndex].showError = false
+          chatPage.setData({
+            messages: messages,
+          })
+          chatPage.scrollToBottom()
       }, (failure) => {
-          hideLoading()
           if (!failure.data) {
-              showErrDialog('消息发送失败，请检查你的网络')
+              messages[newIndex].showLoading = false
+              messages[newIndex].showError = true
+              chatPage.setData({
+                  messages: messages,
+              })
+              chatPage.scrollToBottom()
           }
       })
+  },
+
+  onErrorMsgTap: (e) => {
+      let index = e.currentTarget.dataset.index
+      let messages = chatPage.data.messages
+      if (messages[index].showError) {
+        let otherId = chatPage.data.other.id
+        let message = messages[index].content
+        messages[index].showError = false
+        messages[index].showLoading = true
+        chatPage.setData({
+          messages: messages,
+        })
+        sendMessage(otherId, message, (result: string) => {
+            messages[index].showLoading = false
+            chatPage.setData({
+                messages: messages,
+            })
+            chatPage.scrollToBottom()
+        }, (failure) => {
+            if (!failure.data) {
+                messages[index].showLoading = false
+                messages[index].showError = true
+                chatPage.setData({
+                    messages: messages,
+                })
+                chatPage.scrollToBottom()
+            }
+        })
+      }
   },
 
   onInput: (e) => {

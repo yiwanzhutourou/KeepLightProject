@@ -1,5 +1,5 @@
 <template name="chat-message-item">
-    <view class="common-container" id="item{{index}}">
+    <view class="common-container">
         <view wx:if="{{item.timeString}}" class="chat-time-container">
             <view class="chat-time">
                 {{item.timeString}}
@@ -16,8 +16,27 @@
         </view>
         <view wx:elif="{{item.type === 'message' && item.from === self.id}}"
             class="right-message-container">
-            <view class="right-message-wrapper">
-                <view class="right-message">
+            <view wx:if="{{item.showError}}"
+                class="right-message-error-container"
+                data-index="{{index}}"
+                bindtap="onErrorMsgTap">
+                <view class="right-message-wrapper">
+                    <view class="right-message-error">
+                        {{item.content}}
+                    </view>
+                </view>
+                <view class="chat-error-hint">
+                    <text>发送失败，点击重试</text>
+                </view>
+            </view>
+            <view wx:else class="right-message-wrapper">
+                <view wx:if="{{item.showLoading}}"
+                    class="chat-loading-container">
+                    <view class="chat-loading">
+                        <view class="chat-dot" />
+                    </view>
+                </view>
+                <view wx:else class="right-message">
                     {{item.content}}
                 </view>
             </view>

@@ -180,6 +180,8 @@ export type Message = {
     content?: string,
     extra?: any,
     timeString?: string,
+    showLoading?: boolean,
+    showError?: boolean,
 }
 
 export type ExtraBorrowRequest = {
