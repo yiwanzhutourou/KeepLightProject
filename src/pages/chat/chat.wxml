@@ -1,4 +1,4 @@
-<view class="container">
+<view class="chat-page-container">
     <view class="chat-action-container">
         <view class="send-contact-container"
             bindtap="onSendContactTap">
@@ -37,11 +37,18 @@
         class="chat-message-container"
         scroll-y="true"
         scroll-top="{{scrollTop}}"
+        bindscrolltoupper="onLoadMore"
         style="height: {{screenHeight - 200}}rpx;">
-        <block wx:for="{{messages}}" wx:key="id">
+        <view wx:if="{{showLoadingMore}}" class="loading-container">
+            <view class="loading">
+                <view class="dot">
+                </view>
+            </view>
+        </view>
+        <block wx:for="{{messages}}" wx:key="index">
             <import src="../../template/chat/ChatMessageItem.wxml" />
                 <template is="chat-message-item"
-                    data="{{item, self, other}}" />
+                    data="{{item, self, other, index}}" />
         </block>
     </scroll-view>
 </view>

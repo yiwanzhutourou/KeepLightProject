@@ -2,7 +2,12 @@ import { ChatData, Message } from '../../api/interfaces'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast, timestamp2TextComplex } from '../../utils/utils'
 import { sendContact, sendMessage, startChat } from '../../api/api'
 
+const DEFAULT_CHAT_PAGE_COUNT = 15
+
 let chatPage
+let curPage = 0
+let lastRequest = -1
+let noMore = false
 
 let formatList = (list: Array<Message>) => {
     let lastTime = -1
@@ -37,6 +42,7 @@ Page({
       other: {},
       messages: [],
       inputValue: '',
+      showLoadingMore: false,
   },
 
   onLoad: function(options: any): void {
@@ -46,9 +52,11 @@ Page({
         chatPage.setData({
             screenHeight: getScreenSizeInRpx().height,
         })
+        curPage = 0
         showLoading('正在加载...')
-        startChat(options.otherId, (data: ChatData) => {
+        startChat(options.otherId, DEFAULT_CHAT_PAGE_COUNT, curPage, (data: ChatData) => {
             hideLoading()
+            noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
             wx.setNavigationBarTitle({
                 title: data.other.nickname,
             })
@@ -67,6 +75,36 @@ Page({
     } else {
         wx.navigateBack({
             delta: 1,
+        })
+    }
+  },
+
+  // TODO: 无法定位到之前的位置，貌似可以用scroll-into-view，但是效果不是很理想
+  onLoadMore: (e) => {
+    let otherId = chatPage.data.other.id
+    if (otherId) {
+        if (lastRequest != -1 && e.timeStamp && e.timeStamp - lastRequest < 500) {
+            return
+        }
+        lastRequest = e.timeStamp
+        if (noMore || chatPage.data.showLoadingMore) {
+            return
+        }
+        curPage++
+        chatPage.showLoadingMore()
+        startChat(otherId, DEFAULT_CHAT_PAGE_COUNT, curPage, (data: ChatData) => {
+            chatPage.hideLoadingMore()
+            noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
+            let newData = formatList(data.messages)
+            let oldData = chatPage.data.messages
+            chatPage.setData({
+                messages: newData.concat(oldData),
+            })
+        }, (failure) => {
+            chatPage.hideLoadingMore()
+            if (!failure.data) {
+                showErrDialog('无法加载数据，请检查你的网络')
+            }
         })
     }
   },
@@ -215,5 +253,17 @@ Page({
                 url: '../book/book?isbn=' + isbn,
             })
         }
+  },
+
+  showLoadingMore: () => {
+    chatPage.setData({
+        showLoadingMore: true,
+    })
+  },
+
+  hideLoadingMore: () => {
+    chatPage.setData({
+        showLoadingMore: false,
+    })
   },
 })

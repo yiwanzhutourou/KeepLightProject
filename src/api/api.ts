@@ -474,11 +474,13 @@ export const getChatList = (success: (data: Array<ChatListItem>) => void, failur
     }, failure)
 }
 
-export const startChat = (otherId: number,
+export const startChat = (otherId: number, count: number, page: number,
         success: (data: ChatData) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('Chat.start') + getUrlParam({
             otherId: otherId,
+            count: count,
+            page: page,
         })
         get(url, success, failure)
     }, failure)

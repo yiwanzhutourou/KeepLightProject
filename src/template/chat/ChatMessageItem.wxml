@@ -1,5 +1,5 @@
 <template name="chat-message-item">
-    <view class="common-container">
+    <view class="common-container" id="item{{index}}">
         <view wx:if="{{item.timeString}}" class="chat-time-container">
             <view class="chat-time">
                 {{item.timeString}}
