@@ -1,0 +1,22 @@
+<view class="container">
+    <view wx:if="{{showList}}" class="list-container">
+        <block wx:for="{{chatList}}" wx:key="id">
+            <import src="../../template/chat/ChatUserItem.wxml" />
+            <template is="chat-user-item"
+                data="{{item}}" />
+        </block>
+        <view class="nomore-container">
+            <text class="nomore-text">没有更多消息了</text>
+        </view>
+    </view>
+    <view wx:elif="{{showEmpty}}" class="empty_container">
+        <image class="empty-pic" src="../../resources/img/icon_empty_message.png" />
+        <text class="empty_title">你没有收到任何消息</text>
+        <button class="empty_action" hover-class="empty_action-hover" bindtap="onGotoIndex">去首页看看</button>
+    </view>
+    <view wx:elif="{{showNetworkError}}" class="empty_container">
+        <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
+        <text class="empty_title">网络连接失败啦</text>
+        <button class="empty_action" hover-class="empty_action-hover" bindtap="onReload">点击重新加载</button>
+    </view>
+</view>

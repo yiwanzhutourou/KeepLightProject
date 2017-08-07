@@ -46,6 +46,7 @@ export type Address = {
     detail: string,
     longitude: number,
     latitude: number,
+    city?: CityInfo,
 }
 
 export type Markers = {
@@ -71,8 +72,12 @@ export type HomepageData = {
     info: string,
     nickname: string,
     avatar: string,
+    address: Array<Address>,
     books: Array<Book>,
     isMe: boolean,
+    followed: boolean,
+    followerCount: number,
+    followingCount: number,
 }
 
 export type GuideData = {
@@ -116,6 +121,8 @@ export type SearchUser = {
     nickname: string,
     avatar: string,
     address: SearchAddress,
+    bookCount: number,
+    addressText?: string,
 }
 
 export type CityInfo = {
@@ -132,4 +139,56 @@ export type SearchAddress = {
     name: string,
     detail: string,
     city?: CityInfo,
+}
+
+export type SettingsData = {
+    contact: UserContact,
+    mobileTail: string,
+    address: Array<CityInfo>,
+}
+
+export type MinePageData = {
+    bookCount: number,
+    cardCount: number,
+    followerCount: number,
+    followingCount: number,
+}
+
+export type User = {
+    id: number,
+    nickname: string,
+    avatar: string,
+}
+
+export type ChatListItem = {
+    user: User,
+    message: string,
+    timeStamp: number,
+    timeString?: string,
+}
+
+export type ChatData = {
+    self: User,
+    other: User,
+    messages: Array<Message>,
+}
+
+export type Message = {
+    type: string,
+    from: number,
+    to: number,
+    timeStamp: number,
+    content?: string,
+    extra?: any,
+    timeString?: string,
+    showLoading?: boolean,
+    showError?: boolean,
+}
+
+export type ExtraBorrowRequest = {
+    isbn: string,
+    title: string,
+    cover: string,
+    status: number,
+    requestId: number,
 }

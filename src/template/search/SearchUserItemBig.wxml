@@ -2,27 +2,31 @@
     <view class="common-container">
         <view class="search-user-container-big" data-user="{{item.id}}" bindtap="onUserItemTap">
             <view class="maininfo-container-big">
-                <image class="user-avatar-big" src="{{item.avatar}}" />
-                <view class="detail-container-big">
-                    <text class="user-nickname-big">{{item.nickname}}的书房</text>
-                    <view class="search-address-container-big">
-                        <image class="location_icon-big"
-                            src="../../resources/img/icon_location_small.png" />
-                        <view wx:if="{{item.address.name}}" class="distance-text-big">
-                            {{item.address.name}}
+                <view class="maininfo-container-big2">
+                    <image class="user-avatar-big" src="{{item.avatar}}" />
+                    <view class="detail-container-big">
+                        <text class="user-nickname-big">{{item.nickname}}的书房</text>
+                        <view class="search-address-container-big">
+                            <view wx:if="{{item.addressText}}" class="distance-text-big">
+                                {{item.addressText}}
+                            </view>
+                            <view wx:elif="{{item.address.name}}" class="distance-text-big">
+                                {{item.address.name}}
+                            </view>
+                            <view wx:elif="{{item.address.detail}}" class="distance-text-big">
+                                {{item.address.detail}}
+                            </view>
+                            <view wx:else class="distance-text-big">
+                                暂无地址
+                            </view>
                         </view>
-                        <view wx:elif="{{item.address.detail}}" class="distance-text-big">
-                            {{item.address.detail}}
+                        <view wx:if="{{item.address.distanceText}}"
+                            class="distance-number-text-big">
+                            {{item.address.distanceText}}
                         </view>
-                        <view wx:else class="distance-text-big">
-                            暂无地址
-                        </view>
-                    </view>
-                    <view wx:if="{{item.address.distanceText}}"
-                          class="distance-number-text-big">
-                        {{item.address.distanceText}}
                     </view>
                 </view>
+                <view class="room-number-text">{{item.bookCount}} 本书</view>
             </view>
         </view>
         <view class="item-divider" />

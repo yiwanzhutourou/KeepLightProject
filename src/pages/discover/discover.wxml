@@ -1,0 +1,4 @@
+<view class="container">
+    <image class="working-image" src="../../resources/img/icon_working.png" />
+    <text class="working-text">Working on it...</text>
+</view>

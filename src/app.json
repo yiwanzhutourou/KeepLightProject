@@ -7,19 +7,26 @@
     "pages/homepage/homepage2",
     "pages/book/addBook",
     "pages/book/book",
+    "pages/user/mine",
     "pages/user/address",
     "pages/user/settings",
-    "pages/user/my",
-    "pages/user/request",
     "pages/user/history",
     "pages/user/contact",
     "pages/user/bind",
     "pages/user/changeintro",
+    "pages/user/mybooks",
+    "pages/user/follow",
     "pages/about/about",
     "pages/about/legals",
     "pages/about/untergrund",
     "pages/message/approved",
-    "pages/search/search"
+    "pages/message/message",
+    "pages/message/request",
+    "pages/search/search",
+    "pages/chat/chat",
+    "pages/chat/list",
+    "pages/chat/borrow",
+    "pages/discover/discover"
   ],
   "window": {
     "backgroundTextStyle":"light",
@@ -39,8 +46,8 @@
       }, {  
         "selectedIconPath": "resources/img/icon_homepage_selected.png",  
         "iconPath": "resources/img/icon_homepage.png",  
-        "pagePath": "pages/homepage/homepage",  
-        "text": "书房"  
+        "pagePath": "pages/discover/discover",  
+        "text": "发现"  
       }, {  
         "selectedIconPath": "resources/img/icon_add_selected.png",  
         "iconPath": "resources/img/icon_add.png",  
@@ -49,12 +56,12 @@
       }, {  
         "selectedIconPath": "resources/img/icon_message_selected.png",  
         "iconPath": "resources/img/icon_message.png",  
-        "pagePath": "pages/user/my",  
+        "pagePath": "pages/chat/list",  
         "text": "消息"  
       }, {  
         "selectedIconPath": "resources/img/icon_my_selected.png",  
         "iconPath": "resources/img/icon_my.png",  
-        "pagePath": "pages/user/settings",  
+        "pagePath": "pages/user/mine",  
         "text": "我的"  
       }]  
     }

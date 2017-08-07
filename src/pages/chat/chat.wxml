@@ -1,0 +1,56 @@
+<view class="chat-page-container">
+    <view class="chat-action-container">
+        <view class="send-contact-container"
+            bindtap="onSendContactTap">
+            <image class="chat-action-icon2" src="../../resources/img/icon_send_contact.png" />
+            <view class="chat-action-text">
+                发送联系方式
+            </view>
+        </view>
+        <view class="show-user-container"
+            bindtap="onShowUserTap">
+            <image class="chat-action-icon" src="../../resources/img/icon_show_homepage.png" />
+            <view class="chat-action-text">
+                查看TA的书房
+            </view>
+        </view>
+    </view>
+    <view class="chat-container">
+        <view class="chat-input-container">
+            <input class="chat-input"
+                value="{{inputValue}}"
+                confirm-type="send"
+                bindinput="onInput"
+                bindconfirm="onInputComplete" />
+            <view class="send-container"
+                hover-class="send-container-hover"
+                bindtap="onSendTap">
+                <image
+                    src="../../resources/img/icon_send.png"
+                    mode="aspectFit"
+                    class="send-image" />
+            </view>
+        </view>
+    </view>
+    
+    <scroll-view
+        class="chat-message-container"
+        scroll-y="true"
+        scroll-top="{{scrollTop}}"
+        style="height: {{screenHeight - 200}}rpx;">
+        <view wx:if="{{showContent && !noMore}}" class="loading-container">
+            <view wx:if="{{showLoadingMore}}" class="loading">
+                <view class="dot">
+                </view>
+            </view>
+            <view wx:else class="loading-text"
+                bindtap="onLoadMore"
+                >点击加载更多</view>
+        </view>
+        <block wx:for="{{messages}}" wx:key="index">
+            <import src="../../template/chat/ChatMessageItem.wxml" />
+                <template is="chat-message-item"
+                    data="{{item, self, other, index}}" />
+        </block>
+    </scroll-view>
+</view>

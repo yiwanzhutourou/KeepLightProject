@@ -6,12 +6,10 @@
                 <view class="detail-container">
                     <text class="user-nickname">{{item.nickname}}的书房</text>
                     <view class="search-address-container">
-                        <image class="location_icon"
-                            src="../../resources/img/icon_location_small.png" />
                         <view wx:if="{{item.address.name}}" class="distance-text">
                             {{item.address.name}}
                         </view>
-                        <view wx:elif="{{item.address.detail}}" class="distance-text">
+                        <view wx:elif="{{item.address.detail}}" class="distance-text2">
                             {{item.address.detail}}
                         </view>
                         <view wx:else class="distance-text">
@@ -23,17 +21,6 @@
                     </view>
                 </view>
             </view>
-            <view class="action-container" wx:if="{{showBorrowButton}}">
-                <form bindsubmit="onBorrowBook"
-                      data-user="{{item.id}}"
-                      data-index="{{index}}"
-                      report-submit="true">
-                    <button class="borrow-book-button"
-                            formType="submit"
-                            hover-class="borrow-book-button-hover">借阅</button>
-                </form>
-            </view>
         </view>
-        <view class="item-divider-white" />
     </view>
 </template>

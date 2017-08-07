@@ -46,6 +46,12 @@ Page({
     }
   },
 
+  onAboutUsTap: (e) => {
+      wx.navigateTo({
+        url: '../index/landing',
+      })
+  },
+
   onShareAppMessage: () => {
     return {
       title: '有读书房',

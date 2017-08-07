@@ -1,0 +1,102 @@
+@import "../../template/user/SettingItem.wxss";
+@import "../../template/user/SettingItemWithIcon.wxss";
+
+.detail-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-info-container {
+    width: 100%;
+    height: 200rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+}
+
+.user-avatar {
+    width: 140rpx;
+    height: 140rpx;
+    border-radius: 50%;
+    border: 2rpx solid #eee;
+    margin-left: 30rpx;
+}
+
+.user-container-arrow {
+    width: 10rpx;
+    margin-right: 30rpx;
+}
+
+.user-text-container {
+    width: 530rpx;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20rpx;
+}
+
+.user-nickname {
+    font-size: 40rpx;
+    color: #333;
+}
+
+.show-my-room {
+    font-size: 24rpx;
+    color: #999;
+    margin-top: 10rpx;
+}
+
+.follow-container {
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #fff;
+}
+
+.follow-sub-container {
+    width: 50%;
+    height: 100rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1rpx solid #eee;
+}
+
+.follow-sub-container2 {
+    width: 50%;
+    height: 100rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.follow-number-text {
+    font-size: 34rpx;
+    color: #333;
+}
+
+.follow-content-text {
+    font-size: 20rpx;
+    color: #666;
+}
+
+.thick-divider {
+    height: 40rpx;
+    width: 100%;
+    background: #fafafa;
+}

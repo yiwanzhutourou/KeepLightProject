@@ -1,0 +1,94 @@
+<template name="chat-message-item">
+    <view class="common-container">
+        <view wx:if="{{item.timeString}}" class="chat-time-container">
+            <view class="chat-time">
+                {{item.timeString}}
+            </view>
+        </view>
+        <view wx:if="{{item.type === 'message' && item.to === self.id}}"
+            class="left-message-container">
+            <image class="left-avatar" src="{{other.avatar}}" />
+            <view class="left-message-wrapper">
+                <view class="left-message">
+                    {{item.content}}
+                </view>
+            </view>
+        </view>
+        <view wx:elif="{{item.type === 'message' && item.from === self.id}}"
+            class="right-message-container">
+            <view wx:if="{{item.showError}}"
+                class="right-message-error-container"
+                data-index="{{index}}"
+                bindtap="onErrorMsgTap">
+                <view class="right-message-wrapper">
+                    <view class="right-message-error">
+                        {{item.content}}
+                    </view>
+                </view>
+                <view class="chat-error-hint">
+                    <text>发送失败，点击重试</text>
+                </view>
+            </view>
+            <view wx:else class="right-message-wrapper">
+                <view wx:if="{{item.showLoading}}"
+                    class="chat-loading-container">
+                    <view class="chat-loading">
+                        <view class="chat-dot" />
+                    </view>
+                </view>
+                <view wx:else class="right-message">
+                    {{item.content}}
+                </view>
+            </view>
+            <image class="right-avatar" src="{{self.avatar}}" />
+        </view>
+        <view wx:elif="{{item.type === 'request' && item.from === self.id}}"
+            class="self-request-container">
+            <view class="self-request-wrapper"
+                data-isbn="{{item.extra.isbn}}"
+                bindtap="onRequestTap">
+                <view class="request-detail-container">
+                    <text class="request-title">你想要借阅{{other.nickname}}的</text>
+                    <text class="request-detail">《{{item.extra.title}}》</text>
+                    <text class="request-date">{{item.extra.date}}</text>
+                </view>
+                <image class="book-cover" mode="aspectFit" src="{{item.extra.cover}}" />
+            </view>
+        </view>
+        <view wx:elif="{{item.type === 'request' && item.to === self.id}}"
+            class="other-request-container">
+            <view class="other-request-wrapper"
+                data-isbn="{{item.extra.isbn}}"
+                bindtap="onRequestTap">
+                <image class="other-book-cover" mode="aspectFit" src="{{item.extra.cover}}" />
+                <view class="other-request-detail-container">
+                    <text class="other-request-title">{{other.nickname}}想要借阅你的</text>
+                    <text class="other-request-detail">《{{item.extra.title}}》</text>
+                    <text class="other-request-date">{{item.extra.date}}</text>
+                </view>
+            </view>
+        </view>
+        <view wx:if="{{item.type === 'contact' && item.from === self.id}}"
+            class="self-contact-container">
+            <view class="self-contact-detail-container">
+                <view class="contact-title">
+                    你向{{other.nickname}}发送了{{item.extra.name}}
+                </view>
+                <view class="contact-detail">{{item.extra.contact}}</view>
+            </view>
+        </view>
+        <view wx:if="{{item.type === 'contact' && item.to === self.id}}"
+            class="other-contact-container"
+            bindtap="onCopyContact"
+            data-name="{{item.extra.name}}"
+            data-contact="{{item.extra.contact}}">
+            <view class="other-contact-detail-container">
+                <view class="contact-title">
+                    {{other.nickname}}向你发送了{{item.extra.name}}
+                </view>
+                <view class="contact-detail">{{item.extra.contact}}</view>
+                <view class="contact-extra">点击复制</view>
+            </view>
+        </view>
+    </view>
+</template>

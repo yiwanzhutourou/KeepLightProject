@@ -1,9 +1,10 @@
 import { Book, GuideData, HomepageData } from '../../api/interfaces'
 import { addAddress, borrowBook, checkLoginFirstLaunch, getBookList, getGuideData, getHomepageData, getMyHomepageData, getUserInfo, removeBook, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 import { setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
+import { getAddressDisplayText } from '../../utils/addrUtils'
 import { verifyReg } from '../../utils/reg'
 
 let homepage
@@ -33,11 +34,16 @@ Page({
     isHomePage: true, // always true
     // 我的书房页面，这两个参数一直是true
     isCurrentUser: true,
-    isMyPage: true, // always true
+    isMyPage: false, // 不显示删除按钮
 
     homepageData: {},
+    addressText: '',
+    followed: false,
+    followerNumber: 0,
+    followingNumber: 0,
     bookList: [],
-    showEmpty: false,
+    showContent: false,
+    showNetworkError: false,
 
     showBindMobile: false,
     showGuide: false,
@@ -71,6 +77,7 @@ Page({
           welcomeText = userInfo.nickName + '，' + welcomeText
         }
         homepage.setData({
+          showContent: true,
           showBindMobile: true,
           showGuide: false,
           userInfo: userInfo,
@@ -98,6 +105,7 @@ Page({
                   welcomeText = userInfo.nickName + '，' + welcomeText
                 }
                 homepage.setData({
+                  showContent: true,
                   showBindMobile: false,
                   showGuide: true,
                   guideData: result,
@@ -108,7 +116,10 @@ Page({
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
-              showErrDialog('加载失败，请检查你的网络')
+              homepage.setData({
+                showNetworkError: true,
+                showContent: false,
+              })
             }
           })
       } else {
@@ -128,7 +139,12 @@ Page({
           userIntro: result.info,
         },
         bookList: books,
-        showEmpty: books.length == 0,
+        showContent: true,
+        showNetworkError: false,
+        addressText: getAddressDisplayText(result.address),
+        followed: result.followed,
+        followerNumber: result.followerCount,
+        followingNumber: result.followingCount,
         showBindMobile: false,
         showGuide: false,
       })
@@ -136,18 +152,18 @@ Page({
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
-        showErrDialog('无法加载，请检查你的网络')
+        homepage.setData({
+          showNetworkError: true,
+          showContent: false,
+        })
       }
     })
   },
 
   onBookItemTap: (e) => {
-    let book: Book = e.currentTarget.dataset.book
-    let userId = homepage.data.userId
+    let isbn = e.currentTarget.dataset.isbn
     wx.navigateTo({
-        url: '../book/book?isbn=' + book.isbn
-                + '&showBorrowBook=' + !homepage.data.isCurrentUser
-                + '&belongTo=' + userId,
+        url: '../book/book?isbn=' + isbn,
     })
   },
 
@@ -181,12 +197,10 @@ Page({
             })
             homepage.setData({
               bookList: bookList,
-              showEmpty: bookList.length == 0,
             })
             if (homepage.data.isCurrentUser) {
               updateBookStatus(isbn, false)
             }
-            showToast('删除成功')
           }
         }, (failure) => {
           hideLoading()
@@ -239,7 +253,10 @@ Page({
       }, (failure) => {
           hideLoading()
           if (!failure.data) {
-            showErrDialog('无法获取数据，请检查你的网络状态')
+            homepage.setData({
+              showNetworkError: true,
+              showContent: false,
+            })
           }
       })
   },

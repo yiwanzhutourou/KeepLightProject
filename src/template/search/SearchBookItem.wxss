@@ -1,13 +1,12 @@
 @import "SearchUserItem.wxss";
 
 .book-container {
+    width: 100%;
     height: 180rpx;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
-    padding-left: 25rpx;
-    padding-right: 25rpx;
     padding-top: 5rpx;
     padding-bottom: 5rpx;
 }
@@ -24,6 +23,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-left: 25rpx;
 }
 
 .book-title {
@@ -60,6 +60,7 @@
 .show-users-button {
     font-size: 25rpx;
     color: #f8b62d;
+    margin-right: 25rpx;
 }
 
 .show-users-button-hover {

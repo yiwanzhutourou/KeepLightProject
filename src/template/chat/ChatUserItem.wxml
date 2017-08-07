@@ -1,0 +1,17 @@
+<template name="chat-user-item">
+    <view class="common-container">
+        <view class="chat-user-container" data-user="{{item.user.id}}" bindtap="onChatItemTap">
+            <image class="user-avatar" src="{{item.user.avatar}}" />
+            <view class="chat-info-container">
+                <view class="chat-info-first-line">
+                    <text class="chat-user-nickname">{{item.user.nickname}}</text>
+                    <text class="chat-time">{{item.timeString}}</text>
+                </view>
+                <view class="chat-info-second-line">
+                    <text class="chat-message">{{item.message}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

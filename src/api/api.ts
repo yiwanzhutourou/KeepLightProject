@@ -14,10 +14,11 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { GuideData, LoginData } from './interfaces'
+import { ChatData, ChatListItem, GuideData, LoginData, MinePageData, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+// export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+export const DEFAULT_BASE_URL = 'http://127.0.0.1/api/'
 export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
 
 const URL_KEY = 'url_key'
@@ -269,7 +270,21 @@ export const getOtherUserIntro = (userId: string, success: (info: string) => voi
 export const getUserContact = (success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getUserContact')
-        post(url, [], success, failure)
+        get(url, success, failure)
+    }, failure, false/* 不进行登录行为 */)
+}
+
+export const getSettingsData = (success: (data: SettingsData) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getSettingsData')
+        get(url, success, failure)
+    }, failure, false/* 不进行登录行为 */)
+}
+
+export const getMinePageData = (success: (data: MinePageData) => void, failure?: (res?: any) => void) => {  
+    checkLogin(() => {
+        let url = getUrl('User.getMinePageData')
+        get(url, success, failure)
     }, failure, false/* 不进行登录行为 */)
 }
 
@@ -394,6 +409,29 @@ export const borrowBook = (toUser: string, isbn: string, formId: string, success
     }, failure)
 }
 
+export const borrowBookNew = (toUser: string, isbn: string, message: string, success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.borrowBook')
+        post(url, { 'toUser': toUser, 'isbn': isbn, 'message': message }, success, failure)
+    }, failure)
+}
+
+export const follow = (toUser: string, success: (result: string) => void,
+        failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.follow')
+        post(url, { 'toUser': toUser }, success, failure)
+    }, failure)
+}
+
+export const unfollow = (toUser: string, success: (result: string) => void,
+        failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.unfollow')
+        post(url, { 'toUser': toUser }, success, failure)
+    }, failure)
+}
+
 export const updateRequest = (requestId: number, status: number, success: (result: string) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.updateBorrowRequest')
@@ -408,6 +446,20 @@ export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void
     }, failure)
 }
 
+export const getFollowings = (success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getMyFollowings')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getFollowers = (success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getMyFollowers')
+        get(url, success, failure)
+    }, failure)
+}
+
 export const getMyApprovedRequest = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getMyApprovedRequest')
@@ -418,6 +470,46 @@ export const getMyApprovedRequest = (success: (result: Array<BorrowHistory>) => 
 export const getBorrowRequest = (success: (result: Array<BorrowRequest>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getBorrowRequest')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getChatList = (success: (data: Array<ChatListItem>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.getChatList')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const startChat = (otherId: number, count: number, page: number,
+        success: (data: ChatData) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.start') + getUrlParam({
+            otherId: otherId,
+            count: count,
+            page: page,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const sendMessage = (otherId: number, message: string,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.sendMessage') + getUrlParam({
+            otherId: otherId,
+            message: message,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const sendContact = (otherId: number,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.sendContact') + getUrlParam({
+            otherId: otherId,
+        })
         get(url, success, failure)
     }, failure)
 }

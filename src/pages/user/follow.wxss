@@ -1,0 +1,5 @@
+@import "../../template/search/SearchUserItemBig.wxss";
+
+.list-container {
+    width: 100%;
+}

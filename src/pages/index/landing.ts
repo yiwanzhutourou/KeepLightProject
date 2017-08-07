@@ -26,7 +26,14 @@ Page({
 
   onConfirmTap: () => {
     wx.switchTab({
-      url: '../homepage/homepage',
+      url: '../user/mine',
     })
+  },
+
+  onShareAppMessage: () => {
+    return {
+      title: '有读书房',
+      path: 'pages/index/landing',
+    }
   },
 })

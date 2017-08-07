@@ -7,21 +7,42 @@
     position: relative;
 }
 
-.list-container {
+.title-container {
     width: 100%;
-    height: calc(100% - 450rpx);
+    height: 60rpx;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: #999;
+    font-size: 20rpx;
+    background: #fafafa;
+    padding-bottom: 10rpx;
+}
+
+.user-content-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 450rpx;
+    margin-top: 400rpx;
     z-index: 0;
+}
+
+.content-divider {
+    width: 95%;
+    height: 1rpx;
+    background: #eee;
+}
+
+.list-container {
+    width: 100%;
 }
 
 .blur {
     width: 100%;
-    filter: blur(50rpx);
-    -webkit-filter: blur(50rpx);
-    height: 450rpx;
+    /* filter: blur(10rpx);
+    -webkit-filter: blur(10rpx); */
+    height: 400rpx;
     z-index: 1;
     position: absolute;
     top: 0;
@@ -29,70 +50,91 @@
 
 .dark {
     width: 100%;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.5);
     width: 100%;
-    height: 450rpx;
+    height: 400rpx;
     z-index: 2;
     position: absolute;
     top: 0;
 }
 
-.user-info-container {
+.user-avatar-container {
     width: 100%;
-    height: 450rpx;
+    height: 400rpx;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-end;
     z-index: 3;
     position: absolute;
     top: 0;
+}
+
+.user-nick-container {
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .user-avatar {
     width: 180rpx;
     height: 180rpx;
     border-radius: 50%;
-    border: 2rpx solid #fff;
-    margin-top: 70rpx;
+    border: 3rpx solid #fff;
+    margin-bottom: 70rpx;
 }
 
 .user-text-container {
-    width: 100%;
-    height: 200rpx;
+    width: 440rpx;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    margin-left: 30rpx;
+}
+
+.user-action-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
     align-items: center;
+    margin-right: 30rpx;
 }
 
 .user-nickname {
-    font-size: 40rpx;
-    color: #fafafa;
-    font-weight: 900;
-    margin-top: 30rpx;
+    font-size: 38rpx;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.user-address {
+    font-size: 20rpx;
+    color: #999;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.user-intro-container {
+    width: 100%;
+    padding-top: 10rpx;
+    padding-bottom: 10rpx;
 }
 
 .user-intro {
     display: -webkit-box;
-    font-size: 20rpx;
-    color: #fafafa;
-    margin-top: 20rpx;
+    font-size: 25rpx;
+    color: #666;
     word-break: break-all;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
     text-overflow: ellipsis;
-    padding-left: 30rpx;
-    padding-right: 30rpx;
-}
-
-.empty_container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 700rpx;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
 }
 
 .empty_container2 {
@@ -102,4 +144,95 @@
     justify-content: flex-start;
     align-items: center;
     padding-top: 250rpx;
+}
+
+.chat-button {
+    width: 100rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26rpx;
+    color: #f8b62d;
+    background: #fff;
+    border: 2rpx solid #f8b62d;
+    padding: 6rpx;
+    border-radius: 8rpx;
+}
+
+.chat-button-hover {
+    color: #fff;
+    background: #f8b62d;
+}
+
+.follow-button {
+    width: 100rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26rpx;
+    color: #f8b62d;
+    background: #fff;
+    border: 2rpx solid #f8b62d;
+    padding: 6rpx;
+    border-radius: 8rpx;
+}
+
+.follow-button-hover {
+    color: #fff;
+    background: #f8b62d;
+}
+
+.unfollow-button {
+    width: 120rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26rpx;
+    color: #999;
+    background: #fff;
+    border: 2rpx solid #999;
+    padding: 6rpx;
+    border-radius: 8rpx;
+}
+
+.unfollow-button-hover {
+    color: #fff;
+    background: #999;
+}
+
+.follow-container {
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.follow-sub-container {
+    width: 50%;
+    height: 100rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1rpx solid #eee;
+}
+
+.follow-sub-container2 {
+    width: 50%;
+    height: 100rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.follow-number-text {
+    font-size: 34rpx;
+    color: #666;
+}
+
+.follow-content-text {
+    font-size: 20rpx;
+    color: #999;
 }

@@ -2,7 +2,7 @@
     <view class="common-container">
         <view class="search-book-container">
             <view class="book-container">
-                <view class="book-left-container" data-book="{{item.book}}" bindtap="onBookItemTap">
+                <view class="book-left-container" data-isbn="{{item.book.isbn}}" bindtap="onBookItemTap">
                     <image class="book-pic"
                         src="{{item.book.cover}}"
                         mode="aspectFit" />
@@ -22,7 +22,7 @@
                 <block wx:for="{{item.users}}" wx:key="id">
                     <import src="SearchUserItem.wxml" />
                     <template is="search-user-item"
-                        data="{{item, index, showBorrowButton}}" />
+                        data="{{item, index}}" />
                 </block>
             </view>
         </view>

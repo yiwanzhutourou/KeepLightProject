@@ -1,7 +1,7 @@
 import { Book, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
 import { addBook, getBookInfo, getBookList, searchBooks } from '../../api/api'
 import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
-import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 const INITIAL_PAGE = 0
 
@@ -51,12 +51,10 @@ Page({
   },
 
   onBookItemTap: (e) => {
-    let book: Book = e.currentTarget.dataset.book
+    let isbn = e.currentTarget.dataset.isbn
 
     wx.navigateTo({
-        url: '../book/book?isbn=' + book.isbn
-                  + '&showAddBook=' + true
-                  + '&isAdded=' + book.added,
+        url: '../book/book?isbn=' + isbn,
     })
   },
 
@@ -85,7 +83,6 @@ Page({
           bookList: bookList,
         })
         updateBookStatus(isbn, true)
-        showToast('添加成功')
       }
     }, (failure) => {
       hideLoading()

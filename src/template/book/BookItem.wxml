@@ -3,7 +3,7 @@
         <view class="book-container">
             <view class="content-container">
                 <image class="book-pic" src="{{item.cover}}" mode="aspectFit" />
-                <view class="book-detail-container" data-book="{{item}}" bindtap="onBookItemTap">
+                <view class="book-detail-container" data-isbn="{{item.isbn}}" bindtap="onBookItemTap">
                     <text class="book-title">{{item.title}}</text>
                     <text class="book-author">作者：{{item.author}}</text>
                     <text class="book-publisher">出版社：{{item.publisher}}</text>
@@ -22,14 +22,11 @@
                 data-isbn="{{item.isbn}}"
                 data-title="{{item.title}}"
                 bindtap="onRemoveBook">删除</button>
-            <form wx:elif="{{isHomePage && !isCurrentUser}}"
-                  data-isbn="{{item.isbn}}"
-                  data-title="{{item.title}}"
-                  bindsubmit="onBorrowBook" report-submit="true">
-                  <button class="action-button"
-                        formType="submit"
-                        hover-class="action-button-hover">借阅</button>
-            </form>
+            <button wx:elif="{{isHomePage && !isCurrentUser}}"
+                class="action-button"
+                hover-class="action-button-hover"
+                data-book="{{item}}"
+                bindtap="onBorrowBook">借阅</button>
         </view>
         <view class="item-divider" />
     </view>

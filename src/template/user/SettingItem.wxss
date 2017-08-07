@@ -28,18 +28,31 @@
 .title {
     font-size: 30rpx;
     color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .sub-title {
     font-size: 25rpx;
     color: #666;
     margin-top: 10rpx;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .sub-info {
     font-size: 25rpx;
     color: #666;
     margin-right: 20rpx;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .unread-text {
