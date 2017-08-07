@@ -1,0 +1,11 @@
+.working-text {
+    color: #535354;
+    font-size: 40rpx;
+    margin-top: 30rpx;
+}
+
+.working-image {
+    width: 256rpx;
+    height: 256rpx;
+    margin-top: 300rpx;
+}

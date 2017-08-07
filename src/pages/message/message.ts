@@ -59,7 +59,7 @@ Page({
       switch (id) {
           case SETTING_BORROW_REQUEST:
             wx.navigateTo({
-                url: '../user/request',
+                url: '../message/request',
             })
             break
           case SETTING_BORROW_HISTORY:

@@ -24,7 +24,8 @@
     "pages/message/request",
     "pages/search/search",
     "pages/chat/chat",
-    "pages/chat/list"
+    "pages/chat/list",
+    "pages/discover/discover"
   ],
   "window": {
     "backgroundTextStyle":"light",
@@ -44,7 +45,7 @@
       }, {  
         "selectedIconPath": "resources/img/icon_homepage_selected.png",  
         "iconPath": "resources/img/icon_homepage.png",  
-        "pagePath": "pages/index/landing",  
+        "pagePath": "pages/discover/discover",  
         "text": "发现"  
       }, {  
         "selectedIconPath": "resources/img/icon_add_selected.png",  
