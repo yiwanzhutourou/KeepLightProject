@@ -25,6 +25,7 @@
     "pages/search/search",
     "pages/chat/chat",
     "pages/chat/list",
+    "pages/chat/borrow",
     "pages/discover/discover"
   ],
   "window": {

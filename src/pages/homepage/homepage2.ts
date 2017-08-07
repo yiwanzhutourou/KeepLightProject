@@ -1,9 +1,10 @@
 import { Book, HomepageData } from '../../api/interfaces'
 import { addAddress, borrowBook, follow, getBookList, getHomepageData, removeBook, unfollow } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
-import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
+import { replaceBookList, updateBookStatus, updateBorrowData } from '../../utils/bookCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
+import { parseAuthor } from '../../utils/bookUtils'
 
 let homepage2
 
@@ -51,7 +52,7 @@ Page({
       let books = result.books
       homepage2.setData({
         homepageData: {
-          nickName: result.nickname + '的书房',
+          nickName: result.nickname,
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
@@ -78,36 +79,34 @@ Page({
   },
 
   onBorrowBook: (e) => {
-    showConfirmDialog('借阅信息确认', '借阅书名：《' + e.currentTarget.dataset.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
-      if (confirm) {
-        let formId = e.detail.formId
-        let isbn = e.currentTarget.dataset.isbn
-        if (formId && isbn) {
-          showLoading('正在发送借书请求')
-          borrowBook(homepage2.data.userId, isbn, formId,
-            () => {
-              hideLoading()
-              showDialog('借书请求已发送，请等待书的主人回复~')
-            }, (failure) => {
-              hideLoading()
-              if (!failure.data) {
-                if (!failure.data) {
-                  showErrDialog('无法借阅，请检查你的网络')
-                }
-              }
-            })
-        }
-      }
-    })
+    let book = e.currentTarget.dataset.book
+    let userId = homepage2.data.userId
+    let user = homepage2.data.homepageData
+    if (book && userId && user) {
+      updateBorrowData({
+        user: {
+          id: userId,
+          nickname: user.nickName,
+          avatar: user.avatarUrl,
+        },
+        book: {
+          isbn: book.isbn,
+          title: book.title,
+          author: parseAuthor(book.author, ' '),
+          cover: book.cover,
+          publisher: book.publisher,
+        },
+      })
+      wx.navigateTo({
+        url: '../chat/borrow',
+      })
+    }
   },
 
   onBookItemTap: (e) => {
-    let book: Book = e.currentTarget.dataset.book
-    let userId = homepage2.data.userId
+    let isbn = e.currentTarget.dataset.isbn
     wx.navigateTo({
-        url: '../book/book?isbn=' + book.isbn
-                + '&showBorrowBook=' + !homepage2.data.isCurrentUser
-                + '&belongTo=' + userId,
+        url: '../book/book?isbn=' + isbn,
     })
   },
 

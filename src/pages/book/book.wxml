@@ -19,26 +19,6 @@
                 <text wx:if="{{bookDetail.series}}" class="subinfo-text">{{bookDetail.series}}</text>
                 <text wx:if="{{bookDetail.isbn}}" class="subinfo-text">{{bookDetail.isbn}}</text>
             </view>
-            <view wx:if="{{bookDetail !== null}}" class="button-container">
-                <form wx:if="{{showBorrowBook}}"
-                    bindsubmit="onBorrowBook"
-                    report-submit="true">
-                    <button class="borrow-book-button"
-                        formType="submit"
-                        hover-class="borrow-book-button-hover">借阅</button>
-                </form>
-                <button wx:if="{{showAddBook && !bookAdded}}"
-                    class="borrow-book-button"
-                    hover-class="borrow-book-button-hover"
-                    bindtap="onAddBook">
-                    添加
-                </button>
-                <button wx:if="{{showAddBook && bookAdded}}"
-                    class="added-button"
-                    disabled>
-                    已添加
-                </button>
-            </view>
         </view>
         <view wx:if="{{bookDetail.summary}}" class="detail-container">
             <text class="detail-title">内容介绍</text>

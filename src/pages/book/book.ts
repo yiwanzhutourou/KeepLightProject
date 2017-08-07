@@ -1,20 +1,13 @@
-import { addBook, borrowBook, getBookDetails } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { hideLoading, showErrDialog, showLoading } from '../../utils/utils'
 
-import { Book } from '../../api/interfaces'
+import { getBookDetails } from '../../api/api'
 import { parseAuthor } from '../../utils/bookUtils'
-import { updateBookStatus } from '../../utils/bookCache'
 
 let bookPage
 
 Page({
   data: {
       bookDetail: null,
-      showAddBook: false,
-      showBorrowBook: false,
-      belongTo: '',
-      bookAdded: false,
-      bookIsbn: '',
   },
 
   onLoad: function(option: any): void {
@@ -25,21 +18,6 @@ Page({
             delta: 1,
         })
         return
-    }
-    bookPage.setData({
-        bookIsbn: option.isbn,
-    })
-    if (option.showBorrowBook === 'true'
-            && option.belongTo !== 'undefined') {
-        bookPage.setData({
-            showBorrowBook: true,
-            belongTo: option.belongTo,
-        })
-    } else if (option.showAddBook === 'true') {
-        bookPage.setData({
-            showAddBook: true,
-            bookAdded: option.isAdded === 'true',
-        })
     }
 
     showLoading('正在加载...')
@@ -74,55 +52,6 @@ Page({
         hideLoading()
         if (!failure.data) {
             showErrDialog('无法加载图书详情，请检查你的网络状态')
-        }
-    })
-  },
-
-  onBorrowBook: (e) => {
-      let userId = bookPage.data.belongTo
-      if (userId) {
-        showConfirmDialog('借阅信息确认', '借阅书名：《' + bookPage.data.bookDetail.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
-            if (confirm) {
-                let formId = e.detail.formId
-                let isbn = bookPage.data.bookIsbn
-                if (isbn) {
-                    showLoading('正在发送借书请求')
-                    borrowBook(userId, isbn, formId,
-                        () => {
-                        hideLoading()
-                        showDialog('借书请求已发送，请等待书的主人回复~')
-                    }, (failure) => {
-                        hideLoading()
-                        if (!failure.data) {
-                            showErrDialog('无法借阅，请检查你的网络状态')
-                        }
-                    })
-                }
-            }
-        })
-      }
-  },
-
-  onAddBook: (e) => {
-    let bookIsbn = bookPage.data.bookIsbn
-    if (!bookIsbn || bookIsbn === '') {
-        return
-    }
-    showLoading('正在添加')
-    addBook(bookIsbn, (isbn: string) => {
-        hideLoading()
-        let added = false
-        if (isbn === bookPage.data.bookIsbn) {
-            added = true
-        }
-        bookPage.setData({
-            bookAdded: added,
-        })
-        updateBookStatus(isbn, true)
-    }, (failure) => {
-        hideLoading()
-        if (!failure.data) {
-            showErrDialog('无法添加图书，请检查你的网络状态')
         }
     })
   },

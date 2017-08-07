@@ -4,7 +4,6 @@ import { getMapDetails } from '../../api/api'
 Page({
   data: {
     bookshelves: [],
-    showBorrowButton: false,
   },
 
   onLoad: function(option): void {

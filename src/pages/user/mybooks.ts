@@ -58,12 +58,9 @@ Page({
   },
 
   onBookItemTap: (e) => {
-    let book: Book = e.currentTarget.dataset.book
-    let userId = mybooksPage.data.userId
+    let isbn = e.currentTarget.dataset.isbn
     wx.navigateTo({
-        url: '../book/book?isbn=' + book.isbn
-                + '&showBorrowBook=' + !mybooksPage.data.isCurrentUser
-                + '&belongTo=' + userId,
+        url: '../book/book?isbn=' + isbn,
     })
   },
 

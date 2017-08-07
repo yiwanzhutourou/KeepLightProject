@@ -51,12 +51,10 @@ Page({
   },
 
   onBookItemTap: (e) => {
-    let book: Book = e.currentTarget.dataset.book
+    let isbn = e.currentTarget.dataset.isbn
 
     wx.navigateTo({
-        url: '../book/book?isbn=' + book.isbn
-                  + '&showAddBook=' + true
-                  + '&isAdded=' + book.added,
+        url: '../book/book?isbn=' + isbn,
     })
   },
 

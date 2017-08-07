@@ -2,6 +2,16 @@ import { Book } from '../api/interfaces'
 
 const BOOK_LIST_KEY = 'user_book_list_cache'
 
+let borrowData: any
+
+export const getBorrowData = () => {
+    return borrowData
+}
+
+export const updateBorrowData = (data) => {
+    borrowData = data
+}
+
 let bookList = new Array<string>()
 
 export const replaceBookList = (list: Array<Book>) => {

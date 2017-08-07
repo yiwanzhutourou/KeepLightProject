@@ -28,7 +28,6 @@ Page({
     noMore2: false,
     latitude: 0,
     longitude: 0,
-    showBorrowButton: true,
     locationAquried: false,
   },
 
@@ -111,12 +110,9 @@ Page({
   },
 
   onBookItemTap: (e) => {
-    let book: Book = e.currentTarget.dataset.book
-
+    let isbn = e.currentTarget.dataset.isbn
     wx.navigateTo({
-        url: '../book/book?isbn=' + book.isbn
-                  + '&showAddBook=' + true
-                  + '&isAdded=' + book.added,
+        url: '../book/book?isbn=' + isbn,
     })
   },
 
@@ -369,34 +365,6 @@ Page({
         searchResultList: list,
       })
     }
-  },
-
-  onBorrowBook: (e) => {
-    let index = Number(e.currentTarget.dataset.index)
-    let list = searchPage.data.searchResultList
-    if (index < 0 || index >= list.length) {
-      return
-    }
-    let book: Book = list[index].book
-    showConfirmDialog('借阅信息确认', '借阅书名：《' + book.title + '》\n将会向书房主人发送一条借阅请求，确认继续？', (confirm: boolean) => {
-      if (confirm) {
-        let formId = e.detail.formId
-        let userId = e.currentTarget.dataset.user
-        if (formId && userId && book.isbn) {
-          showLoading('正在发送借书请求')
-          borrowBook(userId, book.isbn, formId,
-            () => {
-              hideLoading()
-              showDialog('借书请求已发送，请等待书的主人回复~')
-            }, (failure) => {
-              hideLoading()
-              if (!failure.data) {
-                showErrDialog('网络错误，请检查你的网络')
-              }
-            })
-        }
-      }
-    })
   },
 
   onUserItemTap: (e) => {

@@ -409,6 +409,13 @@ export const borrowBook = (toUser: string, isbn: string, formId: string, success
     }, failure)
 }
 
+export const borrowBookNew = (toUser: string, isbn: string, message: string, success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.borrowBook')
+        post(url, { 'toUser': toUser, 'isbn': isbn, 'message': message }, success, failure)
+    }, failure)
+}
+
 export const follow = (toUser: string, success: (result: string) => void,
         failure?: (res?: any) => void) => {
     checkLogin(() => {
