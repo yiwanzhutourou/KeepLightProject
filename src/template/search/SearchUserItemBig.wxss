@@ -55,15 +55,6 @@
     text-overflow: ellipsis;
 }
 
-.distance-text-big2 {
-    font-size: 20rpx;
-    color: #8a8a8a;
-    padding-left: 8rpx;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
 .distance-number-text-big {
     font-size: 20rpx;
     color: #8a8a8a;

@@ -2,11 +2,19 @@ import { getFollowers, getFollowings } from '../../api/api'
 import { hideLoading, showDialog, showLoading } from '../../utils/utils'
 
 import { SearchUser } from '../../api/interfaces'
+import { getAddressDisplayText } from '../../utils/addrUtils'
 
 let followPage
 
 const IS_FOLLOWINGS = 0
 const IS_FOLLOWERS = 1
+
+let formatList = (list: Array<SearchUser>) => {
+    list.forEach((item: SearchUser) => {
+        item.addressText = getAddressDisplayText(item.address as any)
+    })
+    return list
+}
 
 Page({
   data: {
@@ -52,7 +60,7 @@ Page({
       getFollowings((list: Array<SearchUser>) => {
         hideLoading()
         followPage.setData({
-          followList: list,
+          followList: formatList(list),
           showList: list.length > 0,
           showEmpty: list.length == 0,
         })
@@ -69,7 +77,7 @@ Page({
       getFollowers((list: Array<SearchUser>) => {
         hideLoading()
         followPage.setData({
-          followList: list,
+          followList: formatList(list),
           showList: list.length > 0,
           showEmpty: list.length == 0,
         })

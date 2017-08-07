@@ -122,6 +122,7 @@ export type SearchUser = {
     avatar: string,
     address: SearchAddress,
     bookCount: number,
+    addressText?: string,
 }
 
 export type CityInfo = {

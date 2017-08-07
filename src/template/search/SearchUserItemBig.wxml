@@ -7,10 +7,13 @@
                     <view class="detail-container-big">
                         <text class="user-nickname-big">{{item.nickname}}的书房</text>
                         <view class="search-address-container-big">
-                            <view wx:if="{{item.address.name}}" class="distance-text-big">
+                            <view wx:if="{{item.addressText}}" class="distance-text-big">
+                                {{item.addressText}}
+                            </view>
+                            <view wx:elif="{{item.address.name}}" class="distance-text-big">
                                 {{item.address.name}}
                             </view>
-                            <view wx:elif="{{item.address.detail}}" class="distance-text-big2">
+                            <view wx:elif="{{item.address.detail}}" class="distance-text-big">
                                 {{item.address.detail}}
                             </view>
                             <view wx:else class="distance-text-big">
