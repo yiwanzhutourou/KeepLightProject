@@ -79,18 +79,19 @@ export const timestamp2Text = (timestamp: number) => {
 
 export const timestamp2TextComplex = (timestamp: number) => {
     let minute = 1000 * 60
-    let hour = minute * 60
-    let day = hour * 24
 
-    let now = new Date().getTime()
-    let diffValue = now - timestamp * 1000
+    let now = new Date()
+    let diffValue = now.getTime() - timestamp * 1000
     if (diffValue < 0) {
         return '来自未来'
     }
+    
     // 2天以上返回日期
-    if ((diffValue / (2 * day)) >= 1) {
+    let today = now.getDay()
+    let lastDay = getDay(timestamp)
+    if (today - lastDay > 1) {
         return parseTimeToDate(timestamp) + ' ' + parseTimeToHour(timestamp)
-    } else if ((diffValue / day) >= 1) {
+    } else if (today - lastDay > 0) {
         return '昨天 ' + parseTimeToHour(timestamp)
     } else if ((diffValue / minute) < 1) {
         return '刚刚'
@@ -121,4 +122,9 @@ export const parseTimeToDate = (timestamp: number) => {
     let month = date.getMonth() + 1
     let day = date.getDate()
     return year + '/' + month + '/' + day
+}
+
+export const getDay = (timestamp: number) => {
+    let date = new Date(timestamp * 1000)
+    return date.getDay()
 }

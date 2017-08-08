@@ -23,11 +23,6 @@
                 placeholder="给书房主人留个言吧"
                 placeholder-class="message-textarea-placeholder" />
             <view class="button-container">
-                <button class="cancel-button"
-                    hover-class="cancel-button-hover"
-                    bindtap="onCancel">
-                    取消
-                </button>
                 <button class="borrow-book-button"
                     hover-class="borrow-book-button-hover"
                     formType="submit">

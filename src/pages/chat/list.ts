@@ -84,6 +84,9 @@ Page({
 
   formatList: (list: Array<ChatListItem>) => {
     list.forEach((item: ChatListItem) => {
+        if (item.message) {
+            item.message = item.message.replace(/\n/g, ' ')
+        }
         item.timeString = timestamp2Text(item.timeStamp)
     })
     return list

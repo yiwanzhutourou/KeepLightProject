@@ -34,7 +34,7 @@
     padding-right: 25rpx;
     padding-top: 5rpx;
     padding-bottom: 5rpx;
-    background: #eee;
+    background: #fafafa;
     border-radius: 16rpx;
 }
 
@@ -92,7 +92,7 @@
 }
 
 .message-textarea {
-    width: 630rpx;
+    width: 598rpx;
     height: 200rpx;
     padding: 30rpx;
     font-size: 30rpx;
@@ -110,24 +110,13 @@
 .button-container {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    margin-top: 40rpx;
-}
-
-.cancel-button {
-    width: 300rpx;
-    background: #fff;
-    color: #666;
-}
-
-.cancel-button-hover {
-    background: #fafafa;
+    margin-top: 80rpx;
 }
 
 .borrow-book-button {
-    width: 300rpx;
+    width: 660rpx;
     background-color: #f8b62d;
     color: #fff;
 }

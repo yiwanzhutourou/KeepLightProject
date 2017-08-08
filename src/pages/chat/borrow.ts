@@ -56,10 +56,4 @@ Page({
         })
     }
   },
-
-  onCancel: (e) => {
-      wx.navigateBack({
-          delta: 1,
-      })
-  },
 })
