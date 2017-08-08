@@ -164,6 +164,7 @@ export type ChatListItem = {
     user: User,
     message: string,
     timeStamp: number,
+    unreadCount: number,
     timeString?: string,
 }
 

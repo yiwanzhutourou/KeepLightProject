@@ -1,7 +1,11 @@
 <template name="chat-user-item">
     <view class="common-container">
         <view class="chat-user-container" data-user="{{item.user.id}}" bindtap="onChatItemTap">
-            <image class="user-avatar" src="{{item.user.avatar}}" />
+            <view class="avatar-container">
+                <view wx:if="{{item.unreadCount > 0}}"
+                    class="unread-count">{{item.unreadCount > 9 ? '9+' : item.unreadCount}}</view>
+                <image class="user-avatar" src="{{item.user.avatar}}" />
+            </view>
             <view class="chat-info-container">
                 <view class="chat-info-first-line">
                     <text class="chat-user-nickname">{{item.user.nickname}}</text>
