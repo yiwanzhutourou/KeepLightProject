@@ -37,6 +37,16 @@
                 <template is="setting-item-with-icon"
                     data="{{settingItem}}" />
             </block>
+            <view class="contact-container">
+                <image
+                    src="../../resources/img/icon_contact_us.png"
+                    class="contact-icon" />
+                <button class="contact-button" open-type="contact">联系客服</button>
+                <image class="contact-arrow"
+                   mode="widthFix"
+                   src="../../resources/img/arrow.png" />
+            </view>
+            <view class="item-divider" />
         </view>
     </view>
 </view>
