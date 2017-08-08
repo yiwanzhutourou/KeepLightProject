@@ -2,6 +2,8 @@ import { ChatData, Message } from '../../api/interfaces'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast, timestamp2TextComplex } from '../../utils/utils'
 import { sendContact, sendMessage, startChat } from '../../api/api'
 
+import { clearUnread } from '../../utils/chatCache'
+
 const DEFAULT_CHAT_PAGE_COUNT = 15
 
 let chatPage
@@ -70,6 +72,7 @@ Page({
                 showContent: true,
             })
             chatPage.scrollToBottom()
+            clearUnread(options.otherId)
         }, (failure) => {
             hideLoading()
             if (!failure.data) {

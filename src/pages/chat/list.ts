@@ -1,3 +1,4 @@
+import { getChatListCache, setChatListCache } from '../../utils/chatCache'
 import { hideLoading, showErrDialog, showLoading, timestamp2Text } from '../../utils/utils'
 
 import { ChatListItem } from '../../api/interfaces'
@@ -21,10 +22,21 @@ Page({
   },
 
   onShow: function (): void {
+    // 缓存里读一读数据
+    let list = getChatListCache()
+    if (list) {
+        chatListPage.setData({
+            chatList: chatListPage.formatList(list),
+            showList: list.length > 0,
+            showEmpty: list.length == 0,
+        })
+    }
+
+    // 五分钟自动拉一次数据
     let now = new Date().getTime()
     if (lastLoadTime === -1 || (now - lastLoadTime) > REFRESH_INTERVAL) {
-      chatListPage.loadData()
-      lastLoadTime = now
+        chatListPage.loadData()
+        lastLoadTime = now
     }
   },
 
@@ -37,6 +49,7 @@ Page({
         showList: list.length > 0,
         showEmpty: list.length == 0,
       })
+      setChatListCache(list)
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
@@ -60,6 +73,7 @@ Page({
         showList: list.length > 0,
         showEmpty: list.length == 0,
       })
+      setChatListCache(list)
     }, (failure) => {
       wx.stopPullDownRefresh()
       if (!failure.data) {
