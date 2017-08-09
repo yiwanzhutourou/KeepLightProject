@@ -160,18 +160,25 @@ export type User = {
     avatar: string,
 }
 
+export type ChatListData = {
+    messages: Array<ChatListItem>,
+    timestamp: number,
+}
+
 export type ChatListItem = {
     user: User,
     message: string,
     timeStamp: number,
     unreadCount: number,
     timeString?: string,
+    localTimestamp?: number,
 }
 
 export type ChatData = {
     self: User,
     other: User,
     messages: Array<Message>,
+    timestamp: number,
 }
 
 export type Message = {

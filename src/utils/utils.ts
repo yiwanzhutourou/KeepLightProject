@@ -63,7 +63,7 @@ export const timestamp2Text = (timestamp: number) => {
     let now = new Date().getTime()
     let diffValue = now - timestamp * 1000
     if (diffValue < 0) {
-        return '来自未来'
+        return '刚刚'
     }
     // 2天以上返回日期
     if ((diffValue / (2 * day)) >= 1) {
@@ -83,7 +83,7 @@ export const timestamp2TextComplex = (timestamp: number) => {
     let now = new Date()
     let diffValue = now.getTime() - timestamp * 1000
     if (diffValue < 0) {
-        return '来自未来'
+        return '刚刚'
     }
     
     // 2天以上返回日期

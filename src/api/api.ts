@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ChatData, ChatListItem, GuideData, LoginData, MinePageData, SettingsData } from './interfaces'
+import { ChatData, ChatListData, GuideData, LoginData, MinePageData, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 // export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -474,7 +474,7 @@ export const getBorrowRequest = (success: (result: Array<BorrowRequest>) => void
     }, failure)
 }
 
-export const getChatList = (success: (data: Array<ChatListItem>) => void, failure?: (res?: any) => void) => {
+export const getChatList = (success: (data: ChatListData) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('Chat.getChatList')
         get(url, success, failure)
@@ -488,6 +488,17 @@ export const startChat = (otherId: number, count: number, page: number,
             otherId: otherId,
             count: count,
             page: page,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const deleteChat = (otherId: number, timestamp: number,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.delete') + getUrlParam({
+            otherId: otherId,
+            timestamp: timestamp,
         })
         get(url, success, failure)
     }, failure)

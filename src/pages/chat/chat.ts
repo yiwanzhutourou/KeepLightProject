@@ -72,7 +72,7 @@ Page({
                 showContent: true,
             })
             chatPage.scrollToBottom()
-            clearUnread(options.otherId)
+            clearUnread(options.otherId, data.timestamp)
         }, (failure) => {
             hideLoading()
             if (!failure.data) {
