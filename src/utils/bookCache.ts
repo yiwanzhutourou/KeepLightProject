@@ -3,6 +3,7 @@ import { Book } from '../api/interfaces'
 const BOOK_LIST_KEY = 'user_book_list_cache'
 
 let borrowData: any
+let postData: any
 
 export const getBorrowData = () => {
     return borrowData
@@ -10,6 +11,14 @@ export const getBorrowData = () => {
 
 export const updateBorrowData = (data) => {
     borrowData = data
+}
+
+export const getPostData = () => {
+    return postData
+}
+
+export const updatePostData = (data) => {
+    postData = data
 }
 
 let bookList = new Array<string>()

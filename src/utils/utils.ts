@@ -121,10 +121,18 @@ export const parseTimeToDate = (timestamp: number) => {
     let year = date.getFullYear()
     let month = date.getMonth() + 1
     let day = date.getDate()
-    return year + '/' + month + '/' + day
+    return year + '-' + (month < 10 ? '0' + month : month) + '-'
+        + (day < 10 ? '0' + day : day)
 }
 
 export const getDay = (timestamp: number) => {
     let date = new Date(timestamp * 1000)
     return date.getDay()
+}
+
+export const trim = (str: string): string => {
+    let result
+    result = str.replace(/(^\s+)|(\s+$)/g, '')
+    result = result.replace(/\s/g, '')
+    return result
 }

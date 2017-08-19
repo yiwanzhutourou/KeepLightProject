@@ -36,7 +36,7 @@ Page({
   onShow: function (): void {
     // 缓存里读一读数据
     let list = getChatListCache()
-    if (list) {
+    if (list && list.messages) {
         chatListPage.setData({
             chatList: chatListPage.formatList(list.messages),
             showList: list.messages.length > 0,

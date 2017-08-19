@@ -9,3 +9,7 @@
     height: 256rpx;
     margin-top: 300rpx;
 }
+
+.post-button {
+    margin-top: 100rpx;
+}

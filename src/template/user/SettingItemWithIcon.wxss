@@ -39,6 +39,7 @@
 }
 
 .sub-info {
+    display: -webkit-box;
     font-size: 25rpx;
     color: #666;
     margin-right: 20rpx;

@@ -1,0 +1,17 @@
+<template name="card-item">
+    <view class="common-container">
+        <view class="card-container" data-id="{{item.id}}" bindtap="onCardItemTap">
+            <view class="first-line-container">
+                <view class="content-container">
+                    <text class="card-title">{{item.title}}</text>
+                    <text class="card-content">{{item.content}}</text>
+                </view>
+                <image class="card-img" src="{{item.picUrl}}" />
+            </view>
+            <view wx:if="{{item.bookTitle}}" class="second-line-container">
+                <text class="book-title">《{{item.bookTitle}}》</text>
+            </view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

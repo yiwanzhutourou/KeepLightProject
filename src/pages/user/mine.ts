@@ -78,6 +78,9 @@ Page({
             })
             break
           case SETTING_MY_CARDS:
+            wx.navigateTo({
+                url: '../card/mycards',
+            })
             break
           case SETTING_BORROW_REQUEST:
             wx.navigateTo({

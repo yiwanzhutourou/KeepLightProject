@@ -1,12 +1,24 @@
-import { Book, HomepageData } from '../../api/interfaces'
+import { Book, HomepageData, MyCardItem } from '../../api/interfaces'
 import { addAddress, borrowBook, follow, getBookList, getHomepageData, removeBook, unfollow } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { replaceBookList, updateBookStatus, updateBorrowData } from '../../utils/bookCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
 import { parseAuthor } from '../../utils/bookUtils'
 
 let homepage2
+
+const formatCards = (cards: Array<MyCardItem>) => {
+  if (cards && cards.length > 0) {
+    cards.forEach((card: MyCardItem) => {
+       if (card.content) {
+         card.content = card.content.replace(/\n/g, ' ')
+       }
+       card.timeString = parseTimeToDate(card.createTime)
+    })
+  }
+  return cards
+}
 
 Page({
   data: {
@@ -20,6 +32,9 @@ Page({
     followed: false,
     followerNumber: 0,
     followingNumber: 0,
+    cardList: [],
+    cardListContainerWidth: 0,
+    cardCount: 0,
     bookList: [],
     showContent: false,
     showNetworkError: false,
@@ -56,6 +71,9 @@ Page({
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
+        cardList: formatCards(result.cards),
+        cardListContainerWidth: result.cards.length * 540 + 280,
+        cardCount: result.cardCount,
         bookList: books,
         addressText: getAddressDisplayText(result.address),
         showContent: true,
@@ -181,5 +199,12 @@ Page({
               url: '../chat/chat?otherId=' + otherId,
           })
       }
+  },
+
+  onCardItemTap: (e) => {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+        url: '../card/card?id=' + id,
+    })
   },
 })

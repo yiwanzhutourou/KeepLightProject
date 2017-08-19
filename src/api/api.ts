@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ChatData, ChatListData, GuideData, LoginData, MinePageData, SettingsData } from './interfaces'
+import { CardDetail, ChatData, ChatListData, GuideData, LoginData, MinePageData, MyCardItem, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 // export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -439,6 +439,48 @@ export const updateRequest = (requestId: number, status: number, success: (resul
     }, failure)
 }
 
+export const newBookCard = (
+        content: string, title: string, picUrl: string, bookIsbn: string,
+        success: (id: number) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.insert')
+        post(url, {
+            'content': content,
+            'title': title,
+            'picUrl': picUrl,
+            'bookIsbn': bookIsbn,
+        }, success, failure)
+    }, failure)
+}
+
+export const getCardById = (id: number,
+        success: (result: CardDetail) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.getCardById') + getUrlParam({
+            cardId: id,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const deleteCardById = (id: number,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.delete') + getUrlParam({
+            cardId: id,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getMyCards = (
+        success: (cards: Array<MyCardItem>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.getMyCards')
+        get(url, success, failure)
+    }, failure)
+}
+
 export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getBorrowHistory')
@@ -639,6 +681,13 @@ export const rights = (success: (result: string) => void, failure?: (res?: any) 
 export const legals = (success: (result: string) => void, failure?: (res?: any) => void) => {
     let url = getUrl('Youdu.legals')
     get(url, success, failure)
+}
+
+export const getUploadToken = (success: (token: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Qiniu.getUploadToken')
+        get(url, success, failure)
+    }, failure)
 }
 
 export const get = (url: string, success?: (res: any) => void, failure?: (res?: any) => void) => {

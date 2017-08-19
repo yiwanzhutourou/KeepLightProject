@@ -74,6 +74,8 @@ export type HomepageData = {
     avatar: string,
     address: Array<Address>,
     books: Array<Book>,
+    cards: Array<MyCardItem>,
+    cardCount: number,
     isMe: boolean,
     followed: boolean,
     followerCount: number,
@@ -199,4 +201,26 @@ export type ExtraBorrowRequest = {
     cover: string,
     status: number,
     requestId: number,
+}
+
+export type CardDetail = {
+    id: number,
+    user: User,
+    title: string,
+    content: string,
+    picUrl: string,
+    book: Book,
+    createTime: number,
+    isMe: boolean,
+    timeString?: string,
+}
+
+export type MyCardItem = {
+    id: number,
+    title: string,
+    content: string,
+    picUrl: string,
+    bookTitle: string,
+    createTime: number,
+    timeString?: string,
 }

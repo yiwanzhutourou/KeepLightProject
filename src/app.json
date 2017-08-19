@@ -26,7 +26,10 @@
     "pages/chat/chat",
     "pages/chat/list",
     "pages/chat/borrow",
-    "pages/discover/discover"
+    "pages/discover/discover",
+    "pages/card/post",
+    "pages/card/card",
+    "pages/card/mycards"
   ],
   "window": {
     "backgroundTextStyle":"light",

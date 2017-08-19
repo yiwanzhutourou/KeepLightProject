@@ -1,0 +1,165 @@
+
+/** book **/
+.book-container {
+    height: 180rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+    background: #fafafa;
+    border-radius: 16rpx;
+}
+
+.book-detail-container {
+    width: 480rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15rpx;
+}
+
+.book-title {
+    font-size: 35rpx;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-author {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-publisher {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 5rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-pic {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+
+/** post content **/
+.form {
+    width: 100%;
+}
+
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title-input {
+    width: 90%;
+    font-size: 45rpx;
+    font-weight: 90;
+    padding-top: 30rpx;
+    padding-bottom: 30rpx;
+    color: #333;
+}
+
+.title-divider {
+    width: 90%;
+    height: 1rpx;
+    background: #999;
+}
+
+.title-placeholder {
+    font-size: 45rpx;
+    color: #999;
+}
+
+.content-textarea {
+    width: 90%;
+    height: 400rpx;
+    padding-top: 30rpx;
+    padding-bottom: 30rpx;
+    font-size: 30rpx;
+    color: #333;
+}
+
+.content-textarea-placeholder {
+    font-size: 30rpx;
+    color: #999;
+}
+
+.image-container {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.upload-img {
+    width: 180rpx;
+    height: 180rpx;
+    margin-left: 30rpx;
+    margin-top: 30rpx;
+    margin-bottom: 30rpx;
+}
+
+.chosen-img-container {
+    position: relative;
+    width: 220rpx;
+    height: 220rpx;
+    margin-left: 10rpx;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+}
+
+.delete-img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: inline-block;
+    width: 40rpx;
+    height: 40rpx;
+    z-index: 5;
+}
+
+.chosen-img {
+    width: 180rpx;
+    height: 180rpx;
+    margin: 20rpx 20rpx;
+    border: 1rpx solid #999;
+}
+
+.button-container {
+    position: fixed;
+    bottom: 0;
+    z-index: 10;
+    width: 100%;
+    padding-bottom: 30rpx;
+    padding-top: 30rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-button {
+    width: 660rpx;
+    background-color: #f8b62d;
+    color: #fff;
+}
+
+.post-button-hover {
+    background: rgba(248, 182, 45, 0.6);
+}

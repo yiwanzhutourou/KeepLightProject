@@ -1,0 +1,50 @@
+<view class="container">
+    <form class="form"
+        bindsubmit="onPostSubmit">
+        <view class="form-container"
+            style="height: {{screenHeight}}rpx;">
+            <view wx:if="{{book}}" class="book-container">
+                <image class="book-pic" src="{{book.cover}}" mode="aspectFit" />
+                <view class="book-detail-container">
+                    <text class="book-title">{{book.title}}</text>
+                    <text class="book-author">作者：{{book.author}}</text>
+                    <text class="book-publisher">出版社：{{book.publisher}}</text>
+                </view>
+            </view>
+            <textarea class="title-input"
+                name="title"
+                auto-height="true"
+                placeholder="标题"
+                placeholder-class="title-placeholder"
+                maxlength="48" />
+            <view class="title-divider" />
+            <textarea class="content-textarea"
+                name="content"
+                placeholder="内容"
+                placeholder-class="content-textarea-placeholder"
+                cursor-spacing="30"
+                maxlength="-1" />
+            <view class="image-container">
+                <image wx:if="{{imgPath === ''}}" class="upload-img"
+                    bindtap="onChooseImage"
+                    src="../../resources/img/icon_upload_image.png" />
+                <view wx:else class="chosen-img-container">
+                    <image class="delete-img"
+                        bindtap="onDeleteImage"
+                        src="../../resources/img/icon_del_image.png"/>
+                    <image class="chosen-img"
+                        bindtap="onChooseImage"
+                        mode="aspectFill"
+                        src="{{imgPath}}" />
+                </view>
+            </view>
+            <view class="button-container">
+                <button class="post-button"
+                    hover-class="post-button-hover"
+                    formType="submit">
+                    发布
+                </button>
+            </view>
+        </view>
+    </form>
+</view>

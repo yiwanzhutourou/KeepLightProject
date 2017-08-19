@@ -22,14 +22,11 @@
                 confirm-type="send"
                 bindinput="onInput"
                 bindconfirm="onInputComplete" />
-            <view class="send-container"
+            <button view class="send-container"
                 hover-class="send-container-hover"
                 bindtap="onSendTap">
-                <image
-                    src="../../resources/img/icon_send.png"
-                    mode="aspectFit"
-                    class="send-image" />
-            </view>
+                留言
+            </button>
         </view>
     </view>
     

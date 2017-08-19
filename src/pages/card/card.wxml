@@ -1,0 +1,39 @@
+<view class="container">
+    <view class="title-container">
+        <text wx:if="{{cardDetail.title}}" class="card-title">{{cardDetail.title}}</text>
+        <view class="user-container">
+            <image class="user-avatar" src="{{cardDetail.user.avatar}}" />
+            <view class="user-time-container">
+                <text class="user-nickname">{{cardDetail.user.nickname}}</text>
+                <text class="card-date">{{cardDetail.timeString}}</text>
+            </view>
+        </view>
+    </view>
+    <view wx:if="{{cardDetail.picUrl}}" class="img-container">
+        <image class="card-img" src="{{cardDetail.picUrl}}" mode="aspectFill" />
+    </view>
+    <view class="content-container">
+        <text class="card-content">
+            {{cardDetail.content}}
+        </text>
+    </view>
+    <view wx:if="{{cardDetail.book}}" class="book-container">
+    </view>
+    <view wx:if="{{cardDetail.isMe}}" class="bottom-bar-container">
+        <view class="bottom-container" bindtap="onDelete">
+            <image class="bottom-icon"
+                src="../../resources/img/icon_card_delete.png" />
+            <text class="bottom-text">删除</text>
+        </view>
+        <view class="bottom-container" bindtap="onModify">
+            <image class="bottom-icon"
+                src="../../resources/img/icon_edit.png" />
+            <text class="bottom-text">修改</text>
+        </view>
+        <view class="bottom-container-2" bindtap="onShare">
+            <image class="bottom-icon"
+                src="../../resources/img/icon_share.png" />
+            <text class="bottom-text">分享</text>
+        </view>
+    </view>
+</view>

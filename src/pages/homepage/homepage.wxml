@@ -117,6 +117,24 @@
                         </view>
                     </view>
                 </view>
+                <view class="card-list-container">
+                    <scroll-view class="card-list-scroller" scroll-x>
+                        <view class="card-scroller-wrapper"
+                            style="width: {{cardListContainerWidth}}rpx;">
+                            <block wx:for="{{cardList}}" wx:key="id">
+                                <import src="../../template/card/HomeCardItem.wxml" />
+                                <template is="home-card-item"
+                                    data="{{item}}" />
+                            </block>
+                            <view class="more-card-wrapper">
+                                <view class="more-card">
+                                    <text class="more-card-text">查看全部卡片</text>
+                                    <text class="more-card-text-2">{{cardCount}} 个</text>
+                                </view>
+                            </view>
+                        </view>
+                    </scroll-view>
+                </view>
                 <view class="list-container">
                     <view class="title-container">
                         <text>{{bookList.length}} 本书</text>

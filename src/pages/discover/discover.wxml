@@ -1,4 +1,6 @@
 <view class="container">
     <image class="working-image" src="../../resources/img/icon_working.png" />
     <text class="working-text">Working on it...</text>
+    <button class="post-button"
+        bindtap="onPost">写读书卡片</button>
 </view>

@@ -1,6 +1,6 @@
-import { Book, GuideData, HomepageData } from '../../api/interfaces'
+import { Book, GuideData, HomepageData, MyCardItem } from '../../api/interfaces'
 import { addAddress, borrowBook, checkLoginFirstLaunch, getBookList, getGuideData, getHomepageData, getMyHomepageData, getUserInfo, removeBook, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 import { setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
@@ -9,6 +9,18 @@ import { verifyReg } from '../../utils/reg'
 
 let homepage
 let timeoutCount
+
+const formatCards = (cards: Array<MyCardItem>) => {
+  if (cards && cards.length > 0) {
+    cards.forEach((card: MyCardItem) => {
+       if (card.content) {
+         card.content = card.content.replace(/\n/g, ' ')
+       }
+       card.timeString = parseTimeToDate(card.createTime)
+    })
+  }
+  return cards
+}
 
 let countDown = () => {
     let countDownTime = homepage.data.countDownTime
@@ -41,6 +53,9 @@ Page({
     followed: false,
     followerNumber: 0,
     followingNumber: 0,
+    cardList: [],
+    cardCount: 0,
+    cardListContainerWidth: 0,
     bookList: [],
     showContent: false,
     showNetworkError: false,
@@ -138,6 +153,9 @@ Page({
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
+        cardList: formatCards(result.cards),
+        cardCount: result.cardCount,
+        cardListContainerWidth: result.cards.length * 540 + 280,
         bookList: books,
         showContent: true,
         showNetworkError: false,
@@ -314,6 +332,13 @@ Page({
         setShowGuide()
         homepage.loadData()
       }
+    })
+  },
+
+  onCardItemTap: (e) => {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+        url: '../card/card?id=' + id,
     })
   },
 })
