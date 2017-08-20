@@ -51,19 +51,24 @@
                     </view>
                 </view>
             </view>
-            <view class="card-list-container">
+            <view wx:if="{{cardList.length > 0}}" class="card-list-container">
+                <view class="title-container">
+                    <text>{{cardCount}} 个读书卡片</text>
+                </view>
                 <scroll-view class="card-list-scroller" scroll-x>
-                    <view class="card-scroller-wrapper"
-                        style="width: {{cardListContainerWidth}}rpx;">
-                        <block wx:for="{{cardList}}" wx:key="id">
+                    <view class="card-scroller-wrapper">
+                        <view class="home-card-wrapper" wx:for="{{cardList}}" wx:key="id">
                             <import src="../../template/card/HomeCardItem.wxml" />
                             <template is="home-card-item"
                                 data="{{item}}" />
-                        </block>
-                        <view class="more-card-wrapper">
+                        </view>
+                        <view class="card-space-wrapper">
+                            <view class="card-space-holder" />
+                        </view>
+                        <view wx:if="{{cardList.length < cardCount}}"
+                            class="more-card-wrapper">
                             <view class="more-card">
-                                <text class="more-card-text">查看全部卡片</text>
-                                <text class="more-card-text-2">{{cardCount}} 个</text>
+                                <text class="more-card-text">查看全部</text>
                             </view>
                         </view>
                     </view>

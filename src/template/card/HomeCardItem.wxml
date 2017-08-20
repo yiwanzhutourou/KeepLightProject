@@ -1,12 +1,17 @@
 <template name="home-card-item">
-    <view class="home-card-wrapper">
-        <view class="home-card-container" data-id="{{item.id}}" bindtap="onCardItemTap">
-            <view class="card-content-container">
-                <text class="card-title">{{item.title}}</text>
-                <text class="card-content">{{item.content}}</text>
-                <text class="card-date">{{item.timeString}}</text>
-            </view>
-            <image class="card-img" src="{{item.picUrl}}" mode="aspectFill" />
+    <view wx:if="{{item.picUrl && item.picUrl.length > 0}}" class="home-card-container" data-id="{{item.id}}" bindtap="onCardItemTap">
+        <view class="card-content-container">
+            <text class="card-title">{{item.title}}</text>
+            <text class="card-content">{{item.content}}</text>
+            <text class="card-date">{{item.timeString}}</text>
+        </view>
+        <image class="card-img" src="{{item.picUrl}}" mode="aspectFill" />
+    </view>
+    <view wx:else class="home-card-container" data-id="{{item.id}}" bindtap="onCardItemTap">
+        <view class="card-content-container-no-img">
+            <text class="card-title">{{item.title}}</text>
+            <text class="card-content">{{item.content}}</text>
+            <text class="card-date">{{item.timeString}}</text>
         </view>
     </view>
 </template>
