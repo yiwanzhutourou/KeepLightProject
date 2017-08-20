@@ -31,11 +31,12 @@
                 <view wx:else class="chosen-img-container">
                     <image class="delete-img"
                         bindtap="onDeleteImage"
-                        src="../../resources/img/icon_del_image.png"/>
-                    <image class="chosen-img"
-                        bindtap="onChooseImage"
-                        mode="aspectFill"
-                        src="{{imgPath}}" />
+                        src="../../resources/img/icon_del_image.png" />
+                    <view class="chosen-img-wrapper" bindtap="onChooseImage">
+                        <image class="chosen-img"
+                            mode="aspectFill"
+                            src="{{imgPath}}" />
+                    </view>
                 </view>
             </view>
             <view class="button-container">

@@ -135,11 +135,24 @@
     z-index: 5;
 }
 
+.chosen-img-wrapper {
+    width: 182rpx;
+    height: 182rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fafafa;
+    border: 1rpx solid #eee;
+    border-radius: 8rpx;
+    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
+    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
+    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
+    margin: 19rpx 19rpx;
+}
+
 .chosen-img {
-    width: 180rpx;
-    height: 180rpx;
-    margin: 20rpx 20rpx;
-    border: 1rpx solid #999;
+    width: 168rpx;
+    height: 168rpx;
 }
 
 .button-container {

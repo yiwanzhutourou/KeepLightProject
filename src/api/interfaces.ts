@@ -69,6 +69,7 @@ export type UserInfo = {
 }
 
 export type HomepageData = {
+    userId: number,
     info: string,
     nickname: string,
     avatar: string,

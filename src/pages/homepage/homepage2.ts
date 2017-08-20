@@ -205,4 +205,11 @@ Page({
         url: '../card/card?id=' + id,
     })
   },
+
+  onShowAllCards: (e) => {
+    let userId = homepage2.data.userId
+    wx.navigateTo({
+        url: '../card/usercards?user=' + userId,
+    })
+  },
 })

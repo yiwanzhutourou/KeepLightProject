@@ -481,6 +481,16 @@ export const getMyCards = (
     }, failure)
 }
 
+export const getCardListByUser = (userId: number,
+        success: (cards: Array<MyCardItem>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.getUserCards') + getUrlParam({
+            userId: userId,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
 export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getBorrowHistory')

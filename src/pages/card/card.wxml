@@ -10,7 +10,7 @@
         </view>
     </view>
     <view wx:if="{{cardDetail.picUrl}}" class="img-container">
-        <image class="card-img" src="{{cardDetail.picUrl}}" mode="aspectFill" />
+        <image class="card-img" src="{{cardDetail.picUrl}}" mode="widthFix" />
     </view>
     <view class="content-container">
         <text class="card-content">

@@ -1,6 +1,4 @@
 .img-container {
-    width: 632rpx;
-    height: 482rpx;
     margin-top: 30rpx;
     display: flex;
     justify-content: center;
@@ -15,7 +13,7 @@
 
 .card-img {
     width: 600rpx;
-    height: 450rpx;
+    margin: 16rpx;
 }
 
 .title-container {

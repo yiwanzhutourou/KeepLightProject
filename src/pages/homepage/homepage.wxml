@@ -132,7 +132,8 @@
                                 <view class="card-space-holder" />
                             </view>
                             <view wx:if="{{cardList.length < cardCount}}"
-                                class="more-card-wrapper">
+                                class="more-card-wrapper"
+                                bindtap="onShowAllCards">
                                 <view class="more-card">
                                     <text class="more-card-text">查看全部</text>
                                 </view>

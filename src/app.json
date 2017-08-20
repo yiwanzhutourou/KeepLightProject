@@ -29,7 +29,8 @@
     "pages/discover/discover",
     "pages/card/post",
     "pages/card/card",
-    "pages/card/mycards"
+    "pages/card/mycards",
+    "pages/card/usercards"
   ],
   "window": {
     "backgroundTextStyle":"light",

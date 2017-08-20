@@ -48,6 +48,7 @@ Page({
     isCurrentUser: true,
     isMyPage: false, // 不显示删除按钮
 
+    userId: 0,
     homepageData: {},
     addressText: '',
     followed: false,
@@ -147,6 +148,7 @@ Page({
       hideLoading()
       let books = result.books
       homepage.setData({
+        userId: result.userId,
         homepageData: {
           nickName: result.nickname + '的书房',
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
@@ -337,6 +339,13 @@ Page({
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
         url: '../card/card?id=' + id,
+    })
+  },
+
+  onShowAllCards: (e) => {
+    let userId = homepage.data.userId
+    wx.navigateTo({
+        url: '../card/usercards?user=' + userId,
     })
   },
 })
