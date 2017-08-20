@@ -194,6 +194,7 @@ export type Message = {
     timeString?: string,
     showLoading?: boolean,
     showError?: boolean,
+    isFake?: boolean,
 }
 
 export type ExtraBorrowRequest = {

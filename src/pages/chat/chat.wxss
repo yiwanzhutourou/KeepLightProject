@@ -109,10 +109,6 @@
     background: rgba(248, 182, 45, 0.6);
 }
 
-.send-image {
-    height: 40rpx;
-}
-
 .chat-message-container {
     margin-top: 100rpx;
     width: 100%;
@@ -192,3 +188,31 @@
   40% { background-color: #ddd; }
 }
 
+.refresh-container {
+    z-index: 10;
+    position: fixed;
+    bottom: 140rpx;
+    right: 40rpx;
+    background: rgba(255, 255, 255, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1rpx solid #fafafa;
+    border-radius: 8rpx;
+    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
+    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
+    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
+    padding: 20rpx;
+}
+
+.refresh-icon {
+    width: 60rpx;
+    height: 60rpx;
+}
+
+.refresh-text {
+    font-size: 24rpx;
+    color: #666;
+    margin-top: 20rpx;
+}

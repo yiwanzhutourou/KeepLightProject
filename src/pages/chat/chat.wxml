@@ -29,6 +29,11 @@
             </button>
         </view>
     </view>
+
+    <view class="refresh-container" bindtap="onRefresh">
+        <image class="refresh-icon" src="../../resources/img/icon_refresh.png" />
+        <text class="refresh-text">刷新</text>
+    </view>
     
     <scroll-view
         class="chat-message-container"

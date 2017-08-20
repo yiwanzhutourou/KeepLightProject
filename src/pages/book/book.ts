@@ -1,4 +1,4 @@
-import { hideLoading, showErrDialog, showLoading } from '../../utils/utils'
+import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { getBookDetails } from '../../api/api'
 import { parseAuthor } from '../../utils/bookUtils'
@@ -7,7 +7,10 @@ let bookPage
 
 Page({
   data: {
+      screenHeight: 0,
       bookDetail: null,
+      showDialog: false,
+      dialogContent: '',
   },
 
   onLoad: function(option: any): void {
@@ -19,6 +22,10 @@ Page({
         })
         return
     }
+
+    bookPage.setData({
+        screenHeight: getScreenSizeInRpx().height,
+    })
 
     showLoading('正在加载...')
     getBookDetails(option.isbn, (result: any) => {
@@ -53,6 +60,23 @@ Page({
         if (!failure.data) {
             showErrDialog('无法加载图书详情，请检查你的网络状态')
         }
+    })
+  },
+
+  onShowContent: (e) => {
+      let content = e.currentTarget.dataset.content
+      if (content) {
+          bookPage.setData({
+              showDialog: true,
+              dialogContent: content,
+          })
+      }
+  },
+
+  onDialogTap: (e) => {
+    bookPage.setData({
+        showDialog: false,
+        dialogContent: '',
     })
   },
 })

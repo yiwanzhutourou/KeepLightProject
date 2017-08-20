@@ -1,7 +1,7 @@
 <view class="container-no-line">
     <image class="blur" src="{{bookDetail.bigImage}}" mode="aspectFill" />
     <view class="dark" />
-    <view class="detail-container">
+    <view class="all-detail-container">
         <view class="title-container">
             <image class="book-cover" src="{{bookDetail.bigImage}}" mode="aspectFit" />
             <view class="title-text-container">
@@ -22,16 +22,50 @@
         </view>
         <view wx:if="{{bookDetail.summary}}" class="detail-container">
             <text class="detail-title">内容介绍</text>
-            <text class="detail-content">{{bookDetail.summary}}</text>
+            <view class="detail-container-wrapper"
+                data-content="{{bookDetail.summary}}"
+                bindtap="onShowContent">
+                <text class="detail-content">{{bookDetail.summary}}</text>
+                <image class="detail-arrow"
+                    mode="widthFix"
+                    src="../../resources/img/arrow.png" />
+            </view>
         </view>
         <view wx:if="{{bookDetail.author_intro}}" class="detail-container">
             <text class="detail-title">作者介绍</text>
-            <text class="detail-content">{{bookDetail.author_intro}}</text>
+            <view class="detail-container-wrapper"
+                data-content="{{bookDetail.author_intro}}"
+                bindtap="onShowContent">
+                <text class="detail-content">{{bookDetail.author_intro}}</text>
+                <image class="detail-arrow"
+                    mode="widthFix"
+                    src="../../resources/img/arrow.png" />
+            </view>
         </view>
         <view wx:if="{{bookDetail.catalog}}" class="detail-container">
             <text class="detail-title">目录</text>
-            <text class="detail-content">{{bookDetail.catalog}}</text>
+            <view class="detail-container-wrapper"
+                data-content="{{bookDetail.catalog}}"
+                bindtap="onShowContent">
+                <text class="detail-content">{{bookDetail.catalog}}</text>
+                <image class="detail-arrow"
+                    mode="widthFix"
+                    src="../../resources/img/arrow.png" />
+            </view>
         </view>
         <view class="space-holder"></view>
+    </view>
+    <view wx:if="{{showDialog}}"
+        class="show-detail-dialog"
+        style="height: {{screenHeight}}rpx;"
+        bindtap="onDialogTap">
+        <scroll-view class="show-detial-scroller"
+            style="height: {{screenHeight*0.6}}rpx;">
+            <view class="show-detail-container">
+                <text class="show-detail-dialog-content">
+                    {{dialogContent}}
+                </text>
+            </view>
+        </scroll-view>
     </view>
 </view>

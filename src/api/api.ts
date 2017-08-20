@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { CardDetail, ChatData, ChatListData, GuideData, LoginData, MinePageData, MyCardItem, SettingsData } from './interfaces'
+import { CardDetail, ChatData, ChatListData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 // export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -540,6 +540,17 @@ export const startChat = (otherId: number, count: number, page: number,
             otherId: otherId,
             count: count,
             page: page,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getNewMessages = (otherId: number, timestamp: number,
+        success: (data: Array<Message>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Chat.getNew') + getUrlParam({
+            otherId: otherId,
+            timestamp: timestamp,
         })
         get(url, success, failure)
     }, failure)

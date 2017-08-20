@@ -1,6 +1,6 @@
 import { ChatData, Message } from '../../api/interfaces'
+import { getNewMessages, sendContact, sendMessage, startChat } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast, timestamp2TextComplex } from '../../utils/utils'
-import { sendContact, sendMessage, startChat } from '../../api/api'
 
 import { clearUnread } from '../../utils/chatCache'
 
@@ -8,15 +8,16 @@ const DEFAULT_CHAT_PAGE_COUNT = 15
 
 let chatPage
 let curPage = 0
-let lastRequest = -1
 
 let formatList = (list: Array<Message>) => {
     let lastTime = -1
     list.forEach((item: Message) => {
-        if (lastTime === -1 || (item.timeStamp - lastTime) > 60) {
-            item.timeString = timestamp2TextComplex(item.timeStamp)
+        if (item.type !== 'fake_hint') {
+            if (lastTime === -1 || (item.timeStamp - lastTime) > 60) {
+                item.timeString = timestamp2TextComplex(item.timeStamp)
+            }
+            lastTime = item.timeStamp
         }
-        lastTime = item.timeStamp
     })
     return list
 }
@@ -33,13 +34,41 @@ let fakeAdd = (message: Message, list: Array<Message>) => {
             message.timeString = timestamp2TextComplex(timestamp)
         }
         message.showLoading = true
+        message.isFake = true
         list.push(message)
     }
+}
+
+let getLastTimestamp = (list: Array<Message>) => {
+    let timestamp = -1
+    if (list && list.length > 0) {
+        for (let i = list.length - 1; i >= 0; i--) {
+            if (!list[i].isFake && list[i].type !== 'fake_hint') {
+                timestamp = list[i].timeStamp
+                break
+            }
+        }
+    }
+    return timestamp
+}
+
+let mergeNewMessages = (oldMsgs: Array<Message>, newMsgs: Array<Message>, timestamp: number) => {
+    let result = new Array<Message>()
+    if (oldMsgs) {
+        for (let i = 0; i < oldMsgs.length; i++) {
+            if (oldMsgs[i].timeStamp > timestamp) {
+                break
+            }
+            result.push(oldMsgs[i])
+        }
+    }
+    return formatList(result.concat(newMsgs))
 }
 
 Page({
   data: {
       screenHeight: 0,
+      otherId: 0,
       self: {},
       other: {},
       messages: [],
@@ -55,30 +84,9 @@ Page({
     if (options && options.otherId) {
         chatPage.setData({
             screenHeight: getScreenSizeInRpx().height,
+            otherId: options.otherId,
         })
-        curPage = 0
-        showLoading('正在加载...')
-        startChat(options.otherId, DEFAULT_CHAT_PAGE_COUNT, curPage, (data: ChatData) => {
-            hideLoading()
-            let noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
-            wx.setNavigationBarTitle({
-                title: data.other.nickname,
-            })
-            chatPage.setData({
-                self: data.self,
-                other: data.other,
-                messages: formatList(data.messages),
-                noMore: noMore,
-                showContent: true,
-            })
-            chatPage.scrollToBottom()
-            clearUnread(options.otherId, data.timestamp)
-        }, (failure) => {
-            hideLoading()
-            if (!failure.data) {
-                showErrDialog('无法加载数据，请检查你的网络')
-            }
-        })
+        chatPage.loadData()
     } else {
         wx.navigateBack({
             delta: 1,
@@ -86,14 +94,64 @@ Page({
     }
   },
 
+  onRefresh: (e) => {
+      let messages = chatPage.data.messages as Array<Message>
+      let timestamp = getLastTimestamp(messages)
+      let otherId = chatPage.data.otherId
+
+      if (timestamp > 0) {
+          showLoading('正在加载...')
+          getNewMessages(otherId, timestamp, (result: Array<Message>) => {
+              hideLoading()
+              let newMsgs = mergeNewMessages(messages, result, timestamp)
+              chatPage.setData({
+                  messages: newMsgs,
+              })
+              chatPage.scrollToBottom()
+              let newTimestamp = getLastTimestamp(newMsgs)
+              clearUnread(otherId, newTimestamp)
+          }, (failure) => {
+              hideLoading()
+              if (!failure.data) {
+                  showErrDialog('无法加载数据，请检查你的网络')
+              }
+          })
+      } else {
+          chatPage.loadData()
+      }
+  },
+
+  loadData: () => {
+    let otherId = chatPage.data.otherId
+    curPage = 0
+    showLoading('正在加载...')
+    startChat(otherId, DEFAULT_CHAT_PAGE_COUNT, curPage, (data: ChatData) => {
+        hideLoading()
+        let noMore = (data.messages.length < DEFAULT_CHAT_PAGE_COUNT)
+        wx.setNavigationBarTitle({
+            title: data.other.nickname,
+        })
+        chatPage.setData({
+            self: data.self,
+            other: data.other,
+            messages: formatList(data.messages),
+            noMore: noMore,
+            showContent: true,
+        })
+        chatPage.scrollToBottom()
+        clearUnread(otherId, data.timestamp)
+    }, (failure) => {
+        hideLoading()
+        if (!failure.data) {
+            showErrDialog('无法加载数据，请检查你的网络')
+        }
+    })
+  },
+
   // TODO: 无法定位到之前的位置，貌似可以用scroll-into-view，但是效果不是很理想
   onLoadMore: (e) => {
     let otherId = chatPage.data.other.id
     if (otherId) {
-        if (lastRequest != -1 && e.timeStamp && e.timeStamp - lastRequest < 500) {
-            return
-        }
-        lastRequest = e.timeStamp
         if (chatPage.data.noMore || chatPage.data.showLoadingMore) {
             return
         }

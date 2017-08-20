@@ -90,5 +90,10 @@
                 <view class="contact-extra">点击复制</view>
             </view>
         </view>
+        <view wx:if="{{item.type === 'fake_hint'}}" class="fake-hint-container">
+            <view class="fake-hint">
+                {{item.content}}
+            </view>
+        </view>
     </view>
 </template>
