@@ -72,4 +72,13 @@ Page({
   onShare: (e) => {
     // TODO
   },
+
+  onShareAppMessage: () => {
+    let cardDetail = cardPage.data.cardDetail
+    return {
+      title: cardDetail && cardDetail.user.nickname ?
+                cardDetail.user.nickname + '的读书卡片' : '有读书房读书卡片',
+      path: 'pages/card/card?id=' + cardDetail.id,
+    }
+  },
 })
