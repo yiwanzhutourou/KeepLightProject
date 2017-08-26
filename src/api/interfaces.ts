@@ -213,9 +213,9 @@ export type CardDetail = {
     title: string,
     content: string,
     picUrl: string,
-    book: Book,
+    book?: Book,
     createTime: number,
-    isMe: boolean,
+    isMe?: boolean,
     timeString?: string,
 }
 

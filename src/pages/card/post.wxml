@@ -8,10 +8,10 @@
                 <view class="book-detail-container">
                     <text class="book-title">{{book.title}}</text>
                     <text class="book-author">作者：{{book.author}}</text>
-                    <text class="book-publisher">出版社：{{book.publisher}}</text>
                 </view>
             </view>
             <textarea class="title-input"
+                value="{{defaultTitle}}"
                 name="title"
                 auto-height="true"
                 placeholder="标题"
@@ -19,6 +19,7 @@
                 maxlength="48" />
             <view class="title-divider" />
             <textarea class="content-textarea"
+                value="{{defaultContent}}"
                 name="content"
                 placeholder="内容"
                 placeholder-class="content-textarea-placeholder"
@@ -43,7 +44,7 @@
                 <button class="post-button"
                     hover-class="post-button-hover"
                     formType="submit">
-                    发布
+                    {{postText}}
                 </button>
             </view>
         </view>

@@ -1,8 +1,8 @@
 import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading, trim } from '../../utils/utils'
-import { getUploadToken, newBookCard } from '../../api/api'
+import { getUploadToken, modifyBookCard, newBookCard } from '../../api/api'
 import { initUploader, uploadFile } from '../../utils/qiniuUploader'
 
-import { getPostData } from '../../utils/bookCache'
+import { getPostModifyData } from '../../utils/postCache'
 
 let postPage
 
@@ -18,8 +18,14 @@ const initQiniu = () => {
 Page({
   data: {
       screenHeight: 0,
+      id: -1,
+      isModify: 0,
+      postText: '发布',
       book: null,
       imgPath: '',
+      defaultTitle: '',
+      defaultContent: '',
+      imageModified: false,
   },
 
   onLoad: function(options: any): void {
@@ -27,10 +33,16 @@ Page({
     postPage.setData({
         screenHeight: getScreenSizeInRpx().height,
     })
-    let data = getPostData()
+    let data = getPostModifyData()
     if (data) {
         postPage.setData({
+            id: data.id,
+            isModify: data.isModify,
+            postText: data.isModify ? '修改' : '发布',
             book: data.book,
+            imgPath: data.picUrl,
+            defaultTitle: data.title,
+            defaultContent: data.content,
         })
     }
   },
@@ -42,6 +54,7 @@ Page({
             if (res && res.tempFilePaths && res.tempFilePaths[0]) {
                 postPage.setData({
                     imgPath: res.tempFilePaths[0],
+                    imageModified: true,
                 })
             }
         },
@@ -49,9 +62,9 @@ Page({
   },
 
   onDeleteImage: (e) => {
-    postPage.setData({
-        imgPath: '',
-    })
+      postPage.setData({
+          imgPath: '',
+      })
   },
 
   onPostSubmit: (e) => {
@@ -68,7 +81,16 @@ Page({
     showLoading('正在发布')
     let imgPath = postPage.data.imgPath
     let bookIsbn = postPage.data.book ? postPage.data.book.isbn : ''
-    if (imgPath !== '') {
+    let isModify = postPage.data.isModify
+    if (isModify) {
+        postPage.postModify(title, content, imgPath)
+    } else {
+        postPage.postNew(title, content, bookIsbn, imgPath)
+    }
+  },
+
+  postNew: (title: string, content: string, bookIsbn: string, imgPath: string) => {
+    if (!imgPath && imgPath !== '') {
         // upload image first
         initQiniu()
         getUploadToken((token: string) => {
@@ -80,6 +102,7 @@ Page({
                     hideLoading()
                     showErrDialog('上传图片失败，请稍后再试')
                 }, {
+                    // TODO 放到服务端
                     region: 'ECN',
                     imageURLPrefix: 'http://othb16dht.bkt.clouddn.com',
                     uploadToken: token,
@@ -97,6 +120,39 @@ Page({
     }
   },
 
+  postModify: (title: string, content: string, imgPath: string) => {
+      let cardId = postPage.data.id
+      let imageModified = postPage.data.imageModified
+      if (imageModified && !imgPath && imgPath !== '') {
+          // upload image first
+          initQiniu()
+          getUploadToken((token: string) => {
+              if (token) {
+                  uploadFile(imgPath, (success) => {
+                      let imgUrl = success.imageURL
+                      postPage.modifyBookCard(cardId, content, title, imgUrl)
+                  }, (fail) => {
+                      hideLoading()
+                      showErrDialog('上传图片失败，请稍后再试')
+                  }, {
+                      // TODO 放到服务端
+                      region: 'ECN',
+                      imageURLPrefix: 'http://othb16dht.bkt.clouddn.com',
+                      uploadToken: token,
+                      shouldUseQiniuFileName: true,
+                  })
+              }
+          }, (failure) => {
+              hideLoading()
+              if (!failure.data) {
+                  showErrDialog('修改失败，请检查你的网络')
+              }
+          })
+      } else {
+          postPage.modifyBookCard(cardId, content, title, '')
+      }
+  },
+
   insertNewBookCard: (content: string, title: string, picUrl: string, bookIsbn: string) => {
     newBookCard(content, title, picUrl, bookIsbn,
         (id: number) => {
@@ -109,6 +165,21 @@ Page({
             hideLoading()
             if (!failure.data) {
                 showErrDialog('发布失败，请检查你的网络')
+            }
+        })
+  },
+
+  modifyBookCard: (cardId: number, content: string, title: string, picUrl: string) => {
+    modifyBookCard(cardId, content, title, picUrl,
+        (id: number) => {
+            hideLoading()
+            wx.navigateBack({
+                delta: 1,
+            })
+        }, (failure) => {
+            hideLoading()
+            if (!failure.data) {
+                showErrDialog('修改失败，请检查你的网络')
             }
         })
   },

@@ -208,6 +208,16 @@ export const getDiscoverPageData = (cursor: number, isTop: number,
         get(url, success, failure)
 }
 
+export const getBookCards = (isbn: string, page: number, count: number,
+    success: (cards: Array<CardDetail>) => void, failure?: (res?: any) => void) => {
+        let url = getUrl('Card.getBookCards') + getUrlParam({
+            isbn: isbn,
+            page: page,
+            count: count,
+        })
+        get(url, success, failure)
+}
+
 export const getHomepageData = (userId: string, success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
     if (userId) {
         let url = getUrl('User.getHomepageData') + getUrlParam({
@@ -458,6 +468,20 @@ export const newBookCard = (
             'title': title,
             'picUrl': picUrl,
             'bookIsbn': bookIsbn,
+        }, success, failure)
+    }, failure)
+}
+
+export const modifyBookCard = (cardId: number,
+        content: string, title: string, picUrl: string,
+        success: (id: number) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.modify')
+        post(url, {
+            'cardId': cardId,
+            'content': content,
+            'title': title,
+            'picUrl': picUrl,
         }, success, failure)
     }, failure)
 }

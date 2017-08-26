@@ -1,7 +1,8 @@
 import { DiscoverItem, DiscoverPageData } from '../../api/interfaces'
-import { getBottomCursor, getDiscoverList, getTopCursor, updateDiscoverCache } from '../../utils/discoverCache'
+import { getBottomCursor, getDiscoverList, updateDiscoverCache } from '../../utils/discoverCache'
 import { hideLoading, parseTimeToDate, showErrDialog, showLoading } from '../../utils/utils'
 
+import { clearPostModifyData } from '../../utils/postCache'
 import { getDiscoverPageData } from '../../api/api'
 
 const DISCOVER_REFRESH_INTERVAL = 5 * 60 * 1000
@@ -33,27 +34,26 @@ Page({
       noMore: false,
       showClickLoadMore: true,
       showPostBtn: false,
+      bottomCursor: -1,
   },
 
   onLoad: function(options: any): void {
       discoverPage = this
+      // 先读缓存里的数据
+      discoverPage.loadDataFromCache()
   },
 
   onShow: function (): void {
-      // 先读缓存里的数据
-      discoverPage.loadDataFromCache()
       // 五分钟自动拉一次数据
       let now = new Date().getTime()
       if (lastLoadDiscoverTime === -1 || (now - lastLoadDiscoverTime) > DISCOVER_REFRESH_INTERVAL) {
-          // 1.5.0开始支持的函数
           discoverPage.loadData()
       }
   },
 
   onPullDownRefresh: (e) => {
       lastLoadDiscoverTime = new Date().getTime()
-      let topCursor = getTopCursor()
-      getDiscoverPageData(topCursor, 1, (data: DiscoverPageData) => {
+      getDiscoverPageData(0, 1, (data: DiscoverPageData) => {
           wx.stopPullDownRefresh()
           // 更新缓存之后直接从缓存里读
           updateDiscoverCache(data, true)
@@ -74,7 +74,7 @@ Page({
 
   onLoadMore: (e) => {
       discoverPage.showLoadingMore()
-      let bottomCursor = getBottomCursor()
+      let bottomCursor = discoverPage.data.bottomCursor
       getDiscoverPageData(bottomCursor, 0, (data: DiscoverPageData) => {
           // 上拉不更新缓存
           let newList = data ? formatList(data.list) : null
@@ -83,6 +83,7 @@ Page({
               let discoverList = discoverPage.data.discoverList.concat(newList)
               discoverPage.setData({
                   discoverList: discoverList,
+                  bottomCursor: data.bottomCursor,
                   showEmpty: discoverList.length == 0,
                   showList: discoverList.length > 0,
                   showClickLoadMore: !noMore,
@@ -102,8 +103,7 @@ Page({
   loadData: () => {
       lastLoadDiscoverTime = new Date().getTime()
       showLoading('正在加载')
-      let topCursor = getTopCursor()
-      getDiscoverPageData(topCursor, 1, (data: DiscoverPageData) => {
+      getDiscoverPageData(0, 1, (data: DiscoverPageData) => {
           hideLoading()
           // 更新缓存之后直接从缓存里读
           updateDiscoverCache(data, true)
@@ -124,9 +124,11 @@ Page({
 
   loadDataFromCache: () => {
     let cachedList = getDiscoverList()
+    let bottomCursor = getBottomCursor()
     if (cachedList) {
         discoverPage.setData({
             discoverList: formatList(cachedList),
+            bottomCursor: bottomCursor,
             showEmpty: cachedList.length == 0,
             showList: cachedList.length > 0,
         })
@@ -134,6 +136,7 @@ Page({
   },
 
   onPost: (e) => {
+      clearPostModifyData()
       wx.navigateTo({
           url: '../card/post',
       })

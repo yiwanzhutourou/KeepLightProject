@@ -21,7 +21,7 @@
     </view>
     <view wx:if="{{cardDetail.book}}" class="book-container">
     </view>
-    <view wx:if="{{cardDetail.isMe}}" class="bottom-bar-container">
+    <view wx:if="{{cardDetail && cardDetail.isMe}}" class="bottom-bar-container">
         <view class="bottom-container" bindtap="onDelete">
             <image class="bottom-icon"
                 src="../../resources/img/icon_card_delete.png" />
@@ -32,10 +32,21 @@
                 src="../../resources/img/icon_edit.png" />
             <text class="bottom-text">修改</text>
         </view>
-        <view class="bottom-container-2" bindtap="onShare">
+        <button class="bottom-btn"
+            hover-class="bottom-btn-hover"
+            open-type="share">
             <image class="bottom-icon"
                 src="../../resources/img/icon_share.png" />
             <text class="bottom-text">分享</text>
-        </view>
+        </button>
+    </view>
+    <view wx:elif="{{cardDetail}}" class="bottom-bar-container">
+        <button class="bottom-btn"
+            hover-class="bottom-btn-hover"
+            open-type="share">
+            <image class="bottom-icon"
+                src="../../resources/img/icon_share.png" />
+            <text class="bottom-text">分享</text>
+        </button>
     </view>
 </view>

@@ -3,6 +3,7 @@ import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDia
 
 import { CardDetail } from '../../api/interfaces'
 import { deleteCardFromCache } from '../../utils/discoverCache'
+import { setPostModifyData } from '../../utils/postCache'
 
 let cardPage
 
@@ -13,6 +14,7 @@ const formatResult = (result: CardDetail) => {
 
 Page({
   data: {
+      cardId: -1,
       cardDetail: null,
   },
 
@@ -23,13 +25,23 @@ Page({
         wx.navigateBack({
             delta: 1,
         })
+    } else {
+        cardPage.setData({
+            cardId: option.id,
+            showPostSuccess: option.showPostSuccess,
+        })
+    }
+  },
+
+  onShow: function (): void {
+    let cardId = cardPage.data.cardId
+    if (!cardId || cardId < 0) {
         return
     }
-
     showLoading('正在加载...')
-    getCardById(option.id, (result: CardDetail) => {
+    getCardById(cardId, (result: CardDetail) => {
         hideLoading()
-        if (option.showPostSuccess) {
+        if (cardPage.data.showPostSuccess) {
             showDialog('发布成功')
         }
         cardPage.setData({
@@ -75,11 +87,14 @@ Page({
   },
 
   onModify: (e) => {
-    // TODO
-  },
-
-  onShare: (e) => {
-    // TODO
+      let cardDetail = cardPage.data.cardDetail
+      setPostModifyData(
+                cardDetail.id,
+                cardDetail.title, cardDetail.content,
+                cardDetail.picUrl, cardDetail.book)
+      wx.navigateTo({
+          url: './post',
+      })
   },
 
   onShareAppMessage: () => {

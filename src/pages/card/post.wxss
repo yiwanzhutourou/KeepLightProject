@@ -10,8 +10,7 @@
     padding-right: 25rpx;
     padding-top: 5rpx;
     padding-bottom: 5rpx;
-    background: #fafafa;
-    border-radius: 16rpx;
+    border-bottom: 1rpx dashed #aaa;
 }
 
 .book-detail-container {
@@ -34,15 +33,6 @@
     font-size: 25rpx;
     color: #666;
     margin-top: 10rpx;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-.book-publisher {
-    font-size: 25rpx;
-    color: #666;
-    margin-top: 5rpx;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;

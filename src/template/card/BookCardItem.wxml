@@ -1,0 +1,33 @@
+<template name="book-card-item">
+    <view class="common-container">
+        <view class="card-container"
+            data-id="{{item.id}}"
+            bindtap="onCardItemTap">
+            <view wx:if="{{item.picUrl && item.picUrl.length > 0}}"
+                class="card-first-line-container">
+                <view class="card-content-container">
+                    <text class="card-title">{{item.title}}</text>
+                    <text class="card-content">{{item.content}}</text>
+                </view>
+                <image class="card-img" src="{{item.picUrl}}" />
+            </view>
+            <view wx:else class="card-first-line-container"
+                data-id="{{item.id}}"
+                bindtap="onCardItemTap">
+                <view class="card-content-container-no-img">
+                    <text class="card-title">{{item.title}}</text>
+                    <text class="card-content">{{item.content}}</text>
+                </view>
+            </view>
+            <view wx:if="{{item.user.id}}"
+                class="card-user-container">
+                <image class="card-user-avatar" src="{{item.user.avatar}}" />
+                <view class="card-user-time-container">
+                    <text class="card-user-nickname">{{item.user.nickname}}</text>
+                    <text class="card-date">{{item.timeString}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

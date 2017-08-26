@@ -11,17 +11,9 @@ export const updateDiscoverCache = (newCache: DiscoverPageData, isTop: boolean) 
     if (!discoverCache) {
         discoverCache = newCache
     } else if (isTop) {
-        if (discoverCache.list.length >= 30) { // 存太多怕炸，超过30条也就全清掉吧
-            discoverCache.list = newCache.list
-            discoverCache.topCursor = newCache.topCursor
-            discoverCache.bottomCursor = newCache.bottomCursor
-        } else {
-            discoverCache.list = newCache.list.concat(discoverCache.list)
-            discoverCache.topCursor = newCache.topCursor
-            // 这种情况bottom cursor不变
-        }
-    } else {
-        // 上拉刷新的数据暂时不做缓存
+        // 下拉刷新先全量替换吧，没想到什么好办法更新删除/修改之后的缓存
+        discoverCache.list = newCache.list
+        discoverCache.topCursor = newCache.topCursor
         discoverCache.bottomCursor = newCache.bottomCursor
     }
 
@@ -34,19 +26,12 @@ export const updateDiscoverCache = (newCache: DiscoverPageData, isTop: boolean) 
 
 export const deleteCardFromCache = (cardId) => {
     let list = getDiscoverList() as any
-    console.log(cardId)
-    console.log(cardId === 20)
-    console.log(cardId === '20')
     let updated = false
     if (list && list.length > 0) {
         for (let i = 0; i < list.length; i++) {
             let item = list[i]
             if (item.type === 'card' && item.data) {
-                console.log(item.data)
-                console.log(item.data.id)
-                console.log(parseInt(item.data.id, 10))
                 if (parseInt(item.data.id, 10) === parseInt(cardId, 10)) {
-                    console.log('here')
                     list.splice(i, 1)
                     updated = true
                     break
