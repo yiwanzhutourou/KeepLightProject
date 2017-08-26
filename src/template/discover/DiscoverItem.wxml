@@ -1,0 +1,34 @@
+<template name="discover-item">
+    <view class="common-container">
+        <view wx:if="{{item.type === 'card'}}"
+            class="card-container"
+            data-id="{{item.data.id}}"
+            bindtap="onCardItemTap">
+            <view wx:if="{{item.data.picUrl && item.data.picUrl.length > 0}}"
+                class="card-first-line-container">
+                <view class="card-content-container">
+                    <text class="card-title">{{item.data.title}}</text>
+                    <text class="card-content">{{item.data.content}}</text>
+                </view>
+                <image class="card-img" src="{{item.data.picUrl}}" />
+            </view>
+            <view wx:else class="card-first-line-container"
+                data-id="{{item.data.id}}"
+                bindtap="onCardItemTap">
+                <view class="card-content-container-no-img">
+                    <text class="card-title">{{item.data.title}}</text>
+                    <text class="card-content">{{item.data.content}}</text>
+                </view>
+            </view>
+            <view wx:if="{{item.data.user.id}}"
+                class="card-user-container">
+                <image class="card-user-avatar" src="{{item.data.user.avatar}}" />
+                <view class="card-user-time-container">
+                    <text class="card-user-nickname">{{item.data.user.nickname}}</text>
+                    <text class="card-date">{{item.data.timeString}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

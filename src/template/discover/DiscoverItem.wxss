@@ -1,0 +1,120 @@
+.card-container {
+    width: 100%;
+    height: 300rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.card-first-line-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-second-line-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-content-container {
+    width: 520rpx;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.card-content-container-no-img {
+    width: 690rpx;
+    margin-left: 30rpx;
+    margin-right: 30rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 20rpx;
+}
+
+.card-title {
+    display: -webkit-box;
+    font-size: 35rpx;
+    font-weight: 60;
+    color: #333;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-content {
+    display: -webkit-box;
+    font-size: 26rpx;
+    color: #999;
+    margin-top: 10rpx;
+    line-height: 140%;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.card-img {
+    width: 160rpx;
+    height: 160rpx;
+    margin-right: 30rpx;
+}
+
+.card-book-title {
+    font-size: 24rpx;
+    color: #666;
+    margin-top: 10rpx;
+}
+
+.card-user-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.card-user-avatar {
+    width: 60rpx;
+    height: 60rpx;
+    border-radius: 50%;
+    border: 2rpx solid #eee;
+    margin-left: 40rpx;
+}
+
+.card-user-time-container {
+    width: 560rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 20rpx;
+}
+
+.card-user-nickname {
+    font-size: 24rpx;
+    color: #666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.card-date {
+    font-size: 20rpx;
+    color: #999;
+}

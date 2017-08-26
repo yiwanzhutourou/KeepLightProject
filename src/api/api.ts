@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { CardDetail, ChatData, ChatListData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
+import { CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 // export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -197,6 +197,15 @@ export const bindUser = (code: string, nickname: string, avatar: string,
         'nickname': nickname,
         'avatar': avatar,
     }, success, failure)
+}
+
+export const getDiscoverPageData = (cursor: number, isTop: number,
+    success: (data: DiscoverPageData) => void, failure?: (res?: any) => void) => {
+        let url = getUrl('Card.getDiscoverPageData') + getUrlParam({
+            cursor: cursor,
+            isTop: isTop,
+        })
+        get(url, success, failure)
 }
 
 export const getHomepageData = (userId: string, success: (info: HomepageData) => void, failure?: (res?: any) => void) => {

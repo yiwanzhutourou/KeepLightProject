@@ -226,3 +226,15 @@ export type MyCardItem = {
     createTime: number,
     timeString?: string,
 }
+
+export type DiscoverItem = {
+    type: string,
+    data: any,
+}
+
+export type DiscoverPageData = {
+    list: Array<DiscoverItem>,
+    topCursor: number,
+    bottomCursor: number,
+    showPost: boolean,
+}

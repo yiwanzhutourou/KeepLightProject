@@ -1,6 +1,8 @@
 <template name="load-more">
     <view wx:if="{{showLoadingMore}}" class="loading-container">
         <text wx:if="{{noMore}}" class="loading-text">没有更多了</text>
+        <view wx:elif="{{showClickLoadMore}}" class="loading-text"
+            bindtap="onLoadMore">点击加载更多</view>
         <view wx:else class="loading">
             <view class="dot">
             </view>

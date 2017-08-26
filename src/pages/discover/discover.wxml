@@ -1,6 +1,32 @@
 <view class="container">
-    <image class="working-image" src="../../resources/img/icon_working.png" />
-    <text class="working-text">Working on it...</text>
-    <button class="post-button"
-        bindtap="onPost">写读书卡片</button>
+    <view class="detail-container">
+        <view wx:if="{{showList}}" class="list-container">
+            <block wx:for="{{discoverList}}" wx:key="id">
+                <import src="../../template/discover/DiscoverItem.wxml" />
+                <template is="discover-item"
+                    data="{{item}}" />
+            </block>
+            <view wx:if="{{showLoadingMore}}" class="discover-loading-more-container">
+                <import src="../../template/widget/LoadMore.wxml" />
+                <template is="load-more"
+                    data="{{showLoadingMore, showClickLoadMore, noMore}}" />
+            </view>
+        </view>
+        <view wx:elif="{{showEmpty}}" class="empty_container">
+            <image class="empty-pic" src="../../resources/img/icon_empty_room.png" />
+            <text class="empty_title">暂无数据</text>
+        </view>
+        <view wx:elif="{{showNetworkError}}" class="empty_container">
+            <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
+            <text class="empty_title">网络连接失败啦</text>
+            <button class="empty_action"
+                hover-class="empty_action-hover" bindtap="onReload">点击重新加载</button>
+        </view>
+        <view wx:if="{{showPostBtn}}"
+            class="post-container"
+            hover-class="post-container-hover"
+            bindtap="onPost">
+            <image class="post-img" src="../../resources/img/icon_post.png" />
+        </view>
+    </view>
 </view>

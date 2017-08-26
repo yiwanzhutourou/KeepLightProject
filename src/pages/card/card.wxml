@@ -1,7 +1,9 @@
 <view class="container">
     <view class="title-container">
         <text wx:if="{{cardDetail.title}}" class="card-title">{{cardDetail.title}}</text>
-        <view class="user-container">
+        <view class="user-container"
+            data-user="{{cardDetail.user.id}}"
+            bindtap="onUserTap">
             <image class="user-avatar" src="{{cardDetail.user.avatar}}" />
             <view class="user-time-container">
                 <text class="user-nickname">{{cardDetail.user.nickname}}</text>

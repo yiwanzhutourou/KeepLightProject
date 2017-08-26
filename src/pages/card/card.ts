@@ -2,6 +2,7 @@ import { deleteCardById, getCardById } from '../../api/api'
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { CardDetail } from '../../api/interfaces'
+import { deleteCardFromCache } from '../../utils/discoverCache'
 
 let cardPage
 
@@ -51,6 +52,7 @@ Page({
         if (confirm) {
           showLoading('正在删除')
           deleteCardById(cardId, (result: string) => {
+              deleteCardFromCache(cardId)
               hideLoading()
               wx.navigateBack({
                   delta: 1,
@@ -63,6 +65,13 @@ Page({
           })
         }
     })
+  },
+
+  onUserTap: (e) => {
+      let user = e.currentTarget.dataset.user
+      wx.navigateTo({
+          url: '../homepage/homepage2?user=' + user,
+      })
   },
 
   onModify: (e) => {
