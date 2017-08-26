@@ -151,6 +151,8 @@ export type SettingsData = {
 }
 
 export type MinePageData = {
+    nickname: string,
+    avatar: string,
     bookCount: number,
     cardCount: number,
     followerCount: number,

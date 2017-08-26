@@ -12,7 +12,7 @@ let minePage
 
 Page({
   data: {
-    userInfo: {},
+    user: null,
     mineItems: [
         {
             id: SETTING_MY_BOOKS,
@@ -46,9 +46,6 @@ Page({
 
   onLoad: function(options: any): void {
       minePage = this
-      minePage.setData({
-          userInfo: getUserInfo(),
-      })
   },
 
   onShow: function(): void {
@@ -62,6 +59,10 @@ Page({
             }
         })
         minePage.setData({
+            user: {
+                nickname: result.nickname,
+                avatar: result.avatar,
+            },
             mineItems: mines,
             followingNumber: result.followingCount,
             followerNumber: result.followerCount,

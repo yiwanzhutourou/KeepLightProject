@@ -1,0 +1,5 @@
+<view class="container-no-line">
+    <view class="book-detail-container">
+        <text class="book-detail-text">{{detailContent}}</text>
+    </view>
+</view>

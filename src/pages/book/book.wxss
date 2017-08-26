@@ -100,47 +100,6 @@
     width: 490rpx;
 }
 
-.button-container {
-    width: 200rpx;
-}
-
-.borrow-book-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60rpx;
-    line-height: 60rpx;
-    font-size: 30rpx;
-    color: #f8b62d;
-    background: #fff;
-    border: 1rpx solid #f8b62d;
-}
-
-.borrow-book-button-hover {
-    color: #fff;
-    background: #f8b62d;
-}
-
-.borrow-book-button::after {
-    display: none;
-}
-
-.added-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60rpx;
-    line-height: 60rpx;
-    font-size: 30rpx;
-    color: #aaa;
-    background: #fff;
-    border: 2rpx solid #aaa;
-}
-
-.added-button::after {
-    display: none;
-}
-
 .subinfo-text {
     display: block;
     font-size: 30rpx;
@@ -195,42 +154,4 @@
 
 .space-holder {
     height: 100rpx;
-}
-
-.show-detail-dialog {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-    width: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.show-detial-scroller {
-    width: 80%;
-    background: #fff;
-    border: 1rpx solid #eee;
-    border-radius: 8rpx;
-    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
-    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-    padding: 30rpx 50rpx;
-    white-space: nowrap;
-}
-
-.show-detail-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: nowrap;
-}
-
-.show-detail-dialog-content {
-    font-size: 30rpx;
-    color: #333;
-    line-height: 160%;
 }

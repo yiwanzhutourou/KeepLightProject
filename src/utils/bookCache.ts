@@ -4,6 +4,18 @@ const BOOK_LIST_KEY = 'user_book_list_cache'
 
 let borrowData: any
 let postData: any
+let bookDetailData: any
+
+export const setBookDetailData = (title: string, content: string) => {
+    bookDetailData = {
+        title: title,
+        content: content,
+    }
+}
+
+export const getBookDetailData = () => {
+    return bookDetailData
+}
 
 export const getBorrowData = () => {
     return borrowData

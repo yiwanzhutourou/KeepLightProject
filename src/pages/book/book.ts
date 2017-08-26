@@ -2,6 +2,7 @@ import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading
 
 import { getBookDetails } from '../../api/api'
 import { parseAuthor } from '../../utils/bookUtils'
+import { setBookDetailData } from '../../utils/bookCache'
 
 let bookPage
 
@@ -9,8 +10,6 @@ Page({
   data: {
       screenHeight: 0,
       bookDetail: null,
-      showDialog: false,
-      dialogContent: '',
   },
 
   onLoad: function(option: any): void {
@@ -64,19 +63,14 @@ Page({
   },
 
   onShowContent: (e) => {
+      let bookTitle = bookPage.data.bookDetail.title
+      let title = e.currentTarget.dataset.title
       let content = e.currentTarget.dataset.content
       if (content) {
-          bookPage.setData({
-              showDialog: true,
-              dialogContent: content,
+          setBookDetailData(bookTitle + ' - ' + title, content)
+          wx.navigateTo({
+              url: '../book/bookDetail',
           })
       }
-  },
-
-  onDialogTap: (e) => {
-    bookPage.setData({
-        showDialog: false,
-        dialogContent: '',
-    })
   },
 })
