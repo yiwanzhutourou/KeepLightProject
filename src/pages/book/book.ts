@@ -162,4 +162,13 @@ Page({
           url: '../card/card?id=' + id,
       })
   },
+
+  onShareAppMessage: () => {
+      let bookDetail = bookPage.data.bookDetail
+      let isbn = bookPage.data.isbn
+      return {
+          title: bookDetail.title,
+          path: 'pages/book/book?isbn=' + isbn,
+      }
+  },
 })
