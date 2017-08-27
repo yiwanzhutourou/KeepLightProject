@@ -155,4 +155,11 @@ Page({
           url: '../card/post',
       })
   },
+
+  onCardItemTap: (e) => {
+      let id = e.currentTarget.dataset.id
+      wx.navigateTo({
+          url: '../card/card?id=' + id,
+      })
+  },
 })

@@ -90,7 +90,7 @@ Page({
   },
 
   postNew: (title: string, content: string, bookIsbn: string, imgPath: string) => {
-    if (!imgPath && imgPath !== '') {
+    if (imgPath && imgPath !== '') {
         // upload image first
         initQiniu()
         getUploadToken((token: string) => {
@@ -123,7 +123,7 @@ Page({
   postModify: (title: string, content: string, imgPath: string) => {
       let cardId = postPage.data.id
       let imageModified = postPage.data.imageModified
-      if (imageModified && !imgPath && imgPath !== '') {
+      if (imageModified && imgPath && imgPath !== '') {
           // upload image first
           initQiniu()
           getUploadToken((token: string) => {

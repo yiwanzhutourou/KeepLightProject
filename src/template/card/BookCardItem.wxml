@@ -11,9 +11,7 @@
                 </view>
                 <image class="card-img" src="{{item.picUrl}}" />
             </view>
-            <view wx:else class="card-first-line-container"
-                data-id="{{item.id}}"
-                bindtap="onCardItemTap">
+            <view wx:else class="card-first-line-container">
                 <view class="card-content-container-no-img">
                     <text class="card-title">{{item.title}}</text>
                     <text class="card-content">{{item.content}}</text>
