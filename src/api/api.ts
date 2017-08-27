@@ -474,7 +474,7 @@ export const newBookCard = (
 }
 
 export const modifyBookCard = (cardId: number,
-        content: string, title: string, picUrl: string,
+        content: string, title: string, picUrl: string, picModified: number,
         success: (id: number) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('Card.modify')
@@ -483,6 +483,7 @@ export const modifyBookCard = (cardId: number,
             'content': content,
             'title': title,
             'picUrl': picUrl,
+            'picModified': picModified,
         }, success, failure)
     }, failure)
 }

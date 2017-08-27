@@ -40,7 +40,7 @@ Page({
             isModify: data.isModify,
             postText: data.isModify ? '修改' : '发布',
             book: data.book,
-            imgPath: data.picUrl,
+            imgPath: data.picUrl ? data.picUrl : '',
             defaultTitle: data.title,
             defaultContent: data.content,
         })
@@ -64,6 +64,7 @@ Page({
   onDeleteImage: (e) => {
       postPage.setData({
           imgPath: '',
+          imageModified: true,
       })
   },
 
@@ -130,7 +131,7 @@ Page({
               if (token) {
                   uploadFile(imgPath, (success) => {
                       let imgUrl = success.imageURL
-                      postPage.modifyBookCard(cardId, content, title, imgUrl)
+                      postPage.modifyBookCard(cardId, content, title, imgUrl, 1)
                   }, (fail) => {
                       hideLoading()
                       showErrDialog('上传图片失败，请稍后再试')
@@ -149,7 +150,7 @@ Page({
               }
           })
       } else {
-          postPage.modifyBookCard(cardId, content, title, '')
+          postPage.modifyBookCard(cardId, content, title, '', imageModified ? 1 : 0)
       }
   },
 
@@ -169,8 +170,8 @@ Page({
         })
   },
 
-  modifyBookCard: (cardId: number, content: string, title: string, picUrl: string) => {
-    modifyBookCard(cardId, content, title, picUrl,
+  modifyBookCard: (cardId: number, content: string, title: string, picUrl: string, picModified: number) => {
+    modifyBookCard(cardId, content, title, picUrl, picModified,
         (id: number) => {
             hideLoading()
             wx.navigateBack({
