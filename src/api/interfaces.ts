@@ -238,5 +238,7 @@ export type DiscoverPageData = {
     list: Array<DiscoverItem>,
     topCursor: number,
     bottomCursor: number,
+    bookTopCursor: number,
+    bookBottomCursor: number,
     showPost: boolean,
 }

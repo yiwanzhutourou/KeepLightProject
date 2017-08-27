@@ -27,6 +27,31 @@
                 </view>
             </view>
         </view>
+        <view wx:elif="{{item.type === 'book'}}"
+            class="book-container">
+            <view class="book-first-line-container"
+                data-isbn="{{item.data.isbn}}"
+                bindtap="onBookItemTap">
+                <image class="book-img" src="{{item.data.cover}}" mode="aspectFit" />
+                <view class="book-content-container">
+                    <text class="book-title">{{item.data.title}}</text>
+                    <text class="book-author">{{item.data.author}}</text>
+                    <text wx:if="{{item.data.summary}}" class="book-summary">{{item.data.summary}}</text>
+                </view>
+            </view>
+            <!-- 这里样式和卡片是一样的 -->
+            <view wx:if="{{item.data.user.id}}"
+                class="card-user-container"
+                data-user="{{item.data.user.id}}"
+                bindtap="onUserTap">
+                <image class="card-user-avatar" src="{{item.data.user.avatar}}" />
+                <view class="card-user-time-container">
+                    <text class="card-user-nickname">{{item.data.user.nickname}}</text>
+                    <text class="card-date">{{item.data.timeString}}</text>
+                    <view class="book-type-title">新增图书</view>
+                </view>
+            </view>
+        </view>
         <view class="item-divider" />
     </view>
 </template>

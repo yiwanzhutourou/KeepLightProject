@@ -1,9 +1,10 @@
 import { DiscoverItem, DiscoverPageData } from '../../api/interfaces'
-import { getBottomCursor, getDiscoverList, updateDiscoverCache } from '../../utils/discoverCache'
+import { getBookBottomCursor, getBottomCursor, getDiscoverList, updateDiscoverCache } from '../../utils/discoverCache'
 import { hideLoading, parseTimeToDate, showErrDialog, showLoading } from '../../utils/utils'
 
 import { clearPostModifyData } from '../../utils/postCache'
 import { getDiscoverPageData } from '../../api/api'
+import { parseAuthor } from '../../utils/bookUtils'
 
 const DISCOVER_REFRESH_INTERVAL = 5 * 60 * 1000
 
@@ -17,6 +18,8 @@ const formatList = (items: Array<DiscoverItem>) => {
             if (item.data.content) {
                 item.data.content = item.data.content.replace(/\n/g, ' ')
             }
+            item.data.timeString = parseTimeToDate(item.data.createTime)
+        } else if (item.type === 'book' && item.data) {
             item.data.timeString = parseTimeToDate(item.data.createTime)
         }
      })
@@ -35,6 +38,7 @@ Page({
       showClickLoadMore: true,
       showPostBtn: false,
       bottomCursor: -1,
+      bookBottomCursor: -1,
   },
 
   onLoad: function(options: any): void {
@@ -53,9 +57,10 @@ Page({
 
   onPullDownRefresh: (e) => {
       lastLoadDiscoverTime = new Date().getTime()
-      getDiscoverPageData(0, 1, (data: DiscoverPageData) => {
+      getDiscoverPageData(0, 0, 1, (data: DiscoverPageData) => {
           wx.stopPullDownRefresh()
           // 更新缓存之后直接从缓存里读
+          data.list = formatList(data.list)
           updateDiscoverCache(data, true)
           discoverPage.loadDataFromCache()
           discoverPage.hideLoadingMore(false)
@@ -75,7 +80,8 @@ Page({
   onLoadMore: (e) => {
       discoverPage.showLoadingMore()
       let bottomCursor = discoverPage.data.bottomCursor
-      getDiscoverPageData(bottomCursor, 0, (data: DiscoverPageData) => {
+      let bookBottomCursor = discoverPage.data.bookBottomCursor
+      getDiscoverPageData(bottomCursor, bookBottomCursor, 0, (data: DiscoverPageData) => {
           // 上拉不更新缓存
           let newList = data ? formatList(data.list) : null
           if (newList) {
@@ -84,6 +90,7 @@ Page({
               discoverPage.setData({
                   discoverList: discoverList,
                   bottomCursor: data.bottomCursor,
+                  bookBottomCursor: data.bookBottomCursor,
                   showEmpty: discoverList.length == 0,
                   showList: discoverList.length > 0,
                   showClickLoadMore: !noMore,
@@ -103,9 +110,10 @@ Page({
   loadData: () => {
       lastLoadDiscoverTime = new Date().getTime()
       showLoading('正在加载')
-      getDiscoverPageData(0, 1, (data: DiscoverPageData) => {
+      getDiscoverPageData(0, 0, 1, (data: DiscoverPageData) => {
           hideLoading()
           // 更新缓存之后直接从缓存里读
+          data.list = formatList(data.list)
           updateDiscoverCache(data, true)
           discoverPage.loadDataFromCache()
           discoverPage.hideLoadingMore(false)
@@ -125,10 +133,12 @@ Page({
   loadDataFromCache: () => {
     let cachedList = getDiscoverList()
     let bottomCursor = getBottomCursor()
+    let bookBottomCursor = getBookBottomCursor()
     if (cachedList) {
         discoverPage.setData({
-            discoverList: formatList(cachedList),
+            discoverList: cachedList,
             bottomCursor: bottomCursor,
+            bookBottomCursor: bookBottomCursor,
             showEmpty: cachedList.length == 0,
             showList: cachedList.length > 0,
         })
@@ -150,6 +160,20 @@ Page({
       let id = e.currentTarget.dataset.id
       wx.navigateTo({
           url: '../card/card?id=' + id,
+      })
+  },
+
+  onBookItemTap: (e) => {
+      let isbn = e.currentTarget.dataset.isbn
+      wx.navigateTo({
+          url: '../book/book?isbn=' + isbn,
+      })
+  },
+
+  onUserTap: (e) => {
+      let user = e.currentTarget.dataset.user
+      wx.navigateTo({
+          url: '../homepage/homepage2?user=' + user,
       })
   },
 

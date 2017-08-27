@@ -199,11 +199,12 @@ export const bindUser = (code: string, nickname: string, avatar: string,
     }, success, failure)
 }
 
-export const getDiscoverPageData = (cursor: number, isTop: number,
+export const getDiscoverPageData = (cursor: number, bookCursor: number, isTop: number,
     success: (data: DiscoverPageData) => void, failure?: (res?: any) => void) => {
         let url = getUrl('Card.getDiscoverPageData') + getUrlParam({
             cursor: cursor,
             isTop: isTop,
+            bookCursor: bookCursor,
         })
         get(url, success, failure)
 }

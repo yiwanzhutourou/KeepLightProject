@@ -15,6 +15,7 @@ export const updateDiscoverCache = (newCache: DiscoverPageData, isTop: boolean) 
         discoverCache.list = newCache.list
         discoverCache.topCursor = newCache.topCursor
         discoverCache.bottomCursor = newCache.bottomCursor
+        discoverCache.bookBottomCursor = newCache.bookBottomCursor
     }
 
     // 保存到disk
@@ -74,6 +75,16 @@ export const getBottomCursor = () => {
     }
     if (discoverCache) {
         return discoverCache.bottomCursor
+    }
+    return -1
+}
+
+export const getBookBottomCursor = () => {
+    if (!discoverCache) {
+        discoverCache = wx.getStorageSync(CACHE_DISCOVER_PAGE)
+    }
+    if (discoverCache) {
+        return discoverCache.bookBottomCursor
     }
     return -1
 }
