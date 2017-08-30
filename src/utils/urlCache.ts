@@ -9,10 +9,14 @@ let urlList: Array<string>
 let showLanding: number = -1
 let showGuide: number = -1
 let minePageCache: MinePageData
-let homeSettingData: any
+let homeSettingData: any = null
 
 export const getHomeSettingData = () => {
     return homeSettingData
+}
+
+export const clearHomeSettingData = () => {
+    homeSettingData = null
 }
 
 export const setHomeSettingData = (newData) => {

@@ -49,9 +49,9 @@
                     <text class="home-setting-title">位置</text>
                 </view>
                 <view class="home-setting-right-container">
-                    <view wx:if="{{homeData.addressText}}"
+                    <view wx:if="{{addressText}}"
                         class="address-text">
-                        {{homeData.addressText}}
+                        {{addressText}}
                     </view>
                     <image class="arrow"
                         mode="widthFix"

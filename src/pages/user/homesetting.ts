@@ -1,10 +1,10 @@
+import { clearHomeSettingData, getHomeSettingData } from '../../utils/urlCache'
 import { getAddressCities, getUploadToken, updateHomeData } from '../../api/api'
 import { hideLoading, showErrDialog, showLoading, trim } from '../../utils/utils'
 import { initUploader, uploadFile } from '../../utils/qiniuUploader'
 
 import { Address } from '../../api/interfaces'
 import { getAddressDisplayText } from '../../utils/addrUtils'
-import { getHomeSettingData } from '../../utils/urlCache'
 
 let homesettingPage
 
@@ -21,22 +21,26 @@ Page({
   data: {
       homeData: {},
       imageModified: false,
+      addressText: '',
   },
 
   onLoad: function(options: any): void {
       homesettingPage = this
-      homesettingPage.setData({
-          homeData: getHomeSettingData(),
-      })
+
+      let homeData = getHomeSettingData()
+      if (homeData) {
+          homesettingPage.setData({
+              homeData: homeData,
+              addressText: homeData.addressText,
+          })
+          clearHomeSettingData()
+      }
   },
 
   onShow: function (): void {
       getAddressCities((cities: Array<Address>) => {
-          let homeData = homesettingPage.data.homeData
-          homeData.addressText = getAddressDisplayText(cities)
           homesettingPage.setData({
-              homeData: homeData,
-              imageModified: true,
+              addressText: getAddressDisplayText(cities),
           })
       }, (failure) => {
           // do nothing
