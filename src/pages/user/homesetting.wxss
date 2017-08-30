@@ -1,0 +1,117 @@
+.form {
+    width: 100%;
+}
+
+.form-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.home-setting-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.home-setting-section-container {
+    width: 94%;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1rpx solid #eee;
+}
+
+.home-setting-section-container2 {
+    width: 94%;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1rpx solid #eee;
+}
+
+.home-setting-title-container {
+    width: 16%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-setting-title {
+    font-size: 30rpx;
+    color: #999;
+}
+
+.home-setting-right-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.home-setting-avatar {
+    width: 120rpx;
+    height: 120rpx;
+    border-radius: 50%;
+    margin-right: 20rpx;
+}
+
+.nickname-input {
+    width: 84%;
+    font-size: 30rpx;
+    color: #444;
+    padding: 0;
+    margin: 0;
+}
+
+.nickname-input-placeholder {
+    font-size: 30rpx;
+    color: #aaa;
+}
+
+.intro-textarea {
+    width: 84%;
+    font-size: 30rpx;
+    color: #444;
+    padding: 0;
+    margin: 0;
+}
+
+.intro-textarea-placeholder {
+    font-size: 30rpx;
+    color: #aaa;
+}
+
+.address-text {
+    width: 400rpx;
+    font-size: 30rpx;
+    color: #444;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 20rpx;
+}
+
+.submit-button {
+    width: 90%;
+    background-color: #f8b62d;
+    color: #fff;
+    margin-top: 200rpx;
+}
+
+.submit-button-hover {
+    background-color: rgba(248, 182, 45, 0.6);
+}

@@ -17,8 +17,8 @@ import {
 import { CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-// export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
-export const DEFAULT_BASE_URL = 'http://127.0.0.1/api/'
+export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+// export const DEFAULT_BASE_URL = 'http://127.0.0.1/api/'
 export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
 
 const URL_KEY = 'url_key'
@@ -273,6 +273,18 @@ export const setUserIntro = (intro: string, success: () => void, failure?: (res?
     }, failure)
 }
 
+export const updateHomeData = (nickname: string, intro: string, avatar: string,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.updateHomeData')
+        post(url, {
+            'nickname': nickname,
+            'intro': intro,
+            'avatar': avatar,
+        }, success, failure)
+    }, failure)
+}
+
 export const getUserIntro = (success: (info: string) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.info')
@@ -363,6 +375,14 @@ export const getAddress = (success: (addresses: Array<Address>) => void,
                             failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getMyAddress')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getAddressCities = (success: (addresses: Array<Address>) => void,
+                            failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getAddressCities')
         get(url, success, failure)
     }, failure)
 }

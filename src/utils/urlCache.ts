@@ -1,11 +1,38 @@
+import { MinePageData } from '../api/interfaces'
 
 const URL_LIST_KEY = 'url_list'
 const SHOW_LANDING_KEY = 'show_landing'
 const SHOW_GUIDE_KEY = 'show_guide'
+const MINE_PAGE_DATA_KEY = 'mine_page_data'
 
 let urlList: Array<string>
 let showLanding: number = -1
 let showGuide: number = -1
+let minePageCache: MinePageData
+let homeSettingData: any
+
+export const getHomeSettingData = () => {
+    return homeSettingData
+}
+
+export const setHomeSettingData = (newData) => {
+    homeSettingData = newData
+}
+
+export const getMinePageCache = () => {
+    if (!minePageCache) {
+        minePageCache = wx.getStorageSync(MINE_PAGE_DATA_KEY)
+    }
+    return minePageCache
+}
+
+export const updateMinePageCache = (newData: MinePageData) => {
+    minePageCache = newData
+    wx.setStorage({
+        key: MINE_PAGE_DATA_KEY,
+        data: minePageCache,
+    })
+}
 
 export const getUrlList = () => {
     if (!urlList) {

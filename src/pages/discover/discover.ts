@@ -1,5 +1,5 @@
 import { DiscoverItem, DiscoverPageData } from '../../api/interfaces'
-import { getBookBottomCursor, getBottomCursor, getDiscoverList, updateDiscoverCache } from '../../utils/discoverCache'
+import { getBookBottomCursor, getBottomCursor, getDiscoverList, getShowPostBtn, updateDiscoverCache } from '../../utils/discoverCache'
 import { hideLoading, parseTimeToDate, showErrDialog, showLoading } from '../../utils/utils'
 
 import { clearPostModifyData } from '../../utils/postCache'
@@ -48,6 +48,9 @@ Page({
   },
 
   onShow: function (): void {
+      discoverPage.setData({
+          showPostBtn: getShowPostBtn(),
+      })
       // 五分钟自动拉一次数据
       let now = new Date().getTime()
       if (lastLoadDiscoverTime === -1 || (now - lastLoadDiscoverTime) > DISCOVER_REFRESH_INTERVAL) {

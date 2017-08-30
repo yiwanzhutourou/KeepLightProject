@@ -1,0 +1,69 @@
+<view class="container">
+    <form class="form" bindsubmit="formSubmit">
+        <view class="home-setting-container">
+            <view class="home-setting-section-container"
+                bindtap="onSettingAvatar">
+                <view class="home-setting-title-container">
+                    <text class="home-setting-title">头像</text>
+                </view>
+                <view class="home-setting-right-container">
+                    <image wx:if="{{homeData.avatar}}"
+                        class="home-setting-avatar"
+                        mode="aspectFill"
+                        src="{{homeData.avatar}}" />
+                    <image class="arrow"
+                        mode="widthFix"
+                        src="../../resources/img/arrow.png" />
+                </view>
+            </view>
+
+            <view class="home-setting-section-container2">
+                <view class="home-setting-title-container">
+                    <text class="home-setting-title">昵称</text>
+                </view>
+                <textarea class="nickname-input"
+                    name="nickname"
+                    value="{{homeData.nickname}}"
+                    placeholder="昵称"
+                    placeholder-class="nickname-input-placeholder"
+                    maxlength="20"
+                    auto-height />
+            </view>
+
+            <view class="home-setting-section-container2">
+                <view class="home-setting-title-container">
+                    <text class="home-setting-title">简介</text>
+                </view>
+                <textarea class="intro-textarea"
+                    name="intro"
+                    value="{{homeData.intro}}"
+                    placeholder="请简短介绍你的书房，最多可以输入70个字"
+                    placeholder-class="intro-textarea-placeholder"
+                    maxlength="70"
+                    auto-height />
+            </view>
+
+            <view class="home-setting-section-container"
+                bindtap="onSettingAddress">
+                <view class="home-setting-title-container">
+                    <text class="home-setting-title">位置</text>
+                </view>
+                <view class="home-setting-right-container">
+                    <view wx:if="{{homeData.addressText}}"
+                        class="address-text">
+                        {{homeData.addressText}}
+                    </view>
+                    <image class="arrow"
+                        mode="widthFix"
+                        src="../../resources/img/arrow.png" />
+                </view>
+            </view>
+
+            <button class="submit-button"
+                hover-class="submit-button-hover"
+                formType="submit">
+                保存
+            </button>
+        </view>
+    </form>
+</view>

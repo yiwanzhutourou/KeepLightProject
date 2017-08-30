@@ -69,6 +69,16 @@ export const getTopCursor = () => {
     return -1
 }
 
+export const getShowPostBtn = () => {
+    if (!discoverCache) {
+        discoverCache = wx.getStorageSync(CACHE_DISCOVER_PAGE)
+    }
+    if (discoverCache) {
+        return discoverCache.showPost
+    }
+    return true
+}
+
 export const getBottomCursor = () => {
     if (!discoverCache) {
         discoverCache = wx.getStorageSync(CACHE_DISCOVER_PAGE)

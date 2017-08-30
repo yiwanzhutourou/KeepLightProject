@@ -2,7 +2,7 @@ import { Book, GuideData, HomepageData, MyCardItem } from '../../api/interfaces'
 import { addAddress, borrowBook, checkLoginFirstLaunch, getBookList, getGuideData, getHomepageData, getMyHomepageData, getUserInfo, removeBook, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
-import { setShowGuide, shouldShowGuide } from '../../utils/urlCache'
+import { setHomeSettingData, setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
 import { verifyReg } from '../../utils/reg'
@@ -150,7 +150,7 @@ Page({
       homepage.setData({
         userId: result.userId,
         homepageData: {
-          nickName: result.nickname + '的书房',
+          nickname: result.nickname,
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
@@ -233,7 +233,7 @@ Page({
   onShareAppMessage: () => {
     if (homepage.data.homepageData) {
       return {
-        title: homepage.data.homepageData.nickName,
+        title: homepage.data.homepageData.nickname,
         path: 'pages/homepage/homepage2?user=' + homepage.data.userId,
       }
     } else {
@@ -346,6 +346,19 @@ Page({
     let userId = homepage.data.userId
     wx.navigateTo({
         url: '../card/usercards?user=' + userId,
+    })
+  },
+
+  onEditHome: (e) => {
+    let data = homepage.data.homepageData
+    setHomeSettingData({
+        nickname: data.nickname,
+        avatar: data.avatarUrl,
+        intro: data.userIntro,
+        addressText: homepage.data.addressText,
+    })
+    wx.navigateTo({
+        url: '../user/homesetting',
     })
   },
 })

@@ -1,4 +1,5 @@
 import { getBorrowRequestCount, getMinePageData, getUserInfo } from '../../api/api'
+import { getMinePageCache, updateMinePageCache } from '../../utils/urlCache'
 
 import { MinePageData } from '../../api/interfaces'
 
@@ -49,24 +50,35 @@ Page({
   },
 
   onShow: function(): void {
+      // 先从cache里读
+      let minePageCache = getMinePageCache()
+      if (minePageCache) {
+          minePage.updateData(minePageCache)
+      }
+
       getMinePageData((result: MinePageData) => {
-        let mines = minePage.data.mineItems
-        mines.forEach((item) => {
-            if (item.id === SETTING_MY_BOOKS) {
-                item.subInfo = result.bookCount + ' 本'
-            } else if (item.id === SETTING_MY_CARDS) {
-                item.subInfo = result.cardCount + ' 个'
-            }
-        })
-        minePage.setData({
-            user: {
-                nickname: result.nickname,
-                avatar: result.avatar,
-            },
-            mineItems: mines,
-            followingNumber: result.followingCount,
-            followerNumber: result.followerCount,
-        })
+          minePage.updateData(result)
+          updateMinePageCache(result)
+    })
+  },
+
+  updateData: (data: MinePageData) => {
+    let mines = minePage.data.mineItems
+    mines.forEach((item) => {
+        if (item.id === SETTING_MY_BOOKS) {
+            item.subInfo = data.bookCount + ' 本'
+        } else if (item.id === SETTING_MY_CARDS) {
+            item.subInfo = data.cardCount + ' 个'
+        }
+    })
+    minePage.setData({
+        user: {
+            nickname: data.nickname,
+            avatar: data.avatar,
+        },
+        mineItems: mines,
+        followingNumber: data.followingCount,
+        followerNumber: data.followerCount,
     })
   },
 

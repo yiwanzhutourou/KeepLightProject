@@ -89,11 +89,14 @@
             <view class="user-content-container">
                 <view class="user-nick-container">
                     <view class="user-text-container">
-                        <text wx:if="{{homepageData.nickName}}"
-                            class="user-nickname">{{homepageData.nickName}}</text>
+                        <text wx:if="{{homepageData.nickname}}"
+                            class="user-nickname">{{homepageData.nickname}}的书房</text>
                         <text wx:if="{{addressText}}"
                             class="user-address">{{addressText}}</text>
                     </view>
+                    <view class="edit-home-btn"
+                        hover-class="edit-home-btn-hover"
+                        bindtap="onEditHome">编辑我的书房</view>
                 </view>
                 <view wx:if="{{homepageData.userIntro !== ''}}" class="user-intro-container">
                     <text class="user-intro">{{homepageData.userIntro}}</text>
