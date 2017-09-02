@@ -3,6 +3,7 @@ import { getUploadToken, modifyBookCard, newBookCard } from '../../api/api'
 import { initUploader, uploadFile } from '../../utils/qiniuUploader'
 
 import { getPostModifyData } from '../../utils/postCache'
+import { updateNeedRefreshCard } from '../../utils/shareData'
 
 let postPage
 
@@ -174,6 +175,7 @@ Page({
     modifyBookCard(cardId, content, title, picUrl, picModified,
         (id: number) => {
             hideLoading()
+            updateNeedRefreshCard(true)
             wx.navigateBack({
                 delta: 1,
             })

@@ -39,8 +39,7 @@
                     value="{{homeData.intro}}"
                     placeholder="请简短介绍你的书房，最多可以输入70个字"
                     placeholder-class="intro-textarea-placeholder"
-                    maxlength="70"
-                    auto-height />
+                    maxlength="70" />
             </view>
 
             <view class="home-setting-section-container"

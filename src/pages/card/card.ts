@@ -1,5 +1,6 @@
 import { deleteCardById, getCardById } from '../../api/api'
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { needRefreshCard, updateNeedRefreshCard } from '../../utils/shareData'
 
 import { CardDetail } from '../../api/interfaces'
 import { deleteCardFromCache } from '../../utils/discoverCache'
@@ -16,6 +17,7 @@ Page({
   data: {
       cardId: -1,
       cardDetail: null,
+      fromList: true,
   },
 
   onLoad: function(option: any): void {
@@ -28,12 +30,24 @@ Page({
     } else {
         cardPage.setData({
             cardId: option.id,
+            fromList: option.fromList ? true : false,
             showPostSuccess: option.showPostSuccess,
         })
+        cardPage.loadData()
     }
   },
 
   onShow: function (): void {
+      if (needRefreshCard()) {
+          updateNeedRefreshCard(false)
+          cardPage.setData({
+              showPostSuccess: false,
+          })
+          cardPage.loadData()
+      }
+  },
+
+  loadData: () => {
     let cardId = cardPage.data.cardId
     if (!cardId || cardId < 0) {
         return
@@ -102,7 +116,7 @@ Page({
     return {
       title: cardDetail && cardDetail.user.nickname ?
                 cardDetail.user.nickname + '的读书卡片' : '有读书房读书卡片',
-      path: 'pages/card/card?id=' + cardDetail.id,
+      path: 'pages/card/card?id=' + cardDetail.id + '&fromList=1',
     }
   },
 })

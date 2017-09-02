@@ -78,7 +78,6 @@
 .content-container {
     width: 660rpx;
     margin-top: 10rpx;
-    margin-bottom: 100rpx;
 }
 
 .card-content {
@@ -148,4 +147,64 @@
 
 .bottom-btn::after {
     display: none;
+}
+
+.card-bottom-space-holder {
+    width: 100%;
+    height: 130rpx;
+}
+
+.book-container {
+    height: 180rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+    border: 1rpx solid #aaa;
+    border-radius: 8rpx;
+    margin-top: 30rpx;
+}
+
+.book-detail-container {
+    width: 480rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15rpx;
+}
+
+.book-title-extra {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-title {
+    font-size: 35rpx;
+    color: #333;
+    margin-top: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-author {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-pic {
+    width: 120rpx;
+    height: 120rpx;
 }

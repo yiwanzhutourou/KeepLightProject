@@ -30,9 +30,10 @@
         </view>
     </view>
 
-    <view class="refresh-container" bindtap="onRefresh">
+    <view class="refresh-container"
+        hover-class="refresh-container-hover"
+        bindtap="onRefresh">
         <image class="refresh-icon" src="../../resources/img/icon_refresh.png" />
-        <text class="refresh-text">刷新</text>
     </view>
     
     <scroll-view

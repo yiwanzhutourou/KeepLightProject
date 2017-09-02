@@ -97,7 +97,7 @@
 .send-container {
     font-size: 24rpx;
     color: #fff;
-    width: 100rpx;
+    width: 120rpx;
     height: 56rpx;
     margin-bottom: 22rpx;
     background: #f8b62d;
@@ -190,25 +190,29 @@
 
 .refresh-container {
     z-index: 10;
+    width: 80rpx;
+    height: 80rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     bottom: 140rpx;
     right: 40rpx;
-    background: rgba(255, 255, 255, 0.5);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: 1rpx solid #fafafa;
-    border-radius: 8rpx;
+    background: #f8b62d;
+    border-radius: 50%;
     -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
     -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
     box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-    padding: 20rpx;
+    opacity: 0.6;
+}
+
+.refresh-container-hover {
+    opacity: 0.8;
 }
 
 .refresh-icon {
-    width: 60rpx;
-    height: 60rpx;
+    width: 40rpx;
+    height: 40rpx;
 }
 
 .refresh-text {

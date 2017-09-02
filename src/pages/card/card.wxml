@@ -20,8 +20,15 @@
         </text>
     </view>
     <view wx:if="{{cardDetail.book}}" class="book-container">
+        <image class="book-pic" src="{{cardDetail.book.cover}}" mode="aspectFit" />
+        <view class="book-detail-container">
+            <text class="book-title-extra">相关图书</text>
+            <text class="book-title">《{{cardDetail.book.title}}》</text>
+            <text class="book-author">作者：{{cardDetail.book.author}}</text>
+        </view>
     </view>
-    <view wx:if="{{cardDetail && cardDetail.isMe}}" class="bottom-bar-container">
+    <view class="card-bottom-space-holder" />
+    <view wx:if="{{cardDetail && cardDetail.isMe && !fromList}}" class="bottom-bar-container">
         <view class="bottom-container" bindtap="onDelete">
             <image class="bottom-icon"
                 src="../../resources/img/icon_card_delete.png" />

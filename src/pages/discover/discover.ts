@@ -162,7 +162,7 @@ Page({
   onCardItemTap: (e) => {
       let id = e.currentTarget.dataset.id
       wx.navigateTo({
-          url: '../card/card?id=' + id,
+          url: '../card/card?id=' + id + '&fromList=1',
       })
   },
 
