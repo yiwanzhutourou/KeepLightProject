@@ -3,7 +3,7 @@
         <view class="chat-user-container"
             data-user="{{item.user.id}}"
             bindtap="onChatItemTap"
-            bindlongtap="onChatItemLongTap">
+            bindlongpress="onChatItemLongTap">
             <view class="avatar-container">
                 <view wx:if="{{item.unreadCount > 0}}"
                     class="unread-count">{{item.unreadCount > 9 ? '9+' : item.unreadCount}}</view>

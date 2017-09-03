@@ -109,15 +109,22 @@ Page({
         longTapLock = false
         return
     }
-    wx.navigateTo({
-        url: '../chat/chat?otherId=' + e.currentTarget.dataset.user,
-    })
+    let otherId = e.currentTarget.dataset.user
+    if (parseInt(otherId, 10) === 0) {
+        wx.navigateTo({
+            url: '../chat/systemchat',
+        })
+    } else {
+        wx.navigateTo({
+            url: '../chat/chat?otherId=' + otherId,
+        })
+    }
   },
 
   onChatItemLongTap: (e) => {
     longTapLock = true
     let user = e.currentTarget.dataset.user
-    if (!user) {
+    if (!user && user !== 0) {
       return
     }
     wx.showActionSheet({

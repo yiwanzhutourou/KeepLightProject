@@ -1,0 +1,23 @@
+<template name="system-message-item">
+    <view class="common-container">
+        <view wx:if="{{item.timeString}}" class="chat-time-container">
+            <view class="chat-time">
+                {{item.timeString}}
+            </view>
+        </view>
+        <view wx:if="{{item.type === 'system'}}"
+            class="message-container-wrapper">
+            <view class="message-container"
+                data-router="{{item.extra.router}}"
+                data-extra="{{item.extra.extra}}"
+                bindtap="onSystemMsgTap">
+                <text class="message-text">
+                    {{item.content}}
+                </text>
+                <view class="message-action-wrapper">
+                    <text class="message-action-text">点击查看</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</template>

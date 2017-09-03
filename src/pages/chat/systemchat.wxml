@@ -1,0 +1,28 @@
+<view class="chat-page-container">
+    <view class="refresh-container"
+        hover-class="refresh-container-hover"
+        bindtap="onRefresh">
+        <image class="refresh-icon" src="../../resources/img/icon_refresh.png" />
+    </view>
+    
+    <scroll-view
+        class="chat-message-container"
+        scroll-y="true"
+        scroll-top="{{scrollTop}}"
+        style="height: {{screenHeight}}rpx;">
+        <view wx:if="{{showContent && !noMore}}" class="loading-container">
+            <view wx:if="{{showLoadingMore}}" class="loading">
+                <view class="dot">
+                </view>
+            </view>
+            <view wx:else class="loading-text"
+                bindtap="onLoadMore"
+                >点击加载更多</view>
+        </view>
+        <block wx:for="{{messages}}" wx:key="index">
+            <import src="../../template/chat/SystemMessageItem.wxml" />
+                <template is="system-message-item"
+                    data="{{item}}" />
+        </block>
+    </scroll-view>
+</view>

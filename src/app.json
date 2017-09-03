@@ -26,6 +26,7 @@
     "pages/message/request",
     "pages/search/search",
     "pages/chat/chat",
+    "pages/chat/systemchat",
     "pages/chat/list",
     "pages/chat/borrow",
     "pages/discover/discover",
