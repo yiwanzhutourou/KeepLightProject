@@ -21,6 +21,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    margin-top: 10rpx;
 }
 
 .card-content-container {
@@ -98,7 +99,7 @@
 }
 
 .card-user-time-container {
-    width: 560rpx;
+    width: 280rpx;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -117,4 +118,33 @@
 .card-date {
     font-size: 20rpx;
     color: #999;
+}
+
+.card-count-container {
+    width: 280rpx;
+    margin-left: 30rpx;
+    margin-right: 40rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.card-read-count {
+    font-size: 24rpx;
+    color: #999;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-right: 1rpx solid #eee;
+    padding-right: 10rpx;
+}
+
+.card-approval-count {
+    font-size: 24rpx;
+    color: #999;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding-left: 10rpx;
 }

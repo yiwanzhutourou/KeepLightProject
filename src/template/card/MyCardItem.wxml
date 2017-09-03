@@ -14,8 +14,16 @@
                     <text class="card-content">{{item.content}}</text>
                 </view>
             </view>
-            <view wx:if="{{item.bookTitle}}" class="second-line-container">
-                <text class="book-title">《{{item.bookTitle}}》</text>
+            <view class="second-line-container">
+                <view class="card-count-container">
+                    <view class="card-read-count">
+                        {{item.readCount}} 次浏览
+                    </view>
+                    <view class="card-approval-count">
+                        {{item.approvalCount}} 个赞
+                    </view>
+                </view>
+                <text wx:if="{{item.bookTitle}}" class="book-title">《{{item.bookTitle}}》</text>
             </view>
         </view>
         <view class="item-divider" />

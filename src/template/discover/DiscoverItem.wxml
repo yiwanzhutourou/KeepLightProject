@@ -18,12 +18,22 @@
                     <text class="card-content">{{item.data.content}}</text>
                 </view>
             </view>
-            <view wx:if="{{item.data.user.id}}"
-                class="card-user-container">
-                <image class="card-user-avatar" src="{{item.data.user.avatar}}" />
-                <view class="card-user-time-container">
-                    <text class="card-user-nickname">{{item.data.user.nickname}}</text>
-                    <text class="card-date">{{item.data.timeString}}</text>
+            <view class="card-second-line-container">
+                <view wx:if="{{item.data.user.id}}"
+                    class="card-user-container">
+                    <image class="card-user-avatar" src="{{item.data.user.avatar}}" />
+                    <view class="card-user-time-container">
+                        <text class="card-user-nickname">{{item.data.user.nickname}}</text>
+                        <text class="card-date">{{item.data.timeString}}</text>
+                    </view>
+                </view>
+                <view class="card-count-container">
+                    <view class="card-read-count">
+                        {{item.data.readCount}} 次浏览
+                    </view>
+                    <view class="card-approval-count">
+                        {{item.data.approvalCount}} 个赞
+                    </view>
                 </view>
             </view>
         </view>

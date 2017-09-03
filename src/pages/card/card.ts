@@ -1,8 +1,8 @@
-import { deleteCardById, getCardById } from '../../api/api'
+import { ApprovalResult, CardDetail } from '../../api/interfaces'
+import { approveCard, deleteCardById, getCardById, unapproveCard } from '../../api/api'
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { needRefreshCard, updateNeedRefreshCard } from '../../utils/shareData'
 
-import { CardDetail } from '../../api/interfaces'
 import { deleteCardFromCache } from '../../utils/discoverCache'
 import { setPostModifyData } from '../../utils/postCache'
 
@@ -18,6 +18,8 @@ Page({
       cardId: -1,
       cardDetail: null,
       fromList: true,
+      approvalInProgress: false,
+      showApprovalUser: false,
   },
 
   onLoad: function(option: any): void {
@@ -109,6 +111,92 @@ Page({
       wx.navigateTo({
           url: './post',
       })
+  },
+
+  onApprovalChange: (e) => {
+      if (cardPage.data.approvalInProgress) {
+          return
+      }
+      cardPage.setData({
+          approvalInProgress: true,
+      })
+      let cardDetail = cardPage.data.cardDetail
+      if (cardDetail.hasApproved) {
+          unapproveCard(cardDetail.id, (result: ApprovalResult) => {
+              hideLoading()
+              showDialog('点赞已取消')
+              cardDetail.hasApproved = false
+              cardDetail.approvalCount = cardDetail.approvalCount - 1
+              if (cardDetail.approvalList && cardDetail.approvalList.length > 0) {
+                  for (let i = cardDetail.approvalList.length - 1; i >= 0; i--) {
+                      if (cardDetail.approvalList[i].id === result.id) {
+                          cardDetail.approvalList.splice(i, 1)
+                          break
+                      }
+                  }
+              }
+              cardPage.setData({
+                  cardDetail: cardDetail,
+                  approvalInProgress: false,
+                  showApprovalUser: false,
+              })
+          }, (failure) => {
+              hideLoading()
+              cardPage.setData({
+                  approvalInProgress: false,
+              })
+              if (!failure.data) {
+                  showErrDialog('无法加载数据，请检查你的网络')
+              }
+          })
+      } else {
+        approveCard(cardDetail.id, (result: ApprovalResult) => {
+            hideLoading()
+            showDialog('点赞成功')
+            cardDetail.hasApproved = true
+            cardDetail.approvalCount = cardDetail.approvalCount + 1
+            if (!cardDetail.approvalList) {
+                cardDetail.approvalList = new Array()
+            }
+            cardDetail.approvalList.unshift({
+                id: result.id,
+                avatar: result.avatar,
+            })
+            cardPage.setData({
+                cardDetail: cardDetail,
+                approvalInProgress: false,
+            })
+        }, (failure) => {
+            hideLoading()
+            cardPage.setData({
+                approvalInProgress: false,
+            })
+            if (!failure.data) {
+                showErrDialog('无法加载数据，请检查你的网络')
+            }
+        })
+      }
+  },
+
+  onShowApprovalUser: (e) => {
+      cardPage.setData({
+          showApprovalUser: true,
+      })
+  },
+
+  onHideApprovalUser: (e) => {
+      cardPage.setData({
+          showApprovalUser: false,
+      })
+  },
+
+  onBookTap: (e) => {
+    let isbn = e.currentTarget.dataset.isbn
+    if (isbn) {
+        wx.navigateTo({
+            url: '../book/book?isbn=' + isbn,
+        })
+    }
   },
 
   onShareAppMessage: () => {

@@ -217,6 +217,10 @@ export type CardDetail = {
     createTime: number,
     isMe?: boolean,
     timeString?: string,
+    hasApproved?: boolean,
+    approvalList?: Array<string>,
+    approvalCount: number,
+    readCount?: number,
 }
 
 export type MyCardItem = {
@@ -241,4 +245,10 @@ export type DiscoverPageData = {
     bookTopCursor: number,
     bookBottomCursor: number,
     showPost: boolean,
+}
+
+export type ApprovalResult = {
+    result: string,
+    id: number,
+    avatar: string,
 }

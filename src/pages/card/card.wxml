@@ -1,15 +1,42 @@
 <view class="container">
-    <view class="title-container">
+    <view wx:if="{{cardDetail}}" class="title-container">
         <text wx:if="{{cardDetail.title}}" class="card-title">{{cardDetail.title}}</text>
-        <view class="user-container"
-            data-user="{{cardDetail.user.id}}"
-            bindtap="onUserTap">
-            <image class="user-avatar" src="{{cardDetail.user.avatar}}" />
-            <view class="user-time-container">
+        <view class="user-container">
+            <image class="user-avatar"
+                data-user="{{cardDetail.user.id}}"
+                bindtap="onUserTap"
+                src="{{cardDetail.user.avatar}}" />
+            <view class="user-time-container"
+                data-user="{{cardDetail.user.id}}"
+                bindtap="onUserTap">
                 <text class="user-nickname">{{cardDetail.user.nickname}}</text>
                 <text class="card-date">{{cardDetail.timeString}}</text>
             </view>
+            <view class="card-count-container">
+                <view class="card-read-count">
+                    {{cardDetail.readCount}} 次浏览
+                </view>
+                <view class="card-approval-count"
+                    bindtap="onShowApprovalUser">
+                    {{cardDetail.approvalCount}} 个赞
+                </view>
+            </view>
         </view>
+    </view>
+    <view wx:if="{{showApprovalUser && cardDetail.approvalList && cardDetail.approvalList.length > 0}}"
+        class="approval-user-container">
+        <block wx:for="{{cardDetail.approvalList}}" wx:key="index">
+            <image class="approval-user-avatar"
+                data-user="{{item.id}}"
+                bindtap="onUserTap"
+                src="{{item.avatar}}" />
+        </block>
+    </view>
+    <view wx:if="{{showApprovalUser && cardDetail.approvalList && cardDetail.approvalList.length > 0}}"
+        class="approval-detail-container">
+        <text class="approval-detail-text">共 {{cardDetail.approvalCount}} 个用户赞过</text>
+        <text class="hide-approval-text"
+            bindtap="onHideApprovalUser">收起</text>
     </view>
     <view wx:if="{{cardDetail.picUrl}}" class="img-container">
         <image class="card-img" src="{{cardDetail.picUrl}}" mode="widthFix" />
@@ -19,7 +46,10 @@
             {{cardDetail.content}}
         </text>
     </view>
-    <view wx:if="{{cardDetail.book}}" class="book-container">
+    <view wx:if="{{cardDetail.book}}"
+        class="book-container"
+        data-isbn="{{cardDetail.book.isbn}}"
+        bindtap="onBookTap">
         <image class="book-pic" src="{{cardDetail.book.cover}}" mode="aspectFit" />
         <view class="book-detail-container">
             <text class="book-title-extra">相关图书</text>
@@ -48,7 +78,18 @@
         </button>
     </view>
     <view wx:elif="{{cardDetail}}" class="bottom-bar-container">
-        <button class="bottom-btn"
+        <view wx:if="{{cardDetail.hasApproved}}"
+            class="bottom-container-3" bindtap="onApprovalChange">
+            <image class="bottom-icon"
+                src="../../resources/img/icon_approval_selected.png" />
+            <text class="bottom-text-selected">已点赞</text>
+        </view>
+        <view wx:else class="bottom-container-3" bindtap="onApprovalChange">
+            <image class="bottom-icon"
+                src="../../resources/img/icon_approval.png" />
+            <text class="bottom-text">点赞</text>
+        </view>
+        <button class="bottom-btn-2"
             hover-class="bottom-btn-hover"
             open-type="share">
             <image class="bottom-icon"

@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
+import { ApprovalResult, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -510,9 +510,27 @@ export const modifyBookCard = (cardId: number,
 
 export const getCardById = (id: number,
         success: (result: CardDetail) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Card.getCardById') + getUrlParam({
+        cardId: id,
+    })
+    get(url, success, failure)
+}
+
+export const approveCard = (cardId: number,
+        success: (result: ApprovalResult) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
-        let url = getUrl('Card.getCardById') + getUrlParam({
-            cardId: id,
+        let url = getUrl('Card.approve') + getUrlParam({
+            cardId: cardId,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const unapproveCard = (cardId: number,
+        success: (result: ApprovalResult) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.unapprove') + getUrlParam({
+            cardId: cardId,
         })
         get(url, success, failure)
     }, failure)
