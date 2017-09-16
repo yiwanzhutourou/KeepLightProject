@@ -82,11 +82,6 @@ Page({
 
   controltap: (event) => {
     switch (event.controlId) {
-      // case EVENT_TAP_SEARCH:
-      //   wx.navigateTo({
-      //     url: '../search/search',
-      //   })
-      //   break
       case EVENT_TAP_SHOW_CURRENT_LOCATION:
         mapCtx.moveToLocation()
         break
@@ -97,38 +92,43 @@ Page({
   markertap: (event) => {
     if (event && event.markerId) {
       const marker = indexPage.findMarker(event.markerId) as Markers
-      if (marker.isMergeMarker) {
-        wx.navigateTo({
-          url: 'mapdetail?users=' + marker.children
-        })
-      } else {
-        wx.navigateTo({
-            url: '../homepage/homepage2?user=' + event.markerId,
-        })
+      if (marker) {
+        if (marker.isMergeMarker) {
+          wx.navigateTo({
+            url: 'mapdetail?users=' + marker.children,
+          })
+        } else {
+          wx.navigateTo({
+              url: '../homepage/homepage2?user=' + marker.children,
+          })
+        }
       }
     }
   },
 
   findMarker: (id: string) => {
     if (indexPage.data.markers) {
-      return indexPage.data.markers.find((marker) => (marker.id + '') === id)
+      return indexPage.data.markers.find((marker) => (marker.id + '') === (id + ''))
     }
     return { markerId: id }
   },
 
-  onRegionChange: (e) => {
-    // 地图拖动的时候，把包含点设置为空
-    indexPage.setData({
-      includePoints: []
-    })
-    mapCtx.getCenterLocation({
-      success: (res) => {
-      },
-    })
-  },
+  // TODO 地图数据如果过多，要重新做这里，只拉当前视图范围内的书房
+  // onRegionChange: (e) => {
+  //   console.log(e)
+  //   // 地图拖动的时候，把包含点设置为空
+  //   indexPage.setData({
+  //     includePoints: [],
+  //   })
+  //   mapCtx.getCenterLocation({
+  //     success: (res) => {
+  //     },
+  //   })
+  // },
 
-  onMapTap: (e) => {
-  },
+  // onMapTap: (e) => {
+  //   console.log(e)
+  // },
 
   onShareAppMessage: () => {
     return {
@@ -138,12 +138,6 @@ Page({
   },
 
   setUpIconOnmap: () => {
-    // // Homepage icon:
-    // let width = windowWidth * 0.15
-    // let height = width
-    // let left = windowWidth * 0.95 - width
-    // let top = windowHeight * 0.05
-
     // Show current location icon:
     let cWidth = windowWidth * 0.1
     let cHeight = cWidth
@@ -152,18 +146,6 @@ Page({
 
     indexPage.setData({
       controls: [
-        // 搜索按钮
-        // {
-        //   id: EVENT_TAP_SEARCH,
-        //   iconPath: '/resources/img/icon_search.png',
-        //   position: {
-        //     left: left,
-        //     top: top,
-        //     width: width,
-        //     height: height,
-        //   },
-        //   clickable: true,
-        // },
         // 显示当前位置
         {
           id: EVENT_TAP_SHOW_CURRENT_LOCATION,
@@ -221,8 +203,10 @@ Page({
 
   transformMarkers: (markers: Array<Array<Markers>>) => {
     const result: Array<Markers> = []
+    let markerIdIndex = 0
     for (const markerArray of markers) {
       const m = markerArray[0]
+      // 服务器发下来的user id作为字符串设置给children属性，多个时用逗号隔开
       if (markerArray.length > 1) {
         m.isMergeMarker = true
         m.children = markerArray.reduce((prev, cur, index) => {
@@ -232,7 +216,12 @@ Page({
           return prev + ',' + cur.id
         }, '')
         m.iconPath = indexPage.getMapIcon(markerArray.length)
+      } else {
+        m.children = m.id + ''
       }
+      // 重新生成id，服务器发下来的id其实是user id，因为用户可以添加多个地址，所以可能会重复
+      // 导致聚合之后的点的id会重复
+      m.id = ++markerIdIndex
       result.push(m)
     }
     return result
@@ -268,7 +257,7 @@ Page({
         minDist = dist
         result = {
           latitude: parseFloat(marker.latitude.toString()),
-          longitude: parseFloat(marker.longitude.toString())
+          longitude: parseFloat(marker.longitude.toString()),
         }
       }
     })
@@ -284,11 +273,11 @@ Page({
     // 做一个镜像点，使得我的位置能够居中
     const mirrorPoint = {
       latitude: myLat + (myLat - result.latitude),
-      longitude: myLon + (myLon - result.longitude)
+      longitude: myLon + (myLon - result.longitude),
     }
     const myPoint = {
       latitude: myLat,
-      longitude: myLon
+      longitude: myLon,
     }
 
     // 三个点都要显示在地图上，就可以了
