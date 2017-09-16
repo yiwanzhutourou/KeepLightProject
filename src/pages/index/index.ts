@@ -21,6 +21,18 @@ let windowHeight
 const KILOMETER_LAT = 0.0019
 const KILOMETER_LNG = 0.0017
 
+// 客户端简单防一下，服务端存在一个用户填了多个相同地址的脏数据
+const alreadyHasUser = (markers: Array<Markers>, marker: Markers) => {
+  if (markers && marker) {
+    for (let i = 0; i < markers.length; i++) {
+      if (markers[i] && markers[i].id === marker.id) {
+        return true
+      }
+    }
+  }
+  return false
+}
+
 Page({
   data: {
     longitude: 121.438378,
@@ -188,7 +200,9 @@ Page({
         let shouldAppend = true
         for (const markerArray of result) {
           if (indexPage.shouldMerge(markerArray[0], marker)) {
-            markerArray.push(marker)
+            if (!alreadyHasUser(markerArray, marker)) {
+              markerArray.push(marker)
+            }
             shouldAppend = false
             break
           }
