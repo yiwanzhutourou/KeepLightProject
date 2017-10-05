@@ -13,10 +13,12 @@
                 <text class="card-date">{{cardDetail.timeString}}</text>
             </view>
             <view class="card-count-container">
-                <view class="card-read-count">
+                <view wx:if="{{cardDetail.readCount || cardDetail.readCount === 0}}"
+                    class="card-read-count">
                     {{cardDetail.readCount}} 次浏览
                 </view>
-                <view class="card-approval-count"
+                <view wx:if="{{cardDetail.approvalCount || cardDetail.approvalCount === 0}}"
+                    class="card-approval-count"
                     bindtap="onShowApprovalUser">
                     {{cardDetail.approvalCount}} 个赞
                 </view>

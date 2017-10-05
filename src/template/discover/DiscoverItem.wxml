@@ -28,10 +28,12 @@
                     </view>
                 </view>
                 <view class="card-count-container">
-                    <view class="card-read-count">
+                    <view wx:if="{{item.data.readCount || item.data.readCount === 0}}"
+                        class="card-read-count">
                         {{item.data.readCount}} 次浏览
                     </view>
-                    <view class="card-approval-count">
+                    <view wx:if="{{item.data.approvalCount || item.data.approvalCount === 0}}"
+                        class="card-approval-count">
                         {{item.data.approvalCount}} 个赞
                     </view>
                 </view>
