@@ -5,7 +5,7 @@
                 <view class="maininfo-container-big2">
                     <image class="user-avatar-big" src="{{item.avatar}}" />
                     <view class="detail-container-big">
-                        <text class="user-nickname-big">{{item.nickname}}的书房</text>
+                        <text class="user-nickname-big">{{item.nickname}}</text>
                         <view class="search-address-container-big">
                             <view wx:if="{{item.addressText}}" class="distance-text-big">
                                 {{item.addressText}}
