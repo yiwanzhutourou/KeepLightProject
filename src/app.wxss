@@ -96,6 +96,7 @@
 }
 
 .empty_title {
+    width: 80%;
     margin-top: 45rpx;
     font-size: 36rpx;
     color: #666;

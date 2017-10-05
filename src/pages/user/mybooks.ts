@@ -1,4 +1,4 @@
-import { getBookList, removeBook } from '../../api/api'
+import { getBookList, markBook, removeBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
 
@@ -8,11 +8,7 @@ let mybooksPage
 
 Page({
   data: {
-    isHomePage: true, // always true
-    // 我的书房页面，这两个参数一直是true
-    isCurrentUser: true,
-    isMyPage: true, // always true
-
+    showAll: true,
     bookList: [],
     showNetworkError: false,
     showEmpty: false,
@@ -27,9 +23,29 @@ Page({
     mybooksPage.loadData()
   },
 
+  onShowAll: (e) => {
+    if (mybooksPage.data.showAll) {
+      return
+    }
+    mybooksPage.setData({
+      showAll: true,
+    })
+    mybooksPage.loadData()
+  },
+
+  onShowIdle: (e) => {
+    if (!mybooksPage.data.showAll) {
+      return
+    }
+    mybooksPage.setData({
+      showAll: false,
+    })
+    mybooksPage.loadData()
+  },
+
   loadData: () => {
     // 主页的所有信息打在一个接口里，后面要做图书分页
-    getBookList('', (books: Array<Book>) => {
+    getBookList('', mybooksPage.data.showAll, (books: Array<Book>) => {
       hideLoading()
       mybooksPage.setData({
         bookList: books,
@@ -64,6 +80,56 @@ Page({
     })
   },
 
+  onMarkBookUnIdle: (e) => {
+    showLoading('正在移除闲置书')
+    let isbn = e.currentTarget.dataset.isbn
+    markBook(isbn, false, (result: string) => {
+      hideLoading()
+      if (mybooksPage.data.bookList) {
+        let bookList: Array<Book> = []
+        mybooksPage.data.bookList.forEach((book: Book) => {
+          if (isbn === book.isbn) {
+            book.canBorrow = false
+          }
+          bookList.push(book)
+        })
+        mybooksPage.setData({
+          bookList: bookList,
+        })
+      }
+    }, (failure) => {
+      hideLoading()
+      if (!failure.data) {
+        showErrDialog('无法删除图书，请检查你的网络')
+      }
+    })
+  },
+
+  onMarkBookIdle: (e) => {
+    showLoading('正在标记图书为闲置书')
+    let isbn = e.currentTarget.dataset.isbn
+    markBook(isbn, true, (result: string) => {
+      hideLoading()
+      if (mybooksPage.data.bookList) {
+        let bookList: Array<Book> = []
+        mybooksPage.data.bookList.forEach((book: Book) => {
+          if (isbn === book.isbn) {
+            book.canBorrow = true
+          }
+          bookList.push(book)
+        })
+        mybooksPage.setData({
+          bookList: bookList,
+        })
+      }
+    }, (failure) => {
+      hideLoading()
+      if (!failure.data) {
+        showErrDialog('无法删除图书，请检查你的网络')
+      }
+    })
+  },
+
   onRemoveBook: (e) => {
     showConfirmDialog('', '确认移除《' + e.currentTarget.dataset.title + '》？', (confirm: boolean) => {
       if (confirm) {
@@ -83,9 +149,7 @@ Page({
               showEmpty: bookList.length == 0,
               showList: bookList.length > 0,
             })
-            if (mybooksPage.data.isCurrentUser) {
-              updateBookStatus(isbn, false)
-            }
+            updateBookStatus(isbn, false)
           }
         }, (failure) => {
           hideLoading()

@@ -1,0 +1,96 @@
+.book-container {
+    height: 150rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 25rpx;
+    padding-right: 25rpx;
+    padding-top: 5rpx;
+    padding-bottom: 5rpx;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 15rpx;
+}
+
+.book-detail-container {
+    width: 440rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15rpx;
+}
+
+.book-title {
+    font-size: 35rpx;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-author {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-publisher {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 5rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-pic {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.action-container {
+    width: 94%;
+    height: 60rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.action-text {
+    font-size: 25rpx;
+    color: #f8b62d;
+    margin-left: 20rpx;
+}
+
+.action-text-hover {
+    color: rgba(248, 182, 45, 0.6);
+}
+
+.unaction-text {
+    font-size: 25rpx;
+    color: #999;
+    margin-left: 20rpx;
+}
+
+.unaction-text-hover {
+    color: #eee;
+}
+
+.delete-text {
+    font-size: 25rpx;
+    color: #f8b62d;
+    margin-left: 20rpx;
+}
+
+.delete-text-hover {
+    color: rgba(248, 182, 45, 0.6);
+}

@@ -1,4 +1,4 @@
-@import "../../template/book/ActionBookItem.wxss";
+@import "../../template/book/GeneralBookItem.wxss";
 
 .detail-container {
     width: 100%;
@@ -44,3 +44,4 @@
     padding: 10rpx 20rpx;
     margin-left: 30rpx;
 }
+

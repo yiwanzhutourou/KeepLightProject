@@ -16,6 +16,7 @@ export type Book = {
     cover?: string,
     publisher?: string,
     added?: boolean,
+    canBorrow?: boolean,
 }
 
 export const CODE_SUCCESS = 200
@@ -74,7 +75,10 @@ export type HomepageData = {
     nickname: string,
     avatar: string,
     address: Array<Address>,
+    borrowBooks: Array<Book>,
+    borrowBookCount: number,
     books: Array<Book>,
+    bookCount: number,
     cards: Array<MyCardItem>,
     cardCount: number,
     isMe: boolean,

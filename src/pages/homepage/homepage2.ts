@@ -34,7 +34,10 @@ Page({
     followingNumber: 0,
     cardList: [],
     cardCount: 0,
+    borrowBookList: [],
+    borrowBookCount: 0,
     bookList: [],
+    bookCount: 0,
     showContent: false,
     showNetworkError: false,
   },
@@ -72,7 +75,10 @@ Page({
         },
         cardList: formatCards(result.cards),
         cardCount: result.cardCount,
+        borrowBookList: result.borrowBooks,
+        borrowBookCount: result.borrowBookCount,
         bookList: books,
+        bookCount: result.bookCount,
         addressText: getAddressDisplayText(result.address),
         showContent: true,
         showNetworkError: false,
@@ -210,6 +216,40 @@ Page({
     let userId = homepage2.data.userId
     wx.navigateTo({
         url: '../card/usercards?user=' + userId,
+    })
+  },
+
+  onShowAllBooks: (e) => {
+    let userId = homepage2.data.userId
+    let user = homepage2.data.homepageData
+    updateBorrowData({
+      user: {
+        id: userId,
+        nickname: user.nickName,
+        avatar: user.avatarUrl,
+      },
+      book: null,
+    })
+    wx.navigateTo({
+        url: '../user/userbooks?user=' + userId
+                  + '&showAll=1',
+    })
+  },
+
+  onShowAllIdleBooks: (e) => {
+    let userId = homepage2.data.userId
+    let user = homepage2.data.homepageData
+    updateBorrowData({
+      user: {
+        id: userId,
+        nickname: user.nickName,
+        avatar: user.avatarUrl,
+      },
+      book: null,
+    })
+    wx.navigateTo({
+        url: '../user/userbooks?user=' + userId
+                  + '&showAll=0',
     })
   },
 })

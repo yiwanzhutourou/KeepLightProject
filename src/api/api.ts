@@ -403,15 +403,30 @@ export const removeBook = (isbn: string, success: (isbn: string) => void,
     }, failure)
 }
 
-export const getBookList = (userId: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+export const markBook = (isbn: string, canBorrow: boolean, success: (result: string) => void,
+                            failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.markBookAs')
+        post(url, {
+            'isbn': isbn,
+            'canBeBorrowed': canBorrow ? 0 : 1,
+        }, success, failure)
+    }, failure)
+}
+
+export const getBookList = (userId: string, all: boolean,
+        success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
     if (userId) {
         let url = getUrl('User.getUserBooks') + getUrlParam({
             userId: userId,
+            all: all ? 0 : 1,
         })
         get(url, success, failure)
     } else {
         checkLogin(() => {
-            let url = getUrl('User.getMyBooks')
+            let url = getUrl('User.getMyBooks') + getUrlParam({
+                all: all ? 0 : 1,
+            })
             get(url, success, failure)
         }, failure)
     }

@@ -8,19 +8,18 @@
         </view>
         <view wx:if="{{showList}}" class="list-container">
             <block wx:for="{{bookList}}" wx:key="id">
-                <import src="../../template/book/ActionBookItem.wxml" />
-                <template is="action-book-item"
+                <import src="../../template/book/GeneralBookItem.wxml" />
+                <template is="general-book-item"
                     data="{{item}}" />
             </block>
         </view>
         <view wx:elif="{{showEmpty && showAll}}" class="empty_container">
             <image class="empty-pic" src="../../resources/img/icon_empty_room.png" />
-            <text class="empty_title">你的书房「空空如也」</text>
-            <button class="empty_action" hover-class="empty_action-hover" bindtap="onUploadBook">去添加第一本书</button>
+            <text class="empty_title">书房「空空如也」</text>
         </view>
         <view wx:elif="{{showEmpty && !showAll}}" class="empty_container">
             <image class="empty-pic" src="../../resources/img/icon_empty_room.png" />
-            <text class="empty_title">你还没有标记任何闲置图书，图书被标记为闲置后，其他书友才能借阅</text>
+            <text class="empty_title">还没有标记任何闲置图书，图书被标记为闲置后，其他书友才能借阅</text>
         </view>
         <view wx:elif="{{showNetworkError}}" class="empty_container">
             <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />

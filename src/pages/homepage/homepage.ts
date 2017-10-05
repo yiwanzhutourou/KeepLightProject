@@ -1,7 +1,7 @@
 import { Book, GuideData, HomepageData, MyCardItem } from '../../api/interfaces'
 import { addAddress, borrowBook, checkLoginFirstLaunch, getBookList, getGuideData, getHomepageData, getMyHomepageData, getUserInfo, removeBook, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
-import { replaceBookList, updateBookStatus } from '../../utils/bookCache'
+import { replaceBookList, updateBookStatus, updateBorrowData } from '../../utils/bookCache'
 import { setHomeSettingData, setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
@@ -56,7 +56,10 @@ Page({
     followingNumber: 0,
     cardList: [],
     cardCount: 0,
+    borrowBookList: [],
+    borrowBookCount: 0,
     bookList: [],
+    bookCount: 0,
     showContent: false,
     showNetworkError: false,
 
@@ -156,7 +159,10 @@ Page({
         },
         cardList: formatCards(result.cards),
         cardCount: result.cardCount,
+        borrowBookList: result.borrowBooks,
+        borrowBookCount: result.borrowBookCount,
         bookList: books,
+        bookCount: result.bookCount,
         showContent: true,
         showNetworkError: false,
         addressText: getAddressDisplayText(result.address),
@@ -346,6 +352,40 @@ Page({
     let userId = homepage.data.userId
     wx.navigateTo({
         url: '../card/usercards?user=' + userId,
+    })
+  },
+
+  onShowAllBooks: (e) => {
+    let userId = homepage.data.userId
+    let user = homepage.data.homepageData
+    updateBorrowData({
+      user: {
+        id: userId,
+        nickname: user.nickName,
+        avatar: user.avatarUrl,
+      },
+      book: null,
+    })
+    wx.navigateTo({
+        url: '../user/userbooks?user=' + userId
+                  + '&showAll=1',
+    })
+  },
+
+  onShowAllIdleBooks: (e) => {
+    let userId = homepage.data.userId
+    let user = homepage.data.homepageData
+    updateBorrowData({
+      user: {
+        id: userId,
+        nickname: user.nickName,
+        avatar: user.avatarUrl,
+      },
+      book: null,
+    })
+    wx.navigateTo({
+        url: '../user/userbooks?user=' + userId
+                  + '&showAll=0',
     })
   },
 

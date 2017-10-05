@@ -16,6 +16,7 @@
     "pages/user/bind",
     "pages/user/changeintro",
     "pages/user/mybooks",
+    "pages/user/userbooks",
     "pages/user/follow",
     "pages/user/homesetting",
     "pages/about/about",

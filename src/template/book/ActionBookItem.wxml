@@ -1,0 +1,32 @@
+<template name="action-book-item">
+    <view class="common-container">
+        <view class="book-container">
+            <view class="content-container">
+                <image class="book-pic" src="{{item.cover}}" mode="aspectFit" />
+                <view class="book-detail-container" data-isbn="{{item.isbn}}" bindtap="onBookItemTap">
+                    <text class="book-title">{{item.title}}</text>
+                    <text class="book-author">作者：{{item.author}}</text>
+                    <text class="book-publisher">出版社：{{item.publisher}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="action-container">
+            <view wx:if="{{item.canBorrow}}"
+                class="unaction-text"
+                hover-class="unaction-text-hover"
+                data-isbn="{{item.isbn}}"
+                bindtap="onMarkBookUnIdle">移除闲置书</view>
+            <view wx:else
+                class="action-text"
+                hover-class="action-text-hover"
+                data-isbn="{{item.isbn}}"
+                bindtap="onMarkBookIdle">标记为闲置书</view>
+            <view class="delete-text"
+                hover-class="delete-text-hover"
+                data-isbn="{{item.isbn}}"
+                data-title="{{item.title}}"
+                bindtap="onRemoveBook">删除</view>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

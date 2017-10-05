@@ -1,4 +1,4 @@
-@import "../../template/book/BookItem.wxss";
+@import "../../template/book/GeneralBookItem.wxss";
 @import "../../template/card/HomeCardItem.wxss";
 
 .detail-container {
@@ -311,4 +311,19 @@
 .card-space-holder {
     height: 244rpx;
     width: 10rpx;
+}
+
+.more-book-container {
+    width: 100%;
+    height: 120rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+}
+
+.more-book-text {
+    color: #aaa;
+    font-size: 25rpx;
 }

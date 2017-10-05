@@ -144,15 +144,38 @@
                         </view>
                     </scroll-view>
                 </view>
+                <view wx:if="{{borrowBookList && borrowBookList.length > 0}}"
+                    class="list-container">
+                    <view class="title-container">
+                        <text>闲置图书 {{borrowBookCount}} 本</text>
+                    </view>
+                    <block wx:for="{{borrowBookList}}" wx:key="id">
+                        <import src="../../template/book/GeneralBookItem.wxml" />
+                        <template is="general-book-item"
+                            data="{{item}}" />
+                    </block>
+                    <view wx:if="{{borrowBookCount > 5}}" class="more-book-container"
+                        bindtap="onShowAllIdleBooks">
+                        <view class="more-book-text">
+                            查看全部闲置图书
+                        </view>
+                    </view>
+                </view>
                 <view class="list-container">
                     <view class="title-container">
-                        <text>{{bookList.length}} 本书</text>
+                        <text>全部图书 {{bookCount}} 本</text>
                     </view>
                     <block wx:for="{{bookList}}" wx:key="id">
-                        <import src="../../template/book/BookItem.wxml" />
-                        <template is="book-item"
-                            data="{{item, isHomePage, isCurrentUser, isMyPage}}" />
+                        <import src="../../template/book/GeneralBookItem.wxml" />
+                        <template is="general-book-item"
+                            data="{{item}}" />
                     </block>
+                    <view wx:if="{{bookCount > 3}}" class="more-book-container"
+                        bindtap="onShowAllBooks">
+                        <view class="more-book-text">
+                            查看全部图书
+                        </view>
+                    </view>
                 </view>
             </view>
         </view>
