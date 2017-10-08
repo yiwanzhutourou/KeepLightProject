@@ -1,3 +1,4 @@
+@import "../../template/discover/BannerItem.wxss";
 @import "../../template/discover/DiscoverItem.wxss";
 @import "../../template/widget/LoadMore.wxss";
 
@@ -5,11 +6,22 @@
     width: 100%;
 }
 
+.swiper {
+    width: 100%;
+    height: 400rpx;
+    position: absolute;
+    top: 0;
+    padding: 0;
+    margin: 0;
+}
+
 .list-container {
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    top: 420rpx;
 }
 
 .discover-loading-more-container {

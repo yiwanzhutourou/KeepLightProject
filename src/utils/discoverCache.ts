@@ -12,6 +12,7 @@ export const updateDiscoverCache = (newCache: DiscoverPageData, isTop: boolean) 
         discoverCache = newCache
     } else if (isTop) {
         // 下拉刷新先全量替换吧，没想到什么好办法更新删除/修改之后的缓存
+        discoverCache.banner = newCache.banner
         discoverCache.list = newCache.list
         discoverCache.topCursor = newCache.topCursor
         discoverCache.bottomCursor = newCache.bottomCursor
@@ -47,6 +48,16 @@ export const deleteCardFromCache = (cardId) => {
             data: discoverCache,
         })
     }
+}
+
+export const getBanner = () => {
+    if (!discoverCache) {
+        discoverCache = wx.getStorageSync(CACHE_DISCOVER_PAGE)
+    }
+    if (discoverCache) {
+        return discoverCache.banner
+    }
+    return null
 }
 
 export const getDiscoverList = () => {

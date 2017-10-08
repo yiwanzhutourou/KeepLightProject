@@ -1,5 +1,21 @@
 <view class="container">
     <view class="detail-container">
+        <swiper wx:if="{{showList && banners && banners.length > 0}}"
+            class="swiper"
+            indicator-dots
+            autoplay
+            indicator-color="rgba(0, 0, 0, .3)"
+            indicator-active-color="#ffffff"
+            interval="3000"
+            duration="600">
+            <block wx:for="{{banners}}" wx:key="id">
+                <swiper-item>
+                    <import src="../../template/discover/BannerItem.wxml" />
+                    <template is="banner-item"
+                        data="{{item}}" />
+                </swiper-item>
+            </block>
+        </swiper>
         <view wx:if="{{showList}}" class="list-container">
             <block wx:for="{{discoverList}}" wx:key="id">
                 <import src="../../template/discover/DiscoverItem.wxml" />

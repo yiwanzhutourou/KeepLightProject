@@ -243,6 +243,8 @@ export type DiscoverItem = {
 }
 
 export type DiscoverPageData = {
+    // banner 应该可以支持书和卡片
+    banner: Array<DiscoverItem>,
     list: Array<DiscoverItem>,
     topCursor: number,
     bottomCursor: number,

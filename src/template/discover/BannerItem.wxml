@@ -1,0 +1,13 @@
+<template name="banner-item">
+    <view class="common-container">
+        <view class="banner-container"
+            data-type="{{item.type}}"
+            data-id="{{item.data.id}}"
+            bindtap="onBannerTap">
+            <image class="banner-image" src="{{item.data.picUrl}}" mode="aspectFill" />
+            <view wx:if="{{item.data.title}}" class="banner-title-container">
+                <text class="banner-title">{{item.data.title}}</text>
+            </view>
+        </view>    
+    </view>
+</template>

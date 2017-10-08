@@ -1,5 +1,5 @@
 import { DiscoverItem, DiscoverPageData } from '../../api/interfaces'
-import { getBookBottomCursor, getBottomCursor, getDiscoverList, getShowPostBtn, updateDiscoverCache } from '../../utils/discoverCache'
+import { getBanner, getBookBottomCursor, getBottomCursor, getDiscoverList, getShowPostBtn, updateDiscoverCache } from '../../utils/discoverCache'
 import { hideLoading, parseTimeToDate, showErrDialog, showLoading } from '../../utils/utils'
 
 import { clearPostModifyData } from '../../utils/postCache'
@@ -29,6 +29,7 @@ const formatList = (items: Array<DiscoverItem>) => {
 
 Page({
   data: {
+      banners: [],
       discoverList: [],
       showNetworkError: false,
       showEmpty: false,
@@ -134,11 +135,13 @@ Page({
   },
 
   loadDataFromCache: () => {
+    let banners = getBanner()
     let cachedList = getDiscoverList()
     let bottomCursor = getBottomCursor()
     let bookBottomCursor = getBookBottomCursor()
     if (cachedList) {
         discoverPage.setData({
+            banners: banners,
             discoverList: cachedList,
             bottomCursor: bottomCursor,
             bookBottomCursor: bookBottomCursor,
@@ -171,6 +174,20 @@ Page({
       wx.navigateTo({
           url: '../book/book?isbn=' + isbn,
       })
+  },
+
+  onBannerTap: (e) => {
+      let type = e.currentTarget.dataset.type
+      let id = e.currentTarget.dataset.id
+      if (type === 'book') {
+          wx.navigateTo({
+              url: '../book/book?isbn=' + id,
+          })
+      } else if (type === 'card') {
+          wx.navigateTo({
+              url: '../card/card?id=' + id + '&fromList=1',
+          })
+      }
   },
 
   onUserTap: (e) => {
