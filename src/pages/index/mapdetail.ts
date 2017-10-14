@@ -1,5 +1,20 @@
 import { SearchUser } from '../../api/interfaces'
+import { getDistrictShortString } from '../../utils/addrUtils'
 import { getMapDetails } from '../../api/api'
+
+const formatUserList = (users: Array<SearchUser>) => {
+  if (users && users.length > 0) {
+    users.forEach((user: SearchUser) => {
+        if (user.address) {
+            user.addressText = user.address.city
+                      ? getDistrictShortString(user.address.city) : user.address.detail
+        } else {
+            user.addressText = '暂无地址'
+        }
+    })
+  }
+  return users
+}
 
 Page({
   data: {
@@ -14,7 +29,7 @@ Page({
     getMapDetails(
       users,
       (result: Array<SearchUser>) => {
-        that.setData({ bookshelves: result })
+        that.setData({ bookshelves: formatUserList(result) })
       }
     )
   },
