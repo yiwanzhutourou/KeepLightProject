@@ -129,29 +129,26 @@ Page({
       }
       return
     }
-    wx.getLocation({
-      type: 'wgs84',
-      success: (res) => {
-        if (res) {
-          let latitude = res.latitude
-          let longitude = res.longitude
-          searchPage.setData({
-            latitude: latitude,
-            longitude: longitude,
-            locationAquried: true,
-          })
-          let keyword = searchPage.data.keyword
-          let index = searchPage.data.currentTab
-          if (index === SEARCH_BOOK) {
-              searchPage.searchBookResult(keyword, latitude, longitude)
-          } else if (index === SEARCH_USER) {
-              searchPage.searchUserResult(keyword, latitude, longitude)
-          }
-        }
-      },
-      fail: () => {
-        showErrDialog('无法获取你的定位')
-      },
+    app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
+      // 无法定位就按在上海搜索
+      let longitude = 121.438378
+      let latitude = 31.181471
+      if (locationInfo) {
+        latitude = locationInfo.latitude
+        longitude = locationInfo.longitude
+      }
+      searchPage.setData({
+        latitude: latitude,
+        longitude: longitude,
+        locationAquried: true,
+      })
+      let keyword = searchPage.data.keyword
+      let index = searchPage.data.currentTab
+      if (index === SEARCH_BOOK) {
+          searchPage.searchBookResult(keyword, latitude, longitude)
+      } else if (index === SEARCH_USER) {
+          searchPage.searchUserResult(keyword, latitude, longitude)
+      }
     })
   },
 
