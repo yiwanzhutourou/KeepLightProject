@@ -1,13 +1,15 @@
-import { getBookCards, getBookDetails } from '../../api/api'
+import { BookPageData, CardDetail, SearchUser } from '../../api/interfaces'
+import { getBookCards, getBookDetails, getBookPageData } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
-import { CardDetail } from '../../api/interfaces'
+import { getDistrictShortString } from '../../utils/addrUtils'
 import { parseAuthor } from '../../utils/bookUtils'
 import { setBookDetailData } from '../../utils/bookCache'
 import { setPostBookData } from '../../utils/postCache'
 
 const DEFAULT_BOOK_CARDS_PAGE_SIZE = 5
 
+let app = getApp()
 let bookPage
 let pageCount = 0
 
@@ -21,7 +23,21 @@ const formatList = (cards: Array<CardDetail>) => {
       })
     }
     return cards
- }
+}
+
+const formatUserList = (users: Array<SearchUser>) => {
+    if (users && users.length > 0) {
+      users.forEach((user: SearchUser) => {
+          if (user.address) {
+              user.addressText = user.address.city
+                        ? getDistrictShortString(user.address.city) : user.address.detail
+          } else {
+              user.addressText = '暂无地址'
+          }
+      })
+    }
+    return users
+}
 
 Page({
   data: {
@@ -34,6 +50,8 @@ Page({
       showLoadingMore: true,
       noMore: false,
       showClickLoadMore: true,
+      userList: [],
+      showUsers: false,
   },
 
   onLoad: function(option: any): void {
@@ -103,19 +121,33 @@ Page({
   loadBookCards: () => {
       let isbn = bookPage.data.isbn
       if (isbn) {
-          pageCount = 0
-          getBookCards(isbn, pageCount, DEFAULT_BOOK_CARDS_PAGE_SIZE,
-            (cards: Array<CardDetail>) => {
-                bookPage.setData({
-                    discoverList: formatList(cards),
-                    showEmpty: cards.length === 0,
-                    showList: cards.length > 0,
+          app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
+              // 无法定位就按在上海搜索
+              let longitude = 121.438378
+              let latitude = 31.181471
+              if (locationInfo) {
+                  latitude = locationInfo.latitude
+                  longitude = locationInfo.longitude
+              }
+              pageCount = 0
+              getBookPageData(isbn, pageCount, DEFAULT_BOOK_CARDS_PAGE_SIZE,
+                latitude, longitude,
+                (data: BookPageData) => {
+                    if (data) {
+                        bookPage.setData({
+                            discoverList: formatList(data.cards),
+                            showEmpty: data.cards.length === 0,
+                            showList: data.cards.length > 0,
+                            userList: formatUserList(data.users),
+                            showUsers: data.users && data.users.length > 0,
+                        })
+                    }
+                }, (failure) => {
+                    if (!failure.data) {
+                        showErrDialog('无法加载图书卡片，请检查你的网络')
+                    }
                 })
-            }, (failure) => {
-                if (!failure.data) {
-                    showErrDialog('无法加载图书卡片，请检查你的网络')
-                }
-            })
+          })
       }
   },
 
@@ -161,6 +193,13 @@ Page({
       wx.navigateTo({
           url: '../card/card?id=' + id + '&fromList=1',
       })
+  },
+
+  onUserItemTap: (e) => {
+    let user = e.currentTarget.dataset.user
+    wx.navigateTo({
+        url: '../homepage/homepage2?user=' + user,
+    })
   },
 
   onShareAppMessage: () => {

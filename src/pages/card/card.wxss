@@ -225,7 +225,7 @@
     padding-right: 25rpx;
     padding-top: 5rpx;
     padding-bottom: 5rpx;
-    border: 1rpx solid #aaa;
+    border: 1rpx solid #eee;
     border-radius: 8rpx;
     margin-top: 30rpx;
 }

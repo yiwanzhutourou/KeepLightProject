@@ -22,6 +22,13 @@ export const getCityShortString = (city: CityInfo) => {
     }
 }
 
+export const getDistrictShortString = (city: CityInfo) => {
+    if (!city) {
+        return ''
+    }
+    return removeLastChar(city.city) + city.district
+}
+
 export const getAddressDisplayText = (addressList: Array<Address>) => {
     if (!addressList || addressList.length == 0) {
         return ''

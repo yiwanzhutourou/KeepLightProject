@@ -1,4 +1,5 @@
 @import "../../template/card/BookCardItem.wxss";
+@import "../../template/user/BookUserItem.wxss";
 @import "../../template/widget/LoadMore.wxss";
 
 .all-detail-container {
@@ -208,4 +209,45 @@
 .book_card_empty_text {
     color: #bbb;
     font-size: 28rpx;
+}
+
+.user-list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30rpx;
+}
+
+.user-list-scroller {
+    width: 100%;
+    height: 320rpx;
+    white-space: nowrap;
+}
+
+.user-scroller-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+}
+
+.book-user-wrapper {
+    width: 240rpx;
+    height: 280rpx;
+    display: inline-block;
+    margin-left: 10rpx;
+    margin-right: 10rpx;
+    background: #fff;
+    border: 1rpx solid #eee;
+}
+
+.user-space-wrapper {
+    display: inline-block;
+}
+
+.user-space-holder {
+    height: 244rpx;
+    width: 30rpx;
 }

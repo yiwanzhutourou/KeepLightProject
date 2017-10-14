@@ -5,19 +5,11 @@
                 <image class="user-avatar" src="{{item.avatar}}" />
                 <view class="detail-container">
                     <text class="user-nickname">{{item.nickname}}的书房</text>
-                    <view class="search-address-container">
-                        <view wx:if="{{item.address.name}}" class="distance-text">
-                            {{item.address.name}}
-                        </view>
-                        <view wx:elif="{{item.address.detail}}" class="distance-text2">
-                            {{item.address.detail}}
-                        </view>
-                        <view wx:else class="distance-text">
-                            暂无地址
-                        </view>
-                        <view class="distance-text">
-                            {{item.address.distanceText}}
-                        </view>
+                    <view wx:if="{{item.addressText}}" class="distance-text">
+                        {{item.addressText}}
+                    </view>
+                    <view wx:if="{{item.distanceText}}" class="distance-text">
+                        距你 {{item.distanceText}}
                     </view>
                 </view>
             </view>

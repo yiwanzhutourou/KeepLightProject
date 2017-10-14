@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
+import { ApprovalResult, BookPageData, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -205,6 +205,19 @@ export const getDiscoverPageData = (cursor: number, bookCursor: number, isTop: n
             cursor: cursor,
             isTop: isTop,
             bookCursor: bookCursor,
+        })
+        get(url, success, failure)
+}
+
+export const getBookPageData = (isbn: string, page: number, count: number,
+    latitude: number, longitude: number,
+    success: (data: BookPageData) => void, failure?: (res?: any) => void) => {
+        let url = getUrl('Card.getBookPageData') + getUrlParam({
+            isbn: isbn,
+            page: page,
+            count: count,
+            latitude: latitude,
+            longitude: longitude,
         })
         get(url, success, failure)
 }

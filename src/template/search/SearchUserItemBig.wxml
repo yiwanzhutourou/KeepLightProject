@@ -10,19 +10,10 @@
                             <view wx:if="{{item.addressText}}" class="distance-text-big">
                                 {{item.addressText}}
                             </view>
-                            <view wx:elif="{{item.address.name}}" class="distance-text-big">
-                                {{item.address.name}}
-                            </view>
-                            <view wx:elif="{{item.address.detail}}" class="distance-text-big">
-                                {{item.address.detail}}
-                            </view>
-                            <view wx:else class="distance-text-big">
-                                暂无地址
-                            </view>
                         </view>
-                        <view wx:if="{{item.address.distanceText}}"
+                        <view wx:if="{{item.distanceText}}"
                             class="distance-number-text-big">
-                            {{item.address.distanceText}}
+                            距你 {{item.distanceText}}
                         </view>
                     </view>
                 </view>

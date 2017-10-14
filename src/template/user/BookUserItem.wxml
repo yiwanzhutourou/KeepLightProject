@@ -1,0 +1,16 @@
+<template name="book-user-item">
+    <view class="book-user-container" data-user="{{item.id}}" bindtap="onUserItemTap">
+        <image class="book-user-avater" src="{{item.avatar}}" />
+        <view class="book-user-detail-container">
+            <view class="book-user-nickname">
+                {{item.nickname}}
+            </view>
+            <view wx:if="{{item.addressText}}" class="book-user-address">
+                {{item.addressText}}
+            </view>
+            <view wx:if="{{item.distanceText}}" class="book-user-distance">
+                距你 {{item.distanceText}}
+            </view>
+        </view>
+    </view>
+</template>

@@ -56,6 +56,24 @@
                     src="../../resources/img/arrow.png" />
             </view>
         </view>
+        <view wx:if="{{showUsers}}" class="user-list-container">
+            <text class="detail-title">{{userList.length}} 个书房里有这本书</text>
+            <scroll-view class="user-list-scroller" scroll-x>
+                <view class="user-scroller-wrapper">
+                    <view class="user-space-wrapper">
+                        <view class="user-space-holder" />
+                    </view>
+                    <view class="book-user-wrapper" wx:for="{{userList}}" wx:key="id">
+                        <import src="../../template/user/BookUserItem.wxml" />
+                        <template is="book-user-item"
+                            data="{{item}}" />
+                    </view>
+                    <view class="user-space-wrapper">
+                        <view class="user-space-holder" />
+                    </view>
+                </view>
+            </scroll-view>
+        </view>
         <view wx:if="{{bookDetail}}" class="book-card-title-container">
             <view class="book-card-title">读书卡片</view>
             <view class="book-card-btn"

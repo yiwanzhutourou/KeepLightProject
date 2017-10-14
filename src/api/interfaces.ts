@@ -128,8 +128,9 @@ export type SearchUser = {
     nickname: string,
     avatar: string,
     address: SearchAddress,
-    bookCount: number,
+    bookCount?: number,
     addressText?: string,
+    distanceText?: string,
 }
 
 export type CityInfo = {
@@ -167,6 +168,7 @@ export type User = {
     id: number,
     nickname: string,
     avatar: string,
+    address?: Array<Address>,
 }
 
 export type ChatListData = {
@@ -257,4 +259,9 @@ export type ApprovalResult = {
     result: string,
     id: number,
     avatar: string,
+}
+
+export type BookPageData = {
+    users: Array<SearchUser>,
+    cards: Array<CardDetail>,
 }

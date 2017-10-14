@@ -2,6 +2,8 @@ import { Book, DEFAULT_SEARCH_PAGE_SIZE, SearchResult, SearchUser } from '../../
 import { borrowBook, search, searchBooks, searchUsers } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
+import { getDistrictShortString } from '../../utils/addrUtils'
+
 const INITIAL_PAGE = 0
 
 let app = getApp()
@@ -14,6 +16,29 @@ let keywords = ['', '']
 
 const SEARCH_BOOK = 0
 const SEARCH_USER = 1
+
+const formatSearchResult = (results: Array<SearchResult>) => {
+  if (results && results.length > 0) {
+    results.forEach((result: SearchResult) => {
+      result.users = formatUserList(result.users)
+    })
+  }
+  return results
+}
+
+const formatUserList = (users: Array<SearchUser>) => {
+  if (users && users.length > 0) {
+    users.forEach((user: SearchUser) => {
+        if (user.address) {
+            user.addressText = user.address.city
+                      ? getDistrictShortString(user.address.city) : user.address.detail
+        } else {
+            user.addressText = '暂无地址'
+        }
+    })
+  }
+  return users
+}
 
 Page({
   data: {
@@ -172,7 +197,7 @@ Page({
             showDialog('没有对应的图书信息')
           } else {
             searchPage.setData({
-              searchResultList: searchPage.formatResult(result),
+              searchResultList: formatSearchResult(result),
             })
           }
         },
@@ -204,7 +229,7 @@ Page({
             showDialog('没有对应的书房信息')
           } else {
             searchPage.setData({
-              searchUserResultList: result,
+              searchUserResultList: formatUserList(result),
             })
           }
         },
@@ -274,7 +299,7 @@ Page({
             searchPage.hideLoadingMore()
             let list = searchPage.data.searchResultList
             searchPage.setData({
-              searchResultList: list.concat(searchPage.formatResult(result)),
+              searchResultList: list.concat(formatSearchResult(result)),
             })
           }
         },
@@ -299,7 +324,7 @@ Page({
             searchPage.hideLoadingMore2()
             let list = searchPage.data.searchUserResultList
             searchPage.setData({
-              searchUserResultList: list.concat(result),
+              searchUserResultList: list.concat(formatUserList(result)),
             })
           }
         },
@@ -347,10 +372,6 @@ Page({
     searchPage.setData({
       showLoadingMore2: false,
     })
-  },
-
-  formatResult: (result: Array<SearchResult>) => {
-    return result
   },
 
   onShowUsers: (e) => {
