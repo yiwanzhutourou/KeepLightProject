@@ -330,7 +330,7 @@ export const getMinePageData = (success: (data: MinePageData) => void, failure?:
     checkLogin(() => {
         let url = getUrl('User.getMinePageData')
         get(url, success, failure)
-    }, failure, false/* 不进行登录行为 */)
+    }, failure)
 }
 
 export const getUserContactByRequest = (requestId: number, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
