@@ -34,7 +34,7 @@
             </view>
             <view class="content-divider" />
             <view class="follow-container">
-                <view class="follow-sub-container">
+                <view class="follow-sub-container" bindtap="onFollowingTap">
                     <view class="follow-number-text">
                         {{followingNumber}}
                     </view>
@@ -42,7 +42,7 @@
                         关注
                     </view>
                 </view>
-                <view class="follow-sub-container2">
+                <view class="follow-sub-container2" bindtap="onFollowerTap">
                     <view class="follow-number-text">
                         {{followerNumber}}
                     </view>

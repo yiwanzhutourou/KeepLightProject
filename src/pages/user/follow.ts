@@ -18,6 +18,7 @@ let formatList = (list: Array<SearchUser>) => {
 
 Page({
   data: {
+    userId: 0,
     type: IS_FOLLOWINGS,
     followList: [],
     emptyText: '没有关注的书房',
@@ -28,22 +29,25 @@ Page({
 
   onLoad: function(options: any): void {
     followPage = this
+    let userId = options ? options.user : 0
     if (options && options.content) {
         if (options.content === 'followings') {
             wx.setNavigationBarTitle({
-              title: '我关注的人',
+              title: userId ? 'TA关注的人' : '我关注的人',
             })
             followPage.setData({
+              userId: userId,
               type: IS_FOLLOWINGS,
               emptyText: '没有关注的人',
             })
         } else {
             wx.setNavigationBarTitle({
-              title: '关注我的人',
+              title: userId ? '关注TA的人' : '关注我的人',
             })
             followPage.setData({
+              userId: userId,
               type: IS_FOLLOWERS,
-              emptyText: '暂时没有关注我的人',
+              emptyText: userId ? '暂时没有关注TA的人' : '暂时没有关注我的人',
             })
         }
     }
@@ -54,10 +58,11 @@ Page({
   },
 
   loadData: () => {
+    let userId = followPage.data.userId
     let type = followPage.data.type
     if (type === IS_FOLLOWINGS) {
       showLoading('正在加载')
-      getFollowings((list: Array<SearchUser>) => {
+      getFollowings(userId, (list: Array<SearchUser>) => {
         hideLoading()
         followPage.setData({
           followList: formatList(list),
@@ -74,7 +79,7 @@ Page({
       })
     } else {
       showLoading('正在加载')
-      getFollowers((list: Array<SearchUser>) => {
+      getFollowers(userId, (list: Array<SearchUser>) => {
         hideLoading()
         followPage.setData({
           followList: formatList(list),

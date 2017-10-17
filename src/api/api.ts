@@ -599,18 +599,34 @@ export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void
     }, failure)
 }
 
-export const getFollowings = (success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('User.getMyFollowings')
+export const getFollowings = (userId: number,
+        success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    if (userId) {
+        let url = getUrl('User.getUserFollowings') + getUrlParam({
+            userId: userId,
+        })
         get(url, success, failure)
-    }, failure)
+    } else {
+        checkLogin(() => {
+            let url = getUrl('User.getMyFollowings')
+            get(url, success, failure)
+        }, failure)
+    }
 }
 
-export const getFollowers = (success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('User.getMyFollowers')
+export const getFollowers = (userId: number,
+        success: (result: Array<SearchUser>) => void, failure?: (res?: any) => void) => {
+    if (userId) {
+        let url = getUrl('User.getUserFollowers') + getUrlParam({
+            userId: userId,
+        })
         get(url, success, failure)
-    }, failure)
+    } else {
+        checkLogin(() => {
+            let url = getUrl('User.getMyFollowers')
+            get(url, success, failure)
+        }, failure)
+    }
 }
 
 export const getMyApprovedRequest = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {

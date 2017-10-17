@@ -250,4 +250,24 @@ Page({
                   + '&showAll=0',
     })
   },
+
+  onFollowingTap: (e) => {
+    let userId = homepage2.data.userId
+    if (!userId) {
+      return
+    }
+    wx.navigateTo({
+      url: '../user/follow?content=followings&user=' + userId,
+    })
+  },
+
+  onFollowerTap: (e) => {
+    let userId = homepage2.data.userId
+    if (!userId) {
+      return
+    }
+    wx.navigateTo({
+      url: '../user/follow?content=followers&user=' + userId,
+    })
+  },
 })

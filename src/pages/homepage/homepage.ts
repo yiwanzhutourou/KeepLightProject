@@ -358,4 +358,24 @@ Page({
         url: '../user/homesetting',
     })
   },
+
+  onFollowingTap: (e) => {
+    let userId = homepage.data.userId
+    if (!userId) {
+      return
+    }
+    wx.navigateTo({
+      url: '../user/follow?content=followings&user=' + userId,
+    })
+  },
+
+  onFollowerTap: (e) => {
+    let userId = homepage.data.userId
+    if (!userId) {
+      return
+    }
+    wx.navigateTo({
+      url: '../user/follow?content=followers&user=' + userId,
+    })
+  },
 })
