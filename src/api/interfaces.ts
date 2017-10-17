@@ -264,4 +264,5 @@ export type ApprovalResult = {
 export type BookPageData = {
     users: Array<SearchUser>,
     cards: Array<CardDetail>,
+    hasBook: number,
 }

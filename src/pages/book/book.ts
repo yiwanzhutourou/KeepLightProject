@@ -1,10 +1,10 @@
-import { BookPageData, CardDetail, SearchUser } from '../../api/interfaces'
-import { getBookCards, getBookDetails, getBookPageData } from '../../api/api'
-import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { Book, BookPageData, CardDetail, SearchUser } from '../../api/interfaces'
+import { addBook, getBookCards, getBookDetails, getBookPageData, removeBook } from '../../api/api'
+import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { setBookDetailData, updateBookStatus } from '../../utils/bookCache'
 
 import { getDistrictShortString } from '../../utils/addrUtils'
 import { parseAuthor } from '../../utils/bookUtils'
-import { setBookDetailData } from '../../utils/bookCache'
 import { setPostBookData } from '../../utils/postCache'
 
 const DEFAULT_BOOK_CARDS_PAGE_SIZE = 5
@@ -52,6 +52,8 @@ Page({
       showClickLoadMore: true,
       userList: [],
       showUsers: false,
+      showAddBook: false,
+      extraLoaded: false,
   },
 
   onLoad: function(option: any): void {
@@ -140,6 +142,8 @@ Page({
                             showList: data.cards.length > 0,
                             userList: formatUserList(data.users),
                             showUsers: data.users && data.users.length > 0,
+                            showAddBook: data.hasBook === 0,
+                            extraLoaded: true,
                         })
                     }
                 }, (failure) => {
@@ -209,5 +213,53 @@ Page({
           title: bookDetail.title,
           path: 'pages/book/book?isbn=' + isbn,
       }
+  },
+
+  onAddBook: (e) => {
+    let isbn = bookPage.data.isbn
+    if (!isbn) {
+        return
+    }
+    showLoading('正在添加')
+    addBook(isbn, () => {
+      hideLoading()
+      showToast('已添加')
+      bookPage.setData({
+        showAddBook: false,
+      })
+      updateBookStatus(isbn, true)
+    }, (failure) => {
+      hideLoading()
+      if (!failure.data) {
+        showErrDialog('无法添加图书，请检查你的网络')
+      }
+    })
+  },
+
+  onRemoveBook: (e) => {
+    let isbn = bookPage.data.isbn
+    if (!isbn) {
+        return
+    }
+    let title = bookPage.data.bookDetail && bookPage.data.bookDetail.title ?
+                    '《' + bookPage.data.bookDetail.title + '》' : '这本书'
+    showConfirmDialog('', '确认从你的书房移除' + title + '？', (confirm: boolean) => {
+      if (confirm) {
+        showLoading('正在删除')
+        removeBook(isbn, () => {
+          hideLoading()
+          showToast('已移除')
+          bookPage.setData({
+            showAddBook: true,
+          })
+          updateBookStatus(isbn, false)
+        }, (failure) => {
+          hideLoading()
+          if (!failure.data) {
+            showErrDialog('无法删除图书，请检查你的网络')
+          }
+        })
+      }
+    })
   },
 })

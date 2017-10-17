@@ -19,6 +19,20 @@
                 <text wx:if="{{bookDetail.series}}" class="subinfo-text">{{bookDetail.series}}</text>
                 <text wx:if="{{bookDetail.isbn}}" class="subinfo-text">{{bookDetail.isbn}}</text>
             </view>
+            <view class="book-button-container">
+                    <view wx:if="{{extraLoaded && showAddBook}}"
+                    class="add-book-button"
+                    hover-class="add-book-button-hover"
+                    bindtap="onAddBook">
+                    添加到我的书房
+                </view>
+                <view wx:elif="{{extraLoaded}}"
+                    class="remove-book-button"
+                    hover-class="remove-book-button-hover"
+                    bindtap="onRemoveBook">
+                    从我的书房移除
+                </view>
+            </view>
         </view>
         <view wx:if="{{bookDetail.summary}}" class="detail-container">
             <text class="detail-title">内容介绍</text>

@@ -1,9 +1,14 @@
 <!--index.wxml-->
 <view class="container">
-    <view class="search-contaner" bindtap="onSearchTap">
-        <view class="fake-input-container">
+    <view class="search-contaner">
+        <view class="fake-input-container"
+            bindtap="onSearchTap">
             <image class="search-image" src="../../resources/img/icon_home_search.png" />
             <view class="search-text">搜索看看附近的书房里都有什么书</view>
+        </view>
+        <view class="scanner-container"
+            bindtap="onScanTap">
+            <image class="scanner-image" src="../../resources/img/icon_index_scan.png" />
         </view>
     </view>
     <map id="homeMap"

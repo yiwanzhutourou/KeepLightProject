@@ -26,13 +26,13 @@
     height: 80rpx;
     background-color: #535354;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
 }
 
 .fake-input-container {
-    width: calc(100% - 40rpx);
+    width: 640rpx;
     height: 60rpx;
     background-color: #f2f2f2;
     border-radius: 8rpx;
@@ -51,4 +51,19 @@
   font-size: 26rpx;
   color: #8a8a8a;
   margin-left: 6rpx;
+}
+
+.scanner-container {
+    width: 60rpx;
+    height: 60rpx;
+    margin-left: 10rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.scanner-image {
+    width: 48rpx;
+    height: 48rpx;
 }

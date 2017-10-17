@@ -1,8 +1,8 @@
-import { Markers, Result } from '../../api/interfaces'
-import { getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
+import { Book, Markers, Result } from '../../api/interfaces'
+import { getBookInfo, getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
+import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 import { shouldShowLanding } from '../../utils/urlCache'
-import { showErrDialog } from '../../utils/utils'
 
 const EVENT_TAP_SEARCH = 0
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
@@ -220,6 +220,53 @@ Page({
   onSearchTap: (e) => {
     wx.navigateTo({
       url: '../search/search',
+    })
+  },
+
+  onScanTap: (e) => {
+    wx.scanCode({
+      success: (res: WeApp.ScanCodeResult) => {
+        if (!res) {
+          return
+        }
+        if (res.scanType === 'EAN_13' && res.result) {
+          // 图书页
+          // 从豆瓣获取图书信息
+          showLoading('正在查找图书信息')
+          getBookInfo(res.result, (books: Array<Book>) => {
+              hideLoading()
+              if (books && books.length > 0 && books[0]) {
+                let isbn = books[0].isbn
+                wx.navigateTo({
+                    url: '../book/book?isbn=' + isbn,
+                })
+              }
+            }, (failure) => {
+              hideLoading()
+              if (!failure.data) {
+                showErrDialog('网络错误，请稍后再试')
+              }
+          })
+        } else if (res.result) {
+          wx.showModal({
+            title: '条码/二维码内容',
+            content: res.result,
+            confirmText: '点击复制',
+            success: (res2: { confirm: boolean }) => {
+              if (res2 && res2.confirm) {
+                wx.setClipboardData({
+                  data: res.result,
+                  success: (result) => {
+                    showToast('已复制')
+                  },
+                })
+              }
+            },
+          })
+        } else {
+          showErrDialog('无法识别条码/二维码')
+        }
+      },
     })
   },
 
