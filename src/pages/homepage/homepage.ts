@@ -1,10 +1,10 @@
 import { Book, GuideData, HomepageData, MyCardItem } from '../../api/interfaces'
 import { addAddress, borrowBook, checkLoginFirstLaunch, getBookList, getGuideData, getHomepageData, getMyHomepageData, getUserInfo, removeBook, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
-import { replaceBookList, updateBookStatus, updateBorrowData } from '../../utils/bookCache'
 import { setHomeSettingData, setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
+import { updateBorrowData } from '../../utils/bookCache'
 import { verifyReg } from '../../utils/reg'
 
 let homepage
@@ -58,7 +58,6 @@ Page({
     cardCount: 0,
     borrowBookList: [],
     borrowBookCount: 0,
-    bookList: [],
     bookCount: 0,
     showContent: false,
     showNetworkError: false,
@@ -149,7 +148,6 @@ Page({
     // 主页的所有信息打在一个接口里，后面要做图书分页
     getMyHomepageData((result: HomepageData) => {
       hideLoading()
-      let books = result.books
       homepage.setData({
         userId: result.userId,
         homepageData: {
@@ -161,7 +159,6 @@ Page({
         cardCount: result.cardCount,
         borrowBookList: result.borrowBooks,
         borrowBookCount: result.borrowBookCount,
-        bookList: books,
         bookCount: result.bookCount,
         showContent: true,
         showNetworkError: false,
@@ -172,7 +169,6 @@ Page({
         showBindMobile: false,
         showGuide: false,
       })
-      replaceBookList(books)
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
@@ -194,45 +190,6 @@ Page({
   onUploadBook: (e) => {
     wx.switchTab({
       url: '../book/addBook',
-    })
-  },
-
-  onRemoveBook: (e) => {
-    showConfirmDialog('', '确认从你的书房中移除《' + e.currentTarget.dataset.title + '》？', (confirm: boolean) => {
-      if (confirm) {
-        showLoading('正在删除')
-        removeBook(e.currentTarget.dataset.isbn, (isbn: string) => {
-          hideLoading()
-          if (homepage.data.bookList) {
-            let bookList: Array<Book> = []
-            homepage.data.bookList.forEach((book: Book) => {
-              let added = book.added
-              if (isbn !== book.isbn) {
-                bookList.push({
-                  isbn: book.isbn,
-                  title: book.title,
-                  author: book.author,
-                  url: book.url,
-                  cover: book.cover,
-                  publisher: book.publisher,
-                  added: true,
-                })
-              }
-            })
-            homepage.setData({
-              bookList: bookList,
-            })
-            if (homepage.data.isCurrentUser) {
-              updateBookStatus(isbn, false)
-            }
-          }
-        }, (failure) => {
-          hideLoading()
-          if (!failure.data) {
-            showErrDialog('无法删除图书，请检查你的网络')
-          }
-        })
-      }
     })
   },
 

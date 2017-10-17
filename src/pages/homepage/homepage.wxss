@@ -504,3 +504,11 @@
     color: #aaa;
     font-size: 25rpx;
 }
+
+.more-all-book-text {
+    font-size: 24rpx;
+    color: #999;
+    padding: 6rpx 10rpx;
+    border: 1rpx solid #999;
+    border-radius: 8rpx;
+}

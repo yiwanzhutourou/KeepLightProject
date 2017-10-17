@@ -77,7 +77,7 @@ export type HomepageData = {
     address: Array<Address>,
     borrowBooks: Array<Book>,
     borrowBookCount: number,
-    books: Array<Book>,
+    books?: Array<Book>,
     bookCount: number,
     cards: Array<MyCardItem>,
     cardCount: number,

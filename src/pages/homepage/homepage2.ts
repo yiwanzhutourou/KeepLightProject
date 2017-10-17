@@ -1,10 +1,10 @@
 import { Book, HomepageData, MyCardItem } from '../../api/interfaces'
-import { addAddress, borrowBook, follow, getBookList, getHomepageData, removeBook, unfollow } from '../../api/api'
+import { addAddress, borrowBook, follow, getHomepageData, removeBook, unfollow } from '../../api/api'
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
-import { replaceBookList, updateBookStatus, updateBorrowData } from '../../utils/bookCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
 import { parseAuthor } from '../../utils/bookUtils'
+import { updateBorrowData } from '../../utils/bookCache'
 
 let homepage2
 
@@ -36,7 +36,6 @@ Page({
     cardCount: 0,
     borrowBookList: [],
     borrowBookCount: 0,
-    bookList: [],
     bookCount: 0,
     showContent: false,
     showNetworkError: false,
@@ -77,7 +76,6 @@ Page({
         cardCount: result.cardCount,
         borrowBookList: result.borrowBooks,
         borrowBookCount: result.borrowBookCount,
-        bookList: books,
         bookCount: result.bookCount,
         addressText: getAddressDisplayText(result.address),
         showContent: true,
