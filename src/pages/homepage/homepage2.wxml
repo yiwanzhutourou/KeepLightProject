@@ -75,8 +75,7 @@
                     </view>
                 </scroll-view>
             </view>
-            <view wx:if="{{borrowBookList && borrowBookList.length > 0}}"
-                class="list-container">
+            <view wx:if="{{bookCount > 0}}" class="list-container">
                 <view class="title-container">
                     <text>闲置图书 {{borrowBookCount}} 本</text>
                 </view>
@@ -87,11 +86,14 @@
                 </block>
             </view>
             <view class="list-container">
-                <view class="more-book-container">
+                <view wx:if="{{bookCount > 0}}" class="more-book-container">
                     <view class="more-all-book-text"
                         bindtap="onShowAllBooks">
                         查看全部 {{bookCount}} 本图书
                     </view>
+                </view>
+                <view wx:else class="title-container">
+                    <text>0 本书</text>
                 </view>
             </view>
         </view>

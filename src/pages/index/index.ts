@@ -240,6 +240,8 @@ Page({
                 wx.navigateTo({
                     url: '../book/book?isbn=' + isbn,
                 })
+              } else {
+                indexPage.showScanError(res.result)
               }
             }, (failure) => {
               hideLoading()
@@ -248,23 +250,27 @@ Page({
               }
           })
         } else if (res.result) {
-          wx.showModal({
-            title: '条码/二维码内容',
-            content: res.result,
-            confirmText: '点击复制',
-            success: (res2: { confirm: boolean }) => {
-              if (res2 && res2.confirm) {
-                wx.setClipboardData({
-                  data: res.result,
-                  success: (result) => {
-                    showToast('已复制')
-                  },
-                })
-              }
-            },
-          })
+          indexPage.showScanError(res.result)
         } else {
           showErrDialog('无法识别条码/二维码')
+        }
+      },
+    })
+  },
+
+  showScanError: (content: string) => {
+    wx.showModal({
+      title: '条码/二维码内容',
+      content: content,
+      confirmText: '点击复制',
+      success: (res2: { confirm: boolean }) => {
+        if (res2 && res2.confirm) {
+          wx.setClipboardData({
+            data: content,
+            success: (result) => {
+              showToast('已复制')
+            },
+          })
         }
       },
     })
