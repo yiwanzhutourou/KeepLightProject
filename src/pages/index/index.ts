@@ -1,5 +1,5 @@
 import { Markers, Result } from '../../api/interfaces'
-import { getMarkers, getUserInfo } from '../../api/api'
+import { getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
 import { rpx2px, showErrDialog } from '../../utils/utils'
 
 import { shouldShowLanding } from '../../utils/urlCache'
@@ -17,20 +17,53 @@ let mapCtx
 let windowWidth
 let windowHeight
 
+let lastCenterLat = -1
+let lastCenterLng = -1
+
 // 每一公里所跨越的经纬度
 const KILOMETER_LAT = 0.0019
 const KILOMETER_LNG = 0.0017
 
 // 客户端简单防一下，服务端存在一个用户填了多个相同地址的脏数据
 const alreadyHasUser = (markers: Array<Markers>, marker: Markers) => {
-  if (markers && marker) {
-    for (let i = 0; i < markers.length; i++) {
-      if (markers[i] && markers[i].id === marker.id) {
-        return true
-      }
+    if (markers && marker) {
+        for (let i = 0; i < markers.length; i++) {
+            if (markers[i] && markers[i].id === marker.id) {
+                return true
+            }
+        }
     }
+    return false
+}
+
+const shouldLoadNew = (curLat: number, curLng: number) => {
+  if (lastCenterLat === -1 || lastCenterLng === -1) {
+      lastCenterLat = curLat
+      lastCenterLng = curLng
+      return true
   }
-  return false
+  let disDiff = calDistance(lastCenterLat, lastCenterLng, curLat, curLng)
+  if (disDiff > 3) { // 写死累计移动 3 公里才加载新数据
+      lastCenterLat = curLat
+      lastCenterLng = curLng
+      return true
+  } else {
+      return false
+  }
+}
+
+const calDistance = (lat1: number, lng1: number, lat2: number, lng2: number) => {
+    let radlat1 = Math.PI * lat1 / 180
+    let radlat2 = Math.PI * lat2 / 180
+    let theta = lng1 - lng2
+    let radtheta = Math.PI * theta / 180
+    let dist = Math.sin(radlat1) * Math.sin(radlat2)
+              + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta)
+    dist = Math.acos(dist)
+    dist = dist * 180 / Math.PI
+    dist = dist * 60 * 1.1515
+    dist = dist * 1.609344
+    return dist
 }
 
 Page({
@@ -53,6 +86,14 @@ Page({
         windowHeight = systemInfo.windowHeight
         indexPage.setUpIconOnmap()
     })
+
+    // 获取定位
+    app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
+      indexPage.setData({
+        longitude: locationInfo.longitude,
+        latitude: locationInfo.latitude,
+      })
+    })
   },
 
   onShow: function(): void {
@@ -65,33 +106,41 @@ Page({
       }, 1500)
     }
 
-    // 获取定位
-    app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
-      // 只有在第一次进入地图页面的时候，才设置中心点
-      if (indexPage.data.markers.length === 0) {
-        indexPage.setData({
-          longitude: locationInfo.longitude,
-          latitude: locationInfo.latitude,
-        })
-      }
+    if (indexPage.data.markers.length === 0) {
+      indexPage.checkAndLoad()
+    }
+  },
 
-      getMarkers(
-        (markers: Array<Markers>) => {
-          const mergedMarkers = indexPage.mergeMarkers(markers)
-          const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
-          const includePoints = indexPage.composeIncludePoints(transformedMarkers)
-
-          indexPage.setData({
-            markers: transformedMarkers,
-            includePoints: includePoints,
-          })
-        }, (failure) => {
-          if (!failure.data) {
-            showErrDialog('无法获取数据，请检查你的网络状态')
+  checkAndLoad: () => {
+    mapCtx.getCenterLocation({
+      success: (res) => {
+        if (res) {
+          let latitude = res.latitude
+          let longitude = res.longitude
+          if (shouldLoadNew(latitude, longitude)) {
+            indexPage.loadMarkers(latitude, longitude)
           }
-        },
-      ) 
+        }
+      },
     })
+  },
+
+  loadMarkers: (lat: number, lng: number) => {
+    getMarkersNearBy(lat, lng, (markers: Array<Markers>) => {
+        if (!markers || markers.length === 0) {
+          return
+        }
+        const mergedMarkers = indexPage.mergeMarkers(markers)
+        const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
+        // const includePoints = indexPage.composeIncludePoints(transformedMarkers)
+
+        indexPage.setData({
+          markers: transformedMarkers,
+          // includePoints: includePoints,
+        })
+      }, (failure) => {
+        // ignore
+      })
   },
 
   controltap: (event) => {
@@ -120,29 +169,18 @@ Page({
     }
   },
 
+  regionchange: (e) => {
+    if (e && e.type === 'end') {
+      indexPage.checkAndLoad()
+    }
+  },
+
   findMarker: (id: string) => {
     if (indexPage.data.markers) {
       return indexPage.data.markers.find((marker) => (marker.id + '') === (id + ''))
     }
     return { markerId: id }
   },
-
-  // TODO 地图数据如果过多，要重新做这里，只拉当前视图范围内的书房
-  // onRegionChange: (e) => {
-  //   console.log(e)
-  //   // 地图拖动的时候，把包含点设置为空
-  //   indexPage.setData({
-  //     includePoints: [],
-  //   })
-  //   mapCtx.getCenterLocation({
-  //     success: (res) => {
-  //     },
-  //   })
-  // },
-
-  // onMapTap: (e) => {
-  //   console.log(e)
-  // },
 
   onShareAppMessage: () => {
     return {

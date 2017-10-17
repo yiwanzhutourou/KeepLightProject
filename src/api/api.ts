@@ -762,6 +762,31 @@ export const getMarkers = (success: (books: Array<Markers>) => void, failure?: (
     }, failure)
 }
 
+export const getMarkersNearBy = (lat: number, lng: number,
+        success: (books: Array<Markers>) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Map.getMarkersNearBy') + getUrlParam({
+        lat: lat,
+        lng: lng,
+    })
+    get(url, (result) => {
+        let markers = Array<Markers>()
+        if (result) {
+            result.forEach((marker) => {
+                markers.push({
+                    id: marker.id,
+                    latitude: marker.latitude,
+                    longitude: marker.longitude,
+                    iconPath: '/resources/img/icon_map_location.png',
+                    width: 33,
+                    height: 40,
+                    isMergeMarker: false,
+                })
+            })
+        }
+        success(markers)
+    }, failure)
+}
+
 export const getBookDetails = (isbn: string, success: (result: any) => void, failure?: (res?: any) => void) => {
     let url = 'https://api.douban.com/v2/book/' + isbn
     // 特殊处理一下老数据，豆瓣的id不可能是978开头的

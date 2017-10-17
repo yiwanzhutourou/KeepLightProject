@@ -14,5 +14,6 @@
         include-points="{{includePoints}}"
         bindcontroltap="controltap"
         bindmarkertap="markertap"
+        bindregionchange="regionchange"
         show-location />
 </view>
