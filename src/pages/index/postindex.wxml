@@ -1,0 +1,17 @@
+<view class="post-container"
+    style="height: {{screenHeight - 100}}px;">
+    <view class="post-wrapper">
+        <view class="post-button-container"
+            hover-class="post-button-container-hover"
+            bindtap="onAddBook">
+            <image class="post-button-image" src="../../resources/img/icon_index_add_book.png" />
+            <view class="post-button-text">添加图书</view>
+        </view>
+        <view class="post-button-container"
+            hover-class="post-button-container-hover"
+            bindtap="onPostCard">
+            <image class="post-button-image" src="../../resources/img/icon_index_post.png" />
+            <view class="post-button-text">写读书卡片</view>
+        </view>
+    </view>
+</view>

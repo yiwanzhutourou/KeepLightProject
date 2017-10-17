@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/index/landing",
     "pages/index/mapdetail",
+    "pages/index/postindex",
     "pages/homepage/homepage",
     "pages/homepage/homepage2",
     "pages/book/addBook",
@@ -59,8 +60,8 @@
       }, {  
         "selectedIconPath": "resources/img/icon_add_selected.png",  
         "iconPath": "resources/img/icon_add.png",  
-        "pagePath": "pages/book/addBook",  
-        "text": "添加图书"  
+        "pagePath": "pages/index/postindex",  
+        "text": "发布"  
       }, {  
         "selectedIconPath": "resources/img/icon_message_selected.png",  
         "iconPath": "resources/img/icon_message.png",  

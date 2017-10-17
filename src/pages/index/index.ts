@@ -1,8 +1,8 @@
 import { Markers, Result } from '../../api/interfaces'
 import { getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
-import { rpx2px, showErrDialog } from '../../utils/utils'
 
 import { shouldShowLanding } from '../../utils/urlCache'
+import { showErrDialog } from '../../utils/utils'
 
 const EVENT_TAP_SEARCH = 0
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
@@ -190,11 +190,14 @@ Page({
   },
 
   setUpIconOnmap: () => {
+    const rpx2px = (rpx: number) => {
+      return rpx * windowWidth / 750
+    }
     // Show current location icon:
     let cWidth = windowWidth * 0.1
     let cHeight = cWidth
     let cLeft = windowWidth * 0.97 - cWidth
-    let cTop = windowHeight * 0.92 - cHeight
+    let cTop = (windowHeight - rpx2px(80)) * 0.97 - cHeight
 
     indexPage.setData({
       controls: [

@@ -15,15 +15,15 @@
 */
 #homeMap {
     width: 100%;
-    height: calc(100vh - 56rpx);
-    margin-top: 56rpx;
+    height: calc(100vh - 80rpx);
+    margin-top: 80rpx;
 }
 
 .search-contaner {
     position: fixed;
     top: 0;
     width: 100%;
-    height: 56rpx;
+    height: 80rpx;
     background-color: #535354;
     display: flex;
     flex-direction: column;
@@ -33,9 +33,9 @@
 
 .fake-input-container {
     width: calc(100% - 40rpx);
-    height: 40rpx;
+    height: 60rpx;
     background-color: #f2f2f2;
-    border-radius: 20rpx;
+    border-radius: 8rpx;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -43,12 +43,12 @@
 }
 
 .search-image {
-    width: 36rpx;
-    height: 36rpx;
+    width: 42rpx;
+    height: 42rpx;
 }
 
 .search-text {
-  font-size: 22rpx;
+  font-size: 26rpx;
   color: #8a8a8a;
   margin-left: 6rpx;
 }
