@@ -58,38 +58,40 @@ Page({
   onShow: function(): void {
     let showLanding = shouldShowLanding()
     if (showLanding) {
-      wx.navigateTo({
-        url: '../index/landing',
-      })
-    } else {
-      // 获取定位
-      app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
-        // 只有在第一次进入地图页面的时候，才设置中心点
-        if (indexPage.data.markers.length === 0) {
-          indexPage.setData({
-            longitude: locationInfo.longitude,
-            latitude: locationInfo.latitude,
-          })
-        }
-
-        getMarkers(
-          (markers: Array<Markers>) => {
-            const mergedMarkers = indexPage.mergeMarkers(markers)
-            const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
-            const includePoints = indexPage.composeIncludePoints(transformedMarkers)
-
-            indexPage.setData({
-              markers: transformedMarkers,
-              includePoints: includePoints,
-            })
-          }, (failure) => {
-            if (!failure.data) {
-              showErrDialog('无法获取数据，请检查你的网络状态')
-            }
-          },
-        ) 
-      })
+      setTimeout(() => {
+        wx.navigateTo({
+          url: '../index/landing',
+        })
+      }, 1500)
     }
+
+    // 获取定位
+    app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
+      // 只有在第一次进入地图页面的时候，才设置中心点
+      if (indexPage.data.markers.length === 0) {
+        indexPage.setData({
+          longitude: locationInfo.longitude,
+          latitude: locationInfo.latitude,
+        })
+      }
+
+      getMarkers(
+        (markers: Array<Markers>) => {
+          const mergedMarkers = indexPage.mergeMarkers(markers)
+          const transformedMarkers = indexPage.transformMarkers(mergedMarkers)
+          const includePoints = indexPage.composeIncludePoints(transformedMarkers)
+
+          indexPage.setData({
+            markers: transformedMarkers,
+            includePoints: includePoints,
+          })
+        }, (failure) => {
+          if (!failure.data) {
+            showErrDialog('无法获取数据，请检查你的网络状态')
+          }
+        },
+      ) 
+    })
   },
 
   controltap: (event) => {
