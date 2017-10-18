@@ -4,7 +4,7 @@
             <view class="maininfo-container" data-user="{{item.id}}" bindtap="onUserItemTap">
                 <image class="user-avatar" src="{{item.avatar}}" />
                 <view class="detail-container">
-                    <text class="user-nickname">{{item.nickname}}的书房</text>
+                    <text class="user-nickname">{{item.nickname}}</text>
                     <view wx:if="{{item.addressText}}" class="distance-text">
                         {{item.addressText}}
                     </view>

@@ -90,7 +90,7 @@
                 <view class="user-nick-container">
                     <view class="user-text-container">
                         <text wx:if="{{homepageData.nickname}}"
-                            class="user-nickname">{{homepageData.nickname}}的书房</text>
+                            class="user-nickname">{{homepageData.nickname}}</text>
                         <text wx:if="{{addressText}}"
                             class="user-address">{{addressText}}</text>
                     </view>
