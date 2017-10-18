@@ -266,3 +266,9 @@ export type BookPageData = {
     cards: Array<CardDetail>,
     hasBook: number,
 }
+
+export type QRCode = {
+    avatar: string,
+    nickname: string,
+    qrToken: string,
+}

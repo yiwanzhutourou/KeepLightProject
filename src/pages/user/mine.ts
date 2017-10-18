@@ -120,6 +120,12 @@ Page({
       })
   },
 
+  onShowMyQRCode: (e) => {
+      wx.navigateTo({
+        url: '../borrow/myqrcode',
+      })
+  },
+
   onFollowingTap: (e) => {
       wx.navigateTo({
         url: './follow?content=followings',

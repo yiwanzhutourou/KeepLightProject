@@ -35,7 +35,8 @@
     "pages/card/post",
     "pages/card/card",
     "pages/card/mycards",
-    "pages/card/usercards"
+    "pages/card/usercards",
+    "pages/borrow/myqrcode"
   ],
   "window": {
     "backgroundTextStyle":"light",

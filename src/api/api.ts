@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, SettingsData } from './interfaces'
+import { ApprovalResult, BookPageData, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -632,6 +632,13 @@ export const getFollowers = (userId: number,
 export const getMyApprovedRequest = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getMyApprovedRequest')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getMyQRCode = (success: (qrCode: QRCode) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getMyQRCode')
         get(url, success, failure)
     }, failure)
 }
