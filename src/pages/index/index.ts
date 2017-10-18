@@ -250,7 +250,15 @@ Page({
               }
           })
         } else if (res.result) {
-          indexPage.showScanError(res.result)
+          let bochaUrl = 'bocha://youdushufang/'
+          if (res.result.slice(0, bochaUrl.length) === bochaUrl) {
+            let userId = res.result.slice(res.result.lastIndexOf('/') + 1)
+            wx.navigateTo({
+              url: '../homepage/homepage2?user=' + userId,
+            })
+          } else {
+            indexPage.showScanError(res.result)
+          }
         } else {
           showErrDialog('无法识别条码/二维码')
         }
