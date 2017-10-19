@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
+import { ApprovalResult, BookPageData, BorrowPageData, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -235,6 +235,19 @@ export const getBookCards = (isbn: string, page: number, count: number,
 export const getHomepageData = (userId: string, success: (info: HomepageData) => void, failure?: (res?: any) => void) => {
     if (userId) {
         let url = getUrl('User.getHomepageData') + getUrlParam({
+            userId: userId,
+        })
+        get(url, success, failure)
+    } else {
+        // 走到这肯定出bug了
+    }
+}
+
+export const getBorrowPageData = (userId: string,
+        success: (data: BorrowPageData) => void,
+        failure?: (res?: any) => void) => {
+    if (userId) {
+        let url = getUrl('Book.getBorrowPageData') + getUrlParam({
             userId: userId,
         })
         get(url, success, failure)
@@ -481,6 +494,15 @@ export const borrowBookNew = (toUser: string, isbn: string, message: string, suc
     checkLogin(() => {
         let url = getUrl('Chat.borrowBook')
         post(url, { 'toUser': toUser, 'isbn': isbn, 'message': message }, success, failure)
+    }, failure)
+}
+
+// 么么哒
+export const trueBorrowBook = (toUser: string, isbn: string,
+        success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.borrow')
+        post(url, { 'to': toUser, 'isbn': isbn }, success, failure)
     }, failure)
 }
 

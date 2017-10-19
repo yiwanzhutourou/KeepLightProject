@@ -272,3 +272,9 @@ export type QRCode = {
     nickname: string,
     qrToken: string,
 }
+
+export type BorrowPageData = {
+    avatar: string,
+    nickname: string,
+    books: Array<Book>,
+}

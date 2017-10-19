@@ -9,7 +9,7 @@
                 style="width:660rpx;height:660rpx;background:#fff;"
                 canvas-id="mycanvas" />
         </view>
-        <view class="my-qr-code-hint">扫描二维码借书</view>
+        <view class="my-qr-code-hint">扫描二维码向我借书</view>
     </view>
 </view>
 <view hidden="{{maskHidden}}" class="mask"></view>

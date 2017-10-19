@@ -1,0 +1,39 @@
+<view class="container">
+    <image wx:if="{{showContent}}" class="blur" src="{{avatar}}" mode="aspectFill" />
+    <view wx:if="{{showContent}}" class="dark" />
+    <view wx:if="{{showContent}}" class="user-avatar-container">
+        <image wx:if="{{avatar}}" class="user-avatar" src="{{avatar}}" />
+    </view>
+    <view wx:if="{{showContent}}" class="detail-container">
+        <view class="user-content-container">
+            <view class="user-nick-container">
+                <view class="user-text-container">
+                    <text wx:if="{{nickname}}"
+                        class="user-nickname">借阅 {{nickname}} 的书</text>
+                    <text class="borrow-hint">点击右侧的扫描按钮扫描需要借阅的图书，或者点击对应图书旁的借阅按钮</text>
+                </view>
+                <view class="user-action-container">
+                    <image class="scan-button"
+                        src="../../resources/img/icon_scan.png"
+                        bindtap="onScanTap" />
+                </view>
+            </view>
+            <view class="content-divider" />
+            <view class="list-container">
+                <view class="title-container">
+                    <text>闲置图书 {{bookList.length}} 本</text>
+                </view>
+                <block wx:for="{{bookList}}" wx:key="id">
+                    <import src="../../template/book/BorrowBookItem.wxml" />
+                    <template is="borrow-book-item"
+                        data="{{item}}" />
+                </block>
+            </view>
+        </view>
+    </view>
+    <view wx:elif="{{showNetworkError}}" class="empty_container2">
+        <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
+        <text class="empty_title">网络连接失败啦</text>
+        <button class="empty_action" hover-class="empty_action-hover" bindtap="onReload">点击重新加载</button>
+    </view>
+</view>
