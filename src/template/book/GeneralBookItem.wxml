@@ -13,7 +13,7 @@
                 class="action-button"
                 hover-class="action-button-hover"
                 data-book="{{item}}"
-                bindtap="onBorrowBook">借阅</button>
+                bindtap="onBorrowBook">预约</button>
         </view>
         <view class="item-divider" />
     </view>

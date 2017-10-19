@@ -51,7 +51,7 @@ Page({
         }, (failure) => {
             hideLoading()
             if (!failure.data) {
-                showErrDialog('无法借阅，请检查你的网络')
+                showErrDialog('请求失败，请检查你的网络')
             }
         })
     }
