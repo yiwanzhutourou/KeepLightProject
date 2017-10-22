@@ -45,7 +45,7 @@ Page({
         },
         {
             id: SETTING_BORROW_IN,
-            title: '我要还书',
+            title: '借入的书',
             icon: '../../resources/img/icon_return_book.png',
         },
         {

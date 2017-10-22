@@ -6,9 +6,6 @@
                 bindtap="onShowFlag">已借出</view>
             <view class="{{showFlag === 3 ? 'filter-item' : 'filter-item-dark'}}"
                 data-flag="{{3}}"
-                bindtap="onShowFlag">归还中</view>
-            <view class="{{showFlag === 4 ? 'filter-item' : 'filter-item-dark'}}"
-                data-flag="{{4}}"
                 bindtap="onShowFlag">已归还</view>
         </view>
         <view wx:if="{{showList}}" class="list-container">

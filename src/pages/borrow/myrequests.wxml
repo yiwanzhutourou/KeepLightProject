@@ -10,9 +10,6 @@
             <view class="{{showFlag === 2 ? 'filter-item' : 'filter-item-dark'}}"
                 data-flag="{{2}}"
                 bindtap="onShowFlag">已拒绝</view>
-            <view class="{{showFlag === 4 ? 'filter-item' : 'filter-item-dark'}}"
-                data-flag="{{4}}"
-                bindtap="onShowFlag">已归还</view>
         </view>
         <view wx:if="{{showList}}" class="list-container">
             <block wx:for="{{dataList}}" wx:key="id">

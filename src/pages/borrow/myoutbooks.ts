@@ -1,4 +1,4 @@
-import { acceptReturn, declineReturn, getMyBorrowRequests } from '../../api/api'
+import { getMyBorrowRequests, markBookReturn } from '../../api/api'
 import { hideLoading, showConfirmDialog, showErrDialog, showLoading, timestamp2Text } from '../../utils/utils'
 
 import { BorrowRequestNew } from '../../api/interfaces'
@@ -92,37 +92,15 @@ Page({
     })
   },
 
-  onDeclineReturn: (e) => {
+  onMarkReturn: (e) => {
     let id = e.currentTarget.dataset.id
     let user = e.currentTarget.dataset.user
     let isbn = e.currentTarget.dataset.isbn
     if (id && user && isbn) {
-      showConfirmDialog('', '确认拒绝？', (confirm) => {
+      showConfirmDialog('', '标记图书为已还，意味着你已经收到了对方归还的图书。标记完成后，有读书房将认定图书已经归还。确认继续？', (confirm) => {        
         if (confirm) {
           showLoading('正在操作...')
-          declineReturn(id, user, isbn, () => {
-            hideLoading()
-            myOutBooksPage.removeItem(id)
-          }, (failure) => {
-            hideLoading()
-            if (!failure.data) {
-              showErrDialog('操作失败，请检查你的网络')
-            }
-          })
-        }
-      })
-    }
-  },
-
-  onAcceptReturn: (e) => {
-    let id = e.currentTarget.dataset.id
-    let user = e.currentTarget.dataset.user
-    let isbn = e.currentTarget.dataset.isbn
-    if (id && user && isbn) {
-      showConfirmDialog('', '同意对方的还书请求，意味着你已经收到了对方归还的图书。同意还书请求后，有读书房将认定图书已经归还。确认继续？', (confirm) => {
-        if (confirm) {
-          showLoading('正在操作...')
-          acceptReturn(id, user, isbn, () => {
+          markBookReturn(id, user, isbn, () => {
             hideLoading()
             myOutBooksPage.removeItem(id)
           }, (failure) => {

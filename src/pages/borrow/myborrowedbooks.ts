@@ -1,7 +1,7 @@
-import { getMyOutBorrowRequests, returnBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showErrDialog, showLoading, timestamp2Text } from '../../utils/utils'
 
 import { BorrowRequestNew } from '../../api/interfaces'
+import { getMyOutBorrowRequests } from '../../api/api'
 
 let myBorrowedBooksPage
 
@@ -90,43 +90,5 @@ Page({
     wx.navigateTo({
         url: '../homepage/homepage2?user=' + user,
     })
-  },
-
-  onReturnBook: (e) => {
-    let id = e.currentTarget.dataset.id
-    let user = e.currentTarget.dataset.user
-    let isbn = e.currentTarget.dataset.isbn
-    if (id && user && isbn) {
-      showConfirmDialog('', '请确认归还图书之后再进行这个操作。是否继续？', (confirm) => {
-        if (confirm) {
-          showLoading('正在操作...')
-          returnBook(id, user, isbn, () => {
-            hideLoading()
-            myBorrowedBooksPage.removeItem(id)
-          }, (failure) => {
-            hideLoading()
-            if (!failure.data) {
-              showErrDialog('操作失败，请检查你的网络')
-            }
-          })
-        }
-      })
-    }
-  },
-
-  removeItem: (id: string) => {
-    let dataList = myBorrowedBooksPage.data.dataList
-    if (dataList) {
-      for (let i = 0; i < dataList.length; i++) {
-        if (dataList[i] && parseInt(dataList[i].id, 10) === parseInt(id, 10)) {
-          dataList.splice(i, 1)
-        }
-      }
-      myBorrowedBooksPage.setData({
-        dataList: dataList,
-        showEmpty: dataList.length == 0,
-        showList: dataList.length > 0,
-      })
-    }
   },
 })

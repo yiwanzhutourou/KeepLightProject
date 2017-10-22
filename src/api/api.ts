@@ -502,36 +502,12 @@ export const declineBorrow = (id: string, userId: string, isbn: string,
     }, failure)
 }
 
-export const acceptReturn = (id: string, userId: string, isbn: string,
+export const markBookReturn = (id: string, userId: string, isbn: string,
         success: () => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
-        let url = getUrl('Book.acceptReturn') + getUrlParam({
+        let url = getUrl('Book.markBookReturn') + getUrlParam({
             id: id,
             from: userId,
-            isbn: isbn,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const declineReturn = (id: string, userId: string, isbn: string,
-        success: () => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Book.declineReturn') + getUrlParam({
-            id: id,
-            from: userId,
-            isbn: isbn,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const returnBook = (id: string, userId: string, isbn: string,
-        success: () => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Book.returnBook') + getUrlParam({
-            id: id,
-            to: userId,
             isbn: isbn,
         })
         get(url, success, failure)

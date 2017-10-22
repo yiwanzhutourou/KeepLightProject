@@ -10,12 +10,6 @@
             <view wx:elif="{{!isOut && item.status === 2}}" class="user-title-text">
                 你拒绝了 {{item.user.nickname}} 的借阅请求
             </view>
-            <view wx:elif="{{!isOut && item.status === 3}}" class="user-title-text">
-                {{item.user.nickname}} 借阅了你的书
-            </view>
-            <view wx:elif="{{!isOut && item.status === 4}}" class="user-title-text">
-                {{item.user.nickname}} 借阅你的书已归还
-            </view>
             <view wx:elif="{{isOut && item.status === 0}}" class="user-title-text">
                 你想要借阅 {{item.user.nickname}} 的
             </view>
@@ -24,12 +18,6 @@
             </view>
             <view wx:elif="{{isOut && item.status === 2}}" class="user-title-text">
                 {{item.user.nickname}} 拒绝了你的借阅请求
-            </view>
-            <view wx:elif="{{isOut && item.status === 3}}" class="user-title-text">
-                你借阅了 {{item.user.nickname}} 的书
-            </view>
-            <view wx:elif="{{isOut && item.status === 4}}" class="user-title-text">
-                你借阅 {{item.user.nickname}} 的书已归还
             </view>
             <image class="user-avatar"
                 data-user="{{item.user.id}}"
