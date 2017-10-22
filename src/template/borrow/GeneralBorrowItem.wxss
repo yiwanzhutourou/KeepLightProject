@@ -1,0 +1,120 @@
+.user-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 30rpx 0 30rpx;
+}
+
+.user-title-text {
+    font-size: 25rpx;
+    color: #666;
+    max-width: 560rpx;
+    display: -webkit-box;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20rpx 30rpx;
+}
+
+.content-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 15rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.user-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+}
+
+.book-detail-container {
+    width: 440rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 15rpx;
+}
+
+.book-title {
+    font-size: 35rpx;
+    color: #333;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-author {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 10rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-publisher {
+    font-size: 25rpx;
+    color: #666;
+    margin-top: 5rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.book-pic {
+    width: 120rpx;
+    height: 120rpx;
+}
+
+.action-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 20rpx 30rpx;
+}
+
+.borrow-action-button {
+    width: 100rpx;
+    font-size: 25rpx;
+    color: #fff;
+    background: #f8b62d;
+    margin: 0 16rpx;
+    padding: 0;
+}
+
+.borrow-action-button::after {
+    display: none;
+}
+
+.borrow-action-button-hover {
+    background: rgba(248, 182, 45, 0.6);
+}
+
+.borrow-action-button2 {
+    width: 100rpx;
+    font-size: 25rpx;
+    color: #666;
+    background: #fff;
+    margin: 0 16rpx;
+    padding: 0;
+}
+
+.borrow-action-button-hover2 {
+    color: #999;
+}

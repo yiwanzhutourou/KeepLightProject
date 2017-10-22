@@ -15,7 +15,7 @@
             <block wx:for="{{dataList}}" wx:key="id">
                 <import src="../../template/borrow/GeneralBorrowItem.wxml" />
                 <template is="general-borrow-item"
-                    data="{{item}}" />
+                    data="{{item, isOut}}" />
             </block>
         </view>
         <view wx:elif="{{showEmpty}}" class="empty_container">

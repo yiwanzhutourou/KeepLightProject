@@ -1,21 +1,21 @@
 <view class="container">
     <view class="detail-container">
         <view class="list-filter-container">
-            <view class="{{showFlag === 0 ? 'filter-item' : 'filter-item-dark'}}"
-                data-flag="{{0}}"
-                bindtap="onShowFlag">未处理</view>
             <view class="{{showFlag === 1 ? 'filter-item' : 'filter-item-dark'}}"
                 data-flag="{{1}}"
-                bindtap="onShowFlag">已同意</view>
-            <view class="{{showFlag === 2 ? 'filter-item' : 'filter-item-dark'}}"
-                data-flag="{{2}}"
-                bindtap="onShowFlag">已拒绝</view>
+                bindtap="onShowFlag">已借出</view>
+            <view class="{{showFlag === 3 ? 'filter-item' : 'filter-item-dark'}}"
+                data-flag="{{3}}"
+                bindtap="onShowFlag">归还中</view>
+            <view class="{{showFlag === 4 ? 'filter-item' : 'filter-item-dark'}}"
+                data-flag="{{4}}"
+                bindtap="onShowFlag">已归还</view>
         </view>
         <view wx:if="{{showList}}" class="list-container">
             <block wx:for="{{dataList}}" wx:key="id">
-                <import src="../../template/borrow/GeneralBorrowItem.wxml" />
-                <template is="general-borrow-item"
-                    data="{{item}}" />
+                <import src="../../template/borrow/GeneralBorrowBookItem.wxml" />
+                <template is="general-borrow-book-item"
+                    data="{{item, isOut}}" />
             </block>
         </view>
         <view wx:elif="{{showEmpty}}" class="empty_container">

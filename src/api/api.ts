@@ -442,20 +442,20 @@ export const markBook = (isbn: string, canBorrow: boolean, success: (result: str
 
 export const getBookList = (userId: string, all: boolean,
     success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-if (userId) {
-    let url = getUrl('User.getUserBooks') + getUrlParam({
-        userId: userId,
-        all: all ? 0 : 1,
-    })
-    get(url, success, failure)
-} else {
-    checkLogin(() => {
-        let url = getUrl('User.getMyBooks') + getUrlParam({
+    if (userId) {
+        let url = getUrl('User.getUserBooks') + getUrlParam({
+            userId: userId,
             all: all ? 0 : 1,
         })
         get(url, success, failure)
-    }, failure)
-}
+    } else {
+        checkLogin(() => {
+            let url = getUrl('User.getMyBooks') + getUrlParam({
+                all: all ? 0 : 1,
+            })
+            get(url, success, failure)
+        }, failure)
+    }
 }
 
 export const getMyBorrowRequests = (flag: number,
@@ -463,6 +463,76 @@ export const getMyBorrowRequests = (flag: number,
     checkLogin(() => {
         let url = getUrl('Book.getMyBorrowRequests') + getUrlParam({
             flag: flag,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getMyOutBorrowRequests = (flag: number,
+        success: (books: Array<BorrowRequestNew>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.getMyOutBorrowRequests') + getUrlParam({
+            flag: flag,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const acceptBorrow = (id: string, userId: string, isbn: string,
+        success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.accept') + getUrlParam({
+            id: id,
+            from: userId,
+            isbn: isbn,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const declineBorrow = (id: string, userId: string, isbn: string,
+        success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.decline') + getUrlParam({
+            id: id,
+            from: userId,
+            isbn: isbn,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const acceptReturn = (id: string, userId: string, isbn: string,
+        success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.acceptReturn') + getUrlParam({
+            id: id,
+            from: userId,
+            isbn: isbn,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const declineReturn = (id: string, userId: string, isbn: string,
+        success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.declineReturn') + getUrlParam({
+            id: id,
+            from: userId,
+            isbn: isbn,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const returnBook = (id: string, userId: string, isbn: string,
+        success: () => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.returnBook') + getUrlParam({
+            id: id,
+            to: userId,
+            isbn: isbn,
         })
         get(url, success, failure)
     }, failure)

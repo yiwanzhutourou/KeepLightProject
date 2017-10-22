@@ -1,9 +1,9 @@
-import { acceptBorrow, declineBorrow, getMyBorrowRequests } from '../../api/api'
+import { getMyOutBorrowRequests, returnBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showErrDialog, showLoading, timestamp2TextComplex } from '../../utils/utils'
 
 import { BorrowRequestNew } from '../../api/interfaces'
 
-let myrequestsPage
+let myBorrowedBooksPage
 
 const parseDataList = (data: Array<BorrowRequestNew>) => {
   if (data && data.length > 0) {
@@ -17,42 +17,43 @@ const parseDataList = (data: Array<BorrowRequestNew>) => {
 
 Page({
   data: {
-    showFlag: 0,
+    showFlag: 1,
     dataList: [],
     showNetworkError: false,
     showEmpty: false,
     showList: false,
+    isOut: false,
   },
   
   onLoad: function(option: any): void {
-    myrequestsPage = this
-    myrequestsPage.loadData()
+    myBorrowedBooksPage = this
+    myBorrowedBooksPage.loadData()
   },
 
   onShowFlag: (e) => {
-    let oldShowFlag = parseInt(myrequestsPage.data.showFlag, 10)
+    let oldShowFlag = parseInt(myBorrowedBooksPage.data.showFlag, 10)
     let newShowFlag = parseInt(e.currentTarget.dataset.flag, 10)
     if (oldShowFlag === newShowFlag) {
       return
     }
-    myrequestsPage.setData({
+    myBorrowedBooksPage.setData({
       showFlag: newShowFlag,
     })
-    myrequestsPage.loadData()
+    myBorrowedBooksPage.loadData()
   },
 
   loadData: () => {
-    myrequestsPage.setData({
+    myBorrowedBooksPage.setData({
       dataList: [],
       showNetworkError: false,
       showEmpty: false,
       showList: false,
     })
     showLoading('正在加载...')
-    let flag = myrequestsPage.data.showFlag
-    getMyBorrowRequests(flag, (data: Array<BorrowRequestNew>) => {
+    let flag = myBorrowedBooksPage.data.showFlag
+    getMyOutBorrowRequests(flag, (data: Array<BorrowRequestNew>) => {
       hideLoading()
-      myrequestsPage.setData({
+      myBorrowedBooksPage.setData({
         dataList: parseDataList(data),
         showEmpty: data.length == 0,
         showList: data.length > 0,
@@ -60,7 +61,7 @@ Page({
     }, (failure) => {
       hideLoading()
       if (!failure.data) {
-        myrequestsPage.setData({
+        myBorrowedBooksPage.setData({
           showNetworkError: true,
         })
       }
@@ -68,7 +69,7 @@ Page({
   },
 
   onReload: (e) => {
-    myrequestsPage.loadData()
+    myBorrowedBooksPage.loadData()
   },
 
   onGotoIndex: (e) => {
@@ -91,39 +92,17 @@ Page({
     })
   },
 
-  onDeclineBorrow: (e) => {
+  onReturnBook: (e) => {
     let id = e.currentTarget.dataset.id
     let user = e.currentTarget.dataset.user
     let isbn = e.currentTarget.dataset.isbn
     if (id && user && isbn) {
-      showConfirmDialog('', '确认拒绝？', (confirm) => {
+      showConfirmDialog('', '请确认归还图书之后再进行这个操作。是否继续？', (confirm) => {
         if (confirm) {
           showLoading('正在操作...')
-          declineBorrow(id, user, isbn, () => {
+          returnBook(id, user, isbn, () => {
             hideLoading()
-            myrequestsPage.loadData()
-          }, (failure) => {
-            hideLoading()
-            if (!failure.data) {
-              showErrDialog('操作失败，请检查你的网络')
-            }
-          })
-        }
-      })
-    }
-  },
-
-  onAcceptBorrow: (e) => {
-    let id = e.currentTarget.dataset.id
-    let user = e.currentTarget.dataset.user
-    let isbn = e.currentTarget.dataset.isbn
-    if (id && user && isbn) {
-      showConfirmDialog('', '请确认已经将这本书当面交给了借书人，并且协商好了还书时间。继续操作？', (confirm) => {
-        if (confirm) {
-          showLoading('正在操作...')
-          acceptBorrow(id, user, isbn, () => {
-            hideLoading()
-            myrequestsPage.loadData()
+            myBorrowedBooksPage.loadData()
           }, (failure) => {
             hideLoading()
             if (!failure.data) {

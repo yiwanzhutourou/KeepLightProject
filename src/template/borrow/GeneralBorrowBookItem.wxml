@@ -1,0 +1,63 @@
+<template name="general-borrow-book-item">
+    <view class="common-container">
+        <view class="user-container">
+            <view wx:if="{{!isOut && item.status === 1}}" class="user-title-text">
+                你借阅了 {{item.user.nickname}} 的书，看完后请及时归还图书哦
+            </view>
+            <view wx:elif="{{!isOut && item.status === 3}}" class="user-title-text">
+                你正在请求还书给 {{item.user.nickname}}，请确保书已经归还给对方后，提醒对方处理你的还书请求
+            </view>
+            <view wx:elif="{{!isOut && item.status === 4}}" class="user-title-text">
+                你借阅 {{item.user.nickname}} 的书已归还
+            </view>
+            <view wx:elif="{{isOut && item.status === 1}}" class="user-title-text">
+                {{item.user.nickname}} 借阅了你的书
+            </view>
+            <view wx:elif="{{isOut && item.status === 3}}" class="user-title-text">
+                {{item.user.nickname}} 正在请求还书给你，请确保已经收到了对方归还回来的图书之后，再点击同意
+            </view>
+            <view wx:elif="{{isOut && item.status === 4}}" class="user-title-text">
+                {{item.user.nickname}} 借阅你的书已归还
+            </view>
+            <image class="user-avatar"
+                data-user="{{item.user.id}}"
+                bindtap="onUserTap"
+                src="{{item.user.avatar}}" />
+        </view>
+        <view class="book-container">
+            <view class="content-container"
+                data-isbn="{{item.book.isbn}}" bindtap="onBookItemTap">
+                <image class="book-pic" src="{{item.book.cover}}" mode="aspectFit" />
+                <view class="book-detail-container">
+                    <text class="book-title">{{item.book.title}}</text>
+                    <text class="book-author">作者：{{item.book.author}}</text>
+                    <text class="book-publisher">出版社：{{item.book.publisher}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="action-container">
+            <button wx:if="{{!isOut && item.status === 1}}"
+                class="borrow-action-button2"
+                hover-class="borrow-action-button-hover2"
+                data-id="{{item.id}}"
+                data-user="{{item.user.id}}"
+                data-isbn="{{item.book.isbn}}"
+                bindtap="onReturnBook">还书</button>
+            <button wx:if="{{isOut && item.status === 3}}"
+                class="borrow-action-button2"
+                hover-class="borrow-action-button-hover2"
+                data-id="{{item.id}}"
+                data-user="{{item.user.id}}"
+                data-isbn="{{item.book.isbn}}"
+                bindtap="onDeclineReturn">拒绝</button>
+            <button wx:if="{{isOut && item.status === 3}}"
+                class="borrow-action-button"
+                hover-class="borrow-action-button-hover"
+                data-id="{{item.id}}"
+                data-user="{{item.user.id}}"
+                data-isbn="{{item.book.isbn}}"
+                bindtap="onAcceptReturn">同意</button>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>

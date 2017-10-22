@@ -1,4 +1,4 @@
-@import "../../template/borrow/GeneralBorrowItem.wxss";
+@import "../../template/borrow/GeneralBorrowBookItem.wxss";
 
 .detail-container {
     width: 100%;

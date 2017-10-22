@@ -38,7 +38,10 @@
     "pages/card/usercards",
     "pages/borrow/myqrcode",
     "pages/borrow/myborrowpage",
-    "pages/borrow/myrequests"
+    "pages/borrow/myrequests",
+    "pages/borrow/myoutrequests",
+    "pages/borrow/myoutbooks",
+    "pages/borrow/myborrowedbooks"
   ],
   "window": {
     "backgroundTextStyle":"light",

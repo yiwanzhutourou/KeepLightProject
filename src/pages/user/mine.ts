@@ -120,17 +120,17 @@ Page({
             break
         case SETTING_BORROW_REQUEST_OUT:
             wx.navigateTo({
-                url: '../borrow/myrequests',
-            })
-            break
-          case SETTING_BORROW_IN:
-            wx.navigateTo({
-                url: './history',
+                url: '../borrow/myoutrequests',
             })
             break
         case SETTING_BORROW_OUT:
             wx.navigateTo({
-                url: './history',
+                url: '../borrow/myoutbooks',
+            })
+            break
+        case SETTING_BORROW_IN:
+            wx.navigateTo({
+                url: '../borrow/myborrowedbooks',
             })
             break
         case SETTING_SETTINGS:

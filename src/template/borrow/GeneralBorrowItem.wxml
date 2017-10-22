@@ -1,0 +1,57 @@
+<template name="general-borrow-item">
+    <view class="common-container">
+        <view class="user-container">
+            <view wx:if="{{!isOut && item.status === 0}}" class="user-title-text">
+                {{item.user.nickname}} 想要借阅你的
+            </view>
+            <view wx:elif="{{!isOut && item.status === 1}}" class="user-title-text">
+                你同意了 {{item.user.nickname}} 的借阅请求
+            </view>
+            <view wx:elif="{{!isOut && item.status === 2}}" class="user-title-text">
+                你拒绝了 {{item.user.nickname}} 的借阅请求
+            </view>
+            <view wx:elif="{{isOut && item.status === 0}}" class="user-title-text">
+                你想要借阅 {{item.user.nickname}} 的
+            </view>
+            <view wx:elif="{{isOut && item.status === 1}}" class="user-title-text">
+                {{item.user.nickname}} 同意了你的借阅请求
+            </view>
+            <view wx:elif="{{isOut && item.status === 2}}" class="user-title-text">
+                {{item.user.nickname}} 拒绝了你的借阅请求
+            </view>
+            <image class="user-avatar"
+                data-user="{{item.user.id}}"
+                bindtap="onUserTap"
+                src="{{item.user.avatar}}" />
+        </view>
+        <view class="book-container">
+            <view class="content-container"
+                data-isbn="{{item.book.isbn}}" bindtap="onBookItemTap">
+                <image class="book-pic" src="{{item.book.cover}}" mode="aspectFit" />
+                <view class="book-detail-container">
+                    <text class="book-title">{{item.book.title}}</text>
+                    <text class="book-author">作者：{{item.book.author}}</text>
+                    <text class="book-publisher">出版社：{{item.book.publisher}}</text>
+                </view>
+            </view>
+        </view>
+        <view class="action-container"
+            wx:if="{{!isOut && item.status === 0}}">
+            <button
+                class="borrow-action-button2"
+                hover-class="borrow-action-button-hover2"
+                data-id="{{item.id}}"
+                data-user="{{item.user.id}}"
+                data-isbn="{{item.book.isbn}}"
+                bindtap="onDeclineBorrow">拒绝</button>
+            <button
+                class="borrow-action-button"
+                hover-class="borrow-action-button-hover"
+                data-id="{{item.id}}"
+                data-user="{{item.user.id}}"
+                data-isbn="{{item.book.isbn}}"
+                bindtap="onAcceptBorrow">同意</button>
+        </view>
+        <view class="item-divider" />
+    </view>
+</template>
