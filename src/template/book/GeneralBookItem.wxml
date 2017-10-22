@@ -9,11 +9,13 @@
                     <text class="book-publisher">出版社：{{item.publisher}}</text>
                 </view>
             </view>
-            <button wx:if="{{item.canBorrow}}"
+            <button wx:if="{{item.canBorrow && item.leftCount > 0}}"
                 class="action-button"
                 hover-class="action-button-hover"
                 data-book="{{item}}"
                 bindtap="onBorrowBook">预约</button>
+            <view wx:if="{{item.canBorrow && item.leftCount <= 0}}"
+                class="unaction-text">已借出</view>
         </view>
         <view class="item-divider" />
     </view>

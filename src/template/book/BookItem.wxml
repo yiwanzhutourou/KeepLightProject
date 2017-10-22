@@ -16,17 +16,6 @@
                 hover-class="action-button-hover"
                 data-book="{{item}}"
                 bindtap="onAddBook">添加</button>
-            <button wx:elif="{{isHomePage && isCurrentUser && isMyPage}}"
-                class="action-button"
-                hover-class="action-button-hover"
-                data-isbn="{{item.isbn}}"
-                data-title="{{item.title}}"
-                bindtap="onRemoveBook">删除</button>
-            <button wx:elif="{{isHomePage && !isCurrentUser}}"
-                class="action-button"
-                hover-class="action-button-hover"
-                data-book="{{item}}"
-                bindtap="onBorrowBook">预约</button>
         </view>
         <view class="item-divider" />
     </view>

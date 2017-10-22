@@ -18,6 +18,7 @@ export type Book = {
     added?: boolean,
     canBorrow?: boolean,
     authorString?: string,
+    leftCount?: number, // 书在书房里的余量
 }
 
 export const CODE_SUCCESS = 200

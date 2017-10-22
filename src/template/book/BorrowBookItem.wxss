@@ -67,3 +67,8 @@
 .action-button-hover {
     background: rgba(248, 182, 45, 0.6);
 }
+
+.unaction-text {
+    font-size: 25rpx;
+    color: #999;
+}
