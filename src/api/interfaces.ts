@@ -17,6 +17,7 @@ export type Book = {
     publisher?: string,
     added?: boolean,
     canBorrow?: boolean,
+    authorString?: string,
 }
 
 export const CODE_SUCCESS = 200
@@ -111,6 +112,17 @@ export type BorrowRequest = {
     bookCover: string,
     date: string,
     status: number,
+}
+
+export type BorrowRequestNew = {
+    id: number,
+    form: User,
+    book: Book,
+    timestamp: number,
+    status: number,
+
+    // local
+    timeString?: string,
 }
 
 export type UserContact = {

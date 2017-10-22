@@ -7,7 +7,6 @@ const SETTING_BIND_CONTACT = 0
 const SETTING_BIND_MOBILE = 1
 const SETTING_ADDRESS = 2
 const SETTING_CHANGE_INFO = 3
-const SETTING_ABOUT = 4
 
 let settingsPage
 
@@ -32,10 +31,6 @@ Page({
             id: SETTING_CHANGE_INFO,
             title: '修改书房简介',
             subTitle: '给你的书房添加简短的介绍吧',
-        },
-        {
-            id: SETTING_ABOUT,
-            title: '关于有读书房',
         },
     ],
   },
@@ -86,11 +81,6 @@ Page({
           case SETTING_CHANGE_INFO:
             wx.navigateTo({
                 url: '../user/changeintro',
-            })
-            break
-          case SETTING_ABOUT:
-            wx.navigateTo({
-                url: '../about/about',
             })
             break
           default:

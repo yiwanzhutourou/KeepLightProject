@@ -30,13 +30,19 @@
             </view>
         </view>
     </view>
+    <view class="item-divider" />
     <view class="thick-divider" />
     <view class="detail-container">
         <view class="list-container">
-            <block wx:for="{{mineItems}}" wx:for-item="settingItem" wx:key="id">
+            <block wx:for="{{mineItems}}"
+                wx:for-item="settingItem"
+                wx:for-index="index"
+                wx:key="id">
+                <view wx:if="{{index === 0 || index === 2 || index === 6}}" class="item-divider" />
                 <import src="../../template/user/SettingItemWithIcon.wxml" />
                 <template is="setting-item-with-icon"
                     data="{{settingItem}}" />
+                <view wx:if="{{index === 1 || index === 5}}" class="thick-divider" />
             </block>
             <view class="contact-container">
                 <image
@@ -48,6 +54,7 @@
                    src="../../resources/img/arrow.png" />
             </view>
             <view class="item-divider" />
+            <view class="thick-divider" />
         </view>
     </view>
 </view>

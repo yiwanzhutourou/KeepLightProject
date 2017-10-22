@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, BorrowPageData, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
+import { ApprovalResult, BookPageData, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -441,21 +441,31 @@ export const markBook = (isbn: string, canBorrow: boolean, success: (result: str
 }
 
 export const getBookList = (userId: string, all: boolean,
-        success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    if (userId) {
-        let url = getUrl('User.getUserBooks') + getUrlParam({
-            userId: userId,
+    success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+if (userId) {
+    let url = getUrl('User.getUserBooks') + getUrlParam({
+        userId: userId,
+        all: all ? 0 : 1,
+    })
+    get(url, success, failure)
+} else {
+    checkLogin(() => {
+        let url = getUrl('User.getMyBooks') + getUrlParam({
             all: all ? 0 : 1,
         })
         get(url, success, failure)
-    } else {
-        checkLogin(() => {
-            let url = getUrl('User.getMyBooks') + getUrlParam({
-                all: all ? 0 : 1,
-            })
-            get(url, success, failure)
-        }, failure)
-    }
+    }, failure)
+}
+}
+
+export const getMyBorrowRequests = (flag: number,
+        success: (books: Array<BorrowRequestNew>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.getMyBorrowRequests') + getUrlParam({
+            flag: flag,
+        })
+        get(url, success, failure)
+    }, failure)
 }
 
 export const getOtherUserBookList = (userId: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {

@@ -5,9 +5,12 @@ import { MinePageData } from '../../api/interfaces'
 
 const SETTING_MY_BOOKS = 0
 const SETTING_MY_CARDS = 1
-const SETTING_BORROW_REQUEST = 2
-const SETTING_BORROW_HISTORY = 3
-const SETTING_SETTINGS = 4
+const SETTING_BORROW_REQUEST_IN = 2
+const SETTING_BORROW_REQUEST_OUT = 3
+const SETTING_BORROW_IN = 4
+const SETTING_BORROW_OUT = 5
+const SETTING_SETTINGS = 6
+const SETTING_ABOUT = 7
 
 let minePage
 
@@ -26,19 +29,34 @@ Page({
             icon: '../../resources/img/icon_card.png',
         },
         {
-            id: SETTING_BORROW_REQUEST,
-            title: '借阅请求',
+            id: SETTING_BORROW_REQUEST_IN,
+            title: '收到的借阅请求',
             icon: '../../resources/img/icon_request.png',
         },
         {
-            id: SETTING_BORROW_HISTORY,
-            title: '借阅历史',
-            icon: '../../resources/img/icon_history.png',
+            id: SETTING_BORROW_REQUEST_OUT,
+            title: '发出的借阅请求',
+            icon: '../../resources/img/icon_request_out.png',
+        },
+        {
+            id: SETTING_BORROW_OUT,
+            title: '借出的书',
+            icon: '../../resources/img/icon_borrow_out.png',
+        },
+        {
+            id: SETTING_BORROW_IN,
+            title: '我要还书',
+            icon: '../../resources/img/icon_return_book.png',
         },
         {
             id: SETTING_SETTINGS,
             title: '设置',
             icon: '../../resources/img/icon_setting.png',
+        },
+        {
+            id: SETTING_ABOUT,
+            title: '关于有读书房',
+            icon: '../../resources/img/icon_setting_logo.png',
         },
     ],
     followingNumber: 0,
@@ -95,22 +113,37 @@ Page({
                 url: '../card/mycards',
             })
             break
-          case SETTING_BORROW_REQUEST:
+          case SETTING_BORROW_REQUEST_IN:
             wx.navigateTo({
-                url: '../message/request',
+                url: '../borrow/myrequests',
             })
             break
-          case SETTING_BORROW_HISTORY:
+        case SETTING_BORROW_REQUEST_OUT:
+            wx.navigateTo({
+                url: '../borrow/myrequests',
+            })
+            break
+          case SETTING_BORROW_IN:
             wx.navigateTo({
                 url: './history',
             })
             break
-          case SETTING_SETTINGS:
+        case SETTING_BORROW_OUT:
+            wx.navigateTo({
+                url: './history',
+            })
+            break
+        case SETTING_SETTINGS:
             wx.navigateTo({
                 url: './settings',
             })
             break
-          default:
+        case SETTING_ABOUT:
+            wx.navigateTo({
+                url: '../about/about',
+            })
+            break
+        default:
       }
   },
 

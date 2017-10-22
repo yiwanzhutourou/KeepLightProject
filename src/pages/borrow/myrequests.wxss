@@ -1,0 +1,46 @@
+@import "../../template/book/ActionBookItem.wxss";
+
+.detail-container {
+    width: 100%;
+}
+
+.list-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.list-filter-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
+}
+
+.filter-item {
+    height: 36rpx;
+    color: #6AA0F0;
+    font-size: 30rpx;
+    line-height: 36rpx;
+    background: #DCEAF7;
+    border: 1rpx solid #BFE3EE;
+    border-radius: 16rpx;
+    padding: 10rpx 20rpx;
+    margin-left: 30rpx;
+}
+
+.filter-item-dark {
+    height: 36rpx;
+    color: #666;
+    font-size: 30rpx;
+    line-height: 36rpx;
+    background: #fff;
+    border: 1rpx solid #eee;
+    border-radius: 16rpx;
+    padding: 10rpx 20rpx;
+    margin-left: 30rpx;
+}
