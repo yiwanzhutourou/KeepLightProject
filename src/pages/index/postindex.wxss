@@ -27,9 +27,24 @@
     background: #fafafa;
 }
 
+.post-button-image-container {
+    width: 120rpx;
+    height: 120rpx;
+    background: #f8b62d;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .post-button-image {
-    width: 80rpx;
-    height: 80rpx;
+    width: 60rpx;
+    height: 60rpx;
+}
+
+.post-button-image2 {
+    width: 50rpx;
+    height: 50rpx;
 }
 
 .post-button-container-hover {
