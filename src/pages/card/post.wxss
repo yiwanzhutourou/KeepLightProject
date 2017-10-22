@@ -1,16 +1,28 @@
 
 /** book **/
 .book-container {
+    width: 90%;
     height: 180rpx;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding-left: 25rpx;
     padding-right: 25rpx;
     padding-top: 5rpx;
     padding-bottom: 5rpx;
-    border-bottom: 1rpx dashed #aaa;
+    border-bottom: 1rpx dashed #eee;
+}
+
+.add-book-image {
+    width: 80rpx;
+    height: 80rpx;
+}
+
+.add-book-text {
+    font-size: 40rpx;
+    color: #666;
+    margin-left: 20rpx;
 }
 
 .book-detail-container {
@@ -68,7 +80,7 @@
 .title-divider {
     width: 90%;
     height: 1rpx;
-    background: #999;
+    background: #eee;
 }
 
 .title-placeholder {
@@ -99,20 +111,16 @@
 }
 
 .upload-img {
-    width: 180rpx;
-    height: 180rpx;
-    margin-left: 30rpx;
-    margin-top: 30rpx;
-    margin-bottom: 30rpx;
+    width: 140rpx;
+    height: 140rpx;
+    margin: 50rpx;
 }
 
 .chosen-img-container {
     position: relative;
     width: 220rpx;
     height: 220rpx;
-    margin-left: 10rpx;
-    margin-top: 10rpx;
-    margin-bottom: 10rpx;
+    margin: 10rpx;
 }
 
 .delete-img {
@@ -134,15 +142,13 @@
     background: #fafafa;
     border: 1rpx solid #eee;
     border-radius: 8rpx;
-    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
-    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
     margin: 19rpx 19rpx;
 }
 
 .chosen-img {
     width: 168rpx;
     height: 168rpx;
+    border-radius: 4rpx;
 }
 
 .button-container {

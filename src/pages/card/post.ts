@@ -48,6 +48,15 @@ Page({
     }
   },
 
+  onShow: function (): void {
+    let data = getPostModifyData()
+    if (data && data.book) {
+        postPage.setData({
+            book: data.book,
+        })
+    }
+  },
+
   onChooseImage: (e) => {
     wx.chooseImage({
         count: 1,
@@ -185,5 +194,11 @@ Page({
                 showErrDialog('修改失败，请检查你的网络')
             }
         })
+  },
+
+  onAddBook: (e) => {
+    wx.navigateTo({
+        url: '../book/addBook?mode=select',
+    })
   },
 })

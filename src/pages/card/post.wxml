@@ -10,6 +10,11 @@
                     <text class="book-author">作者：{{book.author}}</text>
                 </view>
             </view>
+            <view wx:else class="book-container"
+                bindtap="onAddBook">
+                <image class="add-book-image" src="../../resources/img/icon_add_book.png" />
+                <text class="add-book-text">添加关联图书</text>
+            </view>
             <textarea class="title-input"
                 value="{{defaultTitle}}"
                 name="title"

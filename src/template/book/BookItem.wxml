@@ -9,7 +9,12 @@
                     <text class="book-publisher">出版社：{{item.publisher}}</text>
                 </view>
             </view>
-            <view wx:if="{{item.added && !isHomePage}}"
+            <button wx:if="{{selectMode}}"
+                class="action-button"
+                hover-class="action-button-hover"
+                data-book="{{item}}"
+                bindtap="onSelectBook">选择</button>
+            <view wx:elif="{{item.added && !isHomePage}}"
                 class="added-book-text">已添加</view>
             <button wx:elif="{{!isHomePage}}"
                 class="action-button"

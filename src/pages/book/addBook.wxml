@@ -18,7 +18,7 @@
             <block wx:for="{{bookList}}" wx:key="id">
                 <import src="../../template/book/BookItem.wxml" />
                 <template is="book-item"
-                    data="{{item}}" />
+                    data="{{item, selectMode}}" />
             </block>
         </view>
         <import src="../../template/widget/LoadMore.wxml" />

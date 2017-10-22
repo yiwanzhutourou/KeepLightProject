@@ -3,6 +3,8 @@ import { addBook, getBookInfo, getBookList, searchBooks } from '../../api/api'
 import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
 import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
+import { setPostBookData } from '../../utils/postCache'
+
 const INITIAL_PAGE = 0
 
 let app = getApp()
@@ -18,10 +20,16 @@ Page({
     showLoadingMore: false,
     noMore: false,
     showEmpty: true,
+    selectMode: false,
   },
 
   onLoad: function(options: any): void {
     bookPage = this
+    if (options && options.mode && options.mode === 'select') {
+      bookPage.setData({
+        selectMode: true,
+      })
+    }
     bookPage.setData({
       screenHeight: getScreenSizeInRpx().height,
     })
@@ -222,6 +230,14 @@ Page({
   hideLoadingMore: () => {
     bookPage.setData({
       showLoadingMore: false,
+    })
+  },
+
+  onSelectBook: (e) => {
+    let book = e.currentTarget.dataset.book
+    setPostBookData(book)
+    wx.navigateBack({
+      delta: 1,
     })
   },
 })
