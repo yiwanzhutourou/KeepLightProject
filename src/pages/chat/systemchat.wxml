@@ -6,23 +6,23 @@
     </view>
     
     <scroll-view
-        class="chat-message-container"
         scroll-y="true"
         scroll-top="{{scrollTop}}"
         style="height: {{screenHeight}}rpx;">
-        <view wx:if="{{showContent && !noMore}}" class="loading-container">
-            <view wx:if="{{showLoadingMore}}" class="loading">
-                <view class="dot">
+        <view class="chat-message-container">
+            <view wx:if="{{showContent && !noMore}}" class="loading-container">
+                <view wx:if="{{showLoadingMore}}" class="loading">
+                    <view class="dot">
+                    </view>
                 </view>
+                <view wx:else class="loading-text"
+                    bindtap="onLoadMore">点击加载更多</view>
             </view>
-            <view wx:else class="loading-text"
-                bindtap="onLoadMore"
-                >点击加载更多</view>
-        </view>
-        <block wx:for="{{messages}}" wx:key="index">
-            <import src="../../template/chat/SystemMessageItem.wxml" />
+            <block wx:for="{{messages}}" wx:key="index">
+                <import src="../../template/chat/SystemMessageItem.wxml" />
                 <template is="system-message-item"
                     data="{{item}}" />
-        </block>
+            </block>
+        </view>
     </scroll-view>
 </view>
