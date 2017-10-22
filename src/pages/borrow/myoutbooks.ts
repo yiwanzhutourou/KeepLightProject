@@ -102,7 +102,7 @@ Page({
           showLoading('正在操作...')
           declineReturn(id, user, isbn, () => {
             hideLoading()
-            myOutBooksPage.loadData()
+            myOutBooksPage.removeItem(id)
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
@@ -124,7 +124,7 @@ Page({
           showLoading('正在操作...')
           acceptReturn(id, user, isbn, () => {
             hideLoading()
-            myOutBooksPage.loadData()
+            myOutBooksPage.removeItem(id)
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
@@ -132,6 +132,22 @@ Page({
             }
           })
         }
+      })
+    }
+  },
+
+  removeItem: (id: string) => {
+    let dataList = myOutBooksPage.data.dataList
+    if (dataList) {
+      for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i] && parseInt(dataList[i].id, 10) === parseInt(id, 10)) {
+          dataList.splice(i, 1)
+        }
+      }
+      myOutBooksPage.setData({
+        dataList: dataList,
+        showEmpty: dataList.length == 0,
+        showList: dataList.length > 0,
       })
     }
   },

@@ -101,7 +101,7 @@ Page({
           showLoading('正在操作...')
           declineBorrow(id, user, isbn, () => {
             hideLoading()
-            myrequestsPage.loadData()
+            myrequestsPage.removeItem(id)
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
@@ -123,7 +123,7 @@ Page({
           showLoading('正在操作...')
           acceptBorrow(id, user, isbn, () => {
             hideLoading()
-            myrequestsPage.loadData()
+            myrequestsPage.removeItem(id)
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
@@ -131,6 +131,22 @@ Page({
             }
           })
         }
+      })
+    }
+  },
+
+  removeItem: (id: string) => {
+    let dataList = myrequestsPage.data.dataList
+    if (dataList) {
+      for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i] && parseInt(dataList[i].id, 10) === parseInt(id, 10)) {
+          dataList.splice(i, 1)
+        }
+      }
+      myrequestsPage.setData({
+        dataList: dataList,
+        showEmpty: dataList.length == 0,
+        showList: dataList.length > 0,
       })
     }
   },

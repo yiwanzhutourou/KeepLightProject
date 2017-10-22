@@ -102,7 +102,7 @@ Page({
           showLoading('正在操作...')
           returnBook(id, user, isbn, () => {
             hideLoading()
-            myBorrowedBooksPage.loadData()
+            myBorrowedBooksPage.removeItem(id)
           }, (failure) => {
             hideLoading()
             if (!failure.data) {
@@ -110,6 +110,22 @@ Page({
             }
           })
         }
+      })
+    }
+  },
+
+  removeItem: (id: string) => {
+    let dataList = myBorrowedBooksPage.data.dataList
+    if (dataList) {
+      for (let i = 0; i < dataList.length; i++) {
+        if (dataList[i] && parseInt(dataList[i].id, 10) === parseInt(id, 10)) {
+          dataList.splice(i, 1)
+        }
+      }
+      myBorrowedBooksPage.setData({
+        dataList: dataList,
+        showEmpty: dataList.length == 0,
+        showList: dataList.length > 0,
       })
     }
   },
