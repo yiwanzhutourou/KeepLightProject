@@ -1,5 +1,5 @@
 import { acceptBorrow, declineBorrow, getMyOutBorrowRequests } from '../../api/api'
-import { hideLoading, showConfirmDialog, showErrDialog, showLoading, timestamp2TextComplex } from '../../utils/utils'
+import { hideLoading, showConfirmDialog, showErrDialog, showLoading, timestamp2Text } from '../../utils/utils'
 
 import { BorrowRequestNew } from '../../api/interfaces'
 
@@ -9,7 +9,7 @@ const parseDataList = (data: Array<BorrowRequestNew>) => {
   if (data && data.length > 0) {
     data.forEach((request: BorrowRequestNew) => {
        request.status = parseInt('' + request.status, 10)
-       request.timeString = timestamp2TextComplex(request.timestamp)
+       request.timeString = timestamp2Text(request.timestamp)
     })
   }
   return data
