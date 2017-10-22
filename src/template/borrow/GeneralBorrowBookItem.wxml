@@ -35,12 +35,12 @@
         <view class="action-container"
             wx:if="{{isOut && item.status === 1}}">
             <button
-                class="borrow-action-button"
-                hover-class="borrow-action-button-hover"
+                class="borrow-action-button2"
+                hover-class="borrow-action-button-hover2"
                 data-id="{{item.id}}"
                 data-user="{{item.user.id}}"
                 data-isbn="{{item.book.isbn}}"
-                bindtap="onMarkReturn">标记为已还</button>
+                bindtap="onMarkReturn">标记已还</button>
         </view>
         <view class="item-divider" />
     </view>

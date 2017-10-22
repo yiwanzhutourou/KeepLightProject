@@ -93,12 +93,10 @@
 }
 
 .borrow-action-button {
-    width: 100rpx;
     font-size: 25rpx;
     color: #fff;
     background: #f8b62d;
     margin: 0 16rpx;
-    padding: 0;
 }
 
 .borrow-action-button::after {
@@ -110,12 +108,10 @@
 }
 
 .borrow-action-button2 {
-    width: 100rpx;
     font-size: 25rpx;
     color: #666;
     background: #fff;
     margin: 0 16rpx;
-    padding: 0;
 }
 
 .borrow-action-button-hover2 {
