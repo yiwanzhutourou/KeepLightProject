@@ -32,15 +32,24 @@
                 {{item.timeString}}
             </view>
         </view>
-        <view class="action-container"
-            wx:if="{{isOut && item.status === 1}}">
-            <button
+        <view class="action-container">
+            <button wx:if="{{isOut && item.status === 1}}"
                 class="borrow-action-button2"
                 hover-class="borrow-action-button-hover2"
                 data-id="{{item.id}}"
                 data-user="{{item.user.id}}"
                 data-isbn="{{item.book.isbn}}"
                 bindtap="onMarkReturn">标记已还</button>
+            <button wx:if="{{!isOut && item.status === 3}}"
+                class="borrow-action-button2"
+                hover-class="borrow-action-button-hover2"
+                data-book="{{item.book}}"
+                bindtap="onPostCard">写读书卡片</button>
+            <button wx:if="{{item.status === 1}}"
+                class="borrow-action-button2"
+                hover-class="borrow-action-button-hover2"
+                data-user="{{item.user.id}}"
+                bindtap="onChatTap">给TA留言</button>
         </view>
         <view class="item-divider" />
     </view>

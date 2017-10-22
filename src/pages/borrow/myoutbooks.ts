@@ -129,4 +129,13 @@ Page({
       })
     }
   },
+
+  onChatTap: (e) => {
+    let otherId = e.currentTarget.dataset.user
+    if (otherId) {
+        wx.navigateTo({
+            url: '../chat/chat?otherId=' + otherId,
+        })
+    }
+  },
 })

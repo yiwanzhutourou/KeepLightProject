@@ -2,6 +2,7 @@ import { hideLoading, showConfirmDialog, showErrDialog, showLoading, timestamp2T
 
 import { BorrowRequestNew } from '../../api/interfaces'
 import { getMyOutBorrowRequests } from '../../api/api'
+import { setPostBookData } from '../../utils/postCache'
 
 let myBorrowedBooksPage
 
@@ -90,5 +91,22 @@ Page({
     wx.navigateTo({
         url: '../homepage/homepage2?user=' + user,
     })
+  },
+
+  onPostCard: (e) => {
+    let book = e.currentTarget.dataset.book
+    setPostBookData(book)
+    wx.navigateTo({
+        url: '../card/post',
+    })
+  },
+
+  onChatTap: (e) => {
+    let otherId = e.currentTarget.dataset.user
+    if (otherId) {
+        wx.navigateTo({
+            url: '../chat/chat?otherId=' + otherId,
+        })
+    }
   },
 })
