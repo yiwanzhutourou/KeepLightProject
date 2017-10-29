@@ -64,7 +64,7 @@
         <view class="bottom-container-3" bindtap="onApproveCard">
             <image class="bottom-icon"
                 src="../../resources/img/icon_card_approve.png" />
-            <text class="bottom-text">通过</text>
+            <text class="bottom-text-green">通过</text>
         </view>
         <view class="bottom-container-3" bindtap="onDeclineCard">
             <image class="bottom-icon"

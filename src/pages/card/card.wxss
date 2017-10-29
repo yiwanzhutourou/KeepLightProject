@@ -176,6 +176,12 @@
     margin-left: 16rpx;
 }
 
+.bottom-text-green {
+    font-size: 24rpx;
+    color: #42f498;
+    margin-left: 16rpx;
+}
+
 .bottom-text-selected {
     font-size: 24rpx;
     color: #f8b62d;
