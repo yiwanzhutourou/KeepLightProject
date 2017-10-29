@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
+import { ApprovalResult, BookPageData, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -954,6 +954,87 @@ export const legals = (success: (result: string) => void, failure?: (res?: any) 
 export const getUploadToken = (success: (token: string) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('Qiniu.getUploadToken')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getMyLibs = (
+        success: (resultList: Array<Library>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Library.getMyLibs')
+        get(url, success, failure)
+    }, failure)
+}
+
+export const createLib = (
+    name: string,
+    success: (resultList: Array<Library>) => void,
+    failure?: (res?: any) => void,
+) => {
+    checkLogin(() => {
+        let url = getUrl('Library.create')
+        post(url, {
+            'name': name,
+        }, success, failure)
+    }, failure)
+}
+
+export const updateLibInfo = (
+    id: string,
+    name: string,
+    info: string,
+    success: () => void,
+    failure?: (res?: any) => void,
+) => {
+    checkLogin(() => {
+        let url = getUrl('Library.updateLibInfo')
+        post(url, {
+            'id': id,
+            'name': name,
+            'info': info,
+        }, success, failure)
+    }, failure)
+}
+
+export const updateLibAvatar = (
+    id: string,
+    avatar: string,
+    success: () => void,
+    failure?: (res?: any) => void,
+) => {
+    checkLogin(() => {
+        let url = getUrl('Library.updateLibAvatar')
+        post(url, {
+            'id': id,
+            'avatar': avatar,
+        }, success, failure)
+    }, failure)
+}
+
+export const updateLibAddress = (
+    id: string,
+    address: Address,
+    success: (name: string) => void,
+    failure?: (res?: any) => void,
+) => {
+    checkLogin(() => {
+        let url = getUrl('Library.updateLibAddress')
+        post(url, {
+            'id': id,
+            'name': address.name,
+            'detail': address.detail,
+            'latitude': address.latitude,
+            'longitude': address.longitude,
+        }, success, failure)
+    }, failure)
+}
+
+export const getLibSettingData = (id: string,
+        success: (result: LibSettingData) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Library.getSettingData') + getUrlParam({
+            id: id,
+        })
         get(url, success, failure)
     }, failure)
 }

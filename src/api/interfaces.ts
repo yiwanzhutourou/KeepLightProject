@@ -291,3 +291,22 @@ export type BorrowPageData = {
     nickname: string,
     books: Array<Book>,
 }
+
+// Lib
+export type Library = {
+    id: string,
+    name: string,
+    avatar: string,
+    defaultPic: string,
+    info: string,
+    address: Address,
+    addressText?: string,
+}
+
+export type LibSettingData = {
+    name: string,
+    avatar: string,
+    defaultPic: string,
+    info: string,
+    address: Address,
+}

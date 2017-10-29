@@ -41,7 +41,11 @@
     "pages/borrow/myrequests",
     "pages/borrow/myoutrequests",
     "pages/borrow/myoutbooks",
-    "pages/borrow/myborrowedbooks"
+    "pages/borrow/myborrowedbooks",
+    "pages/lib/mylibs",
+    "pages/lib/createlib",
+    "pages/lib/managelib",
+    "pages/lib/libsetting"
   ],
   "window": {
     "backgroundTextStyle":"light",
@@ -49,35 +53,35 @@
     "navigationBarTitleText": "有读书房",
     "navigationBarTextStyle":"white"
   },
-  "tabBar": {  
-      "color": "#535354",  
-      "selectedColor": "#f8b62d",  
-      "borderStyle":"black",  
-      "list": [{  
-        "selectedIconPath": "resources/img/icon_home_selected.png",  
-        "iconPath": "resources/img/icon_home.png",  
-        "pagePath": "pages/index/index",  
-        "text": "首页"  
-      }, {  
-        "selectedIconPath": "resources/img/icon_homepage_selected.png",  
-        "iconPath": "resources/img/icon_homepage.png",  
-        "pagePath": "pages/discover/discover",  
-        "text": "发现"  
-      }, {  
-        "selectedIconPath": "resources/img/icon_add_selected.png",  
-        "iconPath": "resources/img/icon_add.png",  
-        "pagePath": "pages/index/postindex",  
-        "text": "发布"  
-      }, {  
-        "selectedIconPath": "resources/img/icon_message_selected.png",  
-        "iconPath": "resources/img/icon_message.png",  
-        "pagePath": "pages/chat/list",  
-        "text": "消息"  
-      }, {  
-        "selectedIconPath": "resources/img/icon_my_selected.png",  
-        "iconPath": "resources/img/icon_my.png",  
-        "pagePath": "pages/user/mine",  
-        "text": "我的"  
+  "tabBar": {
+      "color": "#535354",
+      "selectedColor": "#f8b62d",
+      "borderStyle":"black",
+      "list": [{
+        "selectedIconPath": "resources/img/icon_home_selected.png",
+        "iconPath": "resources/img/icon_home.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      }, {
+        "selectedIconPath": "resources/img/icon_homepage_selected.png",
+        "iconPath": "resources/img/icon_homepage.png",
+        "pagePath": "pages/discover/discover",
+        "text": "发现"
+      }, {
+        "selectedIconPath": "resources/img/icon_add_selected.png",
+        "iconPath": "resources/img/icon_add.png",
+        "pagePath": "pages/index/postindex",
+        "text": "发布"
+      }, {
+        "selectedIconPath": "resources/img/icon_message_selected.png",
+        "iconPath": "resources/img/icon_message.png",
+        "pagePath": "pages/chat/list",
+        "text": "消息"
+      }, {
+        "selectedIconPath": "resources/img/icon_my_selected.png",
+        "iconPath": "resources/img/icon_my.png",
+        "pagePath": "pages/user/mine",
+        "text": "我的"
       }]  
     }
 }

@@ -1,4 +1,6 @@
-.title-contaiber {
+@import "../../template/user/SettingItem.wxss";
+
+.ug-title-contaiber {
     margin-top: 30rpx;
     margin-bottom: 20rpx;
     margin-left: 30rpx;
@@ -6,10 +8,11 @@
     justify-content: flex-start;
 }
 
-.title {
+.ug-title {
     font-size: 25rpx;
     color: #999;
-    border-bottom: 4rpx solid #f8b62d;
+    border-left: 10rpx solid #f8b62d;
+    padding-left: 12rpx;
 }
 
 .radio-container {
@@ -96,4 +99,8 @@
 
 .clear-button-hover {
     background-color: rgba(248, 182, 45, 0.6);
+}
+
+.manage-library-container {
+    width: 100%;
 }
