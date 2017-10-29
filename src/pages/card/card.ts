@@ -239,6 +239,16 @@ Page({
     }
   },
 
+  onPreviewImage: (e) => {
+    let imgUrl = e.currentTarget.dataset.img
+    if (imgUrl) {
+        wx.previewImage({
+            current: imgUrl,
+            urls: [imgUrl],
+        })
+    }
+  },
+
   onShareAppMessage: () => {
     let cardDetail = cardPage.data.cardDetail
     return {

@@ -1,19 +1,12 @@
 .img-container {
-    margin-top: 30rpx;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fafafa;
-    border: 1rpx solid #eee;
-    border-radius: 8rpx;
-    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
-    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
+    width: 100%;
+    height: 480rpx;
+    background: #efefef;
 }
 
 .card-img {
-    width: 600rpx;
-    margin: 16rpx;
+    width: 100%;
+    height: 100%;
 }
 
 .title-container {
@@ -22,7 +15,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    margin-top: 30rpx;
+    margin-top: 50rpx;
 }
 
 .card-title {
@@ -40,7 +33,7 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 20rpx;
+    margin-top: 40rpx;
 }
 
 .user-avatar {
@@ -62,17 +55,26 @@
 }
 
 .user-nickname {
-    font-size: 24rpx;
+    font-size: 30rpx;
     color: #666;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
+.card-extra-container {
+    width: 670rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20rpx;
+}
+
 .card-date {
-    font-size: 20rpx;
+    font-size: 24rpx;
     color: #999;
-    margin-top: 10rpx;
+    padding-right: 10rpx;
 }
 
 .card-count-container {
@@ -85,23 +87,46 @@
     align-items: center;
 }
 
+.approval-shortcut-container {
+    position: relative;
+    right: 0;
+    bottom: 0;
+}
+
+.shortcut-user-avatar {
+    width: 60rpx;
+    height: 60rpx;
+    border: 2rpx solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    display: inline-block;
+}
+
 .card-read-count {
     font-size: 24rpx;
     color: #999;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    border-right: 1rpx solid #eee;
-    padding-right: 10rpx;
+    border-left: 1rpx solid #eee;
+    padding-left: 10rpx;
+}
+
+.card-approval-count-wrapper {
+    height: 64rpx;
+    width: 160rpx;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
 }
 
 .card-approval-count {
     font-size: 24rpx;
     color: #999;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    padding-left: 10rpx;
 }
 
 
@@ -224,7 +249,7 @@
 
 .card-bottom-space-holder {
     width: 100%;
-    height: 130rpx;
+    height: 200rpx;
 }
 
 .book-container {
@@ -239,7 +264,7 @@
     padding-bottom: 5rpx;
     border: 1rpx solid #eee;
     border-radius: 8rpx;
-    margin-top: 30rpx;
+    margin-top: 60rpx;
 }
 
 .book-detail-container {
