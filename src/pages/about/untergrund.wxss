@@ -1,5 +1,3 @@
-@import "../../template/user/SettingItem.wxss";
-
 .ug-title-contaiber {
     margin-top: 30rpx;
     margin-bottom: 20rpx;
@@ -99,8 +97,4 @@
 
 .clear-button-hover {
     background-color: rgba(248, 182, 45, 0.6);
-}
-
-.manage-library-container {
-    width: 100%;
 }

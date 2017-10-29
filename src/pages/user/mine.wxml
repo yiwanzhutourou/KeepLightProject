@@ -1,6 +1,6 @@
 <view class="container">
     <view class="user-info-container">
-        <image class="user-avatar" src="{{user.avatar}}" />
+        <image class="user-avatar" bindtap="onTapTap" src="{{user.avatar}}" />
         <view class="user-text-container"
             bindtap="onShowMyRoom">
             <text wx:if="{{user.nickname}}" class="user-nickname">{{user.nickname}}</text>

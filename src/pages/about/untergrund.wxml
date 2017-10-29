@@ -34,10 +34,4 @@
             重置开屏
         </button>
     </view>
-    <view class="ug-title-contaiber"><text class="ug-title">有读图书馆</text></view>
-    <view class="manage-library-container">
-        <import src="../../template/user/SettingItem.wxml" />
-        <template is="setting-item"
-            data="{{settingItem}}" />
-    </view>
 </view>

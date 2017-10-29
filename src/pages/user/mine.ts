@@ -13,6 +13,8 @@ const SETTING_SETTINGS = 6
 const SETTING_ABOUT = 7
 
 let minePage
+let lastLogoTap = -1
+let logoTapCount = 0
 
 Page({
   data: {
@@ -169,5 +171,22 @@ Page({
       wx.navigateTo({
         url: './follow?content=followers',
       })
+  },
+
+  onTapTap: (e) => {
+    if (lastLogoTap === -1 || (e.timeStamp && (e.timeStamp - lastLogoTap) < 500)) {
+      logoTapCount++
+    } else {
+      logoTapCount = 1
+    }
+    if (logoTapCount === 5) {
+      lastLogoTap = -1
+      logoTapCount = 0
+      wx.navigateTo({
+        url: '../lib/mylibs',
+      })
+    } else {
+      lastLogoTap = e.timeStamp
+    }
   },
 })

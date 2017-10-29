@@ -4,18 +4,12 @@ import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading 
 
 let unterPage
 
-const SETTING_LIBRARY = 1
-
 Page({
   data: {
     items: [
       { name: '线上服务器', value: DEFAULT_BASE_URL },
       { name: '测试服务器', value: TEST_BASE_URL },
     ],
-    settingItem: {
-      id: SETTING_LIBRARY,
-      title: '图书馆后台',
-    },
   },
 
   onLoad: function(options: any): void {
@@ -81,19 +75,6 @@ Page({
   onResetLanding: (e) => {
     clearShowLanding()
     showDialog('已重置')
-  },
-
-  onSettingItemTap: (e) => {
-    let id = e.currentTarget.dataset.id
-    switch (id) {
-      case SETTING_LIBRARY:
-        wx.navigateTo({
-          url: '../lib/mylibs',
-        })
-        break
-      default:
-        break
-    }
   },
 })
 
