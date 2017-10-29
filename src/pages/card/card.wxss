@@ -249,7 +249,7 @@
 
 .card-bottom-space-holder {
     width: 100%;
-    height: 200rpx;
+    height: 160rpx;
 }
 
 .book-container {
