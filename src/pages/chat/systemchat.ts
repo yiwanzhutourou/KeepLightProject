@@ -181,6 +181,10 @@ Page({
               wx.navigateTo({
                   url: '../user/follow?content=followers',
               })
+          } else if (router === 'newcard' && extra) {
+              wx.navigateTo({
+                  url: '../card/card?id=' + extra + '&admin=1',
+              })
           }
       }
   },

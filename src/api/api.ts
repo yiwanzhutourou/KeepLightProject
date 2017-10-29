@@ -652,6 +652,26 @@ export const deleteCardById = (id: number,
     }, failure)
 }
 
+export const approveCardById = (id: number,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Youdu.cardApprove') + getUrlParam({
+            cardId: id,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const declineCardById = (id: number,
+        success: (result: string) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Youdu.cardDecline') + getUrlParam({
+            cardId: id,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
 export const getMyCards = (
         success: (cards: Array<MyCardItem>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {

@@ -170,6 +170,12 @@
     margin-left: 16rpx;
 }
 
+.bottom-text-red {
+    font-size: 24rpx;
+    color: #f44265;
+    margin-left: 16rpx;
+}
+
 .bottom-text-selected {
     font-size: 24rpx;
     color: #f8b62d;

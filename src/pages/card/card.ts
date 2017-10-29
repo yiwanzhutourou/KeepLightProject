@@ -1,6 +1,6 @@
 import { ApprovalResult, CardDetail } from '../../api/interfaces'
-import { approveCard, deleteCardById, getCardById, unapproveCard } from '../../api/api'
-import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { approveCard, approveCardById, declineCardById, deleteCardById, getCardById, unapproveCard } from '../../api/api'
+import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 import { needRefreshCard, updateNeedRefreshCard } from '../../utils/shareData'
 
 import { deleteCardFromCache } from '../../utils/discoverCache'
@@ -17,6 +17,7 @@ Page({
   data: {
       cardId: -1,
       cardDetail: null,
+      fromAdmin: false,
       fromList: true,
       approvalInProgress: false,
       showApprovalUser: false,
@@ -35,6 +36,11 @@ Page({
             fromList: option.fromList ? true : false,
             showPostSuccess: option.showPostSuccess,
         })
+        if (option.admin) {
+            cardPage.setData({
+                fromAdmin: true,
+            })
+        }
         cardPage.loadData()
     }
   },
@@ -67,6 +73,40 @@ Page({
         hideLoading()
         if (!failure.data) {
             showErrDialog('无法加载读书卡片，请检查你的网络状态')
+        }
+    })
+  },
+
+  onApproveCard: (e) => {
+    let cardId = cardPage.data.cardDetail.id
+    if (!cardId) {
+        return
+    }
+    showLoading('正在操作...')
+    approveCardById(cardId, () => {
+        hideLoading()
+        showToast('操作成功')
+    }, (failure) => {
+        hideLoading()
+        if (!failure.data) {
+            showErrDialog('操作失败，请检查你的网络')
+        }
+    })
+  },
+
+  onDeclineCard: (e) => {
+    let cardId = cardPage.data.cardDetail.id
+    if (!cardId) {
+        return
+    }
+    showLoading('正在操作...')
+    declineCardById(cardId, () => {
+        hideLoading()
+        showToast('操作成功')
+    }, (failure) => {
+        hideLoading()
+        if (!failure.data) {
+            showErrDialog('操作失败，请检查你的网络')
         }
     })
   },
