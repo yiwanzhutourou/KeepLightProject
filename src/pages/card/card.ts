@@ -1,6 +1,6 @@
 import { ApprovalResult, CardDetail } from '../../api/interfaces'
 import { approveCard, approveCardById, declineCardById, deleteCardById, getCardById, unapproveCard } from '../../api/api'
-import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { needRefreshCard, updateNeedRefreshCard } from '../../utils/shareData'
 
 import { deleteCardFromCache } from '../../utils/discoverCache'
@@ -85,7 +85,7 @@ Page({
     showLoading('正在操作...')
     approveCardById(cardId, () => {
         hideLoading()
-        showToast('操作成功')
+        showDialog('操作成功')
     }, (failure) => {
         hideLoading()
         if (!failure.data) {
@@ -102,7 +102,7 @@ Page({
     showLoading('正在操作...')
     declineCardById(cardId, () => {
         hideLoading()
-        showToast('操作成功')
+        showDialog('操作成功')
     }, (failure) => {
         hideLoading()
         if (!failure.data) {

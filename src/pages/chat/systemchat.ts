@@ -1,6 +1,6 @@
 import { ChatData, Message } from '../../api/interfaces'
 import { getNewMessages, sendContact, sendMessage, startChat } from '../../api/api'
-import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast, timestamp2TextComplex } from '../../utils/utils'
+import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading, timestamp2TextComplex } from '../../utils/utils'
 
 import { clearUnread } from '../../utils/chatCache'
 

@@ -1,6 +1,6 @@
 import { Book, BookPageData, CardDetail, SearchUser } from '../../api/interfaces'
 import { addBook, getBookCards, getBookDetails, getBookPageData, removeBook } from '../../api/api'
-import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { setBookDetailData, updateBookStatus } from '../../utils/bookCache'
 
 import { getDistrictShortString } from '../../utils/addrUtils'
@@ -223,7 +223,7 @@ Page({
     showLoading('正在添加')
     addBook(isbn, () => {
       hideLoading()
-      showToast('已添加')
+      showDialog('已添加')
       bookPage.setData({
         showAddBook: false,
       })
@@ -248,7 +248,7 @@ Page({
         showLoading('正在删除')
         removeBook(isbn, () => {
           hideLoading()
-          showToast('已移除')
+          showDialog('已移除')
           bookPage.setData({
             showAddBook: true,
           })
