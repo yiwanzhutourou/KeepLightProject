@@ -1,3 +1,8 @@
+import { checkLibUser, libAddBook } from '../../api/api'
+import { hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+
+import { User } from '../../api/interfaces'
+import { setLibBorrowUser } from '../../utils/shareData'
 
 const MAN_SCAN = 0
 const MAN_ADD_BOOK = 1
@@ -33,7 +38,6 @@ Page({
         {
             id: MAN_SHOW_BOOKS,
             title: '查看图书',
-            subTitle: '查看库存/外借图书',
         },
         {
             id: MAN_SHOW_HOME,
@@ -61,8 +65,10 @@ Page({
       let libId = managelibPage.data.libId
       switch (id) {
           case MAN_SCAN:
+            managelibPage.scanUser()
             break
           case MAN_ADD_BOOK:
+            managelibPage.scanToAddBook()
             break
           case MAN_INFO_SETTING:
             wx.navigateTo({
@@ -72,10 +78,70 @@ Page({
           case MAN_SERVICE_SETTING:
             break
           case MAN_SHOW_BOOKS:
+            wx.navigateTo({
+                url: './libbooks?id=' + libId,
+            })
             break
           case MAN_SHOW_HOME:
             break
           default:
       }
+  },
+
+  scanUser: () => {
+    wx.scanCode({
+      success: (res: WeApp.ScanCodeResult) => {
+        if (res && res.result) {
+          let bochaUrl = 'bocha://youdushufang/'
+          if (res.result.slice(0, bochaUrl.length) === bochaUrl) {
+            let libId = managelibPage.data.libId
+            let userId = res.result.slice(res.result.lastIndexOf('/') + 1)
+            // 检查用户权限
+            checkLibUser(libId, userId, (user: User) => {
+              // 跳借阅界面
+              setLibBorrowUser(user)
+              wx.navigateTo({
+                url: './libborrow?id=' + libId,
+              })
+            }, (failure) => {
+              hideLoading()
+              if (!failure.data) {
+                showErrDialog('无法获取数据，请检查你的网络')
+              }
+          })
+            return
+          }
+        }
+        showErrDialog('请先扫描用户二维码')
+      },
+    })
+  },
+
+  scanToAddBook: () => {
+    wx.scanCode({
+        success: (res: WeApp.ScanCodeResult) => {
+          if (!res) {
+            showErrDialog('请扫描正确图书背面的 ISBN 码')
+            return
+          }
+          if (res.scanType === 'EAN_13' && res.result) {
+            // 图书页
+            // 从豆瓣获取图书信息
+            showLoading('正在添加')
+            let libId = managelibPage.data.libId
+            libAddBook(libId, res.result, () => {
+                hideLoading()
+                showDialog('添加成功')
+              }, (failure) => {
+                hideLoading()
+                if (!failure.data) {
+                  showErrDialog('无法获取数据，请检查你的网络')
+                }
+            })
+          } else {
+            showErrDialog('请扫描正确图书背面的 ISBN 码')
+          }
+        },
+      })
   },
 })

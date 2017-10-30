@@ -18,6 +18,7 @@ export type Book = {
     added?: boolean,
     canBorrow?: boolean,
     authorString?: string,
+    totalCount?: string, // 书在书房里的总量
     leftCount?: number, // 书在书房里的余量
 }
 

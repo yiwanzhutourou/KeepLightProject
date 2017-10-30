@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData } from './interfaces'
+import { ApprovalResult, BookPageData, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData, User } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -1034,6 +1034,46 @@ export const getLibSettingData = (id: string,
     checkLogin(() => {
         let url = getUrl('Library.getSettingData') + getUrlParam({
             id: id,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getLibBooks = (id: string,
+        success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Library.getBooks') + getUrlParam({
+            id: id,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const libAddBook = (
+    id: string,
+    isbn: string,
+    success: () => void,
+    failure?: (res?: any) => void,
+) => {
+    checkLogin(() => {
+        let url = getUrl('Library.addBook')
+        post(url, {
+            'id': id,
+            'isbn': isbn,
+        }, success, failure)
+    }, failure)
+}
+
+export const checkLibUser = (
+    id: string,
+    userId: string,
+    success: (user: User) => void,
+    failure?: (res?: any) => void,
+) => {
+    checkLogin(() => {
+        let url = getUrl('Library.checkUser') + getUrlParam({
+            id: id,
+            userId: userId,
         })
         get(url, success, failure)
     }, failure)

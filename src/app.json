@@ -45,7 +45,9 @@
     "pages/lib/mylibs",
     "pages/lib/createlib",
     "pages/lib/managelib",
-    "pages/lib/libsetting"
+    "pages/lib/libsetting",
+    "pages/lib/libbooks",
+    "pages/lib/libborrow"
   ],
   "window": {
     "backgroundTextStyle":"light",
