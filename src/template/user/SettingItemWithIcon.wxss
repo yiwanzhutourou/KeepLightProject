@@ -10,8 +10,8 @@
 }
 
 .setting-icon {
-    width: 40rpx;
-    height: 40rpx;
+    width: 46rpx;
+    height: 46rpx;
 }
 
 .detail-container-with-icon {
