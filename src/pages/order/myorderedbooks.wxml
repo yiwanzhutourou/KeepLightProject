@@ -1,0 +1,25 @@
+<view class="container">
+    <view class="detail-container">
+        <view wx:if="{{showList}}" class="list-container">
+            <block wx:for="{{dataList}}" wx:key="id">
+                <import src="../../template/borrow/GeneralOrderItem.wxml" />
+                <template is="general-order-item"
+                    data="{{item, isOut}}" />
+            </block>
+        </view>
+        <view wx:elif="{{showEmpty}}" class="empty_container">
+            <image class="empty-pic" src="../../resources/img/icon_empty_room.png" />
+            <text class="empty_title">没有对应数据</text>
+            <button class="empty_action"
+                hover-class="empty_action-hover"
+                bindtap="onGotoIndex">去首页看看</button>
+        </view>
+        <view wx:elif="{{showNetworkError}}" class="empty_container">
+            <image class="empty-pic" src="../../resources/img/icon_empty_internet.png" />
+            <text class="empty_title">网络连接失败啦</text>
+            <button class="empty_action"
+                hover-class="empty_action-hover"
+                bindtap="onReload">点击重新加载</button>
+        </view>
+    </view>
+</view>

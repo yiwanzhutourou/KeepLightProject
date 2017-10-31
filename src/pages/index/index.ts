@@ -254,7 +254,7 @@ Page({
           if (res.result.slice(0, bochaUrl.length) === bochaUrl) {
             let userId = res.result.slice(res.result.lastIndexOf('/') + 1)
             wx.navigateTo({
-              url: '../borrow/myborrowpage?user=' + userId,
+              url: '../homepage/homepage2?user=' + userId,
             })
           } else {
             indexPage.showScanError(res.result)

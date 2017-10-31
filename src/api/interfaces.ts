@@ -116,6 +116,13 @@ export type BorrowRequest = {
     status: number,
 }
 
+export type BorrowOrder = {
+    id: number,
+    user: User,
+    book: Book,
+    date: string,
+}
+
 export type BorrowRequestNew = {
     id: number,
     form: User,

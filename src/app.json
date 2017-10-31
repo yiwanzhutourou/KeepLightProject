@@ -47,7 +47,8 @@
     "pages/lib/managelib",
     "pages/lib/libsetting",
     "pages/lib/libbooks",
-    "pages/lib/libborrow"
+    "pages/lib/libborrow",
+    "pages/order/myorderedbooks"
   ],
   "window": {
     "backgroundTextStyle":"light",

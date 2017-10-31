@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData, User } from './interfaces'
+import { ApprovalResult, BookPageData, BorrowOrder, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData, User } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
@@ -463,6 +463,16 @@ export const getMyBorrowRequests = (flag: number,
     checkLogin(() => {
         let url = getUrl('Book.getMyBorrowRequests') + getUrlParam({
             flag: flag,
+        })
+        get(url, success, failure)
+    }, failure)
+}
+
+export const getMyBorrowOrders = (out: number,
+        success: (books: Array<BorrowOrder>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.getBorrowOrders') + getUrlParam({
+            out: out,
         })
         get(url, success, failure)
     }, failure)

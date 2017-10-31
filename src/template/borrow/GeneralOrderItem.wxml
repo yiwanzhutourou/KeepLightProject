@@ -1,0 +1,37 @@
+<template name="general-order-item">
+    <view class="common-container">
+        <view class="user-container">
+            <view wx:if="{{isOut}}" class="user-title-container">
+                <view class="time-container">
+                    {{item.date}}
+                </view>
+                <view class="user-title-text">
+                    你想要借阅 {{item.user.nickname}} 的
+                </view>
+            </view>
+            <view wx:else class="user-title-text">
+                {{item.user.nickname}} 想要借阅你的
+            </view>
+            <image class="user-avatar"
+                data-user="{{item.user.id}}"
+                bindtap="onUserTap"
+                src="{{item.user.avatar}}" />
+        </view>
+        <view class="book-container">
+            <view class="content-container"
+                data-isbn="{{item.book.isbn}}" bindtap="onBookItemTap">
+                <image class="book-pic" src="{{item.book.cover}}" mode="aspectFit" />
+                <view class="book-detail-container">
+                    <text class="book-title">{{item.book.title}}</text>
+                    <text class="book-author">作者：{{item.book.author}}</text>
+                    <text class="book-publisher">出版社：{{item.book.publisher}}</text>
+                </view>
+            </view>
+            <view class="borrow-action-button"
+                hover-class="borrow-action-button-hover"
+                data-user="{{item.user.id}}"
+                bindtap="onChatTap">给 TA 留言</view>
+        </view>            
+        <view class="item-divider" />
+    </view>
+</template>

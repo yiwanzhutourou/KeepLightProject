@@ -12,6 +12,9 @@ const SETTING_BORROW_OUT = 5
 const SETTING_SETTINGS = 6
 const SETTING_ABOUT = 7
 
+const SETTING_MY_ORDER_BOOK = 8
+const SETTING_OUT_ORDER_BOOK = 9
+
 let minePage
 let lastLogoTap = -1
 let logoTapCount = 0
@@ -30,25 +33,35 @@ Page({
             title: '读书卡片',
             icon: '../../resources/img/icon_card.png',
         },
+        // {
+        //     id: SETTING_BORROW_REQUEST_IN,
+        //     title: '收到的借阅请求',
+        //     icon: '../../resources/img/icon_request.png',
+        // },
+        // {
+        //     id: SETTING_BORROW_REQUEST_OUT,
+        //     title: '发出的借阅请求',
+        //     icon: '../../resources/img/icon_request_out.png',
+        // },
+        // {
+        //     id: SETTING_BORROW_OUT,
+        //     title: '借出的书',
+        //     icon: '../../resources/img/icon_borrow_out.png',
+        // },
+        // {
+        //     id: SETTING_BORROW_IN,
+        //     title: '借入的书',
+        //     icon: '../../resources/img/icon_return_book.png',
+        // },
         {
-            id: SETTING_BORROW_REQUEST_IN,
-            title: '收到的借阅请求',
+            id: SETTING_MY_ORDER_BOOK,
+            title: '预约历史',
             icon: '../../resources/img/icon_request.png',
         },
         {
-            id: SETTING_BORROW_REQUEST_OUT,
-            title: '发出的借阅请求',
+            id: SETTING_OUT_ORDER_BOOK,
+            title: '预约请求',
             icon: '../../resources/img/icon_request_out.png',
-        },
-        {
-            id: SETTING_BORROW_OUT,
-            title: '借出的书',
-            icon: '../../resources/img/icon_borrow_out.png',
-        },
-        {
-            id: SETTING_BORROW_IN,
-            title: '借入的书',
-            icon: '../../resources/img/icon_return_book.png',
         },
         {
             id: SETTING_SETTINGS,
@@ -145,6 +158,16 @@ Page({
                 url: '../about/about',
             })
             break
+        case SETTING_MY_ORDER_BOOK:
+            wx.navigateTo({
+                url: '../order/myorderedbooks?out=0',
+            })
+            break
+        case SETTING_OUT_ORDER_BOOK:
+            wx.navigateTo({
+                url: '../order/myorderedbooks?in=1',
+            })
+            break
         default:
       }
   },
@@ -174,19 +197,19 @@ Page({
   },
 
   onTapTap: (e) => {
-    if (lastLogoTap === -1 || (e.timeStamp && (e.timeStamp - lastLogoTap) < 500)) {
-      logoTapCount++
-    } else {
-      logoTapCount = 1
-    }
-    if (logoTapCount === 5) {
-      lastLogoTap = -1
-      logoTapCount = 0
-      wx.navigateTo({
-        url: '../lib/mylibs',
-      })
-    } else {
-      lastLogoTap = e.timeStamp
-    }
+    // if (lastLogoTap === -1 || (e.timeStamp && (e.timeStamp - lastLogoTap) < 500)) {
+    //   logoTapCount++
+    // } else {
+    //   logoTapCount = 1
+    // }
+    // if (logoTapCount === 5) {
+    //   lastLogoTap = -1
+    //   logoTapCount = 0
+    //   wx.navigateTo({
+    //     url: '../lib/mylibs',
+    //   })
+    // } else {
+    //   lastLogoTap = e.timeStamp
+    // }
   },
 })
