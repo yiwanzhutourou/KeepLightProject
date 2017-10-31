@@ -9,8 +9,13 @@
                     你想要借阅 {{item.user.nickname}} 的
                 </view>
             </view>
-            <view wx:else class="user-title-text">
-                {{item.user.nickname}} 想要借阅你的
+            <view wx:else class="user-title-container">
+                <view class="time-container">
+                    {{item.date}}
+                </view>
+                <view class="user-title-text">
+                    {{item.user.nickname}} 想要借阅你的
+                </view>
             </view>
             <image class="user-avatar"
                 data-user="{{item.user.id}}"
