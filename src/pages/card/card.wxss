@@ -136,10 +136,9 @@
 }
 
 .card-content {
-    font-size: 34rpx;
+    font-size: 36rpx;
     color: #333;
     line-height: 140%;
-    letter-spacing: 2rpx;
 }
 
 .bottom-bar-container {
