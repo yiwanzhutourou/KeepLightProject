@@ -248,6 +248,7 @@ export type CardDetail = {
     approvalList?: Array<string>,
     approvalCount: number,
     readCount?: number,
+    showBottom: boolean,
 }
 
 export type MyCardItem = {

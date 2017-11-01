@@ -137,6 +137,9 @@ Page({
 
   onUserTap: (e) => {
       let user = e.currentTarget.dataset.user
+      if (parseInt(user, 10) === 1) {
+          return
+      }
       wx.navigateTo({
           url: '../homepage/homepage2?user=' + user,
       })
