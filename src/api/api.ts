@@ -17,9 +17,11 @@ import {
 import { ApprovalResult, BookPageData, BorrowOrder, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData, User } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
-export const DEFAULT_BASE_URL = 'https://cuiyi.mozidev.me/api/'
+export const DEFAULT_BASE_URL = 'https://www.youdushufang.com/api/'
 // export const DEFAULT_BASE_URL = 'http://127.0.0.1/api/'
-export const TEST_BASE_URL = 'https://haribo.mozidev.me/api/'
+export const TEST_BASE_URL = 'https://haribo.youdushufang.com/api/'
+
+const OLD_DEFAULT_URL = 'https://cuiyi.mozidev.me/api/'
 
 const URL_KEY = 'url_key'
 const USER_INFO_KEY = 'user_info'
@@ -31,7 +33,7 @@ let baseUrl = ''
 export const getBaseUrl = () => {
     if (baseUrl === '') {
         baseUrl = wx.getStorageSync(URL_KEY)
-        if (!baseUrl) {
+        if (!baseUrl || baseUrl === OLD_DEFAULT_URL) {
             setBaseUrl(DEFAULT_BASE_URL)
         }
     }
@@ -1163,6 +1165,7 @@ const getRequestHeader = () => {
     // TODO: put hash in header
     return {
         'BOCHA-USER-TOKEN': getUserToken(),
+        'BOCHA-PLATFORM': 'wx-mp',
     }
 }
 
