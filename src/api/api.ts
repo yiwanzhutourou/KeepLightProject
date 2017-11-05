@@ -423,6 +423,15 @@ export const addBook = (isbn: string, success: (isbn: string) => void,
     }, failure)
 }
 
+// 新接口，本地拿到豆瓣 Book 对象再发到服务器
+export const addNewBook = (book: any, success: () => void,
+                        failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('User.addNewBook')
+        post(url, { 'book': JSON.stringify(book) }, success, failure)
+    }, failure)
+}
+
 export const removeBook = (isbn: string, success: (isbn: string) => void,
                             failure?: (res?: any) => void) => {
     checkLogin(() => {
@@ -920,12 +929,25 @@ export const getMarkersNearBy = (lat: number, lng: number,
     }, failure)
 }
 
-export const getBookDetails = (isbn: string, success: (result: any) => void, failure?: (res?: any) => void) => {
+export const getBookDetailsByIsbn = (isbn: string,
+        success: (result: any) => void, failure?: (res?: any) => void) => {
+    let url = 'https://api.douban.com/v2/book/isbn/' + isbn
+    getDoubanBook(url, success, failure)
+}
+
+// 历史原因，豆瓣的 Book id，在我们这叫 isbn
+export const getBookDetails = (isbn: string,
+        success: (result: any) => void, failure?: (res?: any) => void) => {
     let url = 'https://api.douban.com/v2/book/' + isbn
     // 特殊处理一下老数据，豆瓣的id不可能是978开头的
     if (isbn && isbn.indexOf('978') === 0) {
         url = 'https://api.douban.com/v2/book/isbn/' + isbn
     }
+    getDoubanBook(url, success, failure)
+}
+
+const getDoubanBook = (url: string,
+        success: (result: any) => void, failure?: (res?: any) => void) => {
     wx.request({
         url: url,
         method: 'GET',
@@ -938,6 +960,40 @@ export const getBookDetails = (isbn: string, success: (result: any) => void, fai
             }
             if (res.statusCode === 200) {
                 success(res.data ? res.data : null)
+            } else {
+                handleServerError(res.data)
+                if (failure) {
+                    failure(res)
+                }
+            }
+        },
+        fail: (e) => {
+            if (failure) {
+                failure(e)
+            }
+        },
+    })
+}
+
+export const searchDoubanBooks = (key: string, page: number, count: number,
+        success: (result: Array<any>) => void, failure?: (res?: any) => void) => {
+    let url = 'https://api.douban.com/v2/book/search'  + getUrlParam({
+        q: key,
+        start: count * page,
+        count: count,
+    })
+    wx.request({
+        url: url,
+        method: 'GET',
+        header: {
+            'Content-Type': 'json',
+        },
+        success: (res) => {
+            if (!res) {
+                return
+            }
+            if (res.statusCode === 200) {
+                success(res.data && res.data.books ? res.data.books : [])
             } else {
                 handleServerError(res.data)
                 if (failure) {

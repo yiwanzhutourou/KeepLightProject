@@ -1,5 +1,5 @@
 import { Book, BookPageData, CardDetail, SearchUser } from '../../api/interfaces'
-import { addBook, getBookCards, getBookDetails, getBookPageData, removeBook } from '../../api/api'
+import { addBook, addNewBook, getBookCards, getBookDetails, getBookPageData, removeBook } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { setBookDetailData, updateBookStatus } from '../../utils/bookCache'
 
@@ -44,6 +44,7 @@ Page({
       isbn: '',
       screenHeight: 0,
       bookDetail: null,
+      doubanBook: '',
       discoverList: [],
       showEmpty: false,
       showList: false,
@@ -76,6 +77,7 @@ Page({
         hideLoading()
         if (result) {
             bookPage.setData({
+                doubanBook: result,
                 bookDetail: {
                     bigImage: result.images ? result.images.large : '',
                     smallImage: result.image,
@@ -99,6 +101,8 @@ Page({
                 })
             }
             bookPage.loadBookCards()
+        } else {
+            showErrDialog('无法加载图书详情，请稍后再试')
         }
     }, (failure) => {
         hideLoading()
@@ -216,18 +220,19 @@ Page({
   },
 
   onAddBook: (e) => {
-    let isbn = bookPage.data.isbn
-    if (!isbn) {
+    let doubanBook = bookPage.data.doubanBook
+    if (!doubanBook) {
         return
     }
     showLoading('正在添加')
-    addBook(isbn, () => {
+    addNewBook(doubanBook, () => {
       hideLoading()
       showDialog('已添加')
       bookPage.setData({
         showAddBook: false,
       })
-      updateBookStatus(isbn, true)
+      // TODO 更新图书添加状态
+      // updateBookStatus(doubanBook.id, true)
     }, (failure) => {
       hideLoading()
       if (!failure.data) {

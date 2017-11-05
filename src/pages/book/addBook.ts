@@ -1,5 +1,5 @@
 import { Book, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
-import { addBook, getBookInfo, getBookList, searchBooks } from '../../api/api'
+import { addBook, addNewBook, getBookDetailsByIsbn, getBookInfo, getBookList, searchBooks, searchDoubanBooks } from '../../api/api'
 import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
 import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
@@ -67,30 +67,28 @@ Page({
   },
 
   onAddBook: (e) => {
+    let book = e.currentTarget.dataset.book
+    if (!book) {
+      return
+    }
     showLoading('正在添加')
-    addBook(e.currentTarget.dataset.book.isbn, (isbn: string) => {
+    addNewBook(book, () => {
       hideLoading()
+      showDialog('已添加')
       if (bookPage.data.bookList) {
         let bookList: Array<Book> = []
-        bookPage.data.bookList.forEach((book: Book) => {
-          let added = book.added
-          if (isbn === book.isbn) {
-            added = true
+        // 更新已添加状态
+        bookList = bookPage.data.bookList
+        bookList.forEach((item: any) => {
+          if (item.id === book.id) {
+            item.added = true
           }
-          bookList.push({
-              isbn: book.isbn,
-              title: book.title,
-              author: book.author,
-              url: book.url,
-              cover: book.cover,
-              publisher: book.publisher,
-              added: added,
-          })
         })
         bookPage.setData({
           bookList: bookList,
         })
-        updateBookStatus(isbn, true)
+        // TODO 同其他
+        // updateBookStatus(isbn, true)
       }
     }, (failure) => {
       hideLoading()
@@ -113,14 +111,14 @@ Page({
         } else {
           // 从豆瓣获取图书信息
           showLoading('正在查找图书信息')
-          getBookInfo(res.result, (books: Array<Book>) => {
+          getBookDetailsByIsbn(res.result, (book: any) => {
               hideLoading()
               bookPage.setData({
                 keyword: '',
                 showLoadingMore: false,
                 noMore: true,
               })
-              bookPage.handleSearchResult(books)
+              bookPage.handleSearchResult([book])
             }, (failure) => {
               hideLoading()
               if (!failure.data) {
@@ -137,7 +135,7 @@ Page({
 
   searchBooks: (keyword: string) => {
     showLoading('正在搜索')
-    searchBooks(keyword, INITIAL_PAGE, DEFAULT_PAGE_SIZE, (books: Array<Book>) => {
+    searchDoubanBooks(keyword, INITIAL_PAGE, DEFAULT_PAGE_SIZE, (books: Array<any>) => {
         hideLoading()
         bookPage.setData({
           noMore: books.length < DEFAULT_PAGE_SIZE,
@@ -151,7 +149,7 @@ Page({
       })
   },
 
-  handleSearchResult: (bookList: Array<Book>) => {
+  handleSearchResult: (bookList: Array<any>) => {
     if (!bookList || bookList.length == 0) {
       showDialog('搜索无结果')
     } else {
@@ -159,7 +157,8 @@ Page({
         bookList: bookList,
         showEmpty: false,
       })
-      updateBookStatusByList(bookList)
+      // TODO 更新添加图书状态，这块重新做，之前写得乱七八糟的
+      // updateBookStatusByList(bookList)
     }
   },
 
@@ -194,7 +193,7 @@ Page({
     bookPage.showLoadingMore()
 
     curPage++
-    searchBooks(keyword, curPage, DEFAULT_PAGE_SIZE, (books: Array<Book>) => {
+    searchDoubanBooks(keyword, curPage, DEFAULT_PAGE_SIZE, (books: Array<any>) => {
         let noMore = (books.length < DEFAULT_PAGE_SIZE)
         if (noMore) {
           bookPage.showNoMore()
@@ -205,7 +204,8 @@ Page({
             bookList: list.concat(books),
           })
         }
-        updateBookStatusByList(books)
+        // TODO 同其他的
+        // updateBookStatusByList(books)
       }, (failure) => {
         bookPage.hideLoadingMore()
         if (!failure.data) {
@@ -235,7 +235,12 @@ Page({
 
   onSelectBook: (e) => {
     let book = e.currentTarget.dataset.book
-    setPostBookData(book)
+    setPostBookData({
+      isbn: book.id,
+      title: book.title,
+      author: book.author,
+      cover: book.image,
+    })
     wx.navigateBack({
       delta: 1,
     })
