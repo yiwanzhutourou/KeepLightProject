@@ -39,7 +39,7 @@ export const replaceBookList = (list: Array<Book>) => {
     setBookListCache(newList)
 }
 
-export const updateBookStatusByList = (list: Array<Book>) => {
+export const updateBookStatusByList = (list: Array<any>) => {
     if (!list || list.length === 0) {
         return
     }
@@ -57,12 +57,12 @@ export const updateBookStatusByList = (list: Array<Book>) => {
     setBookListCache(newList)
 }
 
-const indexOfBook = (isbn: string, books: Array<Book>) => {
+const indexOfBook = (isbn: string, books: Array<any>) => {
     if (!books || books.length === 0) {
         return -1
     }
     for (let i = 0; i < books.length; i++) {
-        if (books[i] && books[i].isbn === isbn) {
+        if (books[i] && parseInt(books[i].id, 10) === parseInt(isbn, 10)) {
             return i
         }
     }
@@ -84,7 +84,7 @@ export const updateBookStatus = (isbn: string, added: boolean) => {
     setBookListCache(oldList)
 }
 
-export const filterBookListByStatus = (list: Array<Book>) => {
+export const filterBookListByStatus = (list: Array<any>) => {
     let listInCache = getBookList()
     if (listInCache && listInCache.length > 0) {
         for (let i = 0; i < list.length; i++) {
@@ -98,9 +98,9 @@ export const filterBookListByStatus = (list: Array<Book>) => {
     return list
 }
 
-const bookIsAdded = (book: Book, list: Array<string>) => {
+const bookIsAdded = (book: any, list: Array<string>) => {
     for (let i = 0; i < list.length; i++) {
-        if (list[i] === book.isbn) {
+        if (book && parseInt(list[i], 10) === parseInt(book.id, 10)) {
             return true
         }
     }

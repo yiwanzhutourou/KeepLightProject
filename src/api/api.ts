@@ -14,7 +14,7 @@ import {
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, BorrowOrder, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData, User } from './interfaces'
+import { ApprovalResult, BookPageData, BookStatus, BorrowOrder, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData, User } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://www.youdushufang.com/api/'
@@ -926,6 +926,16 @@ export const getMarkersNearBy = (lat: number, lng: number,
             })
         }
         success(markers)
+    }, failure)
+}
+
+export const checkBookAdded = (isbns: Array<string>,
+        success: (addedList: Array<BookStatus>) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Book.checkAdded') + getUrlParam({
+            bookIsbns: JSON.stringify(isbns),
+        })
+        get(url, success, failure)
     }, failure)
 }
 

@@ -231,8 +231,7 @@ Page({
       bookPage.setData({
         showAddBook: false,
       })
-      // TODO 更新图书添加状态
-      // updateBookStatus(doubanBook.id, true)
+      updateBookStatus(doubanBook.id, true)
     }, (failure) => {
       hideLoading()
       if (!failure.data) {

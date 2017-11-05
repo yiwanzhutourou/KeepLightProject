@@ -1,5 +1,5 @@
-import { Book, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
-import { addBook, addNewBook, getBookDetailsByIsbn, getBookInfo, getBookList, searchBooks, searchDoubanBooks } from '../../api/api'
+import { Book, BookStatus, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
+import { addBook, addNewBook, checkBookAdded, getBookDetailsByIsbn, getBookInfo, getBookList, searchDoubanBooks } from '../../api/api'
 import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
 import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
@@ -11,6 +11,40 @@ let app = getApp()
 let bookPage
 let curPage = 0
 let lastRequest = -1
+
+const getIsbns = (doubanBooks: Array<any>) => {
+    let isbns = Array<any>()
+    if (doubanBooks && doubanBooks.length > 0) {
+        doubanBooks.forEach((book: any) => {
+            if (book && book.id) {
+                isbns.push(book.id)
+            }
+        })
+    }
+    return isbns
+}
+
+const isAdded = (isbn: string, addedList: Array<BookStatus>) => {
+    if (addedList && addedList.length > 0) {
+        for (let i = 0; i < addedList.length; i++) {
+            if (addedList[i] && parseInt(isbn, 10) === parseInt(addedList[i].isbn, 10)) {
+                return addedList[i].added
+            }
+        }
+    }
+    return false
+}
+
+const applyAddedStatus = (doubanBooks: Array<any>, addedList: Array<BookStatus>) => {
+    if (doubanBooks && addedList) {
+        doubanBooks.forEach((book: any) => {
+            if (book && book.id) {
+                book.added = isAdded(book.id, addedList)
+            }
+        })
+    }
+    return doubanBooks
+}
 
 Page({
   data: {
@@ -87,8 +121,7 @@ Page({
         bookPage.setData({
           bookList: bookList,
         })
-        // TODO 同其他
-        // updateBookStatus(isbn, true)
+        updateBookStatus(book.id, true)
       }
     }, (failure) => {
       hideLoading()
@@ -112,7 +145,6 @@ Page({
           // 从豆瓣获取图书信息
           showLoading('正在查找图书信息')
           getBookDetailsByIsbn(res.result, (book: any) => {
-              hideLoading()
               bookPage.setData({
                 keyword: '',
                 showLoadingMore: false,
@@ -153,12 +185,21 @@ Page({
     if (!bookList || bookList.length == 0) {
       showDialog('搜索无结果')
     } else {
-      bookPage.setData({
-        bookList: bookList,
-        showEmpty: false,
+      // 再去拉一下是不是添加过了
+      checkBookAdded(getIsbns(bookList), (addedList: Array<BookStatus>) => {
+        let statusBookList = applyAddedStatus(bookList, addedList)
+        bookPage.setData({
+          bookList: statusBookList,
+          showEmpty: false,
+        })
+        updateBookStatusByList(statusBookList)
+        hideLoading()
+      }, (failure) => {
+        hideLoading()
+        if (!failure.data) {
+          showErrDialog('网络错误，请稍后再试')
+        }
       })
-      // TODO 更新添加图书状态，这块重新做，之前写得乱七八糟的
-      // updateBookStatusByList(bookList)
     }
   },
 
@@ -198,14 +239,22 @@ Page({
         if (noMore) {
           bookPage.showNoMore()
         } else {
-          bookPage.hideLoadingMore()
-          let list = bookPage.data.bookList
-          bookPage.setData({
-            bookList: list.concat(books),
+          // 再去拉一下是不是添加过了
+          checkBookAdded(getIsbns(books), (addedList: Array<BookStatus>) => {
+            let statusBookList = applyAddedStatus(books, addedList)
+            let list = bookPage.data.bookList
+            bookPage.setData({
+              bookList: list.concat(statusBookList),
+            })
+            updateBookStatusByList(statusBookList)
+            bookPage.hideLoadingMore()
+          }, (failure) => {
+            bookPage.hideLoadingMore()
+            if (!failure.data) {
+              showErrDialog('网络错误，请稍后再试')
+            }
           })
         }
-        // TODO 同其他的
-        // updateBookStatusByList(books)
       }, (failure) => {
         bookPage.hideLoadingMore()
         if (!failure.data) {

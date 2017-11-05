@@ -22,6 +22,11 @@ export type Book = {
     leftCount?: number, // 书在书房里的余量
 }
 
+export type BookStatus = {
+    isbn: string,
+    added: boolean,
+}
+
 export const CODE_SUCCESS = 200
 
 // Client error
