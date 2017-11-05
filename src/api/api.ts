@@ -609,6 +609,20 @@ export const newBookCard = (
     }, failure)
 }
 
+export const insertCardNew = (
+        content: string, title: string, picUrl: string, book: any,
+        success: (id: number) => void, failure?: (res?: any) => void) => {
+    checkLogin(() => {
+        let url = getUrl('Card.insertNew')
+        post(url, {
+            'content': content,
+            'title': title,
+            'picUrl': picUrl,
+            'book': book ? JSON.stringify(book) : '',
+        }, success, failure)
+    }, failure)
+}
+
 export const modifyBookCard = (cardId: number,
         content: string, title: string, picUrl: string, picModified: number,
         success: (id: number) => void, failure?: (res?: any) => void) => {

@@ -1,5 +1,5 @@
+import { getBookDetails, getUploadToken, insertCardNew, modifyBookCard, newBookCard } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading, trim } from '../../utils/utils'
-import { getUploadToken, modifyBookCard, newBookCard } from '../../api/api'
 import { initUploader, uploadFile } from '../../utils/qiniuUploader'
 
 import { getPostModifyData } from '../../utils/postCache'
@@ -165,19 +165,44 @@ Page({
   },
 
   insertNewBookCard: (content: string, title: string, picUrl: string, bookIsbn: string) => {
-    newBookCard(content, title, picUrl, bookIsbn,
-        (id: number) => {
-            hideLoading()
-            wx.redirectTo({
-                url: './card?id=' + id
-                    + '&showPostSuccess=1',
-            })
+    if (bookIsbn) {
+        getBookDetails(bookIsbn, (doubanBook: any) => {
+            if (doubanBook) {
+                insertCardNew(content, title, picUrl, doubanBook,
+                    (id: number) => {
+                        hideLoading()
+                        wx.redirectTo({
+                            url: './card?id=' + id
+                                + '&showPostSuccess=1',
+                        })
+                    }, (failure) => {
+                        hideLoading()
+                        if (!failure.data) {
+                            showErrDialog('发布失败，请检查你的网络')
+                        }
+                    })
+            } else {
+                showErrDialog('无法加载图书详情，请稍后再试')
+            }
         }, (failure) => {
             hideLoading()
-            if (!failure.data) {
-                showErrDialog('发布失败，请检查你的网络')
-            }
+            showErrDialog('无法加载图书详情，请检查你的网络状态')
         })
+    } else {
+        insertCardNew(content, title, picUrl, '',
+            (id: number) => {
+                hideLoading()
+                wx.redirectTo({
+                    url: './card?id=' + id
+                        + '&showPostSuccess=1',
+                })
+            }, (failure) => {
+                hideLoading()
+                if (!failure.data) {
+                    showErrDialog('发布失败，请检查你的网络')
+                }
+            })
+    }
   },
 
   modifyBookCard: (cardId: number, content: string, title: string, picUrl: string, picModified: number) => {

@@ -106,9 +106,7 @@ Page({
         }
     }, (failure) => {
         hideLoading()
-        if (!failure.data) {
-            showErrDialog('无法加载图书详情，请检查你的网络状态')
-        }
+        showErrDialog('无法加载图书详情，请检查你的网络状态')
     })
   },
 
