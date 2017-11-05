@@ -1,4 +1,4 @@
-import { checkLibUser, libAddBook } from '../../api/api'
+import { checkLibUser, getBookDetailsByIsbn, libAddBook } from '../../api/api'
 import { hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { User } from '../../api/interfaces'
@@ -128,15 +128,25 @@ Page({
             // 图书页
             // 从豆瓣获取图书信息
             showLoading('正在添加')
-            let libId = managelibPage.data.libId
-            libAddBook(libId, res.result, () => {
+            getBookDetailsByIsbn(res.result, (doubanBook: any) => {
+              if (doubanBook) {
+                let libId = managelibPage.data.libId
+                libAddBook(libId, doubanBook, () => {
+                    hideLoading()
+                    showDialog('添加成功')
+                  }, (failure) => {
+                    hideLoading()
+                    if (!failure.data) {
+                      showErrDialog('无法获取数据，请检查你的网络')
+                    }
+                })
+              } else {
                 hideLoading()
-                showDialog('添加成功')
-              }, (failure) => {
-                hideLoading()
-                if (!failure.data) {
-                  showErrDialog('无法获取数据，请检查你的网络')
-                }
+                showErrDialog('无法获取图书信息，请稍后再试')
+              }
+            }, (failure) => {
+              hideLoading()
+              showErrDialog('网络错误，请稍后再试')
             })
           } else {
             showErrDialog('请扫描正确图书背面的 ISBN 码')

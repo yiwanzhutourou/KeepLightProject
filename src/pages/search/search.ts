@@ -1,5 +1,5 @@
 import { Book, DEFAULT_SEARCH_PAGE_SIZE, SearchResult, SearchUser } from '../../api/interfaces'
-import { borrowBook, search, searchBooks, searchUsers } from '../../api/api'
+import { borrowBook, search, searchUsers } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { getDistrictShortString } from '../../utils/addrUtils'

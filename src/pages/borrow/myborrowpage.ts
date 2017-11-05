@@ -1,5 +1,5 @@
 import { Book, BorrowPageData } from '../../api/interfaces'
-import { getBookInfo, getBorrowPageData, trueBorrowBook } from '../../api/api'
+import { getBookDetailsByIsbn, getBookInfo, getBorrowPageData, trueBorrowBook } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 let myborrowPage
@@ -81,18 +81,16 @@ Page({
           // 图书页
           // 从豆瓣获取图书信息
           showLoading('正在查找图书信息')
-          getBookInfo(res.result, (books: Array<Book>) => {
+          getBookDetailsByIsbn(res.result, (book: any) => {
               hideLoading()
-              if (books && books.length > 0 && books[0]) {
-                myborrowPage.internalBorrowBook(books[0].isbn, books[0].title)
+              if (book) {
+                myborrowPage.internalBorrowBook(book.id, book.title)
               } else {
                 showErrDialog('无法获取图书信息，请尝试点击图书旁的借阅按钮借阅')
               }
             }, (failure) => {
               hideLoading()
-              if (!failure.data) {
-                showErrDialog('无法获取数据，请检查你的网络')
-              }
+              showErrDialog('无法获取数据，请检查你的网络')
           })
         } else {
           showErrDialog('请扫描正确图书背面的 ISBN 码')

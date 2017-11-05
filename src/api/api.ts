@@ -542,17 +542,6 @@ export const getOtherUserBookList = (userId: string, success: (books: Array<Book
     get(url, success, failure)
 }
 
-export const searchBooks = (
-        key: string, page: number, count = DEFAULT_PAGE_SIZE,
-        success?: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('Book.search') + getUrlParam({
-        key: key,
-        count: count,
-        page: page,
-    })
-    get(url, success, failure)
-}
-
 export const getBookInfo = (isbn: string, success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
     let url = getUrl('Book.getBookByIsbn') + getUrlParam({
         isbn: isbn,
@@ -1129,7 +1118,7 @@ export const getLibBooks = (id: string,
 
 export const libAddBook = (
     id: string,
-    isbn: string,
+    book: any,
     success: () => void,
     failure?: (res?: any) => void,
 ) => {
@@ -1137,7 +1126,7 @@ export const libAddBook = (
         let url = getUrl('Library.addBook')
         post(url, {
             'id': id,
-            'isbn': isbn,
+            'book': JSON.stringify(book),
         }, success, failure)
     }, failure)
 }

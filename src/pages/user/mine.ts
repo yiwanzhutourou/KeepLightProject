@@ -197,19 +197,19 @@ Page({
   },
 
   onTapTap: (e) => {
-    // if (lastLogoTap === -1 || (e.timeStamp && (e.timeStamp - lastLogoTap) < 500)) {
-    //   logoTapCount++
-    // } else {
-    //   logoTapCount = 1
-    // }
-    // if (logoTapCount === 5) {
-    //   lastLogoTap = -1
-    //   logoTapCount = 0
-    //   wx.navigateTo({
-    //     url: '../lib/mylibs',
-    //   })
-    // } else {
-    //   lastLogoTap = e.timeStamp
-    // }
+    if (lastLogoTap === -1 || (e.timeStamp && (e.timeStamp - lastLogoTap) < 500)) {
+      logoTapCount++
+    } else {
+      logoTapCount = 1
+    }
+    if (logoTapCount === 5) {
+      lastLogoTap = -1
+      logoTapCount = 0
+      wx.navigateTo({
+        url: '../lib/mylibs',
+      })
+    } else {
+      lastLogoTap = e.timeStamp
+    }
   },
 })

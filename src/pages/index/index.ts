@@ -1,5 +1,5 @@
 import { Book, Markers, Result } from '../../api/interfaces'
-import { getBookInfo, getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
+import { getBookDetailsByIsbn, getBookInfo, getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
 import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
 import { shouldShowLanding } from '../../utils/urlCache'
@@ -233,10 +233,10 @@ Page({
           // 图书页
           // 从豆瓣获取图书信息
           showLoading('正在查找图书信息')
-          getBookInfo(res.result, (books: Array<Book>) => {
+          getBookDetailsByIsbn(res.result, (book: any) => {
               hideLoading()
-              if (books && books.length > 0 && books[0]) {
-                let isbn = books[0].isbn
+              if (book) {
+                let isbn = book.id
                 wx.navigateTo({
                     url: '../book/book?isbn=' + isbn,
                 })
@@ -245,9 +245,7 @@ Page({
               }
             }, (failure) => {
               hideLoading()
-              if (!failure.data) {
-                showErrDialog('网络错误，请稍后再试')
-              }
+              showErrDialog('网络错误，请稍后再试')
           })
         } else if (res.result) {
           let bochaUrl = 'bocha://youdushufang/'

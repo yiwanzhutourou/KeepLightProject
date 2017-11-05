@@ -153,9 +153,7 @@ Page({
               bookPage.handleSearchResult([book])
             }, (failure) => {
               hideLoading()
-              if (!failure.data) {
-                showErrDialog('网络错误，请稍后再试')
-              }
+              showErrDialog('网络错误，请稍后再试')
           })
         }
       },
