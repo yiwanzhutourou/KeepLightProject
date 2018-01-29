@@ -1,7 +1,7 @@
 <view class="container">
     <view class="user-container">
         <view class="user-title">
-            向 {{user.nickname}} 预约
+            向 {{user.nickname}} 借阅
         </view>
         <image class="user-avatar" src="{{user.avatar}}" />
     </view>
@@ -26,7 +26,7 @@
                 <button class="borrow-book-button"
                     hover-class="borrow-book-button-hover"
                     formType="submit">
-                    预约
+                    借阅
                 </button>
             </view>
         </view>

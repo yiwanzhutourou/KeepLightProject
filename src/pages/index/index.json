@@ -1,1 +1,5 @@
-{}
+{
+    "navigationBarTitleText": "附近的书房",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
+}

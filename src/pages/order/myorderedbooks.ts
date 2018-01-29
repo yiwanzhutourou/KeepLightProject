@@ -19,11 +19,11 @@ Page({
     let isOut = option && option.out ? true : false
     if (isOut) {
       wx.setNavigationBarTitle({
-        title: '预约历史',
+        title: '借阅历史',
       })
     } else {
       wx.setNavigationBarTitle({
-        title: '预约请求',
+        title: '借阅请求',
       })
     }
     myorderedbooksPage.setData({

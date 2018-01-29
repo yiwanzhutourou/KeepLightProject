@@ -210,4 +210,11 @@ Page({
           noMore: noMore,
       })
   },
+
+  onShareAppMessage: () => {
+    return {
+      title: '有读书房',
+      path: 'pages/discover/discover',
+    }
+  },
 })

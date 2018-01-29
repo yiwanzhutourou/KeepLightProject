@@ -100,7 +100,6 @@ Page({
                     title: result.title,
                 })
             }
-            bookPage.loadBookCards()
         } else {
             showErrDialog('无法加载图书详情，请稍后再试')
         }
@@ -108,6 +107,8 @@ Page({
         hideLoading()
         showErrDialog('无法加载图书详情，请检查你的网络状态')
     })
+
+    bookPage.loadBookCards()
   },
 
   onShowContent: (e) => {

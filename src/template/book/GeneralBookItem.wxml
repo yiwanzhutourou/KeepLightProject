@@ -13,7 +13,7 @@
                 class="action-button"
                 hover-class="action-button-hover"
                 data-book="{{item}}"
-                bindtap="onBorrowBook">预约</button>
+                bindtap="onBorrowBook">借阅</button>
             <view wx:if="{{item.canBorrow && item.leftCount <= 0}}"
                 class="unaction-text">已借出</view>
         </view>

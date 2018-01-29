@@ -55,12 +55,12 @@ Page({
         // },
         {
             id: SETTING_MY_ORDER_BOOK,
-            title: '预约历史',
+            title: '借阅历史',
             icon: '../../resources/img/icon_request.png',
         },
         {
             id: SETTING_OUT_ORDER_BOOK,
-            title: '预约请求',
+            title: '借阅请求',
             icon: '../../resources/img/icon_request_out.png',
         },
         {

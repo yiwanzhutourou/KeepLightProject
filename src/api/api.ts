@@ -23,6 +23,9 @@ export const TEST_BASE_URL = 'https://haribo.youdushufang.com/api/'
 
 const OLD_DEFAULT_URL = 'https://cuiyi.mozidev.me/api/'
 
+// 转发的地址
+const DOUBAN_URL = 'https://www.youdushufang.com/v2'
+
 const URL_KEY = 'url_key'
 const USER_INFO_KEY = 'user_info'
 const TOKEN_KEY = 'user_token'
@@ -944,17 +947,17 @@ export const checkBookAdded = (isbns: Array<string>,
 
 export const getBookDetailsByIsbn = (isbn: string,
         success: (result: any) => void, failure?: (res?: any) => void) => {
-    let url = 'https://api.douban.com/v2/book/isbn/' + isbn
+    let url = DOUBAN_URL + '/book/isbn/' + isbn
     getDoubanBook(url, success, failure)
 }
 
 // 历史原因，豆瓣的 Book id，在我们这叫 isbn
 export const getBookDetails = (isbn: string,
         success: (result: any) => void, failure?: (res?: any) => void) => {
-    let url = 'https://api.douban.com/v2/book/' + isbn
+    let url = DOUBAN_URL + '/book/' + isbn
     // 特殊处理一下老数据，豆瓣的id不可能是978开头的
     if (isbn && isbn.indexOf('978') === 0) {
-        url = 'https://api.douban.com/v2/book/isbn/' + isbn
+        url = DOUBAN_URL + '/book/isbn/' + isbn
     }
     getDoubanBook(url, success, failure)
 }
@@ -990,7 +993,7 @@ const getDoubanBook = (url: string,
 
 export const searchDoubanBooks = (key: string, page: number, count: number,
         success: (result: Array<any>) => void, failure?: (res?: any) => void) => {
-    let url = 'https://api.douban.com/v2/book/search'  + getUrlParam({
+    let url = DOUBAN_URL + '/book/search'  + getUrlParam({
         q: key,
         start: count * page,
         count: count,

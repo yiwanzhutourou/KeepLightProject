@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/discover/discover",
     "pages/index/index",
     "pages/index/landing",
     "pages/index/mapdetail",
@@ -31,7 +32,6 @@
     "pages/chat/systemchat",
     "pages/chat/list",
     "pages/chat/borrow",
-    "pages/discover/discover",
     "pages/card/post",
     "pages/card/card",
     "pages/card/mycards",
@@ -63,13 +63,13 @@
       "list": [{
         "selectedIconPath": "resources/img/icon_home_selected.png",
         "iconPath": "resources/img/icon_home.png",
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/discover/discover",
         "text": "首页"
       }, {
         "selectedIconPath": "resources/img/icon_homepage_selected.png",
         "iconPath": "resources/img/icon_homepage.png",
-        "pagePath": "pages/discover/discover",
-        "text": "发现"
+        "pagePath": "pages/index/index",
+        "text": "附近的书房"
       }, {
         "selectedIconPath": "resources/img/icon_add_selected.png",
         "iconPath": "resources/img/icon_add.png",
