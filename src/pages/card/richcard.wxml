@@ -1,0 +1,34 @@
+<view class="container-no-line">
+    <view wx:if="{{cardDetail && cardDetail.picUrl}}"
+        class="img-container"
+        data-img="{{cardDetail.picUrl}}"
+        bindtap="onPreviewImage">
+        <image class="card-img" src="{{cardDetail.picUrl}}" mode="aspectFill" />
+    </view>
+
+    <view wx:if="{{cardDetail}}" class="title-container">
+        <text wx:if="{{cardDetail.title}}" class="card-title">{{cardDetail.title}}</text>
+        <view class="user-container">
+            <image class="user-avatar"
+                src="{{cardDetail.user.avatar}}" />
+            <view class="user-time-container">
+                <text class="user-nickname">{{cardDetail.user.nickname}}</text>
+            </view>
+        </view>
+    </view>
+
+    <view class="card-extra-container">
+        <view class="card-date">{{cardDetail.timeString}}</view>
+        <view wx:if="{{cardDetail.readCount || cardDetail.readCount === 0}}"
+            class="card-read-count">
+            {{cardDetail.readCount}} 次浏览
+        </view>
+    </view>
+
+    <view wx:if="{{cardDetail}}" class="content-container">
+        <import src="../../wxParse/wxParse.wxml"/>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+    </view>
+
+    <view class="card-bottom-space-holder" />
+</view>

@@ -34,6 +34,7 @@
     "pages/chat/borrow",
     "pages/card/post",
     "pages/card/card",
+    "pages/card/richcard",
     "pages/card/mycards",
     "pages/card/usercards",
     "pages/borrow/myqrcode",
@@ -69,7 +70,7 @@
         "selectedIconPath": "resources/img/icon_homepage_selected.png",
         "iconPath": "resources/img/icon_homepage.png",
         "pagePath": "pages/index/index",
-        "text": "附近的书房"
+        "text": "附近"
       }, {
         "selectedIconPath": "resources/img/icon_add_selected.png",
         "iconPath": "resources/img/icon_add.png",

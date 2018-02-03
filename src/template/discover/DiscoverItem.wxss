@@ -140,6 +140,14 @@
     padding-right: 10rpx;
 }
 
+.article-read-count {
+    font-size: 24rpx;
+    color: #999;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
 .card-approval-count {
     font-size: 24rpx;
     color: #999;

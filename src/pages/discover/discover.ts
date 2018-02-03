@@ -5,6 +5,7 @@ import { hideLoading, parseTimeToDate, showErrDialog, showLoading } from '../../
 import { clearPostModifyData } from '../../utils/postCache'
 import { getDiscoverPageData } from '../../api/api'
 import { parseAuthor } from '../../utils/bookUtils'
+import { shouldShowLanding } from '../../utils/urlCache';
 
 const DISCOVER_REFRESH_INTERVAL = 5 * 60 * 1000
 
@@ -49,6 +50,15 @@ Page({
   },
 
   onShow: function (): void {
+      let showLanding = shouldShowLanding()
+      if (showLanding) {
+        setTimeout(() => {
+            wx.navigateTo({
+                url: '../index/landing',
+            })
+        }, 1500)
+    }
+
       discoverPage.setData({
           showPostBtn: getShowPostBtn(),
       })
@@ -169,6 +179,13 @@ Page({
       })
   },
 
+  onArticleItemTap: (e) => {
+      let id = e.currentTarget.dataset.id
+      wx.navigateTo({
+          url: '../card/richcard?id=' + id,
+      })
+  },
+
   onBookItemTap: (e) => {
       let isbn = e.currentTarget.dataset.isbn
       wx.navigateTo({
@@ -184,9 +201,21 @@ Page({
               url: '../book/book?isbn=' + id,
           })
       } else if (type === 'card') {
-          wx.navigateTo({
-              url: '../card/card?id=' + id + '&fromList=1',
-          })
+          let fullPic = e.currentTarget.dataset.bigpic
+          if (fullPic) {
+              wx.previewImage({
+                  current: fullPic,
+                  urls: [fullPic],
+              })
+          } else {
+              wx.navigateTo({
+                  url: '../card/card?id=' + id + '&fromList=1',
+              })
+          }
+      } else if (type === 'article') {
+        wx.navigateTo({
+            url: '../card/richcard?id=' + id,
+        })
       }
   },
 

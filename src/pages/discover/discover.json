@@ -1,1 +1,5 @@
-{}
+{
+    "navigationBarTitleText": "有读书房",
+    "enablePullDownRefresh": true,
+    "backgroundTextStyle": "dark"
+}

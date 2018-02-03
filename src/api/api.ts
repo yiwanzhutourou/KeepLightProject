@@ -1,5 +1,6 @@
 import {
     Address,
+    ArticleDetail,
     Book,
     BorrowHistory,
     BorrowRequest,
@@ -645,6 +646,14 @@ export const getCardById = (id: number,
         success: (result: CardDetail) => void, failure?: (res?: any) => void) => {
     let url = getUrl('Card.getCardById') + getUrlParam({
         cardId: id,
+    })
+    get(url, success, failure)
+}
+
+export const getArticleById = (id: number,
+        success: (result: ArticleDetail) => void, failure?: (res?: any) => void) => {
+    let url = getUrl('Article.getArticle') + getUrlParam({
+        id: id,
     })
     get(url, success, failure)
 }

@@ -2,8 +2,6 @@ import { Book, Markers, Result } from '../../api/interfaces'
 import { getBookDetailsByIsbn, getBookInfo, getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
 import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
-import { shouldShowLanding } from '../../utils/urlCache'
-
 const EVENT_TAP_SEARCH = 0
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
 
@@ -97,15 +95,6 @@ Page({
   },
 
   onShow: function(): void {
-    let showLanding = shouldShowLanding()
-    if (showLanding) {
-      setTimeout(() => {
-        wx.navigateTo({
-          url: '../index/landing',
-        })
-      }, 1500)
-    }
-
     if (indexPage.data.markers.length === 0) {
       indexPage.checkAndLoad()
     }

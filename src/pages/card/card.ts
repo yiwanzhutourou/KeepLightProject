@@ -63,6 +63,11 @@ Page({
     showLoading('正在加载...')
     getCardById(cardId, (result: CardDetail) => {
         hideLoading()
+        if (result.title) {
+            wx.setNavigationBarTitle({
+                title: result.title,
+            })
+        }
         if (cardPage.data.showPostSuccess) {
             showDialog('发布成功')
         }

@@ -3,6 +3,7 @@
         <view class="banner-container"
             data-type="{{item.type}}"
             data-id="{{item.data.id}}"
+            data-bigpic="{{item.data.fullPic}}"
             bindtap="onBannerTap">
             <image class="banner-image" src="{{item.data.picUrl}}" mode="aspectFill" />
             <view wx:if="{{item.data.title}}" class="banner-title-container">
