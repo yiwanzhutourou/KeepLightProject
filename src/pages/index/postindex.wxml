@@ -10,7 +10,8 @@
             </view>
             <view class="post-button-text">添加图书</view>
         </view>
-        <view class="post-button-container"
+        <view wx:if="{{showPostBtn}}"
+            class="post-button-container"
             hover-class="post-button-container-hover"
             bindtap="onPostCard">
             <view class="post-button-image-container">

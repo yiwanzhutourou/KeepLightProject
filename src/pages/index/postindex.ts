@@ -1,5 +1,6 @@
 import { clearPostModifyData } from '../../utils/postCache'
 import { getScreenSizeInRpx } from '../../utils/utils'
+import { getShowPostBtn } from '../../utils/discoverCache'
 
 let app = getApp()
 let postIndexPage
@@ -7,6 +8,7 @@ let postIndexPage
 Page({
   data: {
     screenHeight: 0,
+    showPostBtn: false,
   },
 
   onLoad: function(): void {
@@ -16,6 +18,13 @@ Page({
       postIndexPage.setData({
         screenHeight: systemInfo.windowHeight,
       })
+    })
+  },
+
+  onShow: () => {
+    let showPost = getShowPostBtn()
+    postIndexPage.setData({
+      showPostBtn: showPost,
     })
   },
 

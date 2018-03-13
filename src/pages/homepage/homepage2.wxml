@@ -51,7 +51,7 @@
                     </view>
                 </view>
             </view>
-            <view wx:if="{{cardList.length > 0}}" class="card-list-container">
+            <view wx:if="{{showPost && cardList.length > 0}}" class="card-list-container">
                 <view class="title-container">
                     <text>{{cardCount}} 个读书卡片</text>
                 </view>

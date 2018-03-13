@@ -17,6 +17,7 @@ export const updateDiscoverCache = (newCache: DiscoverPageData, isTop: boolean) 
         discoverCache.topCursor = newCache.topCursor
         discoverCache.bottomCursor = newCache.bottomCursor
         discoverCache.bookBottomCursor = newCache.bookBottomCursor
+        discoverCache.showPost = newCache.showPost
     }
 
     // 保存到disk
@@ -87,7 +88,7 @@ export const getShowPostBtn = () => {
     if (discoverCache) {
         return discoverCache.showPost
     }
-    return true
+    return false
 }
 
 export const getBottomCursor = () => {

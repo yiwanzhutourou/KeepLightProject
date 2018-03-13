@@ -7,9 +7,9 @@
             <text wx:if="{{user}}"
                 class="show-my-room">查看我的书房</text>
         </view>
-        <image class="qr-code-image"
+        <!-- <image class="qr-code-image"
             bindtap="onShowMyQRCode"
-            src="../../resources/img/icon_qr_code.png" />
+            src="../../resources/img/icon_qr_code.png" /> -->
     </view>
     <view class="item-divider" />
     <view class="follow-container">
@@ -38,11 +38,11 @@
                 wx:for-item="settingItem"
                 wx:for-index="index"
                 wx:key="id">
-                <view wx:if="{{index === 0 || index === 2 || index === 4}}" class="item-divider" />
+                <view wx:if="{{ (showPost && (index === 0 || index === 2 || index === 4)) || (!showPost && (index === 0 || index === 1 || index === 3)) }}" class="item-divider" />
                 <import src="../../template/user/SettingItemWithIcon.wxml" />
                 <template is="setting-item-with-icon"
                     data="{{settingItem}}" />
-                <view wx:if="{{index === 1 || index === 3}}" class="thick-divider" />
+                <view wx:if="{{ (showPost && (index === 1 || index === 3)) || (!showPost && (index === 0 || index === 2)) }}" class="thick-divider" />
             </block>
             <view class="contact-container">
                 <image

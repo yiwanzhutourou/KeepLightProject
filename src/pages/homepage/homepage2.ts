@@ -3,6 +3,7 @@ import { addAddress, borrowBook, follow, getHomepageData, removeBook, unfollow }
 import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
+import { getShowPostBtn } from '../../utils/discoverCache';
 import { parseAuthor } from '../../utils/bookUtils'
 import { updateBorrowData } from '../../utils/bookCache'
 
@@ -39,10 +40,17 @@ Page({
     bookCount: 0,
     showContent: false,
     showNetworkError: false,
+
+    showPost: false,
   },
 
   onLoad: function(option: any): void {
     homepage2 = this
+
+    let showPost = getShowPostBtn()
+    homepage2.setData({
+      showPost: showPost,
+    })
 
     showLoading('正在加载...')
     if (option && option.user) {

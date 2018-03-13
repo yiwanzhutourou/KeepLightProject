@@ -2,6 +2,7 @@ import { getBorrowRequestCount, getMinePageData, getUserInfo } from '../../api/a
 import { getMinePageCache, updateMinePageCache } from '../../utils/urlCache'
 
 import { MinePageData } from '../../api/interfaces'
+import { getShowPostBtn } from '../../utils/discoverCache';
 
 const SETTING_MY_BOOKS = 0
 const SETTING_MY_CARDS = 1
@@ -22,17 +23,18 @@ let logoTapCount = 0
 Page({
   data: {
     user: null,
+    showPost: false,
     mineItems: [
         {
             id: SETTING_MY_BOOKS,
             title: '书',
             icon: '../../resources/img/icon_book.png',
         },
-        {
-            id: SETTING_MY_CARDS,
-            title: '读书卡片',
-            icon: '../../resources/img/icon_card.png',
-        },
+        // {
+        //     id: SETTING_MY_CARDS,
+        //     title: '读书卡片',
+        //     icon: '../../resources/img/icon_card.png',
+        // },
         // {
         //     id: SETTING_BORROW_REQUEST_IN,
         //     title: '收到的借阅请求',
@@ -80,7 +82,7 @@ Page({
 
   onLoad: function(options: any): void {
       minePage = this
-  },
+    },
 
   onShow: function(): void {
       // 先从cache里读
@@ -92,7 +94,33 @@ Page({
       getMinePageData((result: MinePageData) => {
           minePage.updateData(result)
           updateMinePageCache(result)
-    })
+      })
+
+      let showPost = getShowPostBtn()
+      minePage.setData({
+          showPost: showPost,
+      })
+      if (showPost) {
+          let newMineItems = minePage.data.mineItems
+          if (newMineItems.length === 5) {
+              newMineItems.splice(1, 0, {
+                id: SETTING_MY_CARDS,
+                title: '读书卡片',
+                icon: '../../resources/img/icon_card.png',
+              })
+              minePage.setData({
+                mineItems: newMineItems,
+              })
+          }
+      } else {
+        let newMineItems = minePage.data.mineItems
+        if (newMineItems.length === 6) {
+            newMineItems.splice(1, 1)
+            minePage.setData({
+              mineItems: newMineItems,
+            })
+        }
+      }
   },
 
   updateData: (data: MinePageData) => {

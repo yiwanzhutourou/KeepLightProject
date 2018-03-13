@@ -4,6 +4,7 @@ import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDia
 import { setHomeSettingData, setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
+import { getShowPostBtn } from '../../utils/discoverCache';
 import { updateBorrowData } from '../../utils/bookCache'
 import { verifyReg } from '../../utils/reg'
 
@@ -72,10 +73,16 @@ Page({
     mobile: '',
 
     guideData: {},
+
+    showPost: false,
   },
   
   onLoad: function(option: any): void {
     homepage = this
+    let showPost = getShowPostBtn()
+    homepage.setData({
+      showPost: showPost,
+    })
   },
 
   onUnload: () => {

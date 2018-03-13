@@ -88,13 +88,13 @@
                 </view>
             </scroll-view>
         </view>
-        <view wx:if="{{bookDetail}}" class="book-card-title-container">
+        <view wx:if="{{showPost && bookDetail}}" class="book-card-title-container">
             <view class="book-card-title">读书卡片</view>
             <view class="book-card-btn"
                 hover-class="book-card-btn-hover"
                 bindtap="onPostCard">写卡片</view>
         </view>
-        <view wx:if="{{showList}}" class="card-list-container">
+        <view wx:if="{{showPost && showList}}" class="card-list-container">
             <block wx:for="{{discoverList}}" wx:key="id">
                 <import src="../../template/card/BookCardItem.wxml" />
                 <template is="book-card-item"
@@ -106,7 +106,7 @@
                     data="{{showLoadingMore, showClickLoadMore, noMore}}" />
             </view>
         </view>
-        <view wx:elif="{{showEmpty}}" class="book_card_empty_container">
+        <view wx:elif="{{showPost && showEmpty}}" class="book_card_empty_container">
             <text class="book_card_empty_text">暂无相关的读书卡片</text>
         </view>
     </view>

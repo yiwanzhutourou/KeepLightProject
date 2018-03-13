@@ -50,8 +50,8 @@ Page({
   },
 
   onShow: function (): void {
-      let showLanding = shouldShowLanding()
-      if (showLanding) {
+    let showLanding = shouldShowLanding()
+    if (showLanding) {
         setTimeout(() => {
             wx.navigateTo({
                 url: '../index/landing',
@@ -59,14 +59,14 @@ Page({
         }, 1500)
     }
 
-      discoverPage.setData({
-          showPostBtn: getShowPostBtn(),
-      })
-      // 五分钟自动拉一次数据
-      let now = new Date().getTime()
-      if (lastLoadDiscoverTime === -1 || (now - lastLoadDiscoverTime) > DISCOVER_REFRESH_INTERVAL) {
-          discoverPage.loadData()
-      }
+    discoverPage.setData({
+        showPostBtn: getShowPostBtn(),
+    })
+    // 五分钟自动拉一次数据
+    let now = new Date().getTime()
+    if (lastLoadDiscoverTime === -1 || (now - lastLoadDiscoverTime) > DISCOVER_REFRESH_INTERVAL) {
+        discoverPage.loadData()
+    }
   },
 
   onPullDownRefresh: (e) => {

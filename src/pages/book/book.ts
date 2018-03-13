@@ -4,6 +4,7 @@ import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showConfirmDialog, sh
 import { setBookDetailData, updateBookStatus } from '../../utils/bookCache'
 
 import { getDistrictShortString } from '../../utils/addrUtils'
+import { getShowPostBtn } from '../../utils/discoverCache';
 import { parseAuthor } from '../../utils/bookUtils'
 import { setPostBookData } from '../../utils/postCache'
 
@@ -55,6 +56,7 @@ Page({
       showUsers: false,
       showAddBook: false,
       extraLoaded: false,
+      showPost: false,
   },
 
   onLoad: function(option: any): void {
@@ -66,6 +68,11 @@ Page({
         })
         return
     }
+
+    let showPost = getShowPostBtn()
+    bookPage.setData({
+      showPost: showPost,
+    })
 
     bookPage.setData({
         screenHeight: getScreenSizeInRpx().height,

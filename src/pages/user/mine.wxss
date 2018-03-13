@@ -40,7 +40,7 @@
 }
 
 .user-text-container {
-    width: 450rpx;
+    width: 560rpx;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
