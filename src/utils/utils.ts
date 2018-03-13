@@ -52,7 +52,7 @@ export const getScreenSizeInRpx = () => {
 
 export const rpx2px = (rpx: number) => {
     let res = wx.getSystemInfoSync() as any
-    return rpx * 750 / res.windowWidth
+    return rpx * res.windowWidth / 750
 }
 
 export const timestamp2Text = (timestamp: number) => {
