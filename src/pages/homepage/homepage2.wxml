@@ -51,30 +51,6 @@
                     </view>
                 </view>
             </view>
-            <view wx:if="{{showPost && cardList.length > 0}}" class="card-list-container">
-                <view class="title-container">
-                    <text>{{cardCount}} 个读书卡片</text>
-                </view>
-                <scroll-view class="card-list-scroller" scroll-x>
-                    <view class="card-scroller-wrapper">
-                        <view class="home-card-wrapper" wx:for="{{cardList}}" wx:key="id">
-                            <import src="../../template/card/HomeCardItem.wxml" />
-                            <template is="home-card-item"
-                                data="{{item}}" />
-                        </view>
-                        <view class="card-space-wrapper">
-                            <view class="card-space-holder" />
-                        </view>
-                        <view wx:if="{{cardList.length < cardCount}}"
-                            class="more-card-wrapper"
-                            bindtap="onShowAllCards">
-                            <view class="more-card">
-                                <text class="more-card-text">查看全部</text>
-                            </view>
-                        </view>
-                    </view>
-                </scroll-view>
-            </view>
             <view wx:if="{{bookCount > 0}}" class="list-container">
                 <view class="title-container">
                     <text>闲置图书 {{borrowBookCount}} 本</text>

@@ -1,60 +1,30 @@
-import { getBorrowRequestCount, getMinePageData, getUserInfo } from '../../api/api'
+import { getMinePageData } from '../../api/api'
 import { getMinePageCache, updateMinePageCache } from '../../utils/urlCache'
 
 import { MinePageData } from '../../api/interfaces'
-import { getShowPostBtn } from '../../utils/discoverCache';
 
 const SETTING_MY_BOOKS = 0
-const SETTING_MY_CARDS = 1
-const SETTING_BORROW_REQUEST_IN = 2
-const SETTING_BORROW_REQUEST_OUT = 3
-const SETTING_BORROW_IN = 4
-const SETTING_BORROW_OUT = 5
-const SETTING_SETTINGS = 6
-const SETTING_ABOUT = 7
+const SETTING_BORROW_REQUEST_IN = 1
+const SETTING_BORROW_REQUEST_OUT = 2
+const SETTING_BORROW_IN = 3
+const SETTING_BORROW_OUT = 4
+const SETTING_SETTINGS = 5
+const SETTING_ABOUT = 6
 
-const SETTING_MY_ORDER_BOOK = 8
-const SETTING_OUT_ORDER_BOOK = 9
+const SETTING_MY_ORDER_BOOK = 7
+const SETTING_OUT_ORDER_BOOK = 8
 
 let minePage
-let lastLogoTap = -1
-let logoTapCount = 0
 
 Page({
   data: {
     user: null,
-    showPost: false,
     mineItems: [
         {
             id: SETTING_MY_BOOKS,
             title: '书',
             icon: '../../resources/img/icon_book.png',
         },
-        // {
-        //     id: SETTING_MY_CARDS,
-        //     title: '读书卡片',
-        //     icon: '../../resources/img/icon_card.png',
-        // },
-        // {
-        //     id: SETTING_BORROW_REQUEST_IN,
-        //     title: '收到的借阅请求',
-        //     icon: '../../resources/img/icon_request.png',
-        // },
-        // {
-        //     id: SETTING_BORROW_REQUEST_OUT,
-        //     title: '发出的借阅请求',
-        //     icon: '../../resources/img/icon_request_out.png',
-        // },
-        // {
-        //     id: SETTING_BORROW_OUT,
-        //     title: '借出的书',
-        //     icon: '../../resources/img/icon_borrow_out.png',
-        // },
-        // {
-        //     id: SETTING_BORROW_IN,
-        //     title: '借入的书',
-        //     icon: '../../resources/img/icon_return_book.png',
-        // },
         {
             id: SETTING_MY_ORDER_BOOK,
             title: '借阅历史',
@@ -80,56 +50,36 @@ Page({
     followerNumber: 0,
   },
 
-  onLoad: function(options: any): void {
+  onLoad: function(): void {
       minePage = this
     },
 
-  onShow: function(): void {
-      // 先从cache里读
-      let minePageCache = getMinePageCache()
-      if (minePageCache) {
-          minePage.updateData(minePageCache)
-      }
+    onShow: function(): void {
+        // 先从cache里读
+        let minePageCache = getMinePageCache()
+        if (minePageCache) {
+            minePage.updateData(minePageCache)
+        }
 
-      getMinePageData((result: MinePageData) => {
-          minePage.updateData(result)
-          updateMinePageCache(result)
-      })
+        getMinePageData((result: MinePageData) => {
+            minePage.updateData(result)
+            updateMinePageCache(result)
+        })
 
-      let showPost = getShowPostBtn()
-      minePage.setData({
-          showPost: showPost,
-      })
-      if (showPost) {
-          let newMineItems = minePage.data.mineItems
-          if (newMineItems.length === 5) {
-              newMineItems.splice(1, 0, {
-                id: SETTING_MY_CARDS,
-                title: '读书卡片',
-                icon: '../../resources/img/icon_card.png',
-              })
-              minePage.setData({
-                mineItems: newMineItems,
-              })
-          }
-      } else {
         let newMineItems = minePage.data.mineItems
         if (newMineItems.length === 6) {
             newMineItems.splice(1, 1)
             minePage.setData({
-              mineItems: newMineItems,
+                mineItems: newMineItems,
             })
         }
-      }
-  },
+    },
 
   updateData: (data: MinePageData) => {
     let mines = minePage.data.mineItems
     mines.forEach((item) => {
         if (item.id === SETTING_MY_BOOKS) {
             item.subInfo = data.bookCount + ' 本'
-        } else if (item.id === SETTING_MY_CARDS) {
-            item.subInfo = data.cardCount + ' 个'
         }
     })
     minePage.setData({
@@ -149,11 +99,6 @@ Page({
           case SETTING_MY_BOOKS:
             wx.navigateTo({
                 url: './mybooks',
-            })
-            break
-          case SETTING_MY_CARDS:
-            wx.navigateTo({
-                url: '../card/mycards',
             })
             break
           case SETTING_BORROW_REQUEST_IN:
@@ -200,44 +145,27 @@ Page({
       }
   },
 
-  onShowMyRoom: (e) => {
+  onShowMyRoom: () => {
       wx.navigateTo({
         url: '../homepage/homepage',
       })
   },
 
-  onShowMyQRCode: (e) => {
+  onShowMyQRCode: () => {
       wx.navigateTo({
         url: '../borrow/myqrcode',
       })
   },
 
-  onFollowingTap: (e) => {
+  onFollowingTap: () => {
       wx.navigateTo({
         url: './follow?content=followings',
       })
   },
 
-  onFollowerTap: (e) => {
+  onFollowerTap: () => {
       wx.navigateTo({
         url: './follow?content=followers',
       })
-  },
-
-  onTapTap: (e) => {
-    if (lastLogoTap === -1 || (e.timeStamp && (e.timeStamp - lastLogoTap) < 500)) {
-      logoTapCount++
-    } else {
-      logoTapCount = 1
-    }
-    if (logoTapCount === 5) {
-      lastLogoTap = -1
-      logoTapCount = 0
-      wx.navigateTo({
-        url: '../lib/mylibs',
-      })
-    } else {
-      lastLogoTap = e.timeStamp
-    }
   },
 })

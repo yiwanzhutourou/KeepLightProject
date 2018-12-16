@@ -11,7 +11,7 @@ let homesettingPage
 const initQiniu = () => {
     let options = {
         region: 'ECN',
-        imageURLPrefix: 'http:// othb16dht.bkt.clouddn.com',
+        imageURLPrefix: 'pic.youdushufang.com',
         shouldUseQiniuFileName: true,
     }
     initUploader(options)
@@ -71,13 +71,13 @@ Page({
                   uploadFile(avatar, (success) => {
                       let avatarUrl = success.imageURL
                       homesettingPage.updateHomeData(nickname, intro, avatarUrl)
-                  }, (fail) => {
+                  }, () => {
                       hideLoading()
                       showErrDialog('上传头像失败，请稍后再试')
                   }, {
                       // TODO 放到服务端
                       region: 'ECN',
-                      imageURLPrefix: 'http://othb16dht.bkt.clouddn.com',
+                      imageURLPrefix: 'pic.youdushufang.com',
                       uploadToken: token,
                       shouldUseQiniuFileName: true,
                   })

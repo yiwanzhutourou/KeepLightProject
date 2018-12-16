@@ -170,20 +170,11 @@ Page({
 
   onSystemMsgTap: (e) => {
       let router = e.currentTarget.dataset.router
-      let extra = e.currentTarget.dataset.extra
       // TODO 先hard code一下，后面搞一个router出来，服务器发下来就直接可以跳
       if (router) {
-          if (router === 'card' && extra) {
-              wx.navigateTo({
-                  url: '../card/card?id=' + extra,
-              })
-          } else if (router === 'follower') {
+          if (router === 'follower') {
               wx.navigateTo({
                   url: '../user/follow?content=followers',
-              })
-          } else if (router === 'newcard' && extra) {
-              wx.navigateTo({
-                  url: '../card/card?id=' + extra + '&admin=1',
               })
           }
       }

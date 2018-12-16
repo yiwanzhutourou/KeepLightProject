@@ -93,14 +93,6 @@ Page({
     })
   },
 
-  onPostCard: (e) => {
-    let book = e.currentTarget.dataset.book
-    setPostBookData(book)
-    wx.navigateTo({
-        url: '../card/post',
-    })
-  },
-
   onChatTap: (e) => {
     let otherId = e.currentTarget.dataset.user
     if (otherId) {

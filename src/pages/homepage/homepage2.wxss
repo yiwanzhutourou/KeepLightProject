@@ -1,5 +1,4 @@
 @import "../../template/book/GeneralBookItem.wxss";
-@import "../../template/card/HomeCardItem.wxss";
 
 .detail-container {
     width: 100%;
@@ -236,81 +235,6 @@
 .follow-content-text {
     font-size: 20rpx;
     color: #999;
-}
-
-.card-list-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    background: #fafafa;
-}
-
-.card-list-scroller {
-    width: 100%;
-    height: 280rpx;
-    white-space: nowrap;
-}
-
-.card-scroller-wrapper {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: nowrap;
-    padding-left: 10rpx;
-}
-
-.home-card-wrapper {
-    width: 520rpx;
-    height: 240rpx;
-    display: inline-block;
-    margin-left: 10rpx;
-    margin-right: 10rpx;
-    background: #fff;
-    border: 1rpx solid #eee;
-    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
-    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-}
-
-.more-card-wrapper {
-    display: inline-block;
-}
-
-.more-card {
-    width: 240rpx;
-    height: 240rpx;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-right: 20rpx;
-    background: #eee;
-    border: 1rpx solid #eee;
-    -webkit-box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-    -moz-box-shadow: 0rpx 0rpx 4px 0rpx #eee;
-    box-shadow: 0rpx 0rpx 4rpx 0rpx #eee;
-}
-
-.more-card-text {
-    font-size: 26rpx;
-    color: #999;
-}
-
-.more-card-text-2 {
-    font-size: 24rpx;
-    color: #999;
-    margin-top: 10rpx;
-}
-
-.card-space-wrapper {
-    display: inline-block;
-}
-
-.card-space-holder {
-    height: 244rpx;
-    width: 10rpx;
 }
 
 .more-book-container {

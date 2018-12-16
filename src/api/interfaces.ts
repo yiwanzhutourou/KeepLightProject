@@ -87,8 +87,6 @@ export type HomepageData = {
     borrowBookCount: number,
     books?: Array<Book>,
     bookCount: number,
-    cards: Array<MyCardItem>,
-    cardCount: number,
     isMe: boolean,
     followed: boolean,
     followerCount: number,
@@ -185,7 +183,6 @@ export type MinePageData = {
     nickname: string,
     avatar: string,
     bookCount: number,
-    cardCount: number,
     followerCount: number,
     followingCount: number,
 }
@@ -239,44 +236,6 @@ export type ExtraBorrowRequest = {
     requestId: number,
 }
 
-export type CardDetail = {
-    id: number,
-    user: User,
-    title: string,
-    content: string,
-    picUrl: string,
-    book?: Book,
-    createTime: number,
-    isMe?: boolean,
-    timeString?: string,
-    hasApproved?: boolean,
-    approvalList?: Array<string>,
-    approvalCount: number,
-    readCount?: number,
-    showBottom: boolean,
-}
-
-export type ArticleDetail = {
-    id: number,
-    user: User,
-    title: string,
-    content: string,
-    picUrl: string,
-    createTime: number,
-    timeString?: string,
-    readCount?: number,
-}
-
-export type MyCardItem = {
-    id: number,
-    title: string,
-    content: string,
-    picUrl: string,
-    bookTitle: string,
-    createTime: number,
-    timeString?: string,
-}
-
 export type DiscoverItem = {
     type: string,
     data: any,
@@ -290,7 +249,6 @@ export type DiscoverPageData = {
     bottomCursor: number,
     bookTopCursor: number,
     bookBottomCursor: number,
-    showPost: boolean,
 }
 
 export type ApprovalResult = {
@@ -301,7 +259,6 @@ export type ApprovalResult = {
 
 export type BookPageData = {
     users: Array<SearchUser>,
-    cards: Array<CardDetail>,
     hasBook: number,
 }
 
@@ -315,23 +272,4 @@ export type BorrowPageData = {
     avatar: string,
     nickname: string,
     books: Array<Book>,
-}
-
-// Lib
-export type Library = {
-    id: string,
-    name: string,
-    avatar: string,
-    defaultPic: string,
-    info: string,
-    address: Address,
-    addressText?: string,
-}
-
-export type LibSettingData = {
-    name: string,
-    avatar: string,
-    defaultPic: string,
-    info: string,
-    address: Address,
 }

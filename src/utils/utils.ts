@@ -10,7 +10,7 @@ export const showConfirmDialog = (title: string, content: string, success: (conf
     wx.showModal({
         title: title,
         content: content,
-        success: (res: { confirm: boolean }) => {
+        success: (res: { confirm: boolean, cancel: boolean }) => {
             success(res.confirm)
         },
         showCancel: showCancel,

@@ -1,25 +1,12 @@
-import { Book, HomepageData, MyCardItem } from '../../api/interfaces'
-import { addAddress, borrowBook, follow, getHomepageData, removeBook, unfollow } from '../../api/api'
-import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { HomepageData } from '../../api/interfaces'
+import { follow, getHomepageData, unfollow } from '../../api/api'
+import { hideLoading, parseTimeToDate, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
-import { getShowPostBtn } from '../../utils/discoverCache';
 import { parseAuthor } from '../../utils/bookUtils'
 import { updateBorrowData } from '../../utils/bookCache'
 
 let homepage2
-
-const formatCards = (cards: Array<MyCardItem>) => {
-  if (cards && cards.length > 0) {
-    cards.forEach((card: MyCardItem) => {
-       if (card.content) {
-         card.content = card.content.replace(/\n/g, ' ')
-       }
-       card.timeString = parseTimeToDate(card.createTime)
-    })
-  }
-  return cards
-}
 
 Page({
   data: {
@@ -33,24 +20,15 @@ Page({
     followed: false,
     followerNumber: 0,
     followingNumber: 0,
-    cardList: [],
-    cardCount: 0,
     borrowBookList: [],
     borrowBookCount: 0,
     bookCount: 0,
     showContent: false,
     showNetworkError: false,
-
-    showPost: false,
   },
 
   onLoad: function(option: any): void {
     homepage2 = this
-
-    let showPost = getShowPostBtn()
-    homepage2.setData({
-      showPost: showPost,
-    })
 
     showLoading('正在加载...')
     if (option && option.user) {
@@ -64,7 +42,7 @@ Page({
       homepage2.loadData()
   },
 
-  onReload: (e) => {
+  onReload: () => {
     showLoading('正在加载...')
     homepage2.loadData()
   },
@@ -80,8 +58,6 @@ Page({
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
-        cardList: formatCards(result.cards),
-        cardCount: result.cardCount,
         borrowBookList: result.borrowBooks,
         borrowBookCount: result.borrowBookCount,
         bookCount: result.bookCount,
@@ -209,20 +185,6 @@ Page({
               url: '../chat/chat?otherId=' + otherId,
           })
       }
-  },
-
-  onCardItemTap: (e) => {
-    let id = e.currentTarget.dataset.id
-    wx.navigateTo({
-        url: '../card/card?id=' + id + '&fromList=1',
-    })
-  },
-
-  onShowAllCards: (e) => {
-    let userId = homepage2.data.userId
-    wx.navigateTo({
-        url: '../card/usercards?user=' + userId,
-    })
   },
 
   onShowAllBooks: (e) => {

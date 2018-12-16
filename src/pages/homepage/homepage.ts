@@ -1,27 +1,14 @@
-import { Book, GuideData, HomepageData, MyCardItem } from '../../api/interfaces'
-import { addAddress, borrowBook, checkLoginFirstLaunch, getBookList, getGuideData, getHomepageData, getMyHomepageData, getUserInfo, removeBook, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
-import { hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { GuideData, HomepageData } from '../../api/interfaces'
+import { checkLoginFirstLaunch, getGuideData, getMyHomepageData, getUserInfo, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
+import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { setHomeSettingData, setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 
 import { getAddressDisplayText } from '../../utils/addrUtils'
-import { getShowPostBtn } from '../../utils/discoverCache';
 import { updateBorrowData } from '../../utils/bookCache'
 import { verifyReg } from '../../utils/reg'
 
 let homepage
 let timeoutCount
-
-const formatCards = (cards: Array<MyCardItem>) => {
-  if (cards && cards.length > 0) {
-    cards.forEach((card: MyCardItem) => {
-       if (card.content) {
-         card.content = card.content.replace(/\n/g, ' ')
-       }
-       card.timeString = parseTimeToDate(card.createTime)
-    })
-  }
-  return cards
-}
 
 let countDown = () => {
     let countDownTime = homepage.data.countDownTime
@@ -55,8 +42,6 @@ Page({
     followed: false,
     followerNumber: 0,
     followingNumber: 0,
-    cardList: [],
-    cardCount: 0,
     borrowBookList: [],
     borrowBookCount: 0,
     bookCount: 0,
@@ -73,16 +58,10 @@ Page({
     mobile: '',
 
     guideData: {},
-
-    showPost: false,
   },
   
-  onLoad: function(option: any): void {
+  onLoad: function(): void {
     homepage = this
-    let showPost = getShowPostBtn()
-    homepage.setData({
-      showPost: showPost,
-    })
   },
 
   onUnload: () => {
@@ -162,8 +141,6 @@ Page({
           avatarUrl: result.avatar ? result.avatar : '/resources/img/default_avatar.png',
           userIntro: result.info,
         },
-        cardList: formatCards(result.cards),
-        cardCount: result.cardCount,
         borrowBookList: result.borrowBooks,
         borrowBookCount: result.borrowBookCount,
         bookCount: result.bookCount,
@@ -302,20 +279,6 @@ Page({
         setShowGuide()
         homepage.loadData()
       }
-    })
-  },
-
-  onCardItemTap: (e) => {
-    let id = e.currentTarget.dataset.id
-    wx.navigateTo({
-        url: '../card/card?id=' + id + '&fromList=1',
-    })
-  },
-
-  onShowAllCards: (e) => {
-    let userId = homepage.data.userId
-    wx.navigateTo({
-        url: '../card/usercards?user=' + userId,
     })
   },
 

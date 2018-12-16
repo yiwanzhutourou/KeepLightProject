@@ -1,44 +1,10 @@
-import { Book, BookPageData, CardDetail, SearchUser } from '../../api/interfaces'
-import { addBook, addNewBook, getBookCards, getBookDetails, getBookPageData, removeBook } from '../../api/api'
-import { getScreenSizeInRpx, hideLoading, parseTimeToDate, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
+import { addNewBook, getBookDetails, removeBook } from '../../api/api'
+import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { setBookDetailData, updateBookStatus } from '../../utils/bookCache'
 
-import { getDistrictShortString } from '../../utils/addrUtils'
-import { getShowPostBtn } from '../../utils/discoverCache';
 import { parseAuthor } from '../../utils/bookUtils'
-import { setPostBookData } from '../../utils/postCache'
 
-const DEFAULT_BOOK_CARDS_PAGE_SIZE = 5
-
-let app = getApp()
 let bookPage
-let pageCount = 0
-
-const formatList = (cards: Array<CardDetail>) => {
-    if (cards && cards.length > 0) {
-      cards.forEach((card: CardDetail) => {
-         if (card.content) {
-             card.content = card.content.replace(/\n/g, ' ')
-         }
-         card.timeString = parseTimeToDate(card.createTime)
-      })
-    }
-    return cards
-}
-
-const formatUserList = (users: Array<SearchUser>) => {
-    if (users && users.length > 0) {
-      users.forEach((user: SearchUser) => {
-          if (user.address) {
-              user.addressText = user.address.city
-                        ? getDistrictShortString(user.address.city) : user.address.detail
-          } else {
-              user.addressText = '暂无地址'
-          }
-      })
-    }
-    return users
-}
 
 Page({
   data: {
@@ -56,7 +22,6 @@ Page({
       showUsers: false,
       showAddBook: false,
       extraLoaded: false,
-      showPost: false,
   },
 
   onLoad: function(option: any): void {
@@ -68,11 +33,6 @@ Page({
         })
         return
     }
-
-    let showPost = getShowPostBtn()
-    bookPage.setData({
-      showPost: showPost,
-    })
 
     bookPage.setData({
         screenHeight: getScreenSizeInRpx().height,
@@ -110,12 +70,10 @@ Page({
         } else {
             showErrDialog('无法加载图书详情，请稍后再试')
         }
-    }, (failure) => {
+    }, () => {
         hideLoading()
         showErrDialog('无法加载图书详情，请检查你的网络状态')
     })
-
-    bookPage.loadBookCards()
   },
 
   onShowContent: (e) => {
@@ -128,85 +86,6 @@ Page({
               url: '../book/bookDetail',
           })
       }
-  },
-
-  loadBookCards: () => {
-      let isbn = bookPage.data.isbn
-      if (isbn) {
-          app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
-              // 无法定位就按在上海搜索
-              let longitude = 121.438378
-              let latitude = 31.181471
-              if (locationInfo) {
-                  latitude = locationInfo.latitude
-                  longitude = locationInfo.longitude
-              }
-              pageCount = 0
-              getBookPageData(isbn, pageCount, DEFAULT_BOOK_CARDS_PAGE_SIZE,
-                latitude, longitude,
-                (data: BookPageData) => {
-                    if (data) {
-                        bookPage.setData({
-                            discoverList: formatList(data.cards),
-                            showEmpty: data.cards.length === 0,
-                            showList: data.cards.length > 0,
-                            userList: formatUserList(data.users),
-                            showUsers: data.users && data.users.length > 0,
-                            showAddBook: data.hasBook === 0,
-                            extraLoaded: true,
-                        })
-                    }
-                }, (failure) => {
-                    if (!failure.data) {
-                        showErrDialog('无法加载图书卡片，请检查你的网络')
-                    }
-                })
-          })
-      }
-  },
-
-  onLoadMore: (e) => {
-    if (bookPage.data.noMore) {
-        return
-    }
-    let isbn = bookPage.data.isbn
-    if (isbn) {
-        pageCount++
-        getBookCards(isbn, pageCount, DEFAULT_BOOK_CARDS_PAGE_SIZE,
-          (cards: Array<CardDetail>) => {
-              let oldList = bookPage.data.discoverList
-              let noMore = cards.length === 0
-              bookPage.setData({
-                  discoverList: oldList.concat(formatList(cards)),
-                  noMore: noMore,
-                  showClickLoadMore: !noMore,
-              })
-          }, (failure) => {
-              if (!failure.data) {
-                  showErrDialog('无法加载图书卡片，请检查你的网络')
-              }
-          })
-    }
-  },
-
-  onPostCard: (e) => {
-      let book = {
-          isbn: bookPage.data.isbn,
-          title: bookPage.data.bookDetail.title,
-          author: bookPage.data.bookDetail.author,
-          cover: bookPage.data.bookDetail.smallImage,
-      }
-      setPostBookData(book)
-      wx.navigateTo({
-          url: '../card/post',
-      })
-  },
-
-  onCardItemTap: (e) => {
-      let id = e.currentTarget.dataset.id
-      wx.navigateTo({
-          url: '../card/card?id=' + id + '&fromList=1',
-      })
   },
 
   onUserItemTap: (e) => {
@@ -225,7 +104,7 @@ Page({
       }
   },
 
-  onAddBook: (e) => {
+  onAddBook: () => {
     let doubanBook = bookPage.data.doubanBook
     if (!doubanBook) {
         return
@@ -246,7 +125,7 @@ Page({
     })
   },
 
-  onRemoveBook: (e) => {
+  onRemoveBook: () => {
     let isbn = bookPage.data.isbn
     if (!isbn) {
         return

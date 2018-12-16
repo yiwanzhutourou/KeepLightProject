@@ -38,11 +38,5 @@
             <button class="empty_action"
                 hover-class="empty_action-hover" bindtap="onReload">点击重新加载</button>
         </view>
-        <view wx:if="{{showPostBtn}}"
-            class="post-container"
-            hover-class="post-container-hover"
-            bindtap="onPost">
-            <image class="post-img" src="../../resources/img/icon_post.png" />
-        </view>
     </view>
 </view>

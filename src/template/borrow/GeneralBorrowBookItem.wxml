@@ -40,11 +40,6 @@
                 data-user="{{item.user.id}}"
                 data-isbn="{{item.book.isbn}}"
                 bindtap="onMarkReturn">标记已还</button>
-            <button wx:if="{{!isOut && item.status === 3}}"
-                class="borrow-action-button2"
-                hover-class="borrow-action-button-hover2"
-                data-book="{{item.book}}"
-                bindtap="onPostCard">写读书卡片</button>
             <button wx:if="{{item.status === 1}}"
                 class="borrow-action-button2"
                 hover-class="borrow-action-button-hover2"

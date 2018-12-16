@@ -1,8 +1,7 @@
-import { Book, Markers, Result } from '../../api/interfaces'
-import { getBookDetailsByIsbn, getBookInfo, getMarkers, getMarkersNearBy, getUserInfo } from '../../api/api'
-import { hideLoading, showDialog, showErrDialog, showLoading, showToast } from '../../utils/utils'
+import { Markers } from '../../api/interfaces'
+import { getBookDetailsByIsbn, getMarkersNearBy } from '../../api/api'
+import { hideLoading, showErrDialog, showLoading, showToast } from '../../utils/utils'
 
-const EVENT_TAP_SEARCH = 0
 const EVENT_TAP_SHOW_CURRENT_LOCATION = 1
 
 // 如果算出来的离我最近的点，十分的近的话，就会把地图的缩放level提到最高，体验不好
@@ -258,11 +257,11 @@ Page({
       title: '条码/二维码内容',
       content: content,
       confirmText: '点击复制',
-      success: (res2: { confirm: boolean }) => {
+      success: (res2: { confirm: boolean, cancel: boolean }) => {
         if (res2 && res2.confirm) {
           wx.setClipboardData({
             data: content,
-            success: (result) => {
+            success: () => {
               showToast('已复制')
             },
           })

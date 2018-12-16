@@ -1,4 +1,3 @@
-@import "../../template/card/BookCardItem.wxss";
 @import "../../template/user/BookUserItem.wxss";
 @import "../../template/widget/LoadMore.wxss";
 
@@ -8,6 +7,7 @@
     flex-direction: column;
     position: relative;
     z-index: 2;
+    padding-bottom: 100rpx;
 }
 
 .blur {
@@ -156,41 +156,9 @@
 }
 
 .detail-title {
-    font-size: 25rpx;
-    color: #999;
-    padding-left: 30rpx;
-    padding-right: 30rpx;
-    padding-bottom: 10rpx;
-}
-
-.book-card-title-container {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10rpx;
-    margin-top: 30rpx;
-}
-
-.book-card-title {
-    font-size: 25rpx;
-    color: #999;
-    padding-left: 30rpx;
-}
-
-.book-card-btn {
     font-size: 30rpx;
-    color: #f8b62d;
-    padding: 6rpx 10rpx;
-    border: 1rpx solid #f8b62d;
-    border-radius: 8rpx;
-    margin-right: 30rpx;
-}
-
-.book-card-btn-hover {
-    color: #fff;
-    background: #f8b62d;
+    color: #555;
+    padding: 20rpx 30rpx;
 }
 
 .detail-container-wrapper {
@@ -208,7 +176,7 @@
 
 .detail-content {
     width: 660rpx;
-    font-size: 30rpx;
+    font-size: 36rpx;
     color: #333;
     line-height: 160%;
     padding-left: 30rpx;
@@ -216,34 +184,13 @@
     display: -webkit-box;
     word-break: break-all;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 10;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
-.card-list-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .discover-loading-more-container {
     width: 100%;
-}
-
-.book_card_empty_container {
-    width: 100%;
-    height: 120rpx;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.book_card_empty_text {
-    color: #bbb;
-    font-size: 28rpx;
 }
 
 .user-list-container {

@@ -1,6 +1,6 @@
 <view class="container">
     <view class="user-info-container">
-        <image class="user-avatar" bindtap="onTapTap" src="{{user.avatar}}" />
+        <image class="user-avatar" src="{{user.avatar}}" />
         <view class="user-text-container"
             bindtap="onShowMyRoom">
             <text wx:if="{{user.nickname}}" class="user-nickname">{{user.nickname}}</text>
@@ -38,11 +38,11 @@
                 wx:for-item="settingItem"
                 wx:for-index="index"
                 wx:key="id">
-                <view wx:if="{{ (showPost && (index === 0 || index === 2 || index === 4)) || (!showPost && (index === 0 || index === 1 || index === 3)) }}" class="item-divider" />
+                <view wx:if="{{ index === 0 || index === 1 || index === 3 }}" class="item-divider" />
                 <import src="../../template/user/SettingItemWithIcon.wxml" />
                 <template is="setting-item-with-icon"
                     data="{{settingItem}}" />
-                <view wx:if="{{ (showPost && (index === 1 || index === 3)) || (!showPost && (index === 0 || index === 2)) }}" class="thick-divider" />
+                <view wx:if="{{ index === 0 || index === 2 }}" class="thick-divider" />
             </block>
             <view class="contact-container">
                 <image
@@ -54,7 +54,6 @@
                    src="../../resources/img/arrow.png" />
             </view>
             <view class="item-divider" />
-            <view class="thick-divider" />
         </view>
     </view>
 </view>

@@ -17,7 +17,6 @@ export const updateDiscoverCache = (newCache: DiscoverPageData, isTop: boolean) 
         discoverCache.topCursor = newCache.topCursor
         discoverCache.bottomCursor = newCache.bottomCursor
         discoverCache.bookBottomCursor = newCache.bookBottomCursor
-        discoverCache.showPost = newCache.showPost
     }
 
     // 保存到disk
@@ -25,30 +24,6 @@ export const updateDiscoverCache = (newCache: DiscoverPageData, isTop: boolean) 
         key: CACHE_DISCOVER_PAGE,
         data: discoverCache,
     })
-}
-
-export const deleteCardFromCache = (cardId) => {
-    let list = getDiscoverList() as any
-    let updated = false
-    if (list && list.length > 0) {
-        for (let i = 0; i < list.length; i++) {
-            let item = list[i]
-            if (item.type === 'card' && item.data) {
-                if (parseInt(item.data.id, 10) === parseInt(cardId, 10)) {
-                    list.splice(i, 1)
-                    updated = true
-                    break
-                }
-            }
-        }
-    }
-    if (updated) {
-        discoverCache.list = list
-        wx.setStorage({
-            key: CACHE_DISCOVER_PAGE,
-            data: discoverCache,
-        })
-    }
 }
 
 export const getBanner = () => {
@@ -79,16 +54,6 @@ export const getTopCursor = () => {
         return discoverCache.topCursor
     }
     return -1
-}
-
-export const getShowPostBtn = () => {
-    if (!discoverCache) {
-        discoverCache = wx.getStorageSync(CACHE_DISCOVER_PAGE)
-    }
-    if (discoverCache) {
-        return discoverCache.showPost
-    }
-    return false
 }
 
 export const getBottomCursor = () => {

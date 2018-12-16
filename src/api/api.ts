@@ -1,21 +1,16 @@
 import {
     Address,
-    ArticleDetail,
     Book,
     BorrowHistory,
     BorrowRequest,
-    CODE_SUCCESS,
-    DEFAULT_PAGE_SIZE,
     HomepageData,
-    MapData,
     Markers,
-    Result,
     SearchResult,
     SearchUser,
     UserContact,
     UserInfo,
 } from './interfaces'
-import { ApprovalResult, BookPageData, BookStatus, BorrowOrder, BorrowPageData, BorrowRequestNew, CardDetail, ChatData, ChatListData, DiscoverPageData, GuideData, LibSettingData, Library, LoginData, Message, MinePageData, MyCardItem, QRCode, SettingsData, User } from './interfaces'
+import { BookPageData, BookStatus, BorrowOrder, BorrowPageData, BorrowRequestNew, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, QRCode, SettingsData } from './interfaces'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
 
 export const DEFAULT_BASE_URL = 'https://www.youdushufang.com/api/'
@@ -224,16 +219,6 @@ export const getBookPageData = (isbn: string, page: number, count: number,
             count: count,
             latitude: latitude,
             longitude: longitude,
-        })
-        get(url, success, failure)
-}
-
-export const getBookCards = (isbn: string, page: number, count: number,
-    success: (cards: Array<CardDetail>) => void, failure?: (res?: any) => void) => {
-        let url = getUrl('Card.getBookCards') + getUrlParam({
-            isbn: isbn,
-            page: page,
-            count: count,
         })
         get(url, success, failure)
 }
@@ -599,133 +584,6 @@ export const updateRequest = (requestId: number, status: number, success: (resul
     }, failure)
 }
 
-export const newBookCard = (
-        content: string, title: string, picUrl: string, bookIsbn: string,
-        success: (id: number) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.insert')
-        post(url, {
-            'content': content,
-            'title': title,
-            'picUrl': picUrl,
-            'bookIsbn': bookIsbn,
-        }, success, failure)
-    }, failure)
-}
-
-export const insertCardNew = (
-        content: string, title: string, picUrl: string, book: any,
-        success: (id: number) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.insertNew')
-        post(url, {
-            'content': content,
-            'title': title,
-            'picUrl': picUrl,
-            'book': book ? JSON.stringify(book) : '',
-        }, success, failure)
-    }, failure)
-}
-
-export const modifyBookCard = (cardId: number,
-        content: string, title: string, picUrl: string, picModified: number,
-        success: (id: number) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.modify')
-        post(url, {
-            'cardId': cardId,
-            'content': content,
-            'title': title,
-            'picUrl': picUrl,
-            'picModified': picModified,
-        }, success, failure)
-    }, failure)
-}
-
-export const getCardById = (id: number,
-        success: (result: CardDetail) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('Card.getCardById') + getUrlParam({
-        cardId: id,
-    })
-    get(url, success, failure)
-}
-
-export const getArticleById = (id: number,
-        success: (result: ArticleDetail) => void, failure?: (res?: any) => void) => {
-    let url = getUrl('Article.getArticle') + getUrlParam({
-        id: id,
-    })
-    get(url, success, failure)
-}
-
-export const approveCard = (cardId: number,
-        success: (result: ApprovalResult) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.approve') + getUrlParam({
-            cardId: cardId,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const unapproveCard = (cardId: number,
-        success: (result: ApprovalResult) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.unapprove') + getUrlParam({
-            cardId: cardId,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const deleteCardById = (id: number,
-        success: (result: string) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.delete') + getUrlParam({
-            cardId: id,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const approveCardById = (id: number,
-        success: (result: string) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Youdu.cardApprove') + getUrlParam({
-            cardId: id,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const declineCardById = (id: number,
-        success: (result: string) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Youdu.cardDecline') + getUrlParam({
-            cardId: id,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const getMyCards = (
-        success: (cards: Array<MyCardItem>) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.getMyCards')
-        get(url, success, failure)
-    }, failure)
-}
-
-export const getCardListByUser = (userId: number,
-        success: (cards: Array<MyCardItem>) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Card.getUserCards') + getUrlParam({
-            userId: userId,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
 export const getBorrowHistory = (success: (result: Array<BorrowHistory>) => void, failure?: (res?: any) => void) => {
     checkLogin(() => {
         let url = getUrl('User.getBorrowHistory')
@@ -1013,7 +871,7 @@ export const searchDoubanBooks = (key: string, page: number, count: number,
         header: {
             'Content-Type': 'json',
         },
-        success: (res) => {
+        success: (res: any) => {
             if (!res) {
                 return
             }
@@ -1051,133 +909,12 @@ export const getUploadToken = (success: (token: string) => void, failure?: (res?
     }, failure)
 }
 
-export const getMyLibs = (
-        success: (resultList: Array<Library>) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Library.getMyLibs')
-        get(url, success, failure)
-    }, failure)
-}
-
-export const createLib = (
-    name: string,
-    success: (resultList: Array<Library>) => void,
-    failure?: (res?: any) => void,
-) => {
-    checkLogin(() => {
-        let url = getUrl('Library.create')
-        post(url, {
-            'name': name,
-        }, success, failure)
-    }, failure)
-}
-
-export const updateLibInfo = (
-    id: string,
-    name: string,
-    info: string,
-    success: () => void,
-    failure?: (res?: any) => void,
-) => {
-    checkLogin(() => {
-        let url = getUrl('Library.updateLibInfo')
-        post(url, {
-            'id': id,
-            'name': name,
-            'info': info,
-        }, success, failure)
-    }, failure)
-}
-
-export const updateLibAvatar = (
-    id: string,
-    avatar: string,
-    success: () => void,
-    failure?: (res?: any) => void,
-) => {
-    checkLogin(() => {
-        let url = getUrl('Library.updateLibAvatar')
-        post(url, {
-            'id': id,
-            'avatar': avatar,
-        }, success, failure)
-    }, failure)
-}
-
-export const updateLibAddress = (
-    id: string,
-    address: Address,
-    success: (name: string) => void,
-    failure?: (res?: any) => void,
-) => {
-    checkLogin(() => {
-        let url = getUrl('Library.updateLibAddress')
-        post(url, {
-            'id': id,
-            'name': address.name,
-            'detail': address.detail,
-            'latitude': address.latitude,
-            'longitude': address.longitude,
-        }, success, failure)
-    }, failure)
-}
-
-export const getLibSettingData = (id: string,
-        success: (result: LibSettingData) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Library.getSettingData') + getUrlParam({
-            id: id,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const getLibBooks = (id: string,
-        success: (books: Array<Book>) => void, failure?: (res?: any) => void) => {
-    checkLogin(() => {
-        let url = getUrl('Library.getBooks') + getUrlParam({
-            id: id,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
-export const libAddBook = (
-    id: string,
-    book: any,
-    success: () => void,
-    failure?: (res?: any) => void,
-) => {
-    checkLogin(() => {
-        let url = getUrl('Library.addBook')
-        post(url, {
-            'id': id,
-            'book': JSON.stringify(book),
-        }, success, failure)
-    }, failure)
-}
-
-export const checkLibUser = (
-    id: string,
-    userId: string,
-    success: (user: User) => void,
-    failure?: (res?: any) => void,
-) => {
-    checkLogin(() => {
-        let url = getUrl('Library.checkUser') + getUrlParam({
-            id: id,
-            userId: userId,
-        })
-        get(url, success, failure)
-    }, failure)
-}
-
 export const get = (url: string, success?: (res: any) => void, failure?: (res?: any) => void) => {
     wx.request({
         url: url,
         method: 'GET',
         header: getRequestHeader(),
-        success: (res) => {
+        success: (res: any) => {
             console.log(res)
             if (!res) {
                 return
@@ -1207,7 +944,7 @@ export const post = (url: string, param, success: (res: any) => void, failure?: 
         data: param,
         method: 'POST',
         header: getRequestHeader(),
-        success: (res) => {
+        success: (res: any) => {
             console.log(res)
             if (!res) {
                 return

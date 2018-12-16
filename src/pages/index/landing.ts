@@ -7,10 +7,10 @@ Page({
   data: {
     screenHeight: 0,
     landings: [
-      'http://othb16dht.bkt.clouddn.com/open1.png',
-      'http://othb16dht.bkt.clouddn.com/open2.png',
-      'http://othb16dht.bkt.clouddn.com/open3.png',
-      'http://othb16dht.bkt.clouddn.com/open4.png',
+      'http://pic.youdushufang.com/open1.png',
+      'http://pic.youdushufang.com/open2.png',
+      'http://pic.youdushufang.com/open3.png',
+      'http://pic.youdushufang.com/open4.png',
     ],
   },
 

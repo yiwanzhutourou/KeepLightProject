@@ -4,7 +4,6 @@
     "pages/index/index",
     "pages/index/landing",
     "pages/index/mapdetail",
-    "pages/index/postindex",
     "pages/homepage/homepage",
     "pages/homepage/homepage2",
     "pages/book/addBook",
@@ -32,23 +31,12 @@
     "pages/chat/systemchat",
     "pages/chat/list",
     "pages/chat/borrow",
-    "pages/card/post",
-    "pages/card/card",
-    "pages/card/richcard",
-    "pages/card/mycards",
-    "pages/card/usercards",
     "pages/borrow/myqrcode",
     "pages/borrow/myborrowpage",
     "pages/borrow/myrequests",
     "pages/borrow/myoutrequests",
     "pages/borrow/myoutbooks",
     "pages/borrow/myborrowedbooks",
-    "pages/lib/mylibs",
-    "pages/lib/createlib",
-    "pages/lib/managelib",
-    "pages/lib/libsetting",
-    "pages/lib/libbooks",
-    "pages/lib/libborrow",
     "pages/order/myorderedbooks"
   ],
   "window": {
@@ -74,8 +62,8 @@
       }, {
         "selectedIconPath": "resources/img/icon_add_selected.png",
         "iconPath": "resources/img/icon_add.png",
-        "pagePath": "pages/index/postindex",
-        "text": "发布"
+        "pagePath": "pages/book/addBook",
+        "text": "添加图书"
       }, {
         "selectedIconPath": "resources/img/icon_message_selected.png",
         "iconPath": "resources/img/icon_message.png",

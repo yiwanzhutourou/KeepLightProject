@@ -1,10 +1,9 @@
 import { DiscoverItem, DiscoverPageData } from '../../api/interfaces'
-import { getBanner, getBookBottomCursor, getBottomCursor, getDiscoverList, getShowPostBtn, updateDiscoverCache } from '../../utils/discoverCache'
+import { getBanner, getBookBottomCursor, getBottomCursor, getDiscoverList, updateDiscoverCache } from '../../utils/discoverCache'
 import { hideLoading, parseTimeToDate, showErrDialog, showLoading } from '../../utils/utils'
 
 import { clearPostModifyData } from '../../utils/postCache'
 import { getDiscoverPageData } from '../../api/api'
-import { parseAuthor } from '../../utils/bookUtils'
 import { shouldShowLanding } from '../../utils/urlCache';
 
 const DISCOVER_REFRESH_INTERVAL = 5 * 60 * 1000
@@ -15,12 +14,7 @@ let lastLoadDiscoverTime = -1
 const formatList = (items: Array<DiscoverItem>) => {
    if (items && items.length > 0) {
      items.forEach((item: DiscoverItem) => {
-        if (item.type === 'card' && item.data) {
-            if (item.data.content) {
-                item.data.content = item.data.content.replace(/\n/g, ' ')
-            }
-            item.data.timeString = parseTimeToDate(item.data.createTime)
-        } else if (item.type === 'book' && item.data) {
+        if (item.type === 'book' && item.data) {
             item.data.timeString = parseTimeToDate(item.data.createTime)
         }
      })
@@ -38,7 +32,6 @@ Page({
       showLoadingMore: true,
       noMore: false,
       showClickLoadMore: true,
-      showPostBtn: false,
       bottomCursor: -1,
       bookBottomCursor: -1,
   },
@@ -59,9 +52,6 @@ Page({
         }, 1500)
     }
 
-    discoverPage.setData({
-        showPostBtn: getShowPostBtn(),
-    })
     // 五分钟自动拉一次数据
     let now = new Date().getTime()
     if (lastLoadDiscoverTime === -1 || (now - lastLoadDiscoverTime) > DISCOVER_REFRESH_INTERVAL) {
@@ -78,9 +68,6 @@ Page({
           updateDiscoverCache(data, true)
           discoverPage.loadDataFromCache()
           discoverPage.hideLoadingMore(false)
-          discoverPage.setData({
-              showPostBtn: data.showPost,
-          })
       }, (failure) => {
           wx.stopPullDownRefresh()
           if (!failure.data) {
@@ -131,9 +118,6 @@ Page({
           updateDiscoverCache(data, true)
           discoverPage.loadDataFromCache()
           discoverPage.hideLoadingMore(false)
-          discoverPage.setData({
-              showPostBtn: data.showPost,
-          })
       }, (failure) => {
           discoverPage.hideLoadingMore()
           if (!failure.data) {
@@ -161,29 +145,8 @@ Page({
     }
   },
 
-  onPost: (e) => {
-      clearPostModifyData()
-      wx.navigateTo({
-          url: '../card/post',
-      })
-  },
-
-  onReload: (e) => {
+  onReload: () => {
       discoverPage.loadData()
-  },
-
-  onCardItemTap: (e) => {
-      let id = e.currentTarget.dataset.id
-      wx.navigateTo({
-          url: '../card/card?id=' + id + '&fromList=1',
-      })
-  },
-
-  onArticleItemTap: (e) => {
-      let id = e.currentTarget.dataset.id
-      wx.navigateTo({
-          url: '../card/richcard?id=' + id,
-      })
   },
 
   onBookItemTap: (e) => {
@@ -200,22 +163,6 @@ Page({
           wx.navigateTo({
               url: '../book/book?isbn=' + id,
           })
-      } else if (type === 'card') {
-          let fullPic = e.currentTarget.dataset.bigpic
-          if (fullPic) {
-              wx.previewImage({
-                  current: fullPic,
-                  urls: [fullPic],
-              })
-          } else {
-              wx.navigateTo({
-                  url: '../card/card?id=' + id + '&fromList=1',
-              })
-          }
-      } else if (type === 'article') {
-        wx.navigateTo({
-            url: '../card/richcard?id=' + id,
-        })
       }
   },
 
