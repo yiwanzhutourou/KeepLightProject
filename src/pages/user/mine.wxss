@@ -25,6 +25,19 @@
     background: #fff;
 }
 
+.my-login-button {
+    height: 80rpx;
+    line-height: 80rpx;
+    font-size: 32rpx;
+    color: #fff;
+    background: #f8b62d;
+    border-radius: 0;
+}
+
+.my-login-button::after{
+    border: none;
+}
+
 .user-avatar {
     width: 140rpx;
     height: 140rpx;
@@ -40,11 +53,12 @@
 }
 
 .user-text-container {
-    width: 560rpx;
+    width: 410rpx;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 40rpx;
+    margin-right: 40rpx;
 }
 
 .user-nickname {

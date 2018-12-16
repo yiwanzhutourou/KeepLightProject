@@ -1,17 +1,5 @@
-import {
-    Address,
-    Book,
-    BorrowHistory,
-    BorrowRequest,
-    HomepageData,
-    Markers,
-    SearchResult,
-    SearchUser,
-    UserContact,
-    UserInfo,
-} from './interfaces'
-import { BookPageData, BookStatus, BorrowOrder, BorrowPageData, BorrowRequestNew, ChatData, ChatListData, DiscoverPageData, GuideData, LoginData, Message, MinePageData, QRCode, SettingsData } from './interfaces'
-import { hideLoading, showConfirmDialog, showDialog, showErrDialog } from '../utils/utils'
+import { hideLoading, showConfirmDialog, showErrDialog, showToast } from '../utils/utils'
+import { Address, Book, BookPageData, BookStatus, BorrowHistory, BorrowOrder, BorrowPageData, BorrowRequest, BorrowRequestNew, ChatData, ChatListData, DiscoverPageData, GuideData, HomepageData, LoginData, Markers, Message, MinePageData, QRCode, SearchResult, SearchUser, SettingsData, UserContact, UserInfo } from './interfaces'
 
 export const DEFAULT_BASE_URL = 'https://www.youdushufang.com/api/'
 // export const DEFAULT_BASE_URL = 'http://127.0.0.1/api/'
@@ -98,61 +86,23 @@ export const hasMobile = () => {
     return hasMobileBound === 1
 }
 
-export const login = (cb: (userInfo: any) => void) => {
+export const login = (info: any, cb: () => void) => {
+    setUserInfo(info)
     wx.login({
         success: (data) => {
             if (data && data.code) {
-                wx.getUserInfo({
-                    success: (res) => {
-                        let info: any = res ? res.userInfo : null
-                        if (info === null) {
-                            setUserToken('')
-                            setUserInfo(null)
-                            cb(null)
-                            return
-                        }
-                        bindUser(data.code, info.nickName, info.avatarUrl, (result: LoginData) => {
-                            if (result && result.token) {
-                                setUserToken(result.token)
-                                setUserInfo(info)
-                                setMobileBound(result.hasMobile)
-                                cb({
-                                    userInfo: userInfo,
-                                    hasMobile: result.hasMobile,
-                                })
-                            }
-                        }, (failure) => {
-                            setUserToken('')
-                            setUserInfo(null)
-                            cb(null)
-                        })
-                    },
-                    fail: () => {
+                bindUser(data.code, info.nickName, info.avatarUrl, (result: LoginData) => {
+                    if (result && result.token) {
+                        setUserToken(result.token)
+                        setMobileBound(result.hasMobile)
+                        cb()
+                    } else {
                         setUserToken('')
-                        setUserInfo(null)
-                        cb(null)
-                        if (wx.openSetting) {
-                            showConfirmDialog('授权提醒',
-                                '无法获取你的微信公开信息，你将不能创建书房、借阅图书等。是否重新授权？',
-                                (confirm) => {
-                                    if (confirm) {
-                                        wx.openSetting({
-                                            success: (authRes: any) => {
-                                                if (authRes.authSetting && authRes.authSetting['scope.userInfo']) {
-                                                    login((result) => {
-                                                        if (result) {
-                                                            showDialog('授权成功')
-                                                        }
-                                                    })
-                                                }
-                                            },
-                                        })
-                                    }
-                                })
-                        } else {
-                            showErrDialog('无法获取你的微信公开信息，你将不能创建书房、借阅图书等。请你重新安装有读书房小程序并授权。')
-                        }
-                    },
+                        showToast('登陆失败，请稍后再试')
+                    }
+                }, () => {
+                    setUserToken('')
+                    showToast('登陆失败，请稍后再试')
                 })
             }
         },
@@ -334,7 +284,7 @@ export const getMinePageData = (success: (data: MinePageData) => void, failure?:
     checkLogin(() => {
         let url = getUrl('User.getMinePageData')
         get(url, success, failure)
-    }, failure)
+    }, failure, false)
 }
 
 export const getUserContactByRequest = (requestId: number, success: (contact: UserContact) => void, failure?: (res?: any) => void) => {
@@ -1009,42 +959,37 @@ export const checkLoginFirstLaunch = (success: () => void, failure?: () => void)
     }
 }
 
-// TODO 所有需要登录的接口都要调这个函数，好蠢，当时结构没设计好
-// 接口越写越复杂，=。=
-const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLogin = true, skipSms = false) => {
+const checkLogin = (success: () => void, failure?: (res?: any) => void, forceLogin = true, skipSms = true) => {
     if (getUserToken()) {
         if (hasMobile() || skipSms) {
             success()
         } else {
+            hideLoading()
             if (forceLogin) {
                 showBindMobileDialog()
             }
-            if (failure) {
-                failure()
-            }
         }
     } else if (forceLogin) {
-        login((result) => {
-            if (result && result.userInfo && (result.hasMobile || skipSms)) {
-                success()
-            } else {
-                if (failure) {
-                    failure()
-                }
-                if (result && !result.hasMobile) {
-                    showBindMobileDialog()
-                }
-            }
-        })
+        hideLoading()
+        showLoginDialog()
     } else {
-        if (failure) {
-            failure()
-        }
+        hideLoading()
     }
 }
 
+const showLoginDialog = () => {
+    showConfirmDialog('未登陆', '你还未授权有读书房获取你的用户信息，请进入「我的」页面点击登陆，否则你将无法使用有读书房的全部功能。是否前往？',
+        (confirm: boolean) => {
+            if (confirm) {
+                wx.switchTab({
+                    url: '../user/mine',
+                })
+            }
+        })
+}
+
 const showBindMobileDialog = () => {
-    showConfirmDialog('你还没有绑定手机号', '有读书房获取你的手机号，仅用于向你推送借阅请求相关的短信。不绑定手机号将不能使用有读书房的完整功能，是否绑定？',
+    showConfirmDialog('你还没有绑定手机号', '有读书房获取你的手机号，仅用于向你推送借阅请求相关的短信。不绑定手机号你将无法借阅图书，是否绑定？',
         (confirm: boolean) => {
             if (confirm) {
                 wx.navigateTo({

@@ -1,5 +1,5 @@
-import { Book, BookStatus, DEFAULT_PAGE_SIZE, Result } from '../../api/interfaces'
-import { addBook, addNewBook, checkBookAdded, getBookDetailsByIsbn, getBookInfo, getBookList, searchDoubanBooks } from '../../api/api'
+import { Book, BookStatus, DEFAULT_PAGE_SIZE } from '../../api/interfaces'
+import { addNewBook, checkBookAdded, getBookDetailsByIsbn, searchDoubanBooks, getUserToken } from '../../api/api'
 import { filterBookListByStatus, updateBookStatus, updateBookStatusByList } from '../../utils/bookCache'
 import { getScreenSizeInRpx, hideLoading, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 
@@ -179,27 +179,41 @@ Page({
       })
   },
 
-  handleSearchResult: (bookList: Array<any>) => {
-    if (!bookList || bookList.length == 0) {
-      showDialog('搜索无结果')
-    } else {
-      // 再去拉一下是不是添加过了
-      checkBookAdded(getIsbns(bookList), (addedList: Array<BookStatus>) => {
-        let statusBookList = applyAddedStatus(bookList, addedList)
-        bookPage.setData({
-          bookList: statusBookList,
-          showEmpty: false,
-        })
-        updateBookStatusByList(statusBookList)
-        hideLoading()
-      }, (failure) => {
-        hideLoading()
-        if (!failure.data) {
-          showErrDialog('网络错误，请稍后再试')
+    handleSearchResult: (bookList: Array<any>) => {
+        if (!bookList || bookList.length == 0) {
+            showDialog('搜索无结果')
+        } else {
+            let isLogin = !!getUserToken()
+            if (isLogin) {
+                // 再去拉一下是不是添加过了
+                checkBookAdded(getIsbns(bookList), (addedList: Array<BookStatus>) => {
+                    let statusBookList = applyAddedStatus(bookList, addedList)
+                    bookPage.setData({
+                        bookList: statusBookList,
+                        showEmpty: false,
+                    })
+                    updateBookStatusByList(statusBookList)
+                    hideLoading()
+                }, (failure) => {
+                    hideLoading()
+                    if (!failure.data) {
+                        showErrDialog('网络错误，请稍后再试')
+                    }
+                })
+            } else {
+                bookList.forEach((book: any) => {
+                    if (book && book.id) {
+                        book.added = false
+                    }
+                })
+                bookPage.setData({
+                    bookList: bookList,
+                    showEmpty: false,
+                })
+                hideLoading()
+            }
         }
-      })
-    }
-  },
+    },
 
   onSearchInput: (e) => {
     bookPage.clearList()
@@ -237,21 +251,34 @@ Page({
         if (noMore) {
           bookPage.showNoMore()
         } else {
-          // 再去拉一下是不是添加过了
-          checkBookAdded(getIsbns(books), (addedList: Array<BookStatus>) => {
-            let statusBookList = applyAddedStatus(books, addedList)
-            let list = bookPage.data.bookList
-            bookPage.setData({
-              bookList: list.concat(statusBookList),
-            })
-            updateBookStatusByList(statusBookList)
-            bookPage.hideLoadingMore()
-          }, (failure) => {
-            bookPage.hideLoadingMore()
-            if (!failure.data) {
-              showErrDialog('网络错误，请稍后再试')
-            }
-          })
+          let list = bookPage.data.bookList
+          let isLogin = !!getUserToken()
+          if (isLogin) {
+              // 再去拉一下是不是添加过了
+              checkBookAdded(getIsbns(books), (addedList: Array<BookStatus>) => {
+                let statusBookList = applyAddedStatus(books, addedList)
+                bookPage.setData({
+                  bookList: list.concat(statusBookList),
+                })
+                updateBookStatusByList(statusBookList)
+                bookPage.hideLoadingMore()
+              }, (failure) => {
+                bookPage.hideLoadingMore()
+                if (!failure.data) {
+                  showErrDialog('网络错误，请稍后再试')
+                }
+              })
+          } else {
+              books.forEach((book: any) => {
+                  if (book && book.id) {
+                      book.added = false
+                  }
+              })
+              bookPage.setData({
+                  bookList: list.concat(books),
+              })
+              bookPage.hideLoadingMore()
+          }
         }
       }, (failure) => {
         bookPage.hideLoadingMore()
