@@ -2,9 +2,8 @@ import { DiscoverItem, DiscoverPageData } from '../../api/interfaces'
 import { getBanner, getBookBottomCursor, getBottomCursor, getDiscoverList, updateDiscoverCache } from '../../utils/discoverCache'
 import { hideLoading, parseTimeToDate, showErrDialog, showLoading } from '../../utils/utils'
 
-import { clearPostModifyData } from '../../utils/postCache'
 import { getDiscoverPageData } from '../../api/api'
-import { shouldShowLanding } from '../../utils/urlCache';
+import { shouldShowLanding } from '../../utils/urlCache'
 
 const DISCOVER_REFRESH_INTERVAL = 5 * 60 * 1000
 

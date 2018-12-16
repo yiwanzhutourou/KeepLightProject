@@ -1,10 +1,27 @@
-import { addNewBook, getBookDetails, removeBook } from '../../api/api'
+import { addNewBook, getBookDetails, removeBook, getBookPageData } from '../../api/api'
 import { getScreenSizeInRpx, hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { setBookDetailData, updateBookStatus } from '../../utils/bookCache'
 
 import { parseAuthor } from '../../utils/bookUtils'
+import { SearchUser, BookPageData } from '../../api/interfaces'
+import { getDistrictShortString } from '../../utils/addrUtils'
 
+let app = getApp()
 let bookPage
+
+const formatUserList = (users: Array<SearchUser>) => {
+    if (users && users.length > 0) {
+      users.forEach((user: SearchUser) => {
+          if (user.address) {
+              user.addressText = user.address.city
+                        ? getDistrictShortString(user.address.city) : user.address.detail
+          } else {
+              user.addressText = '暂无地址'
+          }
+      })
+    }
+    return users
+}
 
 Page({
   data: {
@@ -12,12 +29,6 @@ Page({
       screenHeight: 0,
       bookDetail: null,
       doubanBook: '',
-      discoverList: [],
-      showEmpty: false,
-      showList: false,
-      showLoadingMore: true,
-      noMore: false,
-      showClickLoadMore: true,
       userList: [],
       showUsers: false,
       showAddBook: false,
@@ -67,6 +78,7 @@ Page({
                     title: result.title,
                 })
             }
+            bookPage.loadBookCards()
         } else {
             showErrDialog('无法加载图书详情，请稍后再试')
         }
@@ -87,6 +99,37 @@ Page({
           })
       }
   },
+
+  loadBookCards: () => {
+    let isbn = bookPage.data.isbn
+    if (isbn) {
+        app.getLocationInfo((locationInfo: WeApp.LocationInfo) => {
+            // 无法定位就按在上海搜索
+            let longitude = 121.438378
+            let latitude = 31.181471
+            if (locationInfo) {
+                latitude = locationInfo.latitude
+                longitude = locationInfo.longitude
+            }
+            getBookPageData(isbn, latitude, longitude,
+              (data: BookPageData) => {
+                  if (data) {
+                      bookPage.setData({
+                          userList: formatUserList(data.users),
+                          showUsers: data.users && data.users.length > 0,
+                          showAddBook: data.hasBook === 0,
+                          extraLoaded: true,
+                      })
+                  }
+              }, (failure) => {
+                  if (!failure.data) {
+                      showErrDialog('无法加载图书卡片，请检查你的网络')
+                  }
+              })
+        })
+    }
+},
+
 
   onUserItemTap: (e) => {
     let user = e.currentTarget.dataset.user

@@ -160,13 +160,10 @@ export const getDiscoverPageData = (cursor: number, bookCursor: number, isTop: n
         get(url, success, failure)
 }
 
-export const getBookPageData = (isbn: string, page: number, count: number,
-    latitude: number, longitude: number,
+export const getBookPageData = (isbn: string, latitude: number, longitude: number,
     success: (data: BookPageData) => void, failure?: (res?: any) => void) => {
-        let url = getUrl('Card.getBookPageData') + getUrlParam({
+        let url = getUrl('Card.getBookPageDataNew') + getUrlParam({
             isbn: isbn,
-            page: page,
-            count: count,
             latitude: latitude,
             longitude: longitude,
         })
