@@ -1,5 +1,5 @@
 import { GuideData, HomepageData } from '../../api/interfaces'
-import { checkLoginFirstLaunch, getGuideData, getMyHomepageData, getUserInfo, requestVerifyCode, setMobileBound, verifyCode } from '../../api/api'
+import { getGuideData, getMyHomepageData, getUserInfo, requestVerifyCode, setMobileBound, verifyCode, checkLoginFirstLaunch } from '../../api/api'
 import { hideLoading, showConfirmDialog, showDialog, showErrDialog, showLoading } from '../../utils/utils'
 import { setHomeSettingData, setShowGuide, shouldShowGuide } from '../../utils/urlCache'
 

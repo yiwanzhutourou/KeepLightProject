@@ -946,16 +946,6 @@ export const checkLoginFirstLaunch = (success: () => void, failure?: () => void)
                 failure()
             }
         }
-    } else {
-        login((result) => {
-            if (result && result.userInfo && result.hasMobile) {
-                success()
-            } else {
-                if (failure) {
-                    failure()
-                }
-            }
-        })
     }
 }
 

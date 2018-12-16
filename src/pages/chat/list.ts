@@ -6,7 +6,6 @@ import { hideLoading, showErrDialog, showLoading, timestamp2Text } from '../../u
 const REFRESH_INTERVAL = 5 * 60 * 1000
 
 let chatListPage
-let lastLoadTime = -1
 let longTapLock = false
 
 let removeChatItem = (list: Array<ChatListItem>, userId: number) => {
@@ -44,12 +43,7 @@ Page({
         })
     }
 
-    // 五分钟自动拉一次数据
-    let now = new Date().getTime()
-    if (lastLoadTime === -1 || (now - lastLoadTime) > REFRESH_INTERVAL) {
-        chatListPage.loadData()
-        lastLoadTime = now
-    }
+    chatListPage.loadData()
   },
 
   loadData: () => {
@@ -72,12 +66,11 @@ Page({
     })
   },
 
-  onReload: (e) => {
+  onReload: () => {
     chatListPage.loadData()
   },
 
-  onPullDownRefresh: (e) => {
-    lastLoadTime = new Date().getTime()
+  onPullDownRefresh: () => {
     getChatList((data: ChatListData) => {
       wx.stopPullDownRefresh()
       chatListPage.setData({
